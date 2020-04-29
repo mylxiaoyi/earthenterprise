@@ -94,15 +94,17 @@ env.Depends(streaming_imagery_basename+'.os', streaming_imagery_basename+'.cc')
 # Check environment for png.h file
 conf = Configure(env)
 
-if not conf.CheckCHeader('libpng12/png.h'):
-    print "libpng12 must be installed!"
+if not conf.CheckCHeader('libpng/png.h'):
+    print "libpng must be installed!"
     Exit(1)
 
 env = conf.Finish()
 
+env['CPPFLAGS'] += ['-Wno-error=terminate', '-Wno-error=misleading-indentation']
+
 # TODO: consider to move geGdalUtils to khgdal?!
 gecommon = env.sharedLib('gecommon', commonsources,
-                         LIBS = ['keyholeutils', 'geprotobuf', 'z', 'jpeg', 'png12', 'gdal'])
+                         LIBS = ['keyholeutils', 'geprotobuf', 'z', 'jpeg', 'png', 'gdal'])
 
 utilsources = [
     'ff.cpp',
@@ -141,7 +143,7 @@ utilsources = [
     ]
 # TODO: consider to remove dependency from qt
 geutil = env.sharedLib('geutil', utilsources,
-                       LIBS = ['gecommon', 'qt-mt'])
+                       LIBS = ['gecommon', 'QtCore'])
 
 env.test('quadtreepath_unittest',
          'quadtreepath_unittest.cpp',

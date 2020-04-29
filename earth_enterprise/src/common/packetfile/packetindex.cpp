@@ -71,7 +71,7 @@ PacketIndexReader::PacketIndexReader(geFilePool &file_pool,
   try {
     buffer.CheckCRC(PacketFile::kIndexHeaderSize, "PacketIndexHeader");
   }
-  catch (khSimpleException e) {
+  catch (khSimpleException &e) {
     // Add file name to exception
     throw khSimpleException(e.what()) << ": " << index_path;
   }
@@ -123,7 +123,7 @@ bool PacketIndexReader::ReadNext(PacketIndexEntry *entry) {
   try {
     buffer >> *entry;
   }
-  catch (khSimpleException e) {
+  catch (khSimpleException &e) {
     // Throw new exception with file name
     throw khSimpleException("PacketIndexReader::ReadNext entry decode error")
         << " (" << e.what() << ")"
@@ -154,7 +154,7 @@ bool PacketIndexReader::ReadNext(PacketIndexEntry *entry) {
     try {
       buffer >> entries[i];
     }
-    catch (khSimpleException e) {
+    catch (khSimpleException &e) {
       // Throw new exception with file name
       throw khSimpleException("PacketIndexReader::ReadNextN entry decode error")
           << " (" << e.what() << ")"

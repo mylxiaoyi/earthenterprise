@@ -39,7 +39,7 @@ khProgressMeter::khProgressMeter( std::int64_t totalSteps, const QString &desc_,
 
   if (totalSteps != 0)
     fprintf(stderr, "%sTotal %s to process: %lld\n",
-            progress_meter_prefix_.c_str(), desc.latin1(),
+            progress_meter_prefix_.c_str(), desc.toLatin1().data(),
             (long long)totalSteps);
 
   timer.start();
@@ -74,17 +74,17 @@ khProgressMeter::finalize(void) {
 
   if (overallStats.totalCount != 0) {
     fprintf(stderr, "%sProcessed %lld %s\n", progress_meter_prefix_.c_str(),
-            (long long)overallStats.doneCount, desc.latin1());
+            (long long)overallStats.doneCount, desc.toLatin1().data());
     if (overallStats.skippedCount) {
       fprintf(stderr, "%sSkipped    %lld %s\n", progress_meter_prefix_.c_str(),
-              (long long)overallStats.skippedCount, desc.latin1());
+              (long long)overallStats.skippedCount, desc.toLatin1().data());
     }
     fprintf(stderr, "%sTotal time to process: %s\n",
             progress_meter_prefix_.c_str(),
-            msToString(overallStats.elapsedMS).latin1());
+            msToString(overallStats.elapsedMS).toLatin1().data());
     fprintf(stderr, "%sAverage %s per second: %.2lf\n",
             progress_meter_prefix_.c_str(),
-            desc.latin1(),
+            desc.toLatin1().data(),
             AverageTilesPerMS() * 1000);
   }
 }
@@ -208,9 +208,9 @@ khProgressMeter::DoReport(void) {
           overallStats.progressFraction() * 100,
           (long long)overallStats.processedCount(),
           (long long)overallStats.totalCount,
-          desc.latin1(),
+          desc.toLatin1().data(),
           tilesPerMS * 1000.0,
-          (remainingMS >= 0) ? msToString(remainingMS).latin1() : "???");
+          (remainingMS >= 0) ? msToString(remainingMS).toLatin1().data() : "???");
   // Add more CPU stats for this process (useful for tracking performance issues).
 
   int cpu_percentage = proc_pid_stats.CpuUsagePercentage();

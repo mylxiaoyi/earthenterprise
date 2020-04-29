@@ -19,7 +19,7 @@
 #ifndef GEO_EARTH_ENTERPRISE_SRC_COMMON_RUNTIMEOPTIONS_H_
 #define GEO_EARTH_ENTERPRISE_SRC_COMMON_RUNTIMEOPTIONS_H_
 
-#include <qstring.h>
+#include <QtCore/QString>
 
 class RuntimeOptions {
   static bool EnableAll_;

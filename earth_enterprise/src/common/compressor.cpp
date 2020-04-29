@@ -16,7 +16,7 @@
 
 #include <string.h>
 #include <math.h>
-#include <libpng12/png.h>
+#include <libpng/png.h>
 #include <utility>
 #include "compressor.h"
 #include <common/khConstants.h>

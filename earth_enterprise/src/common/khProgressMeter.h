@@ -38,7 +38,7 @@
 
 #include <stdlib.h>
 #include <string>
-#include <qdatetime.h>
+#include <QtCore/QDateTime>
 #include <deque>
 #include "khTypes.h"
 #include <cstdint>

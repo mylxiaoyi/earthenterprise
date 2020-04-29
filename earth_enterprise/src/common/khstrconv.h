@@ -19,7 +19,7 @@
 #ifndef __khstrconv_h
 #define __khstrconv_h
 
-#include <qstring.h>
+#include <QtCore/QString>
 
 // Bring in the bulk of the conversions from the "simple" variant of myself
 #include "common/khsimple_strconv.h"
@@ -28,7 +28,7 @@ inline
 void
 FromString(const std::string &str, QString &val)
 {
-  val = str;
+  val = QString(str.c_str());
 }
 
 template <class T>
@@ -55,7 +55,7 @@ template <class T>
 void
 FromQString(const QString &str, T &val)
 {
-  FromString((const char *)str.utf8(), val);
+  FromString(str.toStdString(), val);
 }
 
 inline

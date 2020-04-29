@@ -164,7 +164,7 @@ int etDataPacket::load(char* buffer, int bufferSize)
   if(((etDataHeader *)buffer)->magicID != KEYHOLEMAGICID)
     return -1;
    
-  memcpy(&packetHeader, buffer, sizeof(etDataHeader));
+  memcpy((void*)&packetHeader, buffer, sizeof(etDataHeader));
     
   if(packetHeader.metaBufferSize > 0)
     //              metaHeader = getMetaBuffer((char *)buffer + sizeof(etDataHeader));
@@ -295,10 +295,10 @@ int etDataPacket::save(void * buffer, int buffersize)
 int etDataPacket::getFlatFileCount()
 {
   FILE *fp;
-  char fname[fname_len];
+  char fname[1024];
   int count;
 
-  snprintf(fname, fname_len, "%s.header", flatbasename);
+  snprintf(fname, 1024, "%s.header", flatbasename);
   char* lastslash = strrchr(fname, '/');
 #if defined(_WIN32)
   if (!lastslash)
@@ -325,9 +325,9 @@ int etDataPacket::getFlatFileCount()
 int etDataPacket::setFlatFileCount(int num)
 {
   FILE *fp;
-  char fname[fname_len];
+  char fname[1024];
 
-  snprintf(fname, fname_len, "%s.header", flatbasename);
+  snprintf(fname, 1024, "%s.header", flatbasename);
   char* lastslash = strrchr(fname, '/');
 #if defined(_WIN32)
   if (!lastslash)
@@ -345,7 +345,7 @@ int etDataPacket::setFlatFileCount(int num)
 
 int etDataPacket::openFlat(char * flatfile)
 { 
-  char fname[fname_len];
+  char fname[1024];
   int filecount;
 
   //Set File Names
@@ -359,7 +359,7 @@ int etDataPacket::openFlat(char * flatfile)
     return -1;
 
   //Open Directory File
-  snprintf(fname, fname_len, "%s.p%d", flatdirname, filecount);
+  snprintf(fname, 1024, "%s.p%d", flatdirname, filecount);
   char* lastslash = strrchr(fname, '/');
 #if defined(_WIN32)
   if (!lastslash)
@@ -370,7 +370,7 @@ int etDataPacket::openFlat(char * flatfile)
     return -1;
 
   //Open Data File
-  snprintf(fname, fname_len, "%s.p%d", flatdataname, filecount);
+  snprintf(fname, 1024, "%s.p%d", flatdataname, filecount);
   lastslash = strrchr(fname, '/');
 #if defined(_WIN32)
   if (!lastslash)
@@ -1103,9 +1103,9 @@ void etDrawablePacket::merge(etDrawablePacket * pak1, etDrawablePacket * pak2)
   init(pak1->packetHeader.numInstances+pak2->packetHeader.numInstances);
                 
   for(unsigned int i=0; i < pak1->packetHeader.numInstances; i++)
-    memcpy(getPtr(i), pak1->getPtr(i), sizeof(etDataPacket));
+    memcpy((void*)getPtr(i), pak1->getPtr(i), sizeof(etDataPacket));
 
   for(unsigned int i=0; i < pak2->packetHeader.numInstances; i++)
-    memcpy(getPtr(i+pak1->packetHeader.numInstances), pak2->getPtr(i), 
+    memcpy((void*)getPtr(i+pak1->packetHeader.numInstances), pak2->getPtr(i), 
            sizeof(etDataPacket));  
 }

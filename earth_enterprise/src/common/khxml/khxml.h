@@ -30,7 +30,7 @@
 #include <istream>
 #include <memory>
 #include <string>
-#include <qstring.h>
+#include <QtCore/QString>
 
 namespace khxml = xercesc;
 
@@ -102,7 +102,7 @@ inline
 QString
 XMLStr2QString(const XMLCh *xmlch)
 {
-  return QString::fromUcs2(xmlch);
+  return QString::fromUtf16((const ushort*)xmlch);
 }
 
 // ----------------------------------------------------------------------

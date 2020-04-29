@@ -21,8 +21,8 @@
 #include <stdexcept>
 #include <errno.h>
 #include <cstring>
-#include <qstring.h>
-#include <qobject.h>
+#include <QtCore/QString>
+#include <QtCore/QObject>
 
 // for khstrerror
 #include <notify.h>
@@ -45,7 +45,7 @@ class khException : public std::runtime_error
   khException(const char * msg)
       : std::runtime_error(msg) {}
   khException(const QString &msg)
-      : std::runtime_error(std::string((const char *)msg.utf8())) { }
+      : std::runtime_error(msg.toStdString()) { }
   virtual ~khException(void) throw() { }
   QString qwhat(void) const throw() {
     return QString::fromUtf8(what());

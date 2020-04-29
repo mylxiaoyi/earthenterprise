@@ -16,7 +16,7 @@
 
 #include "WaitBaseManager.h"
 #include "WaitBase.h"
-#include <qstring.h>
+#include <QtCore/QString>
 
 namespace mttypes {
 
@@ -43,7 +43,7 @@ void WaitBaseManager::RemoveWaitBase(WaitBase *base) {
 }
 
 void WaitBaseManager::HandleAbortMessage(const QString &msg) {
-  notify(NFY_WARN, "%s", (const char *)msg.utf8());
+  notify(NFY_WARN, "%s", msg.toStdString().c_str());
 }
 
 void WaitBaseManager::Abort(const QString &msg) {

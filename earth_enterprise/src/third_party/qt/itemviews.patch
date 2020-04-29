@@ -1,0 +1,11 @@
+--- src/plugins/accessible/widgets/itemviews.cpp	2020-04-27 21:46:29.137506347 +0800
++++ src/plugins/accessible/widgets/itemviews.cpp	2020-04-27 21:44:02.610059973 +0800
+@@ -393,7 +393,7 @@
+     QModelIndex index = view()->model()->index(0, column, view()->rootIndex());
+     if (!index.isValid() || view()->selectionMode() & QAbstractItemView::NoSelection)
+         return false;
+-    view()->selectionModel()->select(index, QItemSelectionModel::Columns & QItemSelectionModel::Deselect);
++    view()->selectionModel()->select(index, static_cast<QItemSelectionModel::SelectionFlags>(QItemSelectionModel::Columns & QItemSelectionModel::Deselect));
+     return true;
+ }
+ 
