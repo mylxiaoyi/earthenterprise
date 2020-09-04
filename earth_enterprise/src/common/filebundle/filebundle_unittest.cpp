@@ -436,7 +436,7 @@ class FileBundleUnitTest : public UnitTest<FileBundleUnitTest> {
       try {
         updater.WriteAt(0, buffer, kMaxBuffer);
       }
-      catch (khSimpleException e) {
+      catch (khSimpleException &e) {
         thrown = true;
         notify(NFY_DEBUG, "TestExceptions: caught \"%s\"", e.what());
       }
@@ -506,7 +506,7 @@ class FileBundleUnitTest : public UnitTest<FileBundleUnitTest> {
             success = false;
           }
         }
-        catch (khSimpleException e) {
+        catch (khSimpleException &e) {
           if (record_num == kRecordCount - 1) {
             notify(NFY_DEBUG,
                    "TestCRCReport: bad CRC correctly detected, message: %s",

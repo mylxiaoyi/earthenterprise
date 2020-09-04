@@ -23,7 +23,7 @@
 
 class QStringList;
 
-class LabelFormat : public LabelFormatBase {
+class LabelFormat : public Ui::LabelFormatBase {
  public:
   enum LineMode {
     SingleLine, MultiLine

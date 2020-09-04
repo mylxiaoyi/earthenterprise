@@ -16,27 +16,26 @@
 
 #include "LayerLegendWidget.h"
 
-#include <qlayout.h>
-#include <qtable.h>
-#include <qcheckbox.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qcheckbox.h>
 
-class EndEditTable : public QTable {
+class EndEditTable /*: public QTable*/ {
  public:
-  EndEditTable(QWidget* parent, const char* name) : QTable(parent, name) {}
+  //EndEditTable(QWidget* parent, const char* name) : QTable(parent, name) {}
   void EndEdit();
 };
 
 void EndEditTable::EndEdit() {
-  if (isEditing()) {
+  /*if (isEditing()) {
     endEdit(currEditRow(), currEditCol(), true, true);
-  }
+  }*/
 }
 
-LayerLegendWidget::LayerLegendWidget(QWidget* parent, const char* name,
-                                     WFlags fl) :
-    QWidget(parent, name, fl)
+LayerLegendWidget::LayerLegendWidget(QWidget* parent) :
+    QWidget(parent)
 {
-  vlayout = new QVBoxLayout(this);
+  /*vlayout = new QVBoxLayout(this);
   vlayout->setAlignment(Qt::AlignTop);
 
   filter_check = new QCheckBox(this, "filter_check");
@@ -47,13 +46,13 @@ LayerLegendWidget::LayerLegendWidget(QWidget* parent, const char* name,
   table->setSizePolicy(
       QSizePolicy(QSizePolicy::Expanding,
                   QSizePolicy::MinimumExpanding,
-                  0, 0, /* stretch factors */
-                  false /* height not dependent on width */));
+                  0, 0, 
+                  false ));
   table->setNumRows(0);
   table->setNumCols(0);
   vlayout->addWidget(table);
 
-  languageChange();
+  languageChange();*/
 }
 
 
@@ -63,13 +62,13 @@ LayerLegendWidget::~LayerLegendWidget(void)
 }
 
 void LayerLegendWidget::EndEdit() {
-  table->EndEdit();
+  //table->EndEdit();
 }
 
-QTable* LayerLegendWidget::GetTable() {
+/*QTable* LayerLegendWidget::GetTable() {
   return table;
-}
+}*/
 
 void LayerLegendWidget::languageChange() {
-  filter_check->setText(tr("Hide unspecialized locales"));
+  //filter_check->setText(tr("Hide unspecialized locales"));
 }

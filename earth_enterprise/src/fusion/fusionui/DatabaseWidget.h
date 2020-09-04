@@ -25,7 +25,7 @@
 
 class AssetBase;
 
-class DatabaseWidget : public DatabaseWidgetBase, public AssetWidgetBase {
+class DatabaseWidget : public Ui::DatabaseWidgetBase, public AssetWidgetBase {
  public:
   DatabaseWidget(QWidget* parent, AssetBase* base);
 
@@ -38,7 +38,7 @@ class DatabaseWidget : public DatabaseWidgetBase, public AssetWidgetBase {
   virtual void ChooseImageryProject();
   virtual void ClearImageryProject();
   virtual void ChooseTerrainProject();
-  virtual void ClearTerrainProject();
+  //virtual void ClearTerrainProject();
 
  private:
   static QString empty_text;

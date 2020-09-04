@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-#include <qdragobject.h>
+//#include <qdragobject.h>
 #include <assert.h>
 
 #include "AssetTableView.h"
@@ -21,27 +21,28 @@
 #include "AssetManager.h"
 #include "AssetDisplayHelper.h"
 #include "Preferences.h"
+#include <QtGui/QPixmap>
 
 // -----------------------------------------------------------------------------
 
 static QPixmap uic_load_pixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
 // -----------------------------------------------------------------------------
 
-AssetTableItem::AssetTableItem(QTable* table, gstAssetHandle handle)
-    : QTableItem(table, QTableItem::Never, QString::null),
+AssetTableItem::AssetTableItem(QTableWidget* table, gstAssetHandle handle)
+    : QTableWidgetItem(QTableWidgetItem::UserType),
       asset_handle_(handle) {
-  Asset asset = handle->getAsset();
+  /*Asset asset = handle->getAsset();
   AssetDisplayHelper a(asset->type, asset->PrettySubtype());
   setPixmap(a.GetPixmap());
-  setText(shortAssetName(handle->getName()));
+  setText(shortAssetName(handle->getName()));*/
 }
 
 AssetTableItem::~AssetTableItem() {
@@ -51,31 +52,31 @@ gstAssetHandle AssetTableItem::GetAssetHandle() const {
   return asset_handle_;
 }
 
-void AssetTableItem::paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
+/*void AssetTableItem::paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
                            bool sel) {
   QColorGroup ncg = AssetManager::GetStateDrawStyle(text(), p, cg);
   QTableItem::paint(p, ncg, cr, sel);
-}
+}*/
 
 // -----------------------------------------------------------------------------
 
-AssetStateItem::AssetStateItem(QTable* table, QString state)
-    : QTableItem(table, QTableItem::Never, state) {
+AssetStateItem::AssetStateItem(QTableWidget* table, QString state)
+    : QTableWidgetItem(QTableWidgetItem::UserType) {
 }
 
-void AssetStateItem::paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
+/*void AssetStateItem::paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
                            bool sel) {
   QColorGroup ncg = AssetManager::GetStateDrawStyle(text(), p, cg);
   QTableItem::paint(p, ncg, cr, sel);
-}
+}*/
 
 // -----------------------------------------------------------------------------
 
 AssetTableView::AssetTableView(QWidget* parent, const char* name)
-    : QTable(parent, name),
+    : QTableView(parent),
       sort_column_(1),
       sort_ascending_(true) {
-  setNumRows(0);
+  /*setNumRows(0);
   setNumCols(0);
   setShowGrid(false);
   setReadOnly(true);
@@ -90,14 +91,14 @@ AssetTableView::AssetTableView(QWidget* parent, const char* name)
   verticalHeader()->hide();
 
   setColumnMovingEnabled(false);
-  setRowMovingEnabled(false);
+  setRowMovingEnabled(false);*/
 }
 
 AssetTableView::~AssetTableView() {
 }
 
 AssetTableItem* AssetTableView::GetItem(int row) const {
-  return static_cast<AssetTableItem*>(item(row, 0));
+  return nullptr; //static_cast<AssetTableItem*>(item(row, 0));
 }
 
 gstAssetHandle AssetTableView::GetAssetHandle(int row) const {
@@ -113,14 +114,14 @@ gstAssetHandle AssetTableView::GetAssetHandle(int row) const {
 
 
 void AssetTableView::contentsMousePressEvent(QMouseEvent* event) {
-  if (event->button() == LeftButton)
+  /*if (event->button() == LeftButton)
     drag_start_point_ = event->pos();
-  QTable::contentsMousePressEvent(event);
+  QTable::contentsMousePressEvent(event);*/
 }
 
 
 void AssetTableView::contentsMouseMoveEvent(QMouseEvent* event) {
-  if ((event->state() & LeftButton) && !drag_start_point_.isNull()) {
+  /*if ((event->state() & LeftButton) && !drag_start_point_.isNull()) {
     // make sure drag has moved more than 3 pixels so just clicking doesn't
     // accidentally start a drag
     if (QABS(event->pos().x() - drag_start_point_.x()) >= 3 ||
@@ -148,11 +149,11 @@ void AssetTableView::contentsMouseMoveEvent(QMouseEvent* event) {
     }
   } else {
     QTable::contentsMouseMoveEvent(event);
-  }
+  }*/
 }
 
 void AssetTableView::columnClicked(int col) {
-  if (col == sort_column_) {
+  /*if (col == sort_column_) {
     sort_ascending_ = !sort_ascending_;
   } else {
     sort_ascending_ = true;
@@ -160,5 +161,5 @@ void AssetTableView::columnClicked(int col) {
   }
 
   horizontalHeader()->setSortIndicator(col, sort_ascending_);
-  sortColumn(sort_column_, sort_ascending_, true);
+  sortColumn(sort_column_, sort_ascending_, true);*/
 }

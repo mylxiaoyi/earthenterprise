@@ -16,7 +16,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
-#include <qstring.h>
+#include <QtCore/QString>
 
 class LocaleSet
 {

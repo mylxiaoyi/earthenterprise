@@ -15,14 +15,14 @@
 
 #include <vector>
 
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qcursor.h>
-#include <qstringlist.h>
-#include <qtextcodec.h>
-#include <qlayout.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtGui/qcursor.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qtextcodec.h>
+#include <QtWidgets/qlayout.h>
 
 #include <khFileUtils.h>
 #include <gstFormatManager.h>
@@ -42,7 +42,7 @@ SourceFileDialog* SourceFileDialog::self() {
 
 SourceFileDialog::SourceFileDialog(QWidget* parent)
     : QFileDialog(parent) {
-  setCaption(tr("Open"));
+  /*setCaption(tr("Open"));
   history_btn_ = new FileHistory(this, Preferences::filepath(
                                      "fileaccesshistory.xml"));
   addToolButton(history_btn_);
@@ -105,31 +105,31 @@ SourceFileDialog::SourceFileDialog(QWidget* parent)
 #endif
 
   connect(codecCombo, SIGNAL(activated(const QString &)),
-          this, SLOT(chooseCodec(const QString &)));
+          this, SLOT(chooseCodec(const QString &)));*/
 }
 
 void SourceFileDialog::chooseCodec(const QString& str) {
-  if (str == "<none>") {
+  /*if (str == "<none>") {
     codec = QString::null;
   } else {
     codec = str;
-  }
+  }*/
 }
 
 void SourceFileDialog::ChooseRecent(const QString& fname) {
-  setSelection(fname);
+  //setSelection(fname);
 }
 
 void SourceFileDialog::accept() {
-  history_btn_->addFiles(selectedFiles());
-  QFileDialog::accept();
+  //history_btn_->addFiles(selectedFiles());
+  //QFileDialog::accept();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 DatabaseIndexDialog::DatabaseIndexDialog()
     : QFileDialog() {
-  history_btn_ = new FileHistory(this, Preferences::filepath(
+  /*history_btn_ = new FileHistory(this, Preferences::filepath(
                                      "backgroundimagedb.xml"));
   setMode(QFileDialog::DirectoryOnly);
   addToolButton(history_btn_);
@@ -138,34 +138,34 @@ DatabaseIndexDialog::DatabaseIndexDialog()
 
   QStringList fileList = history_btn_->getFileList();
   if (fileList.size() != 0)
-    setDir(khDirname(fileList[0].latin1()));
+    setDir(khDirname(fileList[0].latin1()));*/
 }
 
 void DatabaseIndexDialog::ChooseRecent(const QString& fname) {
-  setSelection(fname);
+  //setSelection(fname);
 }
 
 void DatabaseIndexDialog::accept() {
-  history_btn_->addFile(selectedFile());
-  QFileDialog::accept();
+  //history_btn_->addFile(selectedFile());
+  //QFileDialog::accept();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 AssetDialog::AssetDialog()
     : QFileDialog() {
-  setMode(QFileDialog::DirectoryOnly);
+  /*setMode(QFileDialog::DirectoryOnly);
   connect(this, SIGNAL(dirEntered(const QString &)),
-          this, SLOT(dirEntered(const QString &)));
+          this, SLOT(dirEntered(const QString &)));*/
 }
 
 
 void AssetDialog::dirEntered(const QString& dir) {
-  for (QStringList::Iterator it = dirMatchList.begin();
+  /*for (QStringList::Iterator it = dirMatchList.begin();
        it != dirMatchList.end(); ++it) {
     if (dir.endsWith(*it))
       accept();
-  }
+  }*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ OpenWithHistoryDialog::OpenWithHistoryDialog(QWidget *parent,
                                              const QString& caption,
                                              const QString& history_path)
   : QFileDialog(parent) {
-  setCaption(caption);
+  /*setCaption(caption);
   history_btn_ = new FileHistory(this, Preferences::filepath(history_path));
   addToolButton(history_btn_);
   connect(history_btn_, SIGNAL(selectFile(const QString &)),
@@ -184,14 +184,14 @@ OpenWithHistoryDialog::OpenWithHistoryDialog(QWidget *parent,
   if (file_list.size() != 0)
     setDir(khDirname(file_list[0].latin1()));
 
-  setMode(QFileDialog::ExistingFile);
+  setMode(QFileDialog::ExistingFile);*/
 }
 
 void OpenWithHistoryDialog::ChooseRecent(const QString& fname) {
-  setSelection(fname);
+  //setSelection(fname);
 }
 
 void OpenWithHistoryDialog::accept() {
-  history_btn_->addFile(QFileDialog::selectedFile());
-  QFileDialog::accept();
+  //history_btn_->addFile(QFileDialog::selectedFile());
+  //QFileDialog::accept();
 }

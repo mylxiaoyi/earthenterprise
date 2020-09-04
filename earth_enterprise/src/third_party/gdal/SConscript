@@ -126,7 +126,7 @@ else:
         '%s./configure --prefix=%s --with-gnu-ld --without-libtool '
         '--disable-static --with-threads --with-expat --with-ogdi '
         '--with-libtiff=internal --without-netcdf --with-png=internal --with-jpeg '
-        '--with-geotiff=internal --with-xerces --with-geos '
+        '--with-geotiff=internal --with-geos '
         '--with-openjpeg=%s '
         '--with-mrsid=%s '
         '--with-python=%s '

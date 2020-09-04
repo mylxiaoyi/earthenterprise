@@ -17,7 +17,7 @@
 #ifndef GEO_EARTH_ENTERPRISE_SRC_COMMON_GEGDALUTILS_H_
 #define GEO_EARTH_ENTERPRISE_SRC_COMMON_GEGDALUTILS_H_
 
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 
 class geGdalUtils {
  public:

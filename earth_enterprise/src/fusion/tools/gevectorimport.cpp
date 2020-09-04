@@ -28,8 +28,8 @@
 #include <string>
 #include <map>
 
-#include <qtextcodec.h>
-#include <qdir.h>
+#include <QtCore/qtextcodec.h>
+#include <QtCore/qdir.h>
 
 #include "fusion/gst/gstGridUtils.h"
 #include "fusion/gst/gstGeode.h"
@@ -364,9 +364,12 @@ int main(int argc, char** argv) {
 
     // query must exit
     if (query_encodings) {
-      QTextCodec* codec;
+      QList<QByteArray> codecs = QTextCodec::availableCodecs();
+      for (int i=0; i<codecs.size(); i++)
+        printf("%s\n", QTextCodec::codecForName(codecs[i])->name().data());
+      /*QTextCodec* codec;
       for (int i = 0; (codec = QTextCodec::codecForIndex(i)); ++i)
-        printf("%s\n", codec->name());
+        printf("%s\n", codec->name());*/
       exit(EXIT_SUCCESS);
     }
 
@@ -391,13 +394,16 @@ int main(int argc, char** argv) {
     if (!codec_str.isEmpty()) {
       // Don't delete this codec when we're done with it.
       // It's owned by the Qt internals.
-      QTextCodec* qcodec = QTextCodec::codecForName(codec_str.latin1(), 1);
+      QTextCodec* qcodec = QTextCodec::codecForName(codec_str.toStdString().c_str());
       if (qcodec == 0) {
-        fprintf(stderr, "Invalid codec supplied: %s\n", codec_str.latin1());
+        fprintf(stderr, "Invalid codec supplied: %s\n", codec_str.toStdString().c_str());
         fprintf(stderr, "Valid codec must be one of the following:\n");
-        QTextCodec* codec;
+        QList<QByteArray> codecs = QTextCodec::availableCodecs();
+        for (int i=0; i<codecs.size(); i++)
+            printf("%s\n", QTextCodec::codecForName(codecs[i])->name().data());
+        /*QTextCodec* codec;
         for (int i = 0; (codec = QTextCodec::codecForIndex(i)); ++i)
-          printf("%s\n", codec->name());
+          printf("%s\n", codec->name());*/
         exit(EXIT_FAILURE);
       }
     }
@@ -456,7 +462,7 @@ int main(int argc, char** argv) {
     if (!khMakeCleanDir(path)) {
       usage("Unable to create empty directory");
     }
-    QDir outdir(path);
+    QDir outdir(QString::fromStdString(path));
 
     if (force_2d) {
       notify(NFY_NOTICE, "*** Command run with --force2D");
@@ -503,7 +509,7 @@ int main(int argc, char** argv) {
     // file to the Keyhole Vector Product format (KVP)
 
     gstKVPAsset kvpasset;
-    kvpasset.name = outdir.path().latin1();
+    kvpasset.name = outdir.path().toStdString().c_str();
 
     // pick a grid size that would be a too big for a single building
     // for reference, all of San Francisco could fit in a grid at level 11
@@ -534,7 +540,7 @@ int main(int argc, char** argv) {
       JOBSTATS_END(import_stats, OPENSRC);
 
       if (!codec_str.isEmpty() && !src.SetCodec(codec_str)) {
-        notify(NFY_FATAL, "Failed to apply codec %s", codec_str.latin1());
+        notify(NFY_FATAL, "Failed to apply codec %s", codec_str.toStdString().c_str());
       }
 
       // take header from first source only
@@ -569,7 +575,7 @@ int main(int argc, char** argv) {
 
       char subname[width + 8];
       snprintf(subname, (width + 8), "subpart%0*d", width, sub);
-      gstFileInfo dst(outdir.path().latin1(), subname, "kvgeom");
+      gstFileInfo dst(outdir.path().toStdString().c_str(), subname, "kvgeom");
 
       if (dst.status() == GST_OKAY)
         notify(NFY_FATAL, "Output file already exists. Please remove: %s",
@@ -776,7 +782,7 @@ int main(int argc, char** argv) {
 
       JOBSTATS_BEGIN(import_stats, SAVE);
       // Save after every source is added just in case something fails.
-      kvpasset.Save(outdir.filePath(kHeaderXmlFile).latin1());
+      kvpasset.Save(outdir.filePath(QString::fromStdString(kHeaderXmlFile)).toStdString());
       JOBSTATS_END(import_stats, SAVE);
 
       // Compute features statistics for layer.
@@ -855,7 +861,7 @@ int main(int argc, char** argv) {
 
     JOBSTATS_BEGIN(import_stats, SAVE);
     // Save after setting min/max/efficient resolution levels.
-    kvpasset.Save(outdir.filePath(kHeaderXmlFile).latin1());
+    kvpasset.Save(outdir.filePath(QString::fromStdString(kHeaderXmlFile)).toStdString().c_str());
     JOBSTATS_END(import_stats, SAVE);
 
     if (show_max25d_message) {

@@ -14,16 +14,16 @@
 // limitations under the License.
 
 
-#include <qtable.h>
-#include <qmessagebox.h>
-#include <qinputdialog.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qinputdialog.h>
 #include <notify.h>
 
 #include "LocaleManager.h"
 
-LocaleManager::LocaleManager(QWidget* parent, bool modal, WFlags flags)
-  : LocaleManagerBase(parent, 0, modal, flags) {
-  locale_table->verticalHeader()->hide();
+LocaleManager::LocaleManager(QWidget* parent, bool modal)//, WFlags flags)
+  : LocaleManagerBase() {
+  /*locale_table->verticalHeader()->hide();
   locale_table->setLeftMargin(0);
   locale_table->setNumRows(0);
   locale_table->setColumnStretchable(0, true);
@@ -34,7 +34,7 @@ LocaleManager::LocaleManager(QWidget* parent, bool modal, WFlags flags)
     locale_table->setText(row, 0, localeset_.supportedLocales[row]);
     locale_table->adjustRow(row);
   }
-  locale_table->adjustColumn(0);
+  locale_table->adjustColumn(0);*/
 }
 
 std::vector<QString> LocaleManager::SupportedLocales() {
@@ -44,7 +44,7 @@ std::vector<QString> LocaleManager::SupportedLocales() {
 }
 
 void LocaleManager::accept() {
-  localeset_.supportedLocales.clear();
+  /*localeset_.supportedLocales.clear();
 
   for (int row = 0; row < locale_table->numRows(); ++row) {
     localeset_.supportedLocales.push_back(locale_table->text(row, 0));
@@ -58,19 +58,19 @@ void LocaleManager::accept() {
         tr("OK"), 0, 0, 0);
   } else {
     LocaleManagerBase::accept();
-  }
+  }*/
 }
 
 bool LocaleManager::LocaleExists(const QString& text) {
-  for (int row = 0; row < locale_table->numRows(); ++row) {
+  /*for (int row = 0; row < locale_table->numRows(); ++row) {
     if (text == locale_table->text(row, 0))
       return true;
-  }
+  }*/
   return false;
 }
 
 void LocaleManager::NewLocale() {
-  QString new_locale;
+  /*QString new_locale;
   while (true) {
     bool ok;
     new_locale = QInputDialog::getText(
@@ -95,11 +95,11 @@ void LocaleManager::NewLocale() {
   int row = locale_table->numRows();
   locale_table->setNumRows(row + 1);
   locale_table->setText(row, 0, new_locale);
-  locale_table->adjustRow(row);
+  locale_table->adjustRow(row);*/
 }
 
 void LocaleManager::ModifyLocale() {
-  int row = locale_table->currentRow();
+  /*int row = locale_table->currentRow();
   if (row == -1)
     return;
 
@@ -137,11 +137,11 @@ void LocaleManager::ModifyLocale() {
   } else {
     locale_table->setText(row, 0, new_locale);
     locale_table->adjustRow(row);
-  }
+  }*/
 }
 
 void LocaleManager::DeleteLocale() {
-  int row = locale_table->currentRow();
+  /*int row = locale_table->currentRow();
   if (row == -1)
     return;
 
@@ -151,6 +151,6 @@ void LocaleManager::DeleteLocale() {
                 "does not reference this Locale.  This may cause \n"
                 "layers to contain non-existent locales."),
          tr("OK"), tr("Cancel"), QString::null, 1, 1) == 0)
-    locale_table->removeRow(row);
+    locale_table->removeRow(row);*/
 }
 

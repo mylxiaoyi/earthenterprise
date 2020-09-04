@@ -19,8 +19,8 @@
 #ifndef GEO_EARTH_ENTERPRISE_SRC_FUSION_FUSIONUI_SELECTIONRULES_H_
 #define GEO_EARTH_ENTERPRISE_SRC_FUSION_FUSIONUI_SELECTIONRULES_H_
 
-#include <qlistbox.h>
-#include <qspinbox.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qspinbox.h>
 #include "fusion/gst/gstRecord.h"
 #include "fusion/gst/gstIconManager.h"
 #include "autoingest/.idl/storage/LayerConfig.h"
@@ -30,7 +30,7 @@
 class LabelFormat;
 class gstLayer;
 
-class SelectionRules : public SelectionRulesBase {
+class SelectionRules : public Ui::SelectionRulesBase {
  public:
   SelectionRules(QWidget *parent, const LayerConfig &, gstLayer *layer_,
                  const gstHeaderHandle &hdr, int id = 0);

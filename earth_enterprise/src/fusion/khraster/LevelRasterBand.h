@@ -20,7 +20,7 @@
 #define __LevelRasterBand_h
 
 #include "khRasterProductLevel.h"
-#include <cpl_error.h>
+#include <gdal/cpl_error.h>
 #include <khgdal/khgdal.h>
 
 

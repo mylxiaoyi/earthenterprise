@@ -22,7 +22,7 @@
 #include <sstream>
 #include <khException.h>
 #include <khstl.h>
-#include <gdal.h>
+#include <gdal/gdal.h>
 
 // size helper classes, these will completely dissapper into inlines
 // at compile time
@@ -184,7 +184,7 @@ class khLUT
       Parse(in);
     } else {
       throw khException(kh::tr("Unrecognized LUT definition \"%1\"")
-                        .arg(lutdef));
+                        .arg(QString(lutdef.c_str())));
     }
   }
 

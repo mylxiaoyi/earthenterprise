@@ -16,35 +16,35 @@
 #include "LayerItemBase.h"
 
 LayerItemBase::LayerItemBase(QListView* parent)
-    : QListViewItem(parent) {
+    : QWidget(parent) {
 }
 
-LayerItemBase::LayerItemBase(QListViewItem* parent)
-    : QListViewItem(parent) {
+LayerItemBase::LayerItemBase(QWidget* parent)
+    : QWidget(parent) {
 }
 
 bool LayerItemBase::CanMoveUp() const {
-  return Previous() != NULL;
+  return false;//Previous() != NULL;
 }
 
 bool LayerItemBase::CanMoveDown() const {
-  return nextSibling() != 0;
+  return false;//nextSibling() != 0;
 }
 
 void LayerItemBase::SwapPosition(LayerItemBase* item) {
-  if (item == Next()) {
+  /*if (item == Next()) {
     moveItem(item);
   } else if (item == Previous()) {
     item->moveItem(this);
-  }
+  }*/
 }
 
 LayerItemBase* LayerItemBase::Next() const {
-  return static_cast<LayerItemBase*>(nextSibling());
+  return nullptr;//static_cast<LayerItemBase*>(nextSibling());
 }
 
 LayerItemBase* LayerItemBase::Previous() const {
-  LayerItemBase* item;
+  /*LayerItemBase* item;
   if (parent() == 0) {
     item = static_cast<LayerItemBase*>(listView()->firstChild());
   } else {
@@ -54,15 +54,17 @@ LayerItemBase* LayerItemBase::Previous() const {
     return NULL;
   while (item->Next() != this)
     item = item->Next();
-  return item;
+  return item;*/
+  return nullptr;
 }
 
 int LayerItemBase::SiblingCount() const {
-  if (parent() == 0) {
+  /*if (parent() == 0) {
     return listView()->childCount();
   } else {
     return parent()->childCount();
-  }
+  }*/
+  return 0;
 }
 
 void LayerItemBase::MoveUp() {

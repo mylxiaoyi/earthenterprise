@@ -14,8 +14,8 @@
 
 
 #include <algorithm>
-#include <qpopupmenu.h>
-#include <qcursor.h>
+#include <QtWidgets/qmenu.h>
+#include <QtGui/qcursor.h>
 #include <khFileUtils.h>
 
 #include "FileHistory.h"
@@ -25,8 +25,8 @@ FileHistory::FileHistory(QWidget* parent, const QString& path)
   setText(trUtf8("Recent..."));
 
   // retrieve from disk
-  if (khExists(filePath.latin1()))
-    history.Load(filePath.latin1());
+  if (khExists(filePath.toLatin1().data()))
+    history.Load(filePath.toLatin1().data());
 
   connect(this, SIGNAL(clicked()), this, SLOT(chooseRecent()));
 }
@@ -37,21 +37,21 @@ void FileHistory::chooseRecent() {
   if (recent.size() == 0)
     return;
 
-  QPopupMenu menu(this);
+  //QMenu menu(this);
 
-  int p = 0;
-  for (QStringList::Iterator it = recent.begin(); it != recent.end(); ++it, ++p)
-    menu.insertItem((*it), p);
-  menu.insertSeparator();
-  menu.insertItem(trUtf8("Clear History"), 999);
+  //int p = 0;
+  //for (QStringList::Iterator it = recent.begin(); it != recent.end(); ++it, ++p)
+   // menu.insertItem((*it), p);
+  //menu.insertSeparator();
+  //menu.insertItem(trUtf8("Clear History"), 999);
 
-  int pos = menu.exec(QCursor::pos());
+  //int pos = menu.exec(QCursor::pos());
 
-  if (pos == 999) {
+  /*if (pos == 999) {
     clearFileHistory();
   } else if (pos != -1)  {
     emit selectFile(recent[pos]);
-  }
+  }*/
 }
 
 QStringList FileHistory::getFileList() const {
@@ -79,7 +79,7 @@ void FileHistory::addFile(const QString& fname) {
   if (history.files.size() > kMaxHistoryLength)
     history.files.resize(kMaxHistoryLength);
 
-  history.Save(filePath.latin1());
+  history.Save(filePath.toLatin1().data());
 }
 
 void FileHistory::addFiles(const QStringList& flist) {
@@ -98,10 +98,10 @@ void FileHistory::addFiles(const QStringList& flist) {
   if (history.files.size() > kMaxHistoryLength)
     history.files.resize(kMaxHistoryLength);
 
-  history.Save(filePath.latin1());
+  history.Save(filePath.toLatin1().data());
 }
 
 void FileHistory::clearFileHistory() {
   history.files.clear();
-  history.Save(filePath.latin1());
+  history.Save(filePath.toLatin1().data());
 }

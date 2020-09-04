@@ -1,160 +1,138 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
-<class>AdvancedLabelOptionsBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
 </comment>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>AdvancedLabelOptionsBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>AdvancedLabelOptionsBase</class>
+  <widget class="QDialog" name="AdvancedLabelOptionsBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>329</width>
-            <height>149</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>329</width>
+        <height>149</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Advanced Label Options</string>
+    <property name="windowTitle">
+      <string>Advanced Label Options</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QButtonGroup" row="0" column="0">
-            <property name="name">
-                <cstring>DecimationBtnGrp</cstring>
-            </property>
-            <property name="title">
-                <string>Decimation Method:</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+    <layout class="QGridLayout">
+      <item row="0" column="0">
+        <widget class="QGroupBox" name="DecimationBtnGrp">
+          <property name="title">
+            <string>Decimation Method:</string>
+          </property>
+          <layout class="QGridLayout">
+            <item row="0" column="0" rowspan="1" colspan="2">
+              <widget class="QRadioButton" name="maxBtn">
+                <property name="text">
+                  <string>Maximum Fit</string>
                 </property>
-                <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>maxBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Maximum Fit</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="QRadioButton" row="1" column="0">
-                    <property name="name">
-                        <cstring>subsetBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Representative Subset</string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>subsetText</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QLayoutWidget" row="1" column="0">
-            <property name="name">
-                <cstring>layout20</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+                <property name="checked">
+                  <bool>true</bool>
                 </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>Horizontal Spacing2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>550</width>
-                            <height>16</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>okBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>OK</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="autoDefault">
-                        <bool>true</bool>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>cancelBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Cancel</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="autoDefault">
-                        <bool>false</bool>
-                    </property>
-                    <property name="default">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-            </hbox>
+              </widget>
+            </item>
+            <item row="1" column="0">
+              <widget class="QRadioButton" name="subsetBtn">
+                <property name="text">
+                  <string>Representative Subset</string>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="1">
+              <widget class="QLineEdit" name="subsetText">
+                <property name="enabled">
+                  <bool>false</bool>
+                </property>
+              </widget>
+            </item>
+          </layout>
         </widget>
-    </grid>
-</widget>
-<connections>
+      </item>
+      <item row="1" column="0">
+        <layout class="QHBoxLayout">
+          <item>
+            <spacer name="Horizontal Spacing2">
+              <property name="sizeHint">
+                <size>
+                  <width>550</width>
+                  <height>16</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="okBtn">
+              <property name="text">
+                <string>OK</string>
+              </property>
+              <property name="shortcut">
+                <string/>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="cancelBtn">
+              <property name="text">
+                <string>Cancel</string>
+              </property>
+              <property name="shortcut">
+                <string/>
+              </property>
+              <property name="autoDefault">
+                <bool>false</bool>
+              </property>
+              <property name="default">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
     <connection>
-        <sender>cancelBtn</sender>
-        <signal>released()</signal>
-        <receiver>AdvancedLabelOptionsBase</receiver>
-        <slot>reject()</slot>
+      <sender>cancelBtn</sender>
+      <signal>released()</signal>
+      <receiver>AdvancedLabelOptionsBase</receiver>
+      <slot>reject()</slot>
     </connection>
     <connection>
-        <sender>okBtn</sender>
-        <signal>released()</signal>
-        <receiver>AdvancedLabelOptionsBase</receiver>
-        <slot>accept()</slot>
+      <sender>okBtn</sender>
+      <signal>released()</signal>
+      <receiver>AdvancedLabelOptionsBase</receiver>
+      <slot>accept()</slot>
     </connection>
     <connection>
-        <sender>DecimationBtnGrp</sender>
-        <signal>clicked(int)</signal>
-        <receiver>AdvancedLabelOptionsBase</receiver>
-        <slot>decimationChange(int)</slot>
+      <sender>DecimationBtnGrp</sender>
+      <signal>clicked(int)</signal>
+      <receiver>AdvancedLabelOptionsBase</receiver>
+      <slot>decimationChange(int)</slot>
     </connection>
-</connections>
-<slots>
-    <slot>decimationChange(int)</slot>
-</slots>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </connections>
+</ui>

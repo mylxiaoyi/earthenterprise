@@ -49,7 +49,7 @@ khTask::khTask(const SubmitTaskMsg &msg)
 
   // make our persistent copy (it's just a symlink)
   if (!khSymlink(verref_, TaskFilename())) {
-    throw khErrnoException(kh::tr("Unable to write ") + TaskFilename());
+    throw khErrnoException(kh::tr("Unable to write ") + QString(TaskFilename().c_str()));
   }
 
   // now that we're persistent, add myself to the lists

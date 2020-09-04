@@ -463,11 +463,11 @@ void TiledFloodFill::ProgressTileDone(int tile_row) {
               " at least %d tiles remain (time %s)\n",
               tiles_processed_, tiles_per_ms * 1000,
               tiles_to_process,
-              khProgressMeter::msToString(ms_remaining).latin1());
+              khProgressMeter::msToString(ms_remaining).toStdString().c_str());
     } else {
       fprintf(stderr, "Flooded %d tiles (%.1f/sec) in %s\n",
               tiles_processed_, tiles_per_ms * 1000,
-              khProgressMeter::msToString(ms_elapsed).latin1());
+              khProgressMeter::msToString(ms_elapsed).toStdString().c_str());
     }
     ms_elapsed_reported_ = ms_elapsed;
   }

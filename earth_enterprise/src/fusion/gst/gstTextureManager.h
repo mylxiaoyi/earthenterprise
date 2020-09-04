@@ -25,7 +25,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <map>
-#include <qthread.h>
+#include <QtCore/qthread.h>
 
 #include <khThread.h>
 #include <gstTypes.h>

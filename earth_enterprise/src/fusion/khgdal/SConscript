@@ -28,7 +28,7 @@ gegdal = env.sharedLib('gegdal', ['khgdal.cpp',
                                   '.idl/khVirtualRaster.cpp',
                                   'khGDALReader.cpp',
                                  ],
-                       LIBS=['gexml', 'gdal', 'qt-mt', 'gecommon', 'geutil'])
+                       LIBS=['gexml', 'gdal', 'Qt5Core', 'gecommon', 'geutil'])
 
 gegdalutil = env.sharedLib('gegdalutil', ['RasterClusterAnalyzer.cpp'],
                            LIBS=['gegdal', 'gecommon'])
@@ -36,23 +36,23 @@ gegdalutil = env.sharedLib('gegdalutil', ['RasterClusterAnalyzer.cpp'],
 
 geinfo = env.executable('geinfo', 'geinfo.cpp',
                         LIBS=['gegdal', 'geraster', 'geindex_rw',
-                              'geqtpacket', 'geindex_r', 'geutil', 'gecommon', 'gdal', 'qt-mt', 'geos'])
+                              'geqtpacket', 'geindex_r', 'geutil', 'gecommon', 'gdal', 'Qt5Core', 'geos'])
 
 gevirtualraster = env.executable('gevirtualraster', ['gevirtualraster.cpp'],
-                                 LIBS=['gegdal', 'gegdalutil', 'geutil', 'gecommon', 'gdal', 'qt-mt', 'geos'])
+                                 LIBS=['gegdal', 'gegdalutil', 'geutil', 'gecommon', 'gdal', 'Qt5Core', 'geos'])
 
 geupdatelut = env.executable('geupdatelut', 'geupdatelut.cpp',
-                             LIBS=['gegdal', 'geutil', 'gecommon', 'gdal', 'qt-mt', 'geos'])
+                             LIBS=['gegdal', 'geutil', 'gecommon', 'gdal', 'Qt5Core', 'geos'])
 
 gesplitkhvr = env.executable('gesplitkhvr', 'gesplitkhvr.cpp',
-                             LIBS=['gegdal', 'geutil', 'gecommon', 'qt-mt', 'geos'])
+                             LIBS=['gegdal', 'geutil', 'gecommon', 'Qt5Core', 'geos'])
 
 khprepvirtrast = env.executable('khprepvirtrast', 'khprepvirtrast.cpp',
-                                LIBS=['gegdal', 'geutil', 'gecommon', 'gdal', 'qt-mt', 'geos'])
+                                LIBS=['gegdal', 'geutil', 'gecommon', 'gdal', 'Qt5Core', 'geos'])
 getranslate = env.executable('getranslate', 'getranslate.cpp',
-                             LIBS=['gegdal', 'gdal', 'geos'])
+                             LIBS=['gegdal', 'gdal', 'geos', 'Qt5Core'])
 gereproject = env.executable('gereproject', 'gereproject.cpp',
-                             LIBS=['gegdal', 'geutil', 'gdal', 'geos'])
+                             LIBS=['gegdal', 'geutil', 'gdal', 'geos', 'Qt5Core'])
 
 khgdal_test = env.test('khgdal_test',
     ['khgdal_test.cpp'],
@@ -60,7 +60,7 @@ khgdal_test = env.test('khgdal_test',
 
 khGDALReader_unittest = env.test('khGDALReader_unittest',
     ['khGDALReader_unittest.cpp'],
-    LIBS=['gegdal', 'gecommon', 'geos', 'gtest'])
+    LIBS=['gegdal', 'gecommon', 'geos', 'gtest', 'Qt5Core'])
 
 env.install('fusion_bin', [geinfo, gevirtualraster, gesplitkhvr,
                            getranslate, gereproject])

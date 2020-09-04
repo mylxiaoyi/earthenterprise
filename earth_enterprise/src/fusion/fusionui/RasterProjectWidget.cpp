@@ -33,10 +33,10 @@
 #include "fusion/autoingest/plugins/MercatorRasterProductAsset.h"
 #include "fusion/autoingest/plugins/RasterProductAsset.h"
 
-#include <qpopupmenu.h>
-#include <qheader.h>
-#include <qlineedit.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qmenu.h>
+//#include <qheader.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qmessagebox.h>
 
 // ****************************************************************************
 // ***  RasterLayerItem
@@ -110,13 +110,14 @@ static unsigned int CalcLayerDiff(AssetDefs::Type asset_type) {
 
 static std::string GetAcquisitionDate(const std::string &asset_path,
                                      bool is_mercator) {
-  if (is_mercator) {
+  /*if (is_mercator) {
     MercatorRasterProductAsset asset(asset_path);
     return asset->GetAcquisitionDate();
   } else {
     RasterProductAsset asset(asset_path);
     return asset->GetAcquisitionDate();
-  }
+  }*/
+  return "";
 }
 
 }  // namespace
@@ -138,14 +139,14 @@ RasterLayerItem::RasterLayerItem(QListView* parent, const QString& asset_path,
   : LayerItemBase(parent),
     level_diff_(level_diff),
     is_mercator_(is_mercator) {
-  config_.dataAsset = asset_path;
+  //config_.dataAsset = asset_path;
 
   InitMetaData();
   InitBBox();
 }
 
 void RasterLayerItem::InitMetaData() {
-  if (is_mercator_) {
+  /*if (is_mercator_) {
     MercatorRasterProductAsset asset(config_.dataAsset);
     config_.maxlevel = asset->GetMaxLevel();
     date_string_ = asset->GetAcquisitionDate();
@@ -153,11 +154,11 @@ void RasterLayerItem::InitMetaData() {
     RasterProductAsset asset(config_.dataAsset);
     config_.maxlevel = asset->GetMaxLevel();
     date_string_ = asset->GetAcquisitionDate();
-  }
+  }*/
 }
 
 void RasterLayerItem::InitBBox() {
-  Asset asset(config_.dataAsset);
+  /*Asset asset(config_.dataAsset);
   AssetVersion ver(asset->GetLastGoodVersionRef());
   if (ver) {
     double n, s, e, w;
@@ -173,20 +174,20 @@ void RasterLayerItem::InitBBox() {
                    khTilespace::Normalize(s), khTilespace::Normalize(n));
       }
     }
-  }
+  }*/
 }
 
-static int LevelColors[][3] = {
+/*static int LevelColors[][3] = {
   { 255, 0, 0 },
   { 0, 255, 0 },
   { 0, 0, 255 },
   { 255, 255, 0 },
   { 255, 0, 255 },
   { 0, 255, 255 }
-};
+};*/
 
 void RasterLayerItem::Draw(const gstDrawState& state) {
-  gstBBox box = bbox_;
+  /*gstBBox box = bbox_;
   if (state.IsMercatorPreview() && !is_mercator_) {
     MercatorProjection::NormalizeToMercatorFromFlat(&box.n, &box.s);
   } else if (!state.IsMercatorPreview() && is_mercator_) {
@@ -208,11 +209,11 @@ void RasterLayerItem::Draw(const gstDrawState& state) {
   style.poly_color_[2] = LevelColors[c][2];
   style.poly_color_[3] = 100;
 
-  geode->Draw(state, style);
+  geode->Draw(state, style);*/
 }
 
 QString RasterLayerItem::text(int col) const {
-  if (col == 0) {
+  /*if (col == 0) {
     QString level;
     if (config_.overridemax == 0) {
       level = QString(" (%1)").arg(ProductToDisplayLevel(config_.maxlevel));
@@ -224,7 +225,8 @@ QString RasterLayerItem::text(int col) const {
     return QString(shortAssetName(config_.dataAsset)) + level;
   } else {
     return QString();
-  }
+  }*/
+  return "";
 }
 
 bool RasterLayerItem::CanMoveUp() const {
@@ -295,7 +297,7 @@ RasterProjectWidget::RasterProjectWidget(QWidget *parent,
       level_diff_(CalcLayerDiff(asset_type_)),
       legend_config_(),
       legendManager(this) {
-  if (asset_type_ == AssetDefs::Terrain) {
+  /*if (asset_type_ == AssetDefs::Terrain) {
     HideLegend();
   }
 
@@ -330,12 +332,12 @@ RasterProjectWidget::RasterProjectWidget(QWidget *parent,
 
   if (asset_type_ == AssetDefs::Terrain) {
     ShowOverlayTerrainControls();
-  }
+  }*/
 }
 
 void RasterProjectWidget::Prefill(const RasterProjectEditRequest &req) {
   // sync LayerLegend to widgets
-  legend_config_ = req.config.legend;
+  /*legend_config_ = req.config.legend;
   legendManager.SyncToWidgets();
 
   const RasterProjectConfig& cfg = req.config;
@@ -376,18 +378,18 @@ void RasterProjectWidget::Prefill(const RasterProjectEditRequest &req) {
           GfxView::instance, SLOT(updateGL()));
 
   HideGroupButton();
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 RasterProjectWidget::~RasterProjectWidget() {
-  ListView()->clear();
-  emit RedrawPreview();
+  //ListView()->clear();
+  //emit RedrawPreview();
 }
 
 void RasterProjectWidget::AssembleEditRequest(
     RasterProjectEditRequest *request) {
   // get LayerLegend
-  legendManager.SyncToConfig();
+  /*legendManager.SyncToConfig();
   if (legend_config_.defaultLocale.name.GetValue().isEmpty()) {
     throw khException(kh::tr("Missing legend name"));
   }
@@ -417,10 +419,10 @@ void RasterProjectWidget::AssembleEditRequest(
       static_cast<RasterLayerItem*>(item);
     request->config.insets.push_back(image_layer_item->GetConfig());
     item = image_layer_item->Previous();
-  }
+  }*/
 }
 
-void RasterProjectWidget::ContextMenu(QListViewItem* item,
+/*void RasterProjectWidget::ContextMenu(QListViewItem* item,
                                        const QPoint& pos, int) {
   RasterLayerItem* image_layer_item = static_cast<RasterLayerItem*>(item);
   if (!image_layer_item)
@@ -499,10 +501,10 @@ void RasterProjectWidget::ContextMenu(QListViewItem* item,
   }
 
   emit RedrawPreview();
-}
+}*/
 
 LayerItemBase* RasterProjectWidget::NewLayerItem() {
-  AssetChooser chooser(ListView(), AssetChooser::Open,
+  /*AssetChooser chooser(ListView(), AssetChooser::Open,
                        asset_type_, sub_type_.c_str());
   if (chooser.exec() != QDialog::Accepted)
     return NULL;
@@ -514,12 +516,13 @@ LayerItemBase* RasterProjectWidget::NewLayerItem() {
   // Check that the layer has a valid acquisition date if timemachine is active.
   if (GetTimeMachineCheckboxState() && !CheckForValidDates(newpath))
     return NULL;
-  return NewLayerItem(newpath);
+  return NewLayerItem(newpath);*/
+  return nullptr;
 }
 
 LayerItemBase* RasterProjectWidget::NewLayerItem(const QString& assetref) {
   // give listview the focus so keyboard navigation will work as expected
-  ListView()->setFocus();
+  /*ListView()->setFocus();
 
   // check to make sure we don't already have this one
   QListViewItem* list_item = ListView()->firstChild();
@@ -546,7 +549,8 @@ LayerItemBase* RasterProjectWidget::NewLayerItem(const QString& assetref) {
                                     // we enforce "newer first".
   item->AdjustLevel(enforce_newer_first);
   ListView()->SelectItem(item);
-  return item;
+  return item;*/
+  return nullptr;
 }
 
 #if 0
@@ -557,18 +561,18 @@ void RasterProjectWidget::SelectLayer() {
 #endif
 
 void RasterProjectWidget::GenericCheckboxToggled(bool state) {
-  if (state) {
+  /*if (state) {
     connect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState&)),
             this, SLOT(DrawFeatures(const gstDrawState&)));
   } else {
     disconnect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState&)),
                this, SLOT(DrawFeatures(const gstDrawState&)));
   }
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 bool RasterProjectWidget::CheckForValidDates(const std::string& resource) {
-  std::vector<std::string> resources;
+  /*std::vector<std::string> resources;
   if (resource.empty()) {
     // check to make sure we don't already have this one
     QListViewItem* list_item = ListView()->firstChild();
@@ -605,19 +609,19 @@ bool RasterProjectWidget::CheckForValidDates(const std::string& resource) {
                   "dates specified:%1.\n").arg(missing_dates),
               "OK", 0, 0, 0);
     return false;
-  }
+  }*/
   return true;
 }
 
 void RasterProjectWidget::TimeMachineCheckboxToggled(bool state) {
-  if (state && !CheckForValidDates())
+  /*if (state && !CheckForValidDates())
     state = false;
 
-  SetTimeMachineCheckboxState(state);
+  SetTimeMachineCheckboxState(state);*/
 }
 
 void RasterProjectWidget::DrawFeatures(const gstDrawState& state) {
-  QListViewItem* item = ListView()->firstChild();
+  /*QListViewItem* item = ListView()->firstChild();
   QListViewItem* selected_item = ListView()->selectedItem();
   while (item) {
     RasterLayerItem* image_layer_item = static_cast<RasterLayerItem*>(item);
@@ -629,5 +633,5 @@ void RasterProjectWidget::DrawFeatures(const gstDrawState& state) {
       image_layer_item->Draw(state);
     }
     item = image_layer_item->Next();
-  }
+  }*/
 }

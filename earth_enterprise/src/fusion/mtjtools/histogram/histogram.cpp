@@ -15,7 +15,7 @@
 #include "stdio.h"
 
 // GDAL includes
-#include "gdal_priv.h"
+#include <gdal/gdal_priv.h>
 
 // KHistogram class
 #include "khistogram.h"
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
     // process each file in list
     if (merge == 0)
     {
-      char nextName[2048];
+      char nextName[1000];
       while (fscanf(fp, "%2047s", nextName) == 1)
       {
         if (verbose)
@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-      char nextName[2048];
+      char nextName[1000];
       KHistogram m;
 
       while (fscanf(fp, "%2047s", nextName) == 1)

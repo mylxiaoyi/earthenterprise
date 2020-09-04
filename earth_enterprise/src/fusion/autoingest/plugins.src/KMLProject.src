@@ -97,7 +97,7 @@ KMLProjectAssetImplD::HandleEditRequest(const KMLProjectEditRequest &req)
 
   if (!project)
     throw khException(kh::tr("Unable to create KML project: ") +
-                      projname);
+                      QString(projname.c_str()));
 
   //project->config.AssignChannelIdsIfZero();
   project->SyncInputRefs();

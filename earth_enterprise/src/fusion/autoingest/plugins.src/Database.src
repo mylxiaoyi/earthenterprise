@@ -269,7 +269,7 @@ DatabaseAssetImplD::HandleEditRequest(const DatabaseEditRequest &req)
 
   if (!db) {
     throw khException(kh::tr("Unable to create database %1")
-                      .arg(dbname));
+                      .arg(QString(dbname.c_str())));
   }
 
 }
@@ -418,7 +418,7 @@ DatabaseAssetVersionImplD::DelayedBuildChildren(void)
           kh::tr("Imagery resources in time machine projects are required to "
                  "have valid acquisition dates.\n"
                  "The following imagery resource(s) do not have acquisition "
-                 "dates specified:%1.\n").arg(missing_dates));
+                 "dates specified:%1.\n").arg(QString(missing_dates.c_str())));
     }
   }
 

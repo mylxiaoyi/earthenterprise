@@ -21,9 +21,9 @@
 #include <autoingest/.idl/Locale.h>
 #include <localemanagerbase.h>
 
-class LocaleManager : public LocaleManagerBase {
+class LocaleManager : public Ui::LocaleManagerBase {
  public:
-  LocaleManager(QWidget* parent, bool modal, WFlags flags);
+  LocaleManager(QWidget* parent, bool modal);//, WFlags flags);
 
   // inherited from QDialog
   virtual void accept();

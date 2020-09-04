@@ -94,9 +94,9 @@ void OverrideDefaultLocaleOfLayer(const std::string& layer_options,
     usage(tokens[0], msg.c_str());
   }
   IconReference& icon = legend_locale.icon.GetMutableValue();
-  if (icon_name != icon.href) {  // If icon name has been changed
+  if (icon_name != icon.href.toStdString()) {  // If icon name has been changed
     IconReference::CheckIconExistence(icon_name, &icon.type);
-    icon.href = icon_name;
+    icon.href = QString(icon_name.c_str());
   }
 }
 }  // end namespace
@@ -203,7 +203,7 @@ main(int argc, char *argv[]) {
       QString error;
       if (!khAssetManagerProxy::MapProjectEdit(req, error)) {
         notify(NFY_WARN, "Unable to save project: %s", projectref.c_str());
-        notify(NFY_FATAL, "  REASON: %s", error.latin1());
+        notify(NFY_FATAL, "  REASON: %s", error.toLatin1().data());
       }
     }
   } catch (const std::exception &e) {

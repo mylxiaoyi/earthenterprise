@@ -16,9 +16,9 @@
 #include "QDateWrapper.h"
 #include <stdlib.h>
 #include <string>
-#include <qlineedit.h>
-#include <qvalidator.h>
-#include <qdatetime.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtGui/qvalidator.h>
+#include <QtCore/qdatetime.h>
 #include <common/khConstants.h>
 
 namespace qt_fusion {
@@ -34,7 +34,7 @@ bool QDateWrapper::TimeIncluded() const {
 }
 
 void QDateWrapper::SetDateValidators(QObject* parent) {
-  QIntValidator* year_validator = new QIntValidator(0, 9999, parent);
+  /*QIntValidator* year_validator = new QIntValidator(0, 9999, parent);
   QIntValidator* month_validator = new QIntValidator(0, 12, parent);
   QIntValidator* day_validator = new QIntValidator(0, 31, parent);
   year_edit_->setValidator(year_validator);
@@ -48,7 +48,7 @@ void QDateWrapper::SetDateValidators(QObject* parent) {
     hours_edit_->setValidator(hours_validator);
     minutes_edit_->setValidator(minutes_validator);
     seconds_edit_->setValidator(seconds_validator);
-  }
+  }*/
 }
 
 void QDateWrapper::SetDate(std::uint32_t year, std::uint32_t month, std::uint32_t day,
@@ -56,7 +56,7 @@ void QDateWrapper::SetDate(std::uint32_t year, std::uint32_t month, std::uint32_
   //  enforce some basics
   //  note we allow 0 for all 6 fields
   //  Note: no promise to validate specific dates.
-  year = std::min(year, 9999U);
+  /*year = std::min(year, 9999U);
   month = std::min(month, 12U);
   day = std::min(day, 31U);
   hours = std::min(hours, 23U);
@@ -80,14 +80,14 @@ void QDateWrapper::SetDate(std::uint32_t year, std::uint32_t month, std::uint32_
     minutes_edit_->setText(datetimebuf);
     snprintf(datetimebuf, sizeof(datetimebuf) , "%02d", seconds);
     seconds_edit_->setText(datetimebuf);
-  }
+  }*/
 }
 
 void QDateWrapper::SetDate(std::uint32_t year, std::uint32_t month, std::uint32_t day) {
   //  enforce some basics
   //  note we allow 0 for all 3 fields
   //  mainly used for terrain and vector assets
-  year = std::min(year, 9999U);
+  /*year = std::min(year, 9999U);
   month = std::min(month, 12U);
   day = std::min(day, 31U);  //  Note: no promise to validate specific dates.
   char buf[5];
@@ -96,14 +96,14 @@ void QDateWrapper::SetDate(std::uint32_t year, std::uint32_t month, std::uint32_
   snprintf(buf, 3, "%02d", month);
   month_edit_->setText(buf);
   snprintf(buf, 3, "%02d", day);
-  day_edit_->setText(buf);
+  day_edit_->setText(buf);*/
 }
 
 //  Set the GUI date widget from a string of from "YYYY*MM*DDThh:mm:ss",
 //  where * is any single character separator.
 //  If any part of the date is invalid, we set it to 0000-00-00T00:00:00.
 void QDateWrapper::SetDate(const std::string& date) {
-  std::uint32_t year = 0;
+  /*std::uint32_t year = 0;
   std::uint32_t month = 0;
   std::uint32_t day = 0;
   std::uint32_t hours = 0;
@@ -129,22 +129,23 @@ void QDateWrapper::SetDate(const std::string& date) {
     } else {
       SetDate(year, month, day);
     }
-  }
+  }*/
 }
 
 bool QDateWrapper::IsValidDate() {
   //  A date is valid if it exists or if the field is blank
   //  A value of '0000-00-00' implies the field is blank
-  int zeroVal = year_edit_->text().toInt() |
+  /*int zeroVal = year_edit_->text().toInt() |
                 month_edit_->text().toInt() |
                 day_edit_->text().toInt();
   return (zeroVal == 0) || QDate::isValid(year_edit_->text().toInt(),
                                           month_edit_->text().toInt(),
-                                          day_edit_->text().toInt());
+                                          day_edit_->text().toInt());*/
+  return false;
 }
 
 std::string QDateWrapper::GetDate() const {
-  std::string year_string = year_edit_->text().latin1();
+  /*std::string year_string = year_edit_->text().latin1();
   std::string month_string = month_edit_->text().latin1();
   std::string day_string = day_edit_->text().latin1();
 
@@ -168,7 +169,8 @@ std::string QDateWrapper::GetDate() const {
     char datebuffer[kDateStringBufferLength];  //  Vector and terrain assets.
     snprintf(datebuffer, kDateStringBufferLength,
              "%04d-%02d-%02d", year, month, day);
-    return std::string(datebuffer);
+    return std::string(datebuffer);*/
+    return "";
 }
 
 }  //  namespace qt_fusion

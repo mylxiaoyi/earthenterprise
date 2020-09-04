@@ -20,19 +20,19 @@
 LayerLegendDialog::LayerLegendDialog(QWidget* parent,
                                      LocaleDetails::EditMode mode,
                                      const LayerLegend& legend)
-  : LayerLegendBase(parent),
-    WidgetControllerManager(this),
+  : LayerLegendBase(),
+    WidgetControllerManager((QWidget*)this),
     legend_(legend)
 {
-  LayerLegendController::Create(*this,
-                                layer_legend,
-                                mode,
-                                &legend_);
-  SyncToWidgets();
+  //LayerLegendController::Create(*this,
+  //                              layer_legend,
+  //                              mode,
+  //                              &legend_);
+  //SyncToWidgets();
 }
 
 void LayerLegendDialog::accept() {
-  layer_legend->EndEdit();
-  SyncToConfig();
-  LayerLegendBase::accept();
+  //layer_legend->EndEdit();
+  //SyncToConfig();
+  //LayerLegendBase::accept();
 }

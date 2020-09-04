@@ -27,7 +27,7 @@
 #include <set>
 #include <map>
 #include <string>
-#include <qstring.h>  // NOLINT
+#include <QtCore/qstring.h>  // NOLINT
 //#include "common/khTypes.h"
 #include <cstdint>
 #include "common/gedbroot/proto_dbroot.h"

@@ -20,7 +20,7 @@
 
 #include <vector>
 
-#include <ogrsf_frmts.h>
+#include <gdal/ogrsf_frmts.h>
 
 #include "fusion/gst/gstFormat.h"
 

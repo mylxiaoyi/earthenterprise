@@ -14,7 +14,7 @@
 
 // TODO: High-level file comment.
 ////////////////////////////////////////////////////////////////////////////////
-#include <qapplication.h>
+#include <QtWidgets/QApplication>
 #include <string>
 #include <khGetopt.h>
 #include <khFileUtils.h>
@@ -105,7 +105,7 @@ int main(int argc, char ** argv)
       }
       char title[2048];
       snprintf(title, 2047, "%s (%s)", "Scroll", histogram);
-      mw->setCaption( title );
+      mw->setWindowTitle( title );
     } else {
       if (! output.empty()) {
         usage(progname, "--output specified without a histogram file");
@@ -113,7 +113,7 @@ int main(int argc, char ** argv)
       if (! lutwork.empty()) {
         usage(progname, "--lutwork specified without a histogram file");
       }
-      mw->setCaption( "Scroll" );
+      mw->setWindowTitle( "Scroll" );
     }
 
     mw->show();

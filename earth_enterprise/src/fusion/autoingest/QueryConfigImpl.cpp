@@ -16,7 +16,7 @@
 #include <autoingest/.idl/storage/MapSubLayerConfig.h>
 #include <autoingest/.idl/storage/LayerConfig.h>
 
-#include <qstringlist.h>
+#include <QtCore/QStringList>
 
 // Create a QueryConfig with the necessary pieces from a LayerConfig
 QueryConfig::QueryConfig(const LayerConfig &layerConfig,

@@ -36,10 +36,10 @@ VectorProjectDefs::SubmitFuncType VectorProjectDefs::kSubmitFunc =
 // ****************************************************************************
 class VectorFilterItem : public LayerItemBase {
  public:
-  VectorFilterItem(QListViewItem* parent, const DisplayRuleConfig& cfg);
+  //VectorFilterItem(QListViewItem* parent, const DisplayRuleConfig& cfg);
 };
 
-VectorFilterItem::VectorFilterItem(QListViewItem* parent,
+/*VectorFilterItem::VectorFilterItem(QListViewItem* parent,
                                    const DisplayRuleConfig& cfg)
   : LayerItemBase(parent) {
   std::vector< unsigned int>  fill_rgba, outline_rgba;
@@ -57,7 +57,7 @@ VectorFilterItem::VectorFilterItem(QListViewItem* parent,
     fill_rgba[0], fill_rgba[1], fill_rgba[2],
     outline_rgba[0], outline_rgba[1], outline_rgba[2]));
   setText(0, cfg.name);
-}
+}*/
 
 // ****************************************************************************
 // ***  VectorLayerItem
@@ -77,7 +77,7 @@ class VectorLayerItem : public LayerItemBase {
 
 VectorLayerItem::VectorLayerItem(QListView* parent, const QString& asset_path)
   : LayerItemBase(parent) {
-  layer_config_.assetRef = asset_path;
+  /*layer_config_.assetRef = asset_path;
 
   layer_config_.defaultLocale.ClearDefaultFlags();
   layer_config_.defaultLocale.name_ = QFileInfo(asset_path).baseName(true);
@@ -89,7 +89,7 @@ VectorLayerItem::VectorLayerItem(QListView* parent, const QString& asset_path)
   // XXX should be based on the asset source type
   layer_config_.displayRules[0].feature.featureType = VectorDefs::LineZ;
 
-  Init();
+  Init();*/
 }
 
 VectorLayerItem::VectorLayerItem(QListView* parent,
@@ -103,7 +103,7 @@ void VectorLayerItem::Init() {
   // always clear out all children first
   // since this item will be re-inited after the children
   // have been changed
-  while (firstChild())
+  /*while (firstChild())
     delete firstChild();
 
   setText(0, layer_config_.defaultLocale.name_);
@@ -114,7 +114,7 @@ void VectorLayerItem::Init() {
   for (std::vector<DisplayRuleConfig>::iterator rule = layer_config_.displayRules.begin();
        rule != layer_config_.displayRules.end(); ++rule) {
     (void) new VectorFilterItem(this, *rule);
-  }
+  }*/
 }
 
 #if 0

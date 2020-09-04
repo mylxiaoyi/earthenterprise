@@ -1,104 +1,103 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>SearchTabDetailsBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
 </comment>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>SearchTabDetailsBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>SearchTabDetailsBase</class>
+  <widget class="QWidget" name="SearchTabDetailsBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>315</width>
-            <height>116</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>315</width>
+        <height>116</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Search Tab Details</string>
+    <property name="windowTitle">
+      <string>Search Tab Details</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="spacing">
-            <number>4</number>
-        </property>
-        <widget class="QLabel" row="0" column="0">
-            <property name="name">
-                <cstring>label1_text</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>label 1 goes here...</string>
-            </property>
+    <layout class="QGridLayout">
+      <property name="spacing">
+        <number>4</number>
+      </property>
+      <item row="0" column="0">
+        <widget class="QLabel" name="label1_text">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>5</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string>label 1 goes here...</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>label2_text</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>label 2 goes here...</string>
-            </property>
+      </item>
+      <item row="2" column="0">
+        <widget class="QLabel" name="label2_text">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>5</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string>label 2 goes here...</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="QLineEdit" row="1" column="0">
-            <property name="name">
-                <cstring>label1_edit</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-            <property name="readOnly">
-                <bool>true</bool>
-            </property>
+      </item>
+      <item row="1" column="0">
+        <widget class="QLineEdit" name="label1_edit">
+          <property name="enabled">
+            <bool>false</bool>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="readOnly">
+            <bool>true</bool>
+          </property>
         </widget>
-        <widget class="QLineEdit" row="3" column="0">
-            <property name="name">
-                <cstring>label2_edit</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-            <property name="readOnly">
-                <bool>true</bool>
-            </property>
+      </item>
+      <item row="3" column="0">
+        <widget class="QLineEdit" name="label2_edit">
+          <property name="enabled">
+            <bool>false</bool>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="readOnly">
+            <bool>true</bool>
+          </property>
         </widget>
-    </grid>
-</widget>
-<tabstops>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <tabstops>
     <tabstop>label1_edit</tabstop>
     <tabstop>label2_edit</tabstop>
-</tabstops>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </tabstops>
+</ui>

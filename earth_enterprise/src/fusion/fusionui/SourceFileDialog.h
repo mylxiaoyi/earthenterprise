@@ -18,9 +18,9 @@
 #ifndef KHSRC_FUSION_FUSIONUI_SOURCEFILEDIALOG_H__
 #define KHSRC_FUSION_FUSIONUI_SOURCEFILEDIALOG_H__
 
-#include <qfiledialog.h>
-#include <qstringlist.h>
-#include <qcheckbox.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qcheckbox.h>
 #include <fusionui/.idl/filehistory.h>
 
 class QComboBox;

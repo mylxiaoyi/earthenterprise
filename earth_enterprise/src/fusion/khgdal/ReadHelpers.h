@@ -18,7 +18,7 @@
 #ifndef __ReadHelpers_h
 #define __ReadHelpers_h
 
-#include <gdal.h>
+#include <gdal/gdal.h>
 #include <khCalcHelper.h>
 
 

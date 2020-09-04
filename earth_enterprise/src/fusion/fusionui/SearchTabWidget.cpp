@@ -14,10 +14,10 @@
 // limitations under the License.
 
 
-#include <qcursor.h>
-#include <qpopupmenu.h>
-#include <qinputdialog.h>
-#include <qmessagebox.h>
+#include <QtGui/qcursor.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qmessagebox.h>
 #include "SearchTabWidget.h"
 #include "SearchTabDetails.h"
 #include <autoingest/.idl/SearchTabSet.h>
@@ -25,13 +25,13 @@
 
 SearchTabWidget::SearchTabWidget(QWidget* parent,
                                  const char* name)
-  : QTabWidget(parent, name), is_ge_db_(false), UnhandledErrorCount(0) {
+  : QTabWidget(parent), is_ge_db_(false), UnhandledErrorCount(0) {
 }
 
 
 void SearchTabWidget::Set(const std::vector<SearchTabReference> &refs) {
   // clear all existing pages
-  while (count()) {
+  /*while (count()) {
     QWidget *w = page(0);
     removePage(w);
     delete w;
@@ -45,12 +45,12 @@ void SearchTabWidget::Set(const std::vector<SearchTabReference> &refs) {
       // add a broken tab - so user can fix it
       InsertTab(QString("-- broken --"), refs[i]);
     }
-  }
+  }*/
 }
 
 void SearchTabWidget::ProjectsChanged(
     const std::vector<std::string> &projects) {
-  projects_ = projects;
+  /*projects_ = projects;
 
   // Traverse all pages and prune any that come from projects that I no longer
   // have
@@ -85,21 +85,21 @@ void SearchTabWidget::ProjectsChanged(
     } else {
       ++i;
     }
-  }
+  }*/
 }
 
 std::vector<SearchTabReference> SearchTabWidget::GetSearchTabRefs(void) const {
   std::vector<SearchTabReference> tmp;
-  for (int i = 0; i < count(); ++i) {
+  /*for (int i = 0; i < count(); ++i) {
     SearchTabDetails *details = dynamic_cast<SearchTabDetails*>(page(i));
     tmp.push_back(details->ref_);
-  }
+  }*/
   return tmp;
 }
 
 
 void SearchTabWidget::AddTab() {
-  std::vector<std::pair<QString, SearchTabReference> > tab_refs;
+  /*std::vector<std::pair<QString, SearchTabReference> > tab_refs;
 
   // add all the global search tabs to the popup menu
   {
@@ -148,19 +148,19 @@ void SearchTabWidget::AddTab() {
            "all added search tabs.").arg(kMaxEarthClientTabCount)
            .arg(kMaxEarthClientTabCount),
         tr("OK"));
-  }
+  }*/
 }
 
 void SearchTabWidget::InsertTab(const QString &tab_label,
                                 const SearchTabReference &ref) {
-  SearchTabDetails* search_tab = new SearchTabDetails(this, ref);
+  /*SearchTabDetails* search_tab = new SearchTabDetails(this, ref);
   addTab(search_tab, tab_label);
   showPage(search_tab);
-  emit currentChanged(currentPage());
+  emit currentChanged(currentPage());*/
 }
 
 void SearchTabWidget::DeleteTab() {
-  if (QMessageBox::question(this, tr("Delete Search Tab"),
+  /*if (QMessageBox::question(this, tr("Delete Search Tab"),
         tr("Are you sure you want to delete this search tab:\n\n    ") +
            "\"" + label(currentPageIndex()) + "\"\n",
         QMessageBox::Yes, QMessageBox::No, 0) != QMessageBox::Yes)
@@ -168,22 +168,22 @@ void SearchTabWidget::DeleteTab() {
   QWidget* w = currentPage();
   removePage(w);
   delete w;
-  emit currentChanged(currentPage());
+  emit currentChanged(currentPage());*/
 }
 
 void SearchTabWidget::MoveTabToPos(QWidget* w, int pos) {
-  QString label = tabLabel(w);
+  /*QString label = tabLabel(w);
   removePage(w);
   insertTab(w, label, pos);
-  setCurrentPage(pos);
+  setCurrentPage(pos);*/
 }
 
 void SearchTabWidget::MoveTabLeft() {
-  QWidget* w = currentPage();
-  MoveTabToPos(w, indexOf(w)-1);
+  //QWidget* w = currentPage();
+  //MoveTabToPos(w, indexOf(w)-1);
 }
 
 void SearchTabWidget::MoveTabRight() {
-  QWidget* w = currentPage();
-  MoveTabToPos(w, indexOf(w)+1);
+  //QWidget* w = currentPage();
+  //MoveTabToPos(w, indexOf(w)+1);
 }

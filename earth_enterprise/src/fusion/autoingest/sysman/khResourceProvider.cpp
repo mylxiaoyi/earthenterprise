@@ -183,7 +183,7 @@ khResourceProvider::Run(void)
       }
       if (first && !manager) {
         notify(NFY_WARN, "Unable to connect to resource manager: %s",
-               error.latin1());
+               error.toLatin1().data());
         notify(NFY_WARN, "Will keep retrying every %d seconds",
                waitSecs);
       }
@@ -196,7 +196,7 @@ khResourceProvider::Run(void)
     ProviderConnectMsg connreq(khHostname(), numCPUs, GEE_VERSION);
     if (!manager->TryNotify("ProviderConnectMsg", connreq, error)) {
       notify(NFY_WARN, "Unable to talk to resource manager: %s",
-             error.latin1());
+             error.toLatin1().data());
       // skip the rest of the loop and try to connect again
       sleep(waitSecs);
       continue;
@@ -749,7 +749,7 @@ khResourceProvider::StartLogFile(JobIter job, const std::string &logfile) {
             GEE_VERSION, BUILD_DATE);
     QString runtimeDesc = RuntimeOptions::DescString();
     if (!runtimeDesc.isEmpty()) {
-      fprintf(job->logfile, "OPTIONS: %s\n", runtimeDesc.latin1());
+      fprintf(job->logfile, "OPTIONS: %s\n", runtimeDesc.toLatin1().data());
     }
     fprintf(job->logfile, "STARTTIME: %s\n",
             GetFormattedTimeString(job->beginTime).c_str());

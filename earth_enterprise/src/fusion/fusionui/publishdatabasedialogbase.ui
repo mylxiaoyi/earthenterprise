@@ -1,265 +1,235 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>PublishDatabaseDialogBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
 </comment>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>PublishDatabaseDialogBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>PublishDatabaseDialogBase</class>
+  <widget class="QDialog" name="PublishDatabaseDialogBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>517</width>
-            <height>205</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>517</width>
+        <height>205</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Publish Database</string>
+    <property name="windowTitle">
+      <string>Publish Database</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>layout16</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer9</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>80</width>
-                            <height>31</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>publish_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Publish</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+P</string>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
+    <layout class="QGridLayout">
+      <item row="3" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <spacer name="spacer9">
+              <property name="sizeHint">
+                <size>
+                  <width>80</width>
+                  <height>31</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="publish_btn">
+              <property name="text">
+                <string>&amp;Publish</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+P</string>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="cancel_btn">
+              <property name="text">
+                <string>&amp;Cancel</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+C</string>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+              <property name="default">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="1" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <layout class="QVBoxLayout">
+              <item>
+                <widget class="QLabel" name="textLabel1">
+                  <property name="text">
+                    <string>Server Associations</string>
+                  </property>
+                  <property name="wordWrap">
+                    <bool>false</bool>
+                  </property>
                 </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>cancel_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Cancel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
-                    <property name="autoDefault">
-                        <bool>true</bool>
-                    </property>
-                    <property name="default">
-                        <bool>false</bool>
-                    </property>
+              </item>
+              <item>
+                <widget class="QComboBox" name="nickname_combo">
+                  <property name="sizePolicy">
+                    <sizepolicy>
+                      <hsizetype>3</hsizetype>
+                      <vsizetype>0</vsizetype>
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                    </sizepolicy>
+                  </property>
                 </widget>
-            </hbox>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <layout class="QVBoxLayout">
+              <item>
+                <widget class="QLabel" name="textLabel1_2">
+                  <property name="text">
+                    <string>Version</string>
+                  </property>
+                  <property name="wordWrap">
+                    <bool>false</bool>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QComboBox" name="version_combo">
+                  <property name="sizePolicy">
+                    <sizepolicy>
+                      <hsizetype>3</hsizetype>
+                      <vsizetype>0</vsizetype>
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                    </sizepolicy>
+                  </property>
+                </widget>
+              </item>
+            </layout>
+          </item>
+        </layout>
+      </item>
+      <item row="0" column="1">
+        <widget class="QLabel" name="db_name_label">
+          <property name="text">
+            <string>Database Name</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>layout14</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout11</cstring>
-                    </property>
-                    <vbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Server Associations</string>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <property name="name">
-                                <cstring>nickname_combo</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>3</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                        </widget>
-                    </vbox>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout10</cstring>
-                    </property>
-                    <vbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Version</string>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <property name="name">
-                                <cstring>version_combo</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>3</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                        </widget>
-                    </vbox>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLabel" row="0" column="1">
-            <property name="name">
-                <cstring>db_name_label</cstring>
-            </property>
-            <property name="text">
-                <string>Database Name</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>layout7</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>target_path_label</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="margin">
-                        <number>0</number>
-                    </property>
-                    <property name="text">
-                        <string>Target Path:</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>target_path_edit</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLabel" row="0" column="0">
-            <property name="name">
-                <cstring>db_name_label_2</cstring>
-            </property>
-            <property name="sizePolicy">
+      </item>
+      <item row="2" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <widget class="QLabel" name="target_path_label">
+              <property name="enabled">
+                <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
+                  <hsizetype>0</hsizetype>
+                  <vsizetype>0</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
                 </sizepolicy>
-            </property>
-            <property name="text">
-                <string>&lt;b&gt;Database: &lt;/b&gt;</string>
-            </property>
+              </property>
+              <property name="margin">
+                <number>0</number>
+              </property>
+              <property name="text">
+                <string>Target Path:</string>
+              </property>
+              <property name="wordWrap">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer2">
+              <property name="sizeHint">
+                <size>
+                  <width>50</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QLineEdit" name="target_path_edit">
+              <property name="enabled">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="0" column="0">
+        <widget class="QLabel" name="db_name_label_2">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string>&lt;b&gt;Database: &lt;/b&gt;</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
         </widget>
-    </grid>
-</widget>
-<connections>
-    <connection>
-        <sender>publish_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>PublishDatabaseDialogBase</receiver>
-        <slot>accept()</slot>
-    </connection>
-    <connection>
-        <sender>cancel_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>PublishDatabaseDialogBase</receiver>
-        <slot>reject()</slot>
-    </connection>
-</connections>
-<tabstops>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <tabstops>
     <tabstop>version_combo</tabstop>
     <tabstop>publish_btn</tabstop>
-</tabstops>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </tabstops>
+  <connections>
+    <connection>
+      <sender>publish_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>PublishDatabaseDialogBase</receiver>
+      <slot>accept()</slot>
+    </connection>
+    <connection>
+      <sender>cancel_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>PublishDatabaseDialogBase</receiver>
+      <slot>reject()</slot>
+    </connection>
+  </connections>
+</ui>

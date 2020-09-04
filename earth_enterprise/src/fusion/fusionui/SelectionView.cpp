@@ -16,13 +16,13 @@
 
 #include <vector>
 
-#include <qtable.h>
-#include <qpopupmenu.h>
-#include <qcursor.h>
-#include <qmessagebox.h>
-#include <qfiledialog.h>
-#include <qapplication.h>
-#include <qclipboard.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qmenu.h>
+#include <QtGui/qcursor.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qapplication.h>
+#include <QtGui/qclipboard.h>
 
 #include <khFileUtils.h>
 #include <gstFilter.h>
@@ -40,19 +40,19 @@
 #include "ObjectDetail.h"
 #include "GfxView.h"
 
-SelectionView::SelectionView(QWidget* parent, const char* name, WFlags fl)
-    : SelectionViewBase(parent, name, fl) {
-  connect(selectionTable, SIGNAL(contextMenuRequested(int, int, const QPoint&)),
-          this, SLOT(openContextMenu(int, int, const QPoint&)));
-  connect(this, SIGNAL(zoomToBox(const gstBBox&)),
-          GfxView::instance, SLOT(zoomToBox(const gstBBox&)));
+SelectionView::SelectionView(QWidget* parent, const char* name)
+    /*: SelectionViewBase(parent, name, fl)*/ {
+  //connect(selectionTable, SIGNAL(contextMenuRequested(int, int, const QPoint&)),
+  //        this, SLOT(openContextMenu(int, int, const QPoint&)));
+  //connect(this, SIGNAL(zoomToBox(const gstBBox&)),
+  //        GfxView::instance, SLOT(zoomToBox(const gstBBox&)));
 }
 
 void SelectionView::configure(gstSelector* selector) {
   //
   // always clear out any previous entries
   //
-  selectionTable->setNumCols(0);
+  /*selectionTable->setNumCols(0);
   selectionTable->setNumRows(0);
 
   //
@@ -98,11 +98,11 @@ void SelectionView::configure(gstSelector* selector) {
   if (Preferences::getConfig().dataViewAutoRaise) {
     show();
     parentWidget()->show();
-  }
+  }*/
 }
 
 void SelectionView::openContextMenu(int row, int col, const QPoint &pos) {
-  QHeader* header = selectionTable->horizontalHeader();
+  /*QHeader* header = selectionTable->horizontalHeader();
 
   enum { SORT_ASCENDING, SORT_DESCENDING,
          EXPORT_COLUMN, EXPORT_ALL,
@@ -186,7 +186,7 @@ void SelectionView::openContextMenu(int row, int col, const QPoint &pos) {
       gstGeodeHandle geode = selector_->getPickGeode(row);
       emit zoomToBox(geode->BoundingBox());
     }
-  }
+  }*/
 }
 
 
@@ -198,7 +198,7 @@ void SelectionView::SaveColumns(int pick_col) {
   //
   // must have a valid source
   //
-  if (selector_ == NULL)
+  /*if (selector_ == NULL)
     return;
   gstSource* src = selector_->getSource();
   if (src == NULL)
@@ -278,12 +278,12 @@ void SelectionView::SaveColumns(int pick_col) {
     }
 
     f.close();
-  }
+  }*/
 }
 
 void SelectionView::ExportSelectedFeatures() {
   // must have a valid source
-  if (selector_ == NULL)
+  /*if (selector_ == NULL)
     return;
   gstSource* src = selector_->getSource();
   if (src == NULL)
@@ -326,21 +326,21 @@ void SelectionView::ExportSelectedFeatures() {
         return;
       }
     }
-  }
+  }*/
 }
 
-SelectionViewDocker::SelectionViewDocker(Place p, QWidget* parent,
-                                         const char* n, WFlags f, bool)
-    : QDockWindow(p, parent, n, f) {
-  setResizeEnabled(true);
+SelectionViewDocker::SelectionViewDocker(QWidget* parent,
+                                         const char* n, bool mode)
+    : QDockWidget(parent) {
+  /*setResizeEnabled(true);
   setCloseMode(QDockWindow::Always);
   setCaption(n);
 
   selection_view_ = new SelectionView(this);
-  setWidget(selection_view_);
+  setWidget(selection_view_);*/
 }
 
 
 SelectionViewDocker::~SelectionViewDocker() {
-  delete selection_view_;
+  //delete selection_view_;
 }

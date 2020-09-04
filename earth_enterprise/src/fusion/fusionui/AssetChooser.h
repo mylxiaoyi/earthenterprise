@@ -25,9 +25,14 @@
 #include "assetchooserbase.h"
 #include "fusion/fusionui/AssetDisplayHelper.h"
 
-class QIconViewItem;
+#include <QtWidgets/QDialog>
+#include <QtGui/QKeyEvent>
 
-class AssetChooser : public AssetChooserBase {
+//class QIconViewItem;
+
+class Ui_AssetChooserBase;
+
+class AssetChooser : public QDialog {
  public:
   enum Mode { Open, Save, SaveAs };
 
@@ -69,14 +74,14 @@ class AssetChooser : public AssetChooserBase {
 
   // from QWidget
   virtual void keyPressEvent(QKeyEvent* e);
-  virtual void customEvent(QCustomEvent *e);
+  //virtual void customEvent(QCustomEvent *e);
 
   // from QDialog
   virtual void accept();
 
   // from AssetChooserBase
-  virtual void selectItem(QIconViewItem* i);
-  virtual void chooseItem(QIconViewItem* i);
+  //virtual void selectItem(QIconViewItem* i);
+  //virtual void chooseItem(QIconViewItem* i);
   virtual void cdtoparent();
   virtual void chooseAncestor(const QString& ancestor);
   virtual void nameChanged(const QString& str);
@@ -88,6 +93,7 @@ class AssetChooser : public AssetChooserBase {
   bool getFullPath(QString& p) const;
 
  private:
+  Ui_AssetChooserBase *ui;
   // Checks whether selected input asset has a compatible asset type.
   bool IsCompatibleAsset() const;
 

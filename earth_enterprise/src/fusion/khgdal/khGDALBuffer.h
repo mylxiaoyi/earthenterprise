@@ -23,7 +23,7 @@
 #include <khExtents.h>
 #include <khException.h>
 #include <khCalcHelper.h>
-#include <cpl_error.h>
+#include <gdal/cpl_error.h>
 
 class GDALDataset;
 

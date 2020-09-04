@@ -29,7 +29,7 @@
 class AssetBase;
 class QColor;
 
-class VectorLayerWidget : public VectorLayerWidgetBase,
+class VectorLayerWidget : public QObject, public Ui::VectorLayerWidgetBase,
                           public AssetWidgetBase {
   Q_OBJECT
 

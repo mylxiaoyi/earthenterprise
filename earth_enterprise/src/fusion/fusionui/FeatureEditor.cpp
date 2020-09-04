@@ -16,19 +16,19 @@
 
 #include "fusion/fusionui/FeatureEditor.h"
 
-#include <qevent.h>
-#include <qmessagebox.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qfiledialog.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
-#include <qspinbox.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qbuttongroup.h>
+#include <QtGui/qevent.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qmenubar.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qlayout.h>
+//#include <qbuttongroup.h>
 
 #include "fusion/fusionui/ProjectManager.h"
 #include "fusion/fusionui/AssetDrag.h"
@@ -54,7 +54,7 @@
 
 #include "newfeaturebase.h"
 
-static const char* folder_closed_xpm[] = {
+/*static const char* folder_closed_xpm[] = {
   "16 16 9 1",
   "g c #808080",
   "b c #c0c000",
@@ -110,33 +110,33 @@ static const char* folder_open_xpm[] = {
   "......#egiiicfb#",
   "........#egiibb#",
   "..........#egib#",
-  "............#ee#" };
+  "............#ee#" };*/
 
-static QPixmap* folderClosed = 0;
-static QPixmap* folderOpen = 0;
-static QPixmap* primtype_point;
-static QPixmap* primtype_line;
-static QPixmap* primtype_polygon;
+//static QPixmap* folderClosed = 0;
+//static QPixmap* folderOpen = 0;
+//static QPixmap* primtype_point;
+//static QPixmap* primtype_line;
+//static QPixmap* primtype_polygon;
 
 int FeatureItem::count = 0;
 
 // ----------------------------------------------------------------------------
 
 static QPixmap uic_load_pixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
 // ----------------------------------------------------------------------------
 
-class NewFeatureDialog : public NewFeatureBase {
+class NewFeatureDialog : public Ui::NewFeatureBase {
  public:
   NewFeatureDialog(QWidget* parent)
-      : NewFeatureBase(parent, 0, false, 0),
+      : Ui::NewFeatureBase(),
         type_(gstPolyLine) {}
 
   gstPrimType GetType() const { return type_; }
@@ -163,12 +163,12 @@ class NewFeatureDialog : public NewFeatureBase {
 
 FeatureItem::FeatureItem(QListView* parent, int id, gstGeodeHandle geode,
                          gstRecordHandle attrib)
-    : QCheckListItem(parent, QString::number(id), QCheckListItem::CheckBox),
+    : QWidget(parent),
       id_(id),
       geode_(geode) {
   ++count;
 
-  setExpandable(!geode->IsEmpty());
+  /*setExpandable(!geode->IsEmpty());
   UpdatePixmap();
 
   setRenameEnabled(0, false);
@@ -180,7 +180,7 @@ FeatureItem::FeatureItem(QListView* parent, int id, gstGeodeHandle geode,
     }
   }
 
-  setOn(true);
+  setOn(true);*/
 }
 
 FeatureItem::~FeatureItem() {
@@ -188,19 +188,19 @@ FeatureItem::~FeatureItem() {
 }
 
 void FeatureItem::SetId(int id) {
-  id_ = id;
-  setText(0, QString::number(id));
+  //id_ = id;
+  //setText(0, QString::number(id));
 }
 
-int FeatureItem::compare(QListViewItem* item, int, bool) const {
+/*int FeatureItem::compare(QListViewItem* item, int, bool) const {
   FeatureItem* feature_item = dynamic_cast<FeatureItem*>(item);
   assert(feature_item != NULL);
 
   return id_ - feature_item->Id();
-}
+}*/
 
 void FeatureItem::setOpen(bool o) {
-  if (o) {
+  /*if (o) {
     // setPixmap(0, *folderOpen);
     switch (geode_->PrimType()) {
       case gstUnknown:
@@ -237,19 +237,19 @@ void FeatureItem::setOpen(bool o) {
       item = firstChild();
     }
   }
-  QListViewItem::setOpen(o);
+  QListViewItem::setOpen(o);*/
 }
 
 void FeatureItem::EnsureBackup() {
-  setText(0, QString::number(id_) + " *");
+  /*setText(0, QString::number(id_) + " *");
   if (!orig_geode_)
-    orig_geode_ = geode_->Duplicate();
+    orig_geode_ = geode_->Duplicate();*/
 }
 
 void FeatureItem::RevertEdits() {
-  setText(0, QString::number(id_));
+  /*setText(0, QString::number(id_));
   if (orig_geode_)
-    geode_ = orig_geode_;
+    geode_ = orig_geode_;*/
 }
 
 bool FeatureItem::HasBackup() {
@@ -257,23 +257,23 @@ bool FeatureItem::HasBackup() {
 }
 
 void FeatureItem::UpdatePixmap() {
-  if (geode_->PrimType() == gstPoint)
+  /*if (geode_->PrimType() == gstPoint)
     setPixmap(0, *primtype_point);
   else if (geode_->PrimType() == gstPolyLine || geode_->PrimType() == gstStreet)
     setPixmap(0, *primtype_line);
   else
-    setPixmap(0, *primtype_polygon);
+    setPixmap(0, *primtype_polygon);*/
 }
 
 // ----------------------------------------------------------------------------
 
 int SubpartItem::count = 0;
 
-SubpartItem::SubpartItem(QListViewItem* parent, int id, gstGeodeHandle geode)
-    : QListViewItem(parent),
+SubpartItem::SubpartItem(QWidget* parent, int id, gstGeodeHandle geode)
+    : QWidget(parent),
       id_(id),
       geode_(geode) {
-  switch (geode_->PrimType()) {
+  /*switch (geode_->PrimType()) {
     case gstUnknown:
       break;
 
@@ -300,19 +300,19 @@ SubpartItem::SubpartItem(QListViewItem* parent, int id, gstGeodeHandle geode)
 
   //setExpandable(geode->vertexCount(id) != 0);
   setPixmap(0, *folderClosed);
-  ++count;
+  ++count;*/
 }
 
 SubpartItem::~SubpartItem() {
   --count;
 }
 
-int SubpartItem::compare(QListViewItem* item, int, bool) const {
+/*int SubpartItem::compare(QListViewItem* item, int, bool) const {
   SubpartItem* subpart_item = dynamic_cast<SubpartItem*>(item);
   assert(subpart_item != NULL);
 
   return id_ - subpart_item->Id();
-}
+}*/
 
 void SubpartItem::setOpen(bool o) {
 #if 0
@@ -330,14 +330,14 @@ void SubpartItem::setOpen(bool o) {
     }
   }
 #endif
-  QListViewItem::setOpen(o);
+  //QListViewItem::setOpen(o);
 }
 
 // ----------------------------------------------------------------------------
 
 int VertexItem::count = 0;
 
-VertexItem::VertexItem(QListViewItem* parent, int id, gstGeodeHandle geode)
+/*VertexItem::VertexItem(QListViewItem* parent, int id, gstGeodeHandle geode)
     : QListViewItem(parent),
       id_(id),
       geode_(geode) {
@@ -348,18 +348,18 @@ VertexItem::VertexItem(QListViewItem* parent, int id, gstGeodeHandle geode)
           arg(v.y * 360 - 180, 0, 'f', 10).
           arg(v.x * 360 - 180, 0, 'f', 10).
           arg(v.z));
-}
+}*/
 
 VertexItem::~VertexItem() {
   --count;
 }
 
-int VertexItem::compare(QListViewItem* item, int, bool) const {
+/*int VertexItem::compare(QListViewItem* item, int, bool) const {
   VertexItem* vertex_item = dynamic_cast<VertexItem*>(item);
   assert(vertex_item != NULL);
 
   return id_ - vertex_item->Id();
-}
+}*/
 
 gstVertex VertexItem::Vertex() const {
   if (geode_->PrimType() == gstMultiPolygon ||
@@ -370,10 +370,11 @@ gstVertex VertexItem::Vertex() const {
     return gstVertex();
   }
 
-  SubpartItem* subpart_item = dynamic_cast<SubpartItem*>(parent());
-  assert(subpart_item != NULL);
-  return  (static_cast<const gstGeode*>(&(*geode_)))->GetVertex(
-      subpart_item->Id(), id_);
+  //SubpartItem* subpart_item = dynamic_cast<SubpartItem*>(parent());
+  //assert(subpart_item != NULL);
+  //return  (static_cast<const gstGeode*>(&(*geode_)))->GetVertex(
+  //    subpart_item->Id(), id_);
+  return gstVertex();
 }
 
 // ----------------------------------------------------------------------------
@@ -381,11 +382,11 @@ gstVertex VertexItem::Vertex() const {
 const char* kLayoutFilename = "featureeditor.layout";
 
 FeatureEditor::FeatureEditor(QWidget* parent)
-    : FeatureEditorBase(parent, 0, 0),
+    : //FeatureEditorBase(parent, 0, 0),
       current_header_(gstHeaderImpl::Create()),
       editing_vertex_(false),
       modified_(false) {
-  connect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState&)),
+  /*connect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState&)),
           this, SLOT(DrawFeatures(const gstDrawState&)));
   connect(GfxView::instance, SIGNAL(KeyPress(QKeyEvent*)),
           this, SLOT(KeyPress(QKeyEvent*)));
@@ -453,7 +454,7 @@ FeatureEditor::FeatureEditor(QWidget* parent)
   QLayout* main_layout = layout();
   Q_CHECK_PTR(main_layout);
   main_layout->setMenuBar(menubar);
-  menubar->show();
+  menubar->show();*/
 }
 
 FeatureEditor::~FeatureEditor() {
@@ -461,21 +462,21 @@ FeatureEditor::~FeatureEditor() {
   // it is impossible to prevent the shutdown process here
   // so this test should be done by having the quit process
   // ask this object if it is ok to quit
-  Close();
+  //Close();
 
-  layout_persist_.showme = isShown();
-  layout_persist_.Save(Preferences::filepath(kLayoutFilename).latin1());
+  //layout_persist_.showme = isShown();
+  //layout_persist_.Save(Preferences::filepath(kLayoutFilename).latin1());
 }
 
 void FeatureEditor::moveEvent(QMoveEvent* event) {
-  const QPoint& pt = event->pos();
+  /*const QPoint& pt = event->pos();
 
   // XXX only update if this is a valid event
   // XXX this is clearly a QT bug!
   if (x() != 0 && y() != 0) {
     layout_persist_.xpos = pt.x();
     layout_persist_.ypos = pt.y();
-  }
+  }*/
 }
 
 void FeatureEditor::resizeEvent(QResizeEvent* event) {
@@ -484,8 +485,8 @@ void FeatureEditor::resizeEvent(QResizeEvent* event) {
   layout_persist_.height = sz.height();
 }
 
-void FeatureEditor::ContextMenu(QListViewItem* item, const QPoint& pos, int) {
-  if (item == NULL)
+//void FeatureEditor::ContextMenu(QListViewItem* item, const QPoint& pos, int) {
+  /*if (item == NULL)
     return;
 
   enum { mZoomToFeature,
@@ -575,8 +576,8 @@ void FeatureEditor::ContextMenu(QListViewItem* item, const QPoint& pos, int) {
         editing_vertex_ = false;
       }
       break;
-  }
-}
+  }*/
+//}
 
 void FeatureEditor::EditCopy() {
 }
@@ -585,7 +586,7 @@ void FeatureEditor::EditPaste() {
 }
 
 void FeatureEditor::EditDelete() {
-  int id = 0;
+  /*int id = 0;
   QListViewItem* item = feature_listview->firstChild();
   while (item) {
     QListViewItem* next = item->nextSibling();
@@ -601,11 +602,11 @@ void FeatureEditor::EditDelete() {
     item = next;
   }
   modified_ = true;
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 void FeatureEditor::DeleteFeature(FeatureItem* feature_item) {
-  editing_vertex_ = false;
+  /*editing_vertex_ = false;
 
   int id = feature_item->Id();
   QListViewItem* item = feature_item->nextSibling();
@@ -624,11 +625,11 @@ void FeatureEditor::DeleteFeature(FeatureItem* feature_item) {
   feature_listview->update();
 
   modified_ = true;
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 bool FeatureEditor::Save() {
-  QFileDialog fd(this);
+  /*QFileDialog fd(this);
   fd.setMode(QFileDialog::AnyFile);
   fd.addFilter("Keyhole Geometry (*.kvgeom)");
   if (fd.exec() != QDialog::Accepted)
@@ -663,11 +664,12 @@ bool FeatureEditor::Save() {
   }
 
   modified_ = false;
-  return true;
+  return true;*/
+  return false;
 }
 
 bool FeatureEditor::ExportKVP(const QString& fname) {
-  std::string kvp_name = khEnsureExtension(fname.latin1(), ".kvgeom");
+  /*std::string kvp_name = khEnsureExtension(fname.latin1(), ".kvgeom");
   gstKVPFile kvp(kvp_name.c_str());
   if (kvp.OpenForWrite() != GST_OKAY) {
     notify(NFY_WARN, "Unable to open feature file %s", kvp_name.c_str());
@@ -701,12 +703,13 @@ bool FeatureEditor::ExportKVP(const QString& fname) {
     item = item->nextSibling();
   }
 
-  return true;
+  return true;*/
+  return false;
 }
 
 
 void FeatureEditor::GetSelectList(std::vector<FeatureItem*>* select_list) {
-  QListViewItem* item = feature_listview->firstChild();
+  /*QListViewItem* item = feature_listview->firstChild();
   while (item) {
     FeatureItem* feature_item = dynamic_cast<FeatureItem*>(item);
     assert(feature_item != NULL);
@@ -714,13 +717,13 @@ void FeatureEditor::GetSelectList(std::vector<FeatureItem*>* select_list) {
       select_list->push_back(feature_item);
     }
     item = item->nextSibling();
-  }
+  }*/
 }
 
 
-void FeatureEditor::MousePress(const gstBBox& box_point, Qt::ButtonState state) {
+//void FeatureEditor::MousePress(const gstBBox& box_point, Qt::ButtonState state) {
   // cancel any editing that's currently underway
-  editing_vertex_ = false;
+  /*editing_vertex_ = false;
 
   // always need to know which items are currently selected
   std::vector<FeatureItem*> select_list;
@@ -848,11 +851,11 @@ void FeatureEditor::MousePress(const gstBBox& box_point, Qt::ButtonState state) 
     }
   }
 
-  emit RedrawPreview();
-}
+  emit RedrawPreview();*/
+//}
 
-void FeatureEditor::MouseMove(const gstVertex& point) {
-  if (editing_vertex_) {
+//void FeatureEditor::MouseMove(const gstVertex& point) {
+  /*if (editing_vertex_) {
     // make sure geode has been backed up first
     current_feature_item_->EnsureBackup();
     modified_ = true;
@@ -870,22 +873,22 @@ void FeatureEditor::MouseMove(const gstVertex& point) {
                               current_geode_vertex_, modified_vertex_);
     }
     emit RedrawPreview();
-  }
-}
+  }*/
+//}
 
 void FeatureEditor::MouseRelease() {
 }
 
-void FeatureEditor::dragEnterEvent(QDragEnterEvent* event) {
-  if (AssetDrag::canDecode(event, AssetDefs::Vector, kProductSubtype) ||
+//void FeatureEditor::dragEnterEvent(QDragEnterEvent* event) {
+  /*if (AssetDrag::canDecode(event, AssetDefs::Vector, kProductSubtype) ||
       AssetDrag::canDecode(event, AssetDefs::Imagery, kProductSubtype) ||
       AssetDrag::canDecode(event, AssetDefs::Terrain, kProductSubtype)) {
     event->accept(true);
-  }
-}
+  }*/
+//}
 
-void FeatureEditor::dropEvent(QDropEvent* event) {
-  if (!Close())
+//void FeatureEditor::dropEvent(QDropEvent* event) {
+  /*if (!Close())
     return;
 
   if (AssetDrag::canDecode(event, AssetDefs::Vector, kProductSubtype) ||
@@ -947,19 +950,19 @@ void FeatureEditor::dropEvent(QDropEvent* event) {
       notify(NFY_DEBUG, "Got file: %s", fname.latin1());
     }
   }
-  emit RedrawPreview();
-}
+  emit RedrawPreview();*/
+//}
 
 void FeatureEditor::SelectionChanged() {
-  std::vector<FeatureItem*> select_list;
+  /*std::vector<FeatureItem*> select_list;
   GetSelectList(&select_list);
   if (select_list.size() > 0)
     feature_listview->ensureItemVisible(select_list[0]);
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 void FeatureEditor::Open() {
-  if (!Close())
+  /*if (!Close())
     return;
 
   QFileDialog file_dialog(this);
@@ -985,11 +988,11 @@ void FeatureEditor::Open() {
   if (new_source) {
     AddFeaturesFromSource(new_source);
     delete new_source;
-  }
+  }*/
 }
 
 bool FeatureEditor::Close() {
-  if (modified_) {
+  /*if (modified_) {
     // any modification must be saved, or the user
     // must acknowledge their changes will be lost
     switch (QMessageBox::warning(this, "Save Changes...",
@@ -1024,7 +1027,8 @@ bool FeatureEditor::Close() {
   //mobile_blocks_.clear();
 
   emit RedrawPreview();
-  return true;
+  return true;*/
+  return false;
 }
 
 void FeatureEditor::KeyPress(QKeyEvent* event) {
@@ -1042,8 +1046,8 @@ void FeatureEditor::KeyPress(QKeyEvent* event) {
 #endif
 }
 
-void FeatureEditor::DrawFeatures(const gstDrawState& state) {
-  if (feature_listview->childCount() == 0)
+//void FeatureEditor::DrawFeatures(const gstDrawState& state) {
+  /*if (feature_listview->childCount() == 0)
     return;
 
   gstFeaturePreviewConfig style;
@@ -1104,8 +1108,8 @@ void FeatureEditor::DrawFeatures(const gstDrawState& state) {
          it != join_.end(); ++it) {
       (*it)->Draw(state, red_style);
     }
-  }
-}
+  }*/
+//}
 
 int BlendModes[] = {
   GL_ZERO,
@@ -1152,7 +1156,7 @@ void FeatureEditor::DrawMobileBlocks(const gstDrawState& state) {
 
 gstSource* FeatureEditor::OpenSource(const char* src, const char* codec,
                                      bool nofileok) {
-  gstSource* new_source = new gstSource(src);
+  /*gstSource* new_source = new gstSource(src);
   khDeleteGuard<gstSource> srcGuard(TransferOwnership(new_source));
   if (codec != NULL)
     new_source->SetCodec(QString(codec));
@@ -1174,12 +1178,13 @@ gstSource* FeatureEditor::OpenSource(const char* src, const char* codec,
     return NULL;
   }
 
-  return srcGuard.take();
+  return srcGuard.take();*/
+  return nullptr;
 }
 
 
 void FeatureEditor::AddFeaturesFromSource(gstSource* source) {
-  const int kMaxBadFeatures = 20;
+  /*const int kMaxBadFeatures = 20;
 
   // configure columns for attribute data
   current_header_ = source->GetAttrDefs(0);
@@ -1249,16 +1254,16 @@ void FeatureEditor::AddFeaturesFromSource(gstSource* source) {
                           tr("OK"), 0, 0, 0);
   }
 
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
-void FeatureEditor::SelectBox(const gstDrawState& state,
-                              Qt::ButtonState btn_state) {
+//void FeatureEditor::SelectBox(const gstDrawState& state,
+//                              Qt::ButtonState btn_state) {
   // three possible states:
   //   clear & add - no keyboard modifiers
   //   add         - shift
   //   subtract    - ctrl-shift
-  bool pick_clear = true;
+  /*bool pick_clear = true;
   bool pick_add = true;
 
   if (btn_state & ShiftButton) {
@@ -1294,12 +1299,12 @@ void FeatureEditor::SelectBox(const gstDrawState& state,
 
   if (top_item)
     feature_listview->ensureItemVisible(top_item);
-  emit RedrawPreview();
-}
+  emit RedrawPreview();*/
+//}
 
 
 void FeatureEditor::BoxCut() {
-  std::vector<FeatureItem*> select_list;
+  /*std::vector<FeatureItem*> select_list;
   GetSelectList(&select_list);
   if (select_list.size() == 0) {
     QMessageBox::critical(this, "Error",
@@ -1347,7 +1352,7 @@ void FeatureEditor::BoxCut() {
         }
       }
     }
-  }
+  }*/
 }
 
 #if 0
@@ -1406,21 +1411,21 @@ void FeatureEditor::MobileConvert() {
 #endif
 
 void FeatureEditor::CheckAll() {
-  QCheckListItem* item = static_cast<QCheckListItem*>(feature_listview->firstChild());
+  /*QCheckListItem* item = static_cast<QCheckListItem*>(feature_listview->firstChild());
   while (item) {
     item->setOn(true);
     item = static_cast<QCheckListItem*>(item->nextSibling());
   }
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 void FeatureEditor::CheckNone() {
-  QCheckListItem* item = static_cast<QCheckListItem*>(feature_listview->firstChild());
+  /*QCheckListItem* item = static_cast<QCheckListItem*>(feature_listview->firstChild());
   while (item) {
     item->setOn(false);
     item = static_cast<QCheckListItem*>(item->nextSibling());
   }
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 #if 0
@@ -1456,7 +1461,7 @@ void FeatureEditor::ShowNext() {
 #endif
 
 void FeatureEditor::ChangePrimType() {
-  gstPrimType new_type = prim_type_combo->currentItem() == 0 ? gstPoint :
+  /*gstPrimType new_type = prim_type_combo->currentItem() == 0 ? gstPoint :
       (prim_type_combo->currentItem() == 1 ? gstPolyLine : gstPolygon);
   FeatureItem* feature_item = dynamic_cast<FeatureItem*>(
       feature_listview->firstChild());
@@ -1466,11 +1471,11 @@ void FeatureEditor::ChangePrimType() {
     feature_item = dynamic_cast<FeatureItem*>(feature_item->nextSibling());
   }
   emit RedrawPreview();
-  feature_listview->update();
+  feature_listview->update();*/
 }
 
 void FeatureEditor::NewFeature() {
-  NewFeatureDialog new_feature_dialog(this);
+  /*NewFeatureDialog new_feature_dialog(this);
   if (new_feature_dialog.exec() != QDialog::Accepted)
     return;
 
@@ -1483,11 +1488,11 @@ void FeatureEditor::NewFeature() {
   feature_listview->selectAll(false);
   feature_listview->setSelected(item, true);
 
-  emit RedrawPreview();
+  emit RedrawPreview();*/
 }
 
 void FeatureEditor::Join() {
-  std::vector<FeatureItem*> select_list;
+  /*std::vector<FeatureItem*> select_list;
   GetSelectList(&select_list);
   if (select_list.size() == 0) {
     QMessageBox::critical(this, "Error",
@@ -1507,7 +1512,7 @@ void FeatureEditor::Join() {
   std::uint64_t num_joined = 0;
   vectorprep::PolylineJoiner<GeodeList>::
       RemoveDuplicatesAndJoinNeighborsAtDegreeTwoVertices(
-          glist, &num_duplicates, &num_joined);
+          glist, &num_duplicates, &num_joined);*/
 }
 
 void FeatureEditor::Simplify() {

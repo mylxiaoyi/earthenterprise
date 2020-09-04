@@ -229,7 +229,7 @@ void MercatorRasterProjectAssetImplD::AddInsets(
     // error if there's anything I already have
     if (have.find(item->dataAsset) != have.end()) {
       throw khException(kh::tr("Project already has inset '%1'")
-                        .arg(item->dataAsset));
+                        .arg(QString(item->dataAsset.c_str())));
     }
 
     // figure out what its levels should be
@@ -513,7 +513,7 @@ void MercatorRasterProjectAssetImplD::HandleDropFromRequest(
                      (&InsetStackItem::dataAsset, *r)) ==
         project->config.insets.end()) {
       throw khException(kh::tr("Project doesn't have inset '%1'")
-                        .arg(*r));
+                        .arg(QString((*r).c_str())));
     } else {
       todrop.insert(*r);
     }
@@ -560,7 +560,7 @@ void MercatorRasterProjectAssetVersionImplD::UpdateChildren(void) {
 
   if (numInsets == 0) {
     throw khException(kh::tr("No insets defined for project %1.\n"
-                             "Cannot build").arg(GetRef().toString()));
+                             "Cannot build").arg(QString(GetRef().toString().c_str())));
   }
 }
 
@@ -636,19 +636,19 @@ void MercatorRasterProjectAssetVersionImplD::DelayedBuildChildren(void) {
   const unsigned int numInsets = inputs.size();
   if (numInsets == 0) {
     throw khException(kh::tr("No insets defined for project %1.\n"
-                             "Cannot build").arg(GetRef().toString()));
+                             "Cannot build").arg(QString(GetRef().toString().c_str())));
   }
 
   // sanity check in case the previous logic to ensure a valid channel id
   // fails
   if (config.fuid_channel_ == 0) {
     throw khException(kh::tr("Internal Error: No channel id for %1")
-                      .arg(GetRef().toString()));
+                      .arg(QString(GetRef().toString().c_str())));
   }
 
   if (config.asset_uuid_ == "") {
     throw khException(kh::tr("Internal Error: No UUID for %1")
-                      .arg(GetRef().toString()));
+                      .arg(QString(GetRef().toString().c_str())));
   }
 
 
@@ -821,7 +821,7 @@ void MercatorRasterProjectAssetVersionImplD::LoadInsetInfoForIndexing(
   if (numInsets == 0) {
     throw khException(kh::tr("Attempt to build index with too few "
                              "insets for project: %1.\n"
-                             "Cannot build").arg(GetRef().toString()));
+                             "Cannot build").arg(QString(GetRef().toString().c_str())));
   }
 
   const auto last_iter = inset_infos.rbegin();

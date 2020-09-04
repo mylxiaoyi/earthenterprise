@@ -24,7 +24,7 @@
 #include <string>
 #include <map>
 
-class AssetLog : public AssetLogBase
+class AssetLog : public QDialog 
 {
   AssetLog( const std::string &filename );
  protected:
@@ -36,6 +36,7 @@ class AssetLog : public AssetLogBase
   static void Open(const std::string &filename);
 
  private:
+  Ui_AssetLogBase *ui;
   std::string _logfile;
   int _logfd;
   off_t _written;

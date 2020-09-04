@@ -14,9 +14,9 @@
 
 
 #include <stdlib.h>
-#include <qtable.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include <khFileUtils.h>
 
@@ -25,33 +25,33 @@
 #include "PlacemarkEdit.h"
 
 PlacemarkManager::PlacemarkManager()
-  : PlacemarkManagerBase(0, 0, false, 0) {
-  placemark_table->verticalHeader()->hide();
+{//: PlacemarkManagerBase(0, 0, false, 0) {
+  /*placemark_table->verticalHeader()->hide();
   placemark_table->setLeftMargin(0);
   placemark_table->setColumnStretchable(0, true);
 
   if (khExists(Preferences::filepath("placemarks.xml").latin1()))
-    placemarks_.Load(Preferences::filepath("placemarks.xml").latin1());
+    placemarks_.Load(Preferences::filepath("placemarks.xml").latin1());*/
 }
 
 void PlacemarkManager::accept() {
-  Save();
-  PlacemarkManagerBase::accept();
+  //Save();
+  //PlacemarkManagerBase::accept();
 }
 
 void PlacemarkManager::Save() {
-  if (!placemarks_.Save(Preferences::filepath("placemarks.xml").latin1())) {
+  /*if (!placemarks_.Save(Preferences::filepath("placemarks.xml").latin1())) {
     QMessageBox::critical(
         this, tr("Error"),
         tr("Unable to save Favorites") +
         tr("Check console for more information"),
         tr("OK"), 0, 0, 0);
-  }
+  }*/
 }
 
 void PlacemarkManager::reject() {
-  placemarks_ = restore_placemarks_;
-  PlacemarkManagerBase::reject();
+  //placemarks_ = restore_placemarks_;
+  //PlacemarkManagerBase::reject();
 }
 
 QStringList PlacemarkManager::GetList() {
@@ -73,7 +73,7 @@ gstPlacemark PlacemarkManager::Get(int idx) const {
 }
 
 int PlacemarkManager::Manage() {
-  restore_placemarks_ = placemarks_;
+  /*restore_placemarks_ = placemarks_;
 
   placemark_table->setNumRows(0);
 
@@ -90,19 +90,20 @@ int PlacemarkManager::Manage() {
   if (placemark_table->numRows() != 0)
     placemark_table->selectRow(0);
 
-  return PlacemarkManagerBase::exec();
+  return PlacemarkManagerBase::exec();*/
+  return 0;
 }
 
 void PlacemarkManager::SetRow(int row, const gstPlacemark& pm) {
-  placemark_table->setText(row, 0, pm.name);
+  /*placemark_table->setText(row, 0, pm.name);
   placemark_table->setText(row, 1, QString("%1").arg(pm.latitude, 0, 'f', 8));
   placemark_table->setText(row, 2, QString("%1").arg(pm.longitude, 0, 'f', 8));
   placemark_table->setText(row, 3, QString("%1").arg(pm.level));
-  placemark_table->adjustRow(row);
+  placemark_table->adjustRow(row);*/
 }
 
 void PlacemarkManager::deletePlacemark() {
-  int row = placemark_table->currentRow();
+  /*int row = placemark_table->currentRow();
   if (row == -1)
     return;
 
@@ -121,11 +122,11 @@ void PlacemarkManager::deletePlacemark() {
     selectionChanged(-1, 0);
   } else {
     placemark_table->selectRow(row);
-  }
+  }*/
 }
 
 void PlacemarkManager::modifyPlacemark() {
-  int row = placemark_table->currentRow();
+  /*int row = placemark_table->currentRow();
   if (row == -1)
     return;
 
@@ -138,11 +139,11 @@ void PlacemarkManager::modifyPlacemark() {
 
   placemarks_.items[row] = pm;
 
-  SetRow(row, pm);
+  SetRow(row, pm);*/
 }
 
 void PlacemarkManager::moveDown() {
-  int row = placemark_table->currentRow();
+  /*int row = placemark_table->currentRow();
   if (row == -1 || row == placemark_table->numRows() - 1)
     return;
 
@@ -153,11 +154,11 @@ void PlacemarkManager::moveDown() {
   SetRow(row, placemarks_.items[row]);
   SetRow(row + 1, placemarks_.items[row + 1]);
 
-  placemark_table->selectRow(row + 1);
+  placemark_table->selectRow(row + 1);*/
 }
 
 void PlacemarkManager::moveUp() {
-  int row = placemark_table->currentRow();
+  /*int row = placemark_table->currentRow();
   if (row == -1 || row == 0)
     return;
 
@@ -168,11 +169,11 @@ void PlacemarkManager::moveUp() {
   SetRow(row, placemarks_.items[row]);
   SetRow(row - 1, placemarks_.items[row - 1]);
 
-  placemark_table->selectRow(row - 1);
+  placemark_table->selectRow(row - 1);*/
 }
 
 void PlacemarkManager::newPlacemark() {
-  PlacemarkEdit edit(this, gstPlacemark());
+  /*PlacemarkEdit edit(this, gstPlacemark());
 
   if (edit.exec() != QDialog::Accepted)
     return;
@@ -183,12 +184,12 @@ void PlacemarkManager::newPlacemark() {
   int row = placemark_table->numRows();
   placemark_table->setNumRows(row + 1);
   SetRow(row, pm);
-  placemark_table->selectRow(row);
+  placemark_table->selectRow(row);*/
 }
 
 void PlacemarkManager::selectionChanged(int row, int) {
   // none selected
-  if (row == -1) {
+  /*if (row == -1) {
     delete_btn->setEnabled(false);
     move_up_btn->setEnabled(false);
     move_down_btn->setEnabled(false);
@@ -197,5 +198,5 @@ void PlacemarkManager::selectionChanged(int row, int) {
     move_up_btn->setEnabled(row != 0);
     move_down_btn->setEnabled(row != placemark_table->numRows() - 1);
     placemark_table->selectRow(row);
-  }
+  }*/
 }

@@ -31,7 +31,7 @@ QString MakeJSContextErrorMessage(struct JSContext *cx,
                                   const QString &header) {
   QString ret = header + ": ";
 
-  if (JS_IsExceptionPending(cx)) {
+  /*if (JS_IsExceptionPending(cx)) {
     ret += "Exception pending";
   } else {
     KHJSContextImpl *khcx = (KHJSContextImpl*)JS_GetContextPrivate(cx);
@@ -41,7 +41,7 @@ QString MakeJSContextErrorMessage(struct JSContext *cx,
       ret += QString("\n") + khcx->pendingErrorMsg;
       khcx->pendingErrorMsg = QString();
     }
-  }
+  }*/
 
   return ret;
 }
@@ -56,7 +56,7 @@ KHJSScriptImpl::KHJSScriptImpl(const KHJSContext &cx_,
     cx(cx_), scriptObj(0)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(cx);
+  /*JSContextUser jsuser(cx);
 
   // Make sure all newborns can't be GC'd until we're done here.
   JSLocalRootScopeGuard rootGuard(jsuser);
@@ -65,17 +65,17 @@ KHJSScriptImpl::KHJSScriptImpl(const KHJSContext &cx_,
   scriptObj = rootGuard.CompileScript(scriptText, errorContext);
 
   // protect scriptObj from GC
-  jsuser.AddNamedRoot(&scriptObj, "KHJSScript");
+  jsuser.AddNamedRoot(&scriptObj, "KHJSScript");*/
 }
 
 KHJSScriptImpl::~KHJSScriptImpl(void)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(cx);
+  //JSContextUser jsuser(cx);
 
   // remove scriptObj from GC root list. The script should get finalized on
   // the next GC run.
-  jsuser.RemoveRoot(&scriptObj);
+  //jsuser.RemoveRoot(&scriptObj);
 }
 
 
@@ -85,11 +85,11 @@ KHJSScriptImpl::~KHJSScriptImpl(void)
 // ***  KHJSContext
 // ****************************************************************************
 KHJSContextImpl::KHJSContextImpl(void) :
-    cx_(JS_NewContext(KHJSRuntime::Singleton()->runtime,
-                      4096 /* stackChunkSize */)),
+    //cx_(JS_NewContext(KHJSRuntime::Singleton()->runtime,
+    //                  4096 /* stackChunkSize */)),
     branchCallbackCount(0)
 {
-  if (!cx_) {
+  /*if (!cx_) {
     throw khException(kh::tr("Unable to create javascript context"));
   }
 
@@ -123,23 +123,23 @@ KHJSContextImpl::KHJSContextImpl(void) :
     (void) JS_DestroyContext(cx_);
 
     throw khException(msg);
-  }
+  }*/
 
   //  (void) JS_SetOptions(cx_, JSOPTION_STRICT|JSOPTION_WERROR);
 }
 KHJSContextImpl::~KHJSContextImpl(void)
 {
   // clear the back pointer before we start to tear it down
-  JS_SetContextPrivate(cx_, 0);
+  //JS_SetContextPrivate(cx_, 0);
 
-  (void)JS_DestroyContext(cx_);
+  //(void)JS_DestroyContext(cx_);
 }
 
 void
 KHJSContextImpl::HandleError(const char *msg, JSErrorReport *report)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
 
   QString fullMsg = QString("%1\n%2 line %3")
                     .arg(msg)
@@ -147,7 +147,7 @@ KHJSContextImpl::HandleError(const char *msg, JSErrorReport *report)
                     .arg(report->lineno+1);
 
   pendingErrorMsg = fullMsg;
-  notify(NFY_DEBUG, "Javascript HandleError: %s", fullMsg.latin1());
+  notify(NFY_DEBUG, "Javascript HandleError: %s", fullMsg.toLatin1().data());*/
 }
 
 void
@@ -156,12 +156,12 @@ KHJSContextImpl::cbErrorHandler(JSContext *cx, const char *message,
 {
   // We don't have a JSContextUser, but nobody will ever change the context
   // private data, so there is no race.
-  KHJSContextImpl *khcx = (KHJSContextImpl*)JS_GetContextPrivate(cx);
+  /*KHJSContextImpl *khcx = (KHJSContextImpl*)JS_GetContextPrivate(cx);
 
   // make sure we're still attached. We may have gone away.
   if (khcx) {
     khcx->HandleError(message, report);
-  }
+  }*/
 }
 
 void
@@ -180,14 +180,15 @@ KHJSContextImpl::cbBranchCallback(struct JSContext *cx, JSScript *script)
 {
   // We don't have a JSContextUser, but nobody will ever change the context
   // private data, so there is no race.
-  KHJSContextImpl *khcx = (KHJSContextImpl*)JS_GetContextPrivate(cx);
+  /*KHJSContextImpl *khcx = (KHJSContextImpl*)JS_GetContextPrivate(cx);
 
   // make sure we're still attached. We may have gone away.
   if (khcx) {
     khcx->HandleBranchCallback();
   }
 
-  return JS_TRUE;
+  return JS_TRUE;*/
+  return 0;
 }
 
 KHJSContext
@@ -200,17 +201,18 @@ bool
 KHJSContextImpl::IsIdentifier(const QString &str)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
 
-  return jsuser.IsIdentifier(str);
+  return jsuser.IsIdentifier(str);*/
+  return false;
 }
 
 void
 KHJSContextImpl::FindGlobalFunctionNames(QStringList &fnames)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
-  return jsuser.FindGlobalFunctionNames(fnames);
+  /*JSContextUser jsuser(khRefGuardFromThis());
+  return jsuser.FindGlobalFunctionNames(fnames);*/
 }
 
 KHJSScript
@@ -226,30 +228,30 @@ void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval unused;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj),
-                       &unused);
+                       &unused);*/
 }
 
 void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script, bool &ret)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval rval;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj), &rval);
-  ret = jsuser.ValueToBoolean(rval);
+  ret = jsuser.ValueToBoolean(rval);*/
 }
 
 void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script, QString &ret)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval rval;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj), &rval);
-  ret = jsuser.ValueToString(rval);
+  ret = jsuser.ValueToString(rval);*/
 }
 
 
@@ -257,29 +259,29 @@ void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script, std::int32_t &ret)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval rval;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj), &rval);
-  ret = jsuser.ValueToInt32(rval);
+  ret = jsuser.ValueToInt32(rval);*/
 }
 
 void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script, std::uint32_t &ret)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval rval;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj), &rval);
-  ret = jsuser.ValueToUint32(rval);
+  ret = jsuser.ValueToUint32(rval);*/
 }
 
 void
 KHJSContextImpl::ExecuteScript(const KHJSScript &script, float64 &ret)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(khRefGuardFromThis());
+  /*JSContextUser jsuser(khRefGuardFromThis());
   jsval rval;
   jsuser.ExecuteScript((JSScript*)jsuser.GetPrivate(script->scriptObj), &rval);
-  ret = jsuser.ValueToFloat64(rval);
+  ret = jsuser.ValueToFloat64(rval);*/
 }
 

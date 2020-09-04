@@ -19,17 +19,17 @@
 #define KHSRC_FUSION_FUSIONUI_QUERYRULES_H__
 
 #include <khArray.h>
-#include <qscrollview.h>
+#include <QtWidgets/QScrollArea>
 #include <autoingest/.idl/storage/FilterConfig.h>
 
 class QComboBox;
 class QLineEdit;
 
-class QueryRules : public QScrollView {
+class QueryRules : public QScrollArea {
   Q_OBJECT
 
  public:
-  QueryRules(QWidget* parent = 0, const char* name = 0, WFlags f = 0);
+  QueryRules(QWidget* parent = 0);//, const char* name = 0, WFlags f = 0);
 
   void init(const FilterConfig& cfg);
   FilterConfig getConfig() const;

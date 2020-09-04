@@ -19,6 +19,6 @@ Import('env')
 gejs = env.sharedLib('gejs', ['KHJSContext.cpp',
                               'KHJSImpl.cpp',
                               ],
-                     LIBS=['geutil', 'js'])
+                     LIBS=['geutil'])
 
 env.install('fusion_lib', [gejs])

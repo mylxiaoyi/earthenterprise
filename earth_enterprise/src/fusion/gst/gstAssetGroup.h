@@ -18,9 +18,9 @@
 #define KHSRC_FUSION_GST_GSTASSETGROUP_H__
 
 #include <vector>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdir.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qdir.h>
 #include <khRefCounter.h>
 
 #include <autoingest/Asset.h>

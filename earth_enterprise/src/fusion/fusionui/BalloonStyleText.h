@@ -20,7 +20,7 @@
 
 #include "balloonstyletextbase.h"
 
-class BalloonStyleText : public BalloonStyleTextBase {
+class BalloonStyleText : public Ui::BalloonStyleTextBase {
  public:
   BalloonStyleText(QWidget* parent, const QString& text);
 

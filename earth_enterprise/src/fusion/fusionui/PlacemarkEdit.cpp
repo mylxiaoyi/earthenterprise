@@ -13,17 +13,17 @@
 // limitations under the License.
 
 
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qpushbutton.h>
 
 #include "PlacemarkEdit.h"
 
 
 PlacemarkEdit::PlacemarkEdit( QWidget* parent, const gstPlacemark &pm )
-    : PlacemarkEditBase( parent, 0, false, 0 )
+    //: PlacemarkEditBase( parent, 0, false, 0 )
 {
-  if ( !pm.name.isEmpty() ) {
+  /*if ( !pm.name.isEmpty() ) {
     nameEdit->setText( pm.name );
     latitudeEdit->setText( QString( "%1" ).arg( pm.latitude, 0, 'f', 8 ) );
     longitudeEdit->setText( QString( "%1" ).arg( pm.longitude, 0, 'f', 8 ) );
@@ -35,25 +35,25 @@ PlacemarkEdit::PlacemarkEdit( QWidget* parent, const gstPlacemark &pm )
     longitudeEdit->setText( "0" );
     levelEdit->setText( "0" );
     okBtn->setEnabled( false );
-  }
+  }*/
 }
 
 gstPlacemark PlacemarkEdit::getPlacemark() const
 {
   gstPlacemark placemark;
 
-  placemark.name = nameEdit->text();
+  /*placemark.name = nameEdit->text();
   placemark.latitude = latitudeEdit->text().toDouble();
   placemark.longitude = longitudeEdit->text().toDouble();
-  placemark.level = levelEdit->text().toDouble();
+  placemark.level = levelEdit->text().toDouble();*/
 
   return placemark;
 }
 
 void PlacemarkEdit::nameChanged( const QString &txt )
 {
-  bool m = !txt.isEmpty();
+  /*bool m = !txt.isEmpty();
   okBtn->setEnabled( m );
-  okBtn->setDefault( m );
+  okBtn->setDefault( m );*/
 }
 

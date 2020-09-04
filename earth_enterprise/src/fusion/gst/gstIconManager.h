@@ -17,7 +17,7 @@
 #ifndef KHSRC_FUSION_GST_GSTICONMANAGER_H__
 #define KHSRC_FUSION_GST_GSTICONMANAGER_H__
 
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <gstTypes.h>
 #include <autoingest/.idl/storage/LayerConfig.h>
 

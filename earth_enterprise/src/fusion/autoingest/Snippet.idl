@@ -17,7 +17,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <qstring.h>
+#include <QtCore/QString>
 
 class SnippetSet
 {

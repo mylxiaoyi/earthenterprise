@@ -17,7 +17,7 @@
 #ifndef KHSRC_FUSION_GST_GSTFORMATRULES_H__
 #define KHSRC_FUSION_GST_GSTFORMATRULES_H__
 
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <gst/.idl/gstFormatRule.h>
 
 class gstFormatRules {

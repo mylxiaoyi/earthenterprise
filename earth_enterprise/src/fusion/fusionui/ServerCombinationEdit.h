@@ -21,7 +21,7 @@
 #include <servercombinationeditbase.h>
 #include <autoingest/.idl/ServerCombination.h>
 
-class ServerCombinationEdit : public ServerCombinationEditBase {
+class ServerCombinationEdit : public Ui::ServerCombinationEditBase {
  public:
   ServerCombinationEdit(QWidget* parent, const ServerCombination& c);
   ServerCombination GetCombination() const;

@@ -13,31 +13,31 @@
 // limitations under the License.
 
 
-#include <qdragobject.h>
-#include <qheader.h>
-#include <qstringlist.h>
+//#include <qdragobject.h>
+//#include <qheader.h>
+#include <QtCore/qstringlist.h>
 
 #include "ProjectLayerView.h"
 #include "Preferences.h"
 
-ProjectLayerView::ProjectLayerView(QWidget* parent, const char* n, WFlags f)
-    : QListView(parent, n, f) {
-  header()->setStretchEnabled(true);
+ProjectLayerView::ProjectLayerView(QWidget* parent)
+    : QListView(parent) {
+  /*header()->setStretchEnabled(true);
   header()->hide();
   addColumn(trUtf8("Name"));
   // disable sorting.  the item positions will be managed directly
-  setSorting(-1);
+  setSorting(-1);*/
 }
 
 void ProjectLayerView::EnableAssetDrops(AssetDefs::Type type,
                                         const std::string& subtype) {
-  drag_asset_type_ = type;
+  /*drag_asset_type_ = type;
   drag_asset_subtype_ = subtype;
   setAcceptDrops(true);
-  viewport()->setAcceptDrops(true);
+  viewport()->setAcceptDrops(true);*/
 }
 
-void ProjectLayerView::SelectItem(QListViewItem* item) {
+/*void ProjectLayerView::SelectItem(QListViewItem* item) {
   QListViewItem* child = firstChild();
   while (child) {
     setSelected(child, false);
@@ -45,16 +45,16 @@ void ProjectLayerView::SelectItem(QListViewItem* item) {
   }
   setCurrentItem(item);
   setSelected(item, true);
-}
+}*/
 
-void ProjectLayerView::contentsDragMoveEvent(QDragMoveEvent* e) {
+/*void ProjectLayerView::contentsDragMoveEvent(QDragMoveEvent* e) {
   // QScrollView::contentsDragMoveEvent seems to be more reliable than
   // QScrollView::contentsDragEnterEvent so use it even though it will
   // continue to be called as the drag is moved around the widget
   e->accept(AssetDrag::canDecode(e, drag_asset_type_, drag_asset_subtype_));
-}
+}*/
 
-void ProjectLayerView::contentsDropEvent(QDropEvent* e) {
+/*void ProjectLayerView::contentsDropEvent(QDropEvent* e) {
   if (AssetDrag::canDecode(e, drag_asset_type_, drag_asset_subtype_)) {
     QString text;
     AssetDrag::decode(e, text);
@@ -64,4 +64,4 @@ void ProjectLayerView::contentsDropEvent(QDropEvent* e) {
       emit dropAsset(*it);
     }
   }
-}
+}*/

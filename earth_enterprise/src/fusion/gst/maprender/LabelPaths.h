@@ -37,7 +37,7 @@ namespace tr1 {
 template<>
 struct hash<QString> : public unary_function<QString, std::size_t> {
   std::size_t operator()(const QString &_val) const {
-    QByteArray byte_array = _val.utf8();
+    QByteArray byte_array = _val.toUtf8();
     return hash<std::string>()(byte_array.data());
   }
 };

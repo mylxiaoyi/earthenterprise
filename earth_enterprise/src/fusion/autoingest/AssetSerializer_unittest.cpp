@@ -132,7 +132,7 @@ std::string RunLoadForException(AssetSerializerLocalXML<TestItem> &serializer){
     string boundref = "doesnt_matter";
     serializer.Load(boundref);
   }
-  catch (khException e) {
+  catch (khException &e) {
     errorMsg = string(e.what());
   }
 

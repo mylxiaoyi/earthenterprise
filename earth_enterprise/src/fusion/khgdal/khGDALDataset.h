@@ -22,10 +22,10 @@
 #include <khGeomUtils.h>
 #include <khGuard.h>
 #include <string>
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 #include "khGeoExtents.h"
 #include <khRefCounter.h>
-#include <ogr_spatialref.h>
+#include <gdal/ogr_spatialref.h>
 #include <notify.h>
 #include <khTileAddr.h>
 

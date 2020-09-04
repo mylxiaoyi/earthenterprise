@@ -19,8 +19,8 @@
 #ifndef __IMAGE_VIEW_H__
 #define __IMAGE_VIEW_H__
 
-#include <qscrollview.h>
-#include "gdal_priv.h"
+#include <QtWidgets/QScrollArea>
+#include <gdal/gdal_priv.h>
 
 #include "histogram.h"
 #include "linreg.h"
@@ -42,9 +42,9 @@ struct RGBSample
   int x, y;
 };
 
-class ImageView : public QScrollView {
+class ImageView : public QScrollArea {
  public:
-  ImageView(QWidget *parent=0, const char *name=0, WFlags f=0);
+  ImageView(QWidget *parent=0, const char *name=0, Qt::WindowFlags f=0);
   ~ImageView();
 
   void setFilename(char *name);

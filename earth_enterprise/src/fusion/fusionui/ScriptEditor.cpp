@@ -17,14 +17,14 @@
 
 #include <set>
 
-#include <qmessagebox.h>
-#include <qtextedit.h>
-#include <qlistbox.h>
-#include <qstringlist.h>
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qprogressdialog.h>
-#include <qapplication.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qtextedit.h>
+//#include <qlistbox.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qbuttongroup.h>
+#include <QtWidgets/qprogressdialog.h>
+#include <QtWidgets/qapplication.h>
 
 #include "ScriptEditor.h"
 #include <gstFormat.h>
@@ -39,58 +39,58 @@ ScriptEditor::ScriptEditor(QWidget* parent,
                            const gstSharedSource &source_,
                            const QString &script, Type type,
                            const QStringList &contextScripts_) :
-    ScriptEditorBase(parent),
+    //ScriptEditorBase(parent),
     source(source_),
     recordHeader(source ? source->GetAttrDefs(0) : gstHeaderHandle()),
     currField(-1),
     contextScripts(contextScripts_)
 {
-  gstRecordJSContext cx = gstRecordJSContextImpl::Create(recordHeader,
-                                                         contextScripts);
-
-  // Walk the recordHeader, add each field name to the field listBox and
-  // figure out what test we're going to paste for each one.
-  for (unsigned int f = 0; f < recordHeader->numColumns(); ++f) {
-    QString name = recordHeader->Name(f);
-    fieldsListBox->insertItem(name);
-    if ((f < gstRecordJSContextImpl::MaxNumProperties) &&
-        cx->IsIdentifier(name)) {
-      insertFieldText.push_back(QString("fields.")+name);
-    } else {
-      insertFieldText.push_back(QString("fields[%1 /* %2 */]")
-                                .arg(f).arg(name));
-    }
-  }
-
-  // Walk the global functions registered by the context scripts and add
-  // them to the fields listBox too.
-  QStringList globalFuncs;
-  cx->FindGlobalFunctionNames(globalFuncs);
-  for (QStringList::const_iterator gf = globalFuncs.begin();
-       gf != globalFuncs.end(); ++gf) {
-    QString withParens = *gf + "()";
-    fieldsListBox->insertItem(withParens);
-    insertFieldText.push_back(withParens);
-  }
-
-  // misc widgetry setup
-  getValuesButton->setEnabled(false);
-  scriptEdit->setText(script);
-  scriptEdit->moveCursor(QTextEdit::MoveEnd, false);
-  scriptEdit->setFocus();
-  if (type == Expression) {
-    semicolonButton->setEnabled(false);
-  }
+//  gstRecordJSContext cx = gstRecordJSContextImpl::Create(recordHeader,
+//                                                         contextScripts);
+//
+//  // Walk the recordHeader, add each field name to the field listBox and
+//  // figure out what test we're going to paste for each one.
+//  for (unsigned int f = 0; f < recordHeader->numColumns(); ++f) {
+//    QString name = recordHeader->Name(f);
+//    fieldsListBox->insertItem(name);
+//    if ((f < gstRecordJSContextImpl::MaxNumProperties) &&
+//        cx->IsIdentifier(name)) {
+//      insertFieldText.push_back(QString("fields.")+name);
+//    } else {
+//      insertFieldText.push_back(QString("fields[%1 /* %2 */]")
+//                                .arg(f).arg(name));
+//    }
+//  }
+//
+//  // Walk the global functions registered by the context scripts and add
+//  // them to the fields listBox too.
+//  QStringList globalFuncs;
+//  cx->FindGlobalFunctionNames(globalFuncs);
+//  for (QStringList::const_iterator gf = globalFuncs.begin();
+//       gf != globalFuncs.end(); ++gf) {
+//    QString withParens = *gf + "()";
+//    fieldsListBox->insertItem(withParens);
+//    insertFieldText.push_back(withParens);
+//  }
+//
+//  // misc widgetry setup
+//  getValuesButton->setEnabled(false);
+//  scriptEdit->setText(script);
+//  scriptEdit->moveCursor(QTextEdit::MoveEnd, false);
+//  scriptEdit->setFocus();
+//  if (type == Expression) {
+//    semicolonButton->setEnabled(false);
+//  }
 }
 
 ScriptEditor::~ScriptEditor(void)
 {
-  for (ValueCache::const_iterator i = cachedValues.begin();
+  /*for (ValueCache::const_iterator i = cachedValues.begin();
        i != cachedValues.end(); ++i) {
     if (i->second) {
       delete i->second;
     }
-  }
+  }*/
 }
 
 bool
@@ -99,7 +99,7 @@ ScriptEditor::Run(QWidget *parent,
                   QString& script, Type type,
                   const QStringList &contextScripts)
 {
-  if (!source_) {
+  /*if (!source_) {
     QMessageBox::critical(parent, tr("Error"),
                           tr("No source record is available"),
                           tr("OK"), 0, 0, 0);
@@ -129,21 +129,22 @@ ScriptEditor::Run(QWidget *parent,
   QMessageBox::critical(parent, tr("JavaScript Error"),
                         tr("JavaScript Error:\n%1")
                         .arg(javascriptError),
-                        tr("OK"), 0, 0, 0);
+                        tr("OK"), 0, 0, 0);*/
   return false;
 }
 
 
 bool ScriptEditor::CurrFieldIsReal(void) const {
-  return ((currField >= 0) &&
-          (currField < (int)recordHeader->numColumns()));
+  //return ((currField >= 0) &&
+  //        (currField < (int)recordHeader->numColumns()));
+  return false;
 }
 bool ScriptEditor::WantGetValues(void) const {
-  return CurrFieldIsReal() || insertFieldText[currField].endsWith("()");
+  return false;//CurrFieldIsReal() || insertFieldText[currField].endsWith("()");
 }
 
 void ScriptEditor::fieldHighlighted(int fNum) {
-  if (currField != fNum) {
+  /*if (currField != fNum) {
     currField = fNum;
     valuesListBox->clear();
     QStringList *values = cachedValues[currField];
@@ -151,14 +152,14 @@ void ScriptEditor::fieldHighlighted(int fNum) {
       valuesListBox->insertStringList(*values);
     }
     getValuesButton->setEnabled(WantGetValues());
-  }
+  }*/
 }
 
 void ScriptEditor::insertField(int num) {
-  scriptEdit->insert(insertFieldText[num]);
+  //scriptEdit->insert(insertFieldText[num]);
 }
 
-void ScriptEditor::insertValue(QListBoxItem* item) {
+/*void ScriptEditor::insertValue(QListBoxItem* item) {
   QString text = item->text();
 
   if (!WantGetValues()) {
@@ -189,10 +190,10 @@ void ScriptEditor::insertValue(QListBoxItem* item) {
     text.replace("\n", "\\\n");  // escape embedded newline
     scriptEdit->insert(QString("\"")+text+QString("\""));
   }
-}
+}*/
 
 void ScriptEditor::getValues() {
-  if (!WantGetValues()) {
+  /*if (!WantGetValues()) {
     return;
   }
 
@@ -279,21 +280,21 @@ void ScriptEditor::getValues() {
   QMessageBox::critical(this, tr("Error"),
                         tr("Error getting values:\n%1")
                         .arg(javascriptError),
-                        tr("OK"), 0, 0, 0);
+                        tr("OK"), 0, 0, 0);*/
     
 }
 
 void ScriptEditor::insertButtonClicked(int id) {
-  QButton *button = insertButtonGroup->find(id);
+  /*QButton *button = insertButtonGroup->find(id);
   if (!button) return;
   QPushButton *pushButton = static_cast<QPushButton*>(button);
   QString text = pushButton->text();
   text.replace("&&", "&");  // undo double '&' needed to avoid accelerator key
-  scriptEdit->insert(text);
+  scriptEdit->insert(text);*/
 }
 
 void ScriptEditor::compileAndAccept() {
-  QString newScript = scriptEdit->text();
+  /*QString newScript = scriptEdit->text();
   if (newScript.isEmpty()) {
     accept();
     return;
@@ -308,5 +309,5 @@ void ScriptEditor::compileAndAccept() {
                           tr("JavaScript Error:\n%1")
                           .arg(compilationError),
                           tr("OK"), 0, 0, 0);
-  }
+  }*/
 }

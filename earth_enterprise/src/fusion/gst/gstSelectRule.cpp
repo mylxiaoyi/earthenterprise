@@ -59,10 +59,10 @@ int gstSelectRule::eval(gstRecordHandle rec) {
       else
         return *lval != rvalue_ ? 1 : 0;
     case SelectRuleConfig::RegExpMatch: {
-      return (regexp->search(lval->ValueAsUnicode()) >= 0) ? 1 : 0;
+      return (regexp->indexIn(lval->ValueAsUnicode()) >= 0) ? 1 : 0;
     }
     case SelectRuleConfig::NotRegExpMatch: {
-      return (regexp->search(lval->ValueAsUnicode()) >= 0) ? 0 : 1;
+      return (regexp->indexIn(lval->ValueAsUnicode()) >= 0) ? 0 : 1;
     }
 #if 0
     case SelectRuleConfig::RegExpMatchNoCase: {

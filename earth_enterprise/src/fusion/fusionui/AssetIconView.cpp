@@ -13,8 +13,9 @@
 // limitations under the License.
 
 
-#include <qimage.h>
-#include <qstringlist.h>
+#include <QtGui/qimage.h>
+#include <QtGui/QPixmap>
+#include <QtCore/qstringlist.h>
 #include <assert.h>
 
 
@@ -24,11 +25,11 @@
 // -----------------------------------------------------------------------------
 
 static QPixmap uic_load_pixmap(const QString& name) {
-  const QMimeSource *m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource *m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
@@ -36,24 +37,24 @@ static QPixmap uic_load_pixmap(const QString& name) {
 
 QImage* AssetIcon::defaultImage = NULL;
 
-AssetIcon::AssetIcon(QIconView* parent, gstAssetHandle handle, int initsz)
-    : QIconViewItem(parent),
+AssetIcon::AssetIcon(QWidget* parent, gstAssetHandle handle, int initsz)
+    : QWidget(parent),
       asset_handle_(handle) {
-  if (defaultImage == NULL)
+  /*if (defaultImage == NULL)
     defaultImage = new QImage(uic_load_pixmap("preview_default.png").
-                              convertToImage());
+                              convertToImage());*/
 
-  setText(shortAssetName(handle->getName()));
+  //setText(shortAssetName(handle->getName()));
 
   QImage img;
   AssetVersion ver(handle->getAsset()->CurrVersionRef());
   if (ver) {
     std::string previewpath = ver->PreviewFilename();
-    if (previewpath.size() && img.load(previewpath)) {
+    /*if (previewpath.size() && img.load(previewpath)) {
       image_ = new QImage(img);
     } else {
       image_ = defaultImage;
-    }
+    }*/
   } else {
     image_ = defaultImage;
   }
@@ -68,23 +69,23 @@ AssetIcon::~AssetIcon() {
 
 
 void AssetIcon::resize(int sz) {
-  setPixmap(image_->scale(sz, sz, QImage::ScaleMin));
-  setPixmapRect(QRect(0, 0, sz, sz));
-  calcRect();
+  //setPixmap(image_->scale(sz, sz, QImage::ScaleMin));
+  //setPixmapRect(QRect(0, 0, sz, sz));
+  //calcRect();
 }
 
 // -----------------------------------------------------------------------------
 
-AssetIconView::AssetIconView(QWidget* parent, const char* name, WFlags f)
-    : QIconView(parent, name, f) {
-  setItemsMovable(false);
+AssetIconView::AssetIconView(QWidget* parent)
+    : QWidget(parent) {
+  //setItemsMovable(false);
 }
 
 void AssetIconView::startDrag() {
-  AssetIcon* icon = static_cast<AssetIcon*>(currentItem());
-  assert(icon != NULL);
+  //AssetIcon* icon = static_cast<AssetIcon*>(currentItem());
+  //assert(icon != NULL);
 
-  AssetDrag* ad = new AssetDrag(this, icon->getAssetHandle()->getAsset());
-  ad->setPixmap(icon->image()->scale(64, 64, QImage::ScaleMin));
-  ad->dragCopy();
+  //AssetDrag* ad = new AssetDrag(this, icon->getAssetHandle()->getAsset());
+  //ad->setPixmap(icon->image()->scale(64, 64, QImage::ScaleMin));
+  //ad->dragCopy();
 }

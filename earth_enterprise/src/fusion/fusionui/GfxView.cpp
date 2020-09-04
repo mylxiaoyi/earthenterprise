@@ -14,22 +14,27 @@
 // limitations under the License.
 
 
-#include <qcursor.h>
-#include <qtimer.h>
-#include <qdragobject.h>
-#include <qmessagebox.h>
-#include <qbitmap.h>
+#include <QtGui/qcursor.h>
+#include <QtCore/qtimer.h>
+//#include <qdragobject.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/qbitmap.h>
+#include <QtGui/QKeyEvent>
 
 #include <gstTexture.h>
 #include <gstTextureManager.h>
 #include <notify.h>
 #include <gstHistogram.h>
 #include <font.h>
-#include <qpainter.h>
+#include <QtGui/qpainter.h>
 #include <khTimer.h>
 #include <gstIconManager.h>
 #include <khTileAddr.h>
 #include <gstGridUtils.h>
+
+#ifdef GL_GLEXT_VERSION
+#undef GL_GLEXT_VERSION
+#endif 
 
 #include "GfxView.h"
 #include "Preferences.h"
@@ -39,8 +44,8 @@ QString GfxView::BitsPerComp;
 
 GfxView* GfxView::instance = 0;
 
-GfxView::GfxView(QWidget* parent, const char* name)
-    : QGLWidget(parent, name),
+GfxView::GfxView(QWidget* parent)
+    : QGLWidget(parent),
       start_scale_(-1.0),               // less than 0 -> not dragging
       state_(false),
       snap_to_level_(false)
@@ -110,7 +115,7 @@ void GfxView::contextMenuEvent(QContextMenuEvent* e) {
 }
 
 void GfxView::mousePressEvent(QMouseEvent* e) {
-  drag_box_.start(e->x(), e->y());
+  /*drag_box_.start(e->x(), e->y());
   drag_box_.end(e->x(), e->y());
 
   if (e->button() == LeftButton) {
@@ -153,12 +158,12 @@ void GfxView::mousePressEvent(QMouseEvent* e) {
     tool_mode_ = Pan;
     start_pan_[0] = state_.frust.CenterX();
     start_pan_[1] = state_.frust.CenterY();
-  }
+  }*/
 }
 
 void GfxView::mouseMoveEvent(QMouseEvent* e) {
   // if anyone is watching, update the geographic coordinate of the cursor
-  gstVertex point = ConvertScreenToLatLon(e->x(), e->y());
+  /*gstVertex point = ConvertScreenToLatLon(e->x(), e->y());
   emit latlonChanged(khTilespace::Denormalize(point.y),
                      khTilespace::Denormalize(point.x));
 
@@ -228,11 +233,11 @@ void GfxView::mouseMoveEvent(QMouseEvent* e) {
         updateGL();
       }
       break;
-  }
+  }*/
 }
 
 void GfxView::mouseReleaseEvent(QMouseEvent* e) {
-  switch (tool_mode_ | e->button()) {
+  /*switch (tool_mode_ | e->button()) {
     case Edit | LeftButton:
       emit MouseRelease();
       break;
@@ -273,10 +278,10 @@ void GfxView::mouseReleaseEvent(QMouseEvent* e) {
       start_scale_ = -1.0;
       adjustLevel(0);
       break;
-  }
+  }*/
 }
 
-void GfxView::selectFeatures(Qt::ButtonState btnState) {
+/*void GfxView::selectFeatures(Qt::ButtonState btnState) {
   gstBBox box(drag_box_.SX, drag_box_.EX, height() - drag_box_.SY,
               height() - drag_box_.EY);
   box *= state_.Scale();
@@ -286,7 +291,7 @@ void GfxView::selectFeatures(Qt::ButtonState btnState) {
   state_.select = box;
 
   emit selectBox(state_, btnState);
-}
+}*/
 
 void GfxView::adjustLevel(int step) {
   double nl = log(2 / state_.Scale()) * M_LOG2E - level_zero_ + step;
@@ -393,41 +398,41 @@ void GfxView::zoomToBox(const gstBBox& bbox) {
 }
 
 void GfxView::toolModeZoomBox(bool state) {
-  if (state == 1) {
+  /*if (state == 1) {
     tool_mode_ = ZoomBox;
     QPixmap zoombox(QPixmap::fromMimeSource("zoombox_cursor.png"));
     QBitmap mask;
     mask = QPixmap::fromMimeSource("zoombox_cursor_mask.png");
     zoombox.setMask(mask);
     setCursor(zoombox);
-  }
+  }*/
 }
 
 void GfxView::toolModeZoomDrag(bool state) {
   if (state == 1) {
     tool_mode_ = ZoomDrag;
-    setCursor(SizeVerCursor);
+    //setCursor(SizeVerCursor);
   }
 }
 
 void GfxView::toolModeSelect(bool state) {
   if (state == 1) {
     tool_mode_ = Select;
-    setCursor(ArrowCursor);
+    //setCursor(ArrowCursor);
   }
 }
 
 void GfxView::toolModePan(bool state) {
   if (state == 1) {
     tool_mode_ = Pan;
-    setCursor(PointingHandCursor);
+    //setCursor(PointingHandCursor);
   }
 }
 
 void GfxView::toolModeEdit(bool state) {
   if (state == 1) {
     tool_mode_ = Edit;
-    setCursor(CrossCursor);
+    //setCursor(CrossCursor);
   }
 }
 
@@ -478,7 +483,7 @@ void GfxView::newTexture() {
 
 
 void GfxView::keyPressEvent(QKeyEvent* e) {
-  if (tool_mode_ == Edit) {
+  /*if (tool_mode_ == Edit) {
     emit KeyPress(e);
     return;
   }
@@ -513,11 +518,11 @@ void GfxView::keyPressEvent(QKeyEvent* e) {
     default:
       e->ignore();
       QGLWidget::keyPressEvent(e);
-  }
+  }*/
 }
 
 void GfxView::wheelEvent(QWheelEvent* e) {
-  if (snap_to_level_) {
+  /*if (snap_to_level_) {
     adjustLevel(e->delta() <= 0 ? -1 : 1);
   } else {
     double new_scale;
@@ -534,7 +539,7 @@ void GfxView::wheelEvent(QWheelEvent* e) {
   resizeEvent(NULL);
   updateGL();
 
-  e->accept();
+  e->accept();*/
 }
 
 void GfxView::timerEvent(QTimerEvent* e) {
@@ -757,7 +762,7 @@ void GfxView::paintGL() {
   // if this timer hasn't been triggerd yet, it will get reset
   // effectively making sure the labels are never drawn until
   // all textures are loaded and drawn
-  label_timer_->start(200, true);
+  //label_timer_->start(200, true);
 
   ++frame_num_;
 }  // End GfxView::paintGL()
@@ -816,7 +821,7 @@ void GfxView::initializeGL() {
 
 void GfxView::ValidateGfxMode() {
   // ensure OpenGL context is current
-  makeCurrent();
+  /*makeCurrent();
 
   GLint maxtex;
   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxtex);
@@ -856,7 +861,7 @@ void GfxView::ValidateGfxMode() {
       true,                                       // modal
       WStyle_DialogBorder | WStyle_StaysOnTop);   // style
     error.exec();
-  }
+  }*/
 }
 
 void GfxView::resizeGL(int w, int h) {
@@ -873,14 +878,14 @@ void GfxView::resizeGL(int w, int h) {
   adjustLevel(0);
 }
 
-static float tileColors[][4] = {
+/*static float tileColors[][4] = {
   {1, 0, 0, .4},
   {0, 1, 0, .4},
   {0, 0, 1, .4},
   {1, 1, 0, .4},
   {1, 0, 1, .4},
   {0, 1, 1, .4}
-};
+};*/
 
 void GfxView::drawTextures(const gstBBox &box, double grid, int level) {
   if (level < 0) {
@@ -1050,18 +1055,18 @@ void GfxView::drawTextureTile(const TexTile& tile, bool blend) {
 
 // solid color tile
 void GfxView::drawSolidTile(double xx, double yy, double grid) {
-  glColor3f(.10, .10, .50);
+  /*glColor3f(.10, .10, .50);
   glBegin(GL_QUADS);
   glVertex2f(xx - state_.frust.w, yy - state_.frust.s);
   glVertex2f(xx - state_.frust.w, yy + grid - state_.frust.s);
   glVertex2f(xx - state_.frust.w + grid, yy + grid - state_.frust.s);
   glVertex2f(xx - state_.frust.w + grid, yy - state_.frust.s);
-  glEnd();
+  glEnd();*/
 }
 
 // invalid (out of bounds) tile
 void GfxView::drawInvalidTile(double xx, double yy, double grid) {
-  double left = xx - state_.frust.w;
+  /*double left = xx - state_.frust.w;
   double right = xx + grid - state_.frust.w;
   double bottom = yy - state_.frust.s;
   double top = yy + grid - state_.frust.s;
@@ -1110,12 +1115,12 @@ void GfxView::drawInvalidTile(double xx, double yy, double grid) {
       glVertex2f(x1, y1);
     }
   }
-  glEnd();
+  glEnd();*/
 }
 
 
 void GfxView::drawGridLines(double xx, double yy, double grid, int lev) {
-  glPushAttrib(GL_LINE_BIT);
+  /*glPushAttrib(GL_LINE_BIT);
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1149,11 +1154,11 @@ void GfxView::drawGridLines(double xx, double yy, double grid, int lev) {
 
   glDisable(GL_BLEND);
 
-  glPopAttrib();
+  glPopAttrib();*/
 }
 
 void GfxView::drawTileAddress(double xx, double yy, double grid, int lev) {
-  unsigned int row = (unsigned int)((yy) / grid);
+  /*unsigned int row = (unsigned int)((yy) / grid);
   unsigned int col = (unsigned int)((xx) / grid);
 
   glColor3f(1.0, 1.0, .2);
@@ -1202,7 +1207,7 @@ void GfxView::drawTileAddress(double xx, double yy, double grid, int lev) {
     glRasterPos2d(west, south);
     PrintGLString("rp-c:%d", col >> 2);
     south -= line;
-  }
+  }*/
 }
 
 void GfxView::drawTileMessages(TexTile & /* tile */) {
@@ -1230,14 +1235,14 @@ void GfxView::drawTileMessages(TexTile & /* tile */) {
 #endif
 }
 
-void GfxView::dragEnterEvent(QDragEnterEvent* event) {
+/*void GfxView::dragEnterEvent(QDragEnterEvent* event) {
   if (event->provides("text/plain"))
     event->accept(true);
-}
+}*/
 
-void GfxView::dropEvent(QDropEvent* event) {
+/*void GfxView::dropEvent(QDropEvent* event) {
   QString text;
 
   if (QTextDrag::decode(event, text))
     emit dropFile(text);
-}
+}*/

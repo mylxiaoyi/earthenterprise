@@ -21,27 +21,27 @@
 #include <errno.h>
 #include <iostream>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qcombobox.h>
-#include <qapplication.h>
-#include <qpopupmenu.h>
-#include <qmessagebox.h>
-#include <qpixmap.h>
-#include <qheader.h>
-#include <qprogressdialog.h>
-#include <qlineedit.h>
-#include <qtabwidget.h>
-#include <qimage.h>
-#include <qpushbutton.h>
-#include <qinputdialog.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qcheckbox.h>
-#include <qsplitter.h>
-#include <qwidgetstack.h>
-#include <qcursor.h>
-#include <qthread.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qapplication.h>
+//#include <qpopupmenu.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/qpixmap.h>
+//#include <qheader.h>
+#include <QtWidgets/qprogressdialog.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qtabwidget.h>
+#include <QtGui/qimage.h>
+#include <QtWidgets/qpushbutton.h>
+//#include <qinputdialog.h>
+#include <QtWidgets/qlayout.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qsplitter.h>
+#include <QtWidgets/QStackedWidget>
+#include <QtGui/qcursor.h>
+#include <QtCore/qthread.h>
 
 #include "fusion/autoingest/plugins/RasterProductAsset.h"
 #include "fusion/autoingest/plugins/MercatorRasterProductAsset.h"
@@ -98,7 +98,7 @@
 
 namespace {
 
-const char* folder_closed_xpm[]={
+/*const char* folder_closed_xpm[]={
   "16 16 9 1",
   "g c #808080",
   "b c #c0c000",
@@ -154,15 +154,15 @@ const char* folder_open_xpm[]={
   "......#egiiicfb#",
   "........#egiibb#",
   "..........#egib#",
-  "............#ee#" };
+  "............#ee#" };*/
 
-QPixmap* folderClosed = 0;
-QPixmap* folderOpen = 0;
+//QPixmap* folderClosed = 0;
+//QPixmap* folderOpen = 0;
 
-class AssetFolder : public QListViewItem {
+class AssetFolder : public QWidget {
  public:
-  AssetFolder(QListViewItem* parent, const gstAssetFolder& f);
-  AssetFolder(QListView* parent, const gstAssetFolder& f);
+  AssetFolder(QWidget* parent, const gstAssetFolder& f);
+  //AssetFolder(QWidget* parent, const gstAssetFolder& f);
 
   const gstAssetFolder& getFolder() const { return folder; }
 
@@ -180,26 +180,26 @@ class AssetFolder : public QListViewItem {
 
 // -----------------------------------------------------------------------------
 
-AssetFolder::AssetFolder(QListView* parent, const gstAssetFolder& f)
-    : QListViewItem(parent, f.name()),
+AssetFolder::AssetFolder(QWidget* parent, const gstAssetFolder& f)
+    : QWidget(parent),
       folder(f),
       type_(ASSET_MANAGER) {
-  setPixmap(0, *folderClosed);
-  setExpandable(true);
+  //setPixmap(0, *folderClosed);
+  //setExpandable(true);
 }
 
-AssetFolder::AssetFolder(QListViewItem* parent, const gstAssetFolder& f)
-    : QListViewItem(parent, f.name()),
+/*AssetFolder::AssetFolder(QWidget* parent, const gstAssetFolder& f)
+    : QWidget(parent, f.name()),
       folder(f),
       type_(ASSET_FOLDER) {
-  setPixmap(0, *folderClosed);
-  setExpandable(f.getAssetFolders().size() != 0);
-  setRenameEnabled(0, false);
-}
+  //setPixmap(0, *folderClosed);
+  //setExpandable(f.getAssetFolders().size() != 0);
+  //setRenameEnabled(0, false);
+}*/
 
 void AssetFolder::setOpen(bool o) {
   // always clear out all children
-  QListViewItem* item = firstChild();
+  /*QListViewItem* item = firstChild();
   while (item) {
     takeItem(item);
     delete item;
@@ -210,10 +210,10 @@ void AssetFolder::setOpen(bool o) {
     setPixmap(0, *folderOpen);
     populate();
   } else {
-    setPixmap(0, *folderClosed);
+    //setPixmap(0, *folderClosed);
   }
 
-  QListViewItem::setOpen(o);
+  //QListViewItem::setOpen(o);*/
 }
 
 void AssetFolder::populate() {
@@ -225,7 +225,7 @@ void AssetFolder::populate() {
 }
 
 AssetFolder* AssetFolder::newFolder(const QString& text, QString &error) {
-  if (!folder.newFolder(text, error))
+  /*if (!folder.newFolder(text, error))
     return NULL;
 
   if (!isExpandable())
@@ -245,7 +245,7 @@ AssetFolder* AssetFolder::newFolder(const QString& text, QString &error) {
     if (child->text(0) == text)
       return dynamic_cast<AssetFolder*>(child);
     child = child->nextSibling();
-  }
+  }*/
 
   return NULL;
 }
@@ -253,11 +253,11 @@ AssetFolder* AssetFolder::newFolder(const QString& text, QString &error) {
 // -----------------------------------------------------------------------------
 
 static QPixmap uic_load_pixmap_AssetManager(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
@@ -334,13 +334,13 @@ AssetAction::AssetAction(QObject* parent, AssetBase* asset_window)
   setText(asset_window->Name());
   AssetDisplayHelper helper(asset_window->AssetType(),
                             asset_window->AssetSubtype());
-  setIconSet(QIconSet(helper.GetPixmap()));
+  /*setIconSet(QIconSet(helper.GetPixmap()));
   connect(this, SIGNAL(activated()), asset_window, SLOT(showNormal()));
   connect(this, SIGNAL(activated()), asset_window, SLOT(raise()));
   connect(asset_window, SIGNAL(NameChanged(const QString&)),
           this, SLOT(NameChanged(const QString&)));
   connect(asset_window, SIGNAL(destroyed()), this, SLOT(Cleanup()));
-  all_actions.push_back(this);
+  all_actions.push_back(this);*/
 }
 
 void AssetAction::NameChanged(const QString& text) {
@@ -359,14 +359,14 @@ QString AssetAction::Name() const {
   return asset_window_->Name();
 }
 
-AssetAction* AssetAction::FindAsset(const QString& txt) {
+/*AssetAction* AssetAction::FindAsset(const QString& txt) {
   for (std::vector<AssetAction*>::iterator it = all_actions.begin();
        it != all_actions.end(); ++it) {
     if ((*it)->Name() == txt)
       return *it;
   }
   return NULL;
-}
+}*/
 
 bool AssetAction::OkToCloseAll() {
   for (std::vector<AssetAction*>::iterator it = all_actions.begin();
@@ -480,7 +480,7 @@ void ServeAssistant::SetCanceled() {
 }
 
 void ServeAssistant::Perform() {
-  progress_dialog_->setTotalSteps(progress_->total());
+  /*progress_dialog_->setTotalSteps(progress_->total());
   progress_dialog_->setProgress(progress_->done());
 
   // Check to see if a request for user authentication has been made.
@@ -488,7 +488,7 @@ void ServeAssistant::Perform() {
   // Note: IsRequestPending() has a mutex to prevent a race condition.
   if (auth_->IsRequestPending()) {
     auth_->ExecAndSignal();
-  }
+  }*/
 }
 
 //------------------------------------------------------------------------------
@@ -504,13 +504,14 @@ std::string AssetManager::GetProviderById(std::uint32_t id) {
 }
 
 AssetManager::AssetManager(QWidget* parent)
-    : AssetManagerBase(parent),
+    : QMainWindow(parent), ui(new Ui_AssetManagerBase),
       icon_grid_(128),
       filter_type_(0),
       filter_subtype_(0),
       asset_manager_icon_choice_orig_(
           Preferences::getConfig().assetManagerIconChoice) {
-  RemoveToolBarIcons();  // Icons will be set at Show
+  ui->setupUi(this);
+  /*RemoveToolBarIcons();  // Icons will be set at Show
   {
     gstProviderSet providers;
     if (providers.Load()) {
@@ -592,11 +593,11 @@ AssetManager::AssetManager(QWidget* parent)
     newImageryProjectAction->removeFrom(Toolbar);
     newTerrainProjectAction->removeFrom(Toolbar);
   }
-  toolbar_chooser_combo->setCurrentItem(asset_manager_icon_choice_orig_);
+  toolbar_chooser_combo->setCurrentItem(asset_manager_icon_choice_orig_);*/
 }
 
 AssetManager::~AssetManager() {
-  if (asset_manager_icon_choice_orig_ !=
+  /*if (asset_manager_icon_choice_orig_ !=
       Preferences::getConfig().assetManagerIconChoice) {
     Preferences::getConfig().Save(Preferences::filepath("preferences.xml"));
   }
@@ -623,7 +624,7 @@ AssetManager::~AssetManager() {
 
   layout_persist_.filterType = filter_type_;
   layout_persist_.filterSubType = filter_subtype_;
-  layout_persist_.Save(Preferences::filepath("assetmanager.layout").latin1());
+  layout_persist_.Save(Preferences::filepath("assetmanager.layout").latin1());*/
 }
 
 AssetManagerLayout::Size AssetManager::GetLayoutSize(const QString& name) {
@@ -635,23 +636,24 @@ void AssetManager::SetLayoutSize(const QString& name, int width, int height) {
 }
 
 void AssetManager::HandleNewWindow(AssetBase* asset_window) {
-  AssetDisplayHelper helper(asset_window->AssetType(),
+  /*AssetDisplayHelper helper(asset_window->AssetType(),
                             asset_window->AssetSubtype());
   AssetAction* action = new AssetAction(this, asset_window);
   action->addTo(Window);
   asset_window->setIcon(helper.GetPixmap());
   asset_window->move(QCursor::pos());
-  asset_window->show();
+  asset_window->show();*/
 }
 
 bool AssetManager::RestoreExisting(const std::string& asset_ref) {
-  AssetAction* action = AssetAction::FindAsset(asset_ref);
+  /*AssetAction* action = AssetAction::FindAsset(asset_ref);
   if (action == NULL) {
     return false;
   } else {
     action->activate();
     return true;
-  }
+  }*/
+  return false;
 }
 
 bool AssetManager::OkToQuit() {
@@ -808,7 +810,7 @@ void AssetManager::resizeEvent(QResizeEvent* event) {
 }
 
 void AssetManager::RemoveToolBarIcons() {
-  newVectorResourceAction->removeFrom(Toolbar);
+  /*newVectorResourceAction->removeFrom(Toolbar);
   newVectorProjectAction->removeFrom(Toolbar);
   newImageryResourceAction->removeFrom(Toolbar);
   newImageryProjectAction->removeFrom(Toolbar);
@@ -820,11 +822,11 @@ void AssetManager::RemoveToolBarIcons() {
   newMapLayerAction->removeFrom(Toolbar);
   newMapProjectAction->removeFrom(Toolbar);
   newMapDatabaseMercatorAction->removeFrom(Toolbar);
-  newMapDatabaseAction->removeFrom(Toolbar);
+  newMapDatabaseAction->removeFrom(Toolbar);*/
 }
 
 void AssetManager::ShowIcons() {
-  switch (asset_manager_icon_choice_ =
+  /*switch (asset_manager_icon_choice_ =
           Preferences::getConfig().assetManagerIconChoice) {
     case PrefsConfig::ShowEarthIcons:
       newImageryResourceAction->addTo(Toolbar);
@@ -853,11 +855,11 @@ void AssetManager::ShowIcons() {
       break;
     default:
       break;
-  }
+  }*/
 }
 
 void AssetManager::show() {
-  if (!isVisible()) {
+  /*if (!isVisible()) {
     connect(SystemListener::instance,
             SIGNAL(assetsChanged(const AssetChanges&)),
             this,
@@ -866,11 +868,11 @@ void AssetManager::show() {
   }
   HideIcons();
   ShowIcons();
-  AssetManagerBase::show();
+  AssetManagerBase::show();*/
 }
 
 void AssetManager::HideIcons() {
-  switch (asset_manager_icon_choice_) {
+  /*switch (asset_manager_icon_choice_) {
     case PrefsConfig::ShowEarthIcons:
       newVectorResourceAction->removeFrom(Toolbar);
       newVectorProjectAction->removeFrom(Toolbar);
@@ -898,20 +900,20 @@ void AssetManager::HideIcons() {
       break;
     default:
       break;
-  }
+  }*/
 }
 
 void AssetManager::hide() {
-  disconnect(SystemListener::instance,
+  /*disconnect(SystemListener::instance,
              SIGNAL(assetsChanged(const AssetChanges&)),
              this,
              SLOT(assetsChanged(const AssetChanges&)));
   HideIcons();
-  AssetManagerBase::hide();
+  AssetManagerBase::hide();*/
 }
 
 void AssetManager::RedrawTree(bool select_top) {
-  categories->clear();
+  /*categories->clear();
 
   if (theAssetManager == NULL) {
     QMessageBox::warning(this, "Warning",
@@ -933,24 +935,24 @@ void AssetManager::RedrawTree(bool select_top) {
     layout_persist_.selectedPath = QString::null;
   } else if (select_top && categories->firstChild()) {
     categories->setSelected(categories->firstChild(), true);
-  }
+  }*/
 }
 
 void AssetManager::addAsset() {
 }
 
-void AssetManager::childCollapsed(QListViewItem* item) {
-  AssetFolder* assetfolder = dynamic_cast<AssetFolder*>(item);
+//void AssetManager::childCollapsed(QListViewItem* item) {
+  /*AssetFolder* assetfolder = dynamic_cast<AssetFolder*>(item);
   if (assetfolder == NULL)
     return;
 
   gstAssetFolder folder = GetSelectedFolder();
   if (!folder.isValid())
-    categories->setSelected(assetfolder, true);
-}
+    categories->setSelected(assetfolder, true);*/
+//}
 
-void AssetManager::rmbClicked(QListViewItem* item, const QPoint& pos, int) {
-  enum { REFRESH, NEW_FOLDER };
+//void AssetManager::rmbClicked(QListViewItem* item, const QPoint& pos, int) {
+  /*enum { REFRESH, NEW_FOLDER };
 
   QPopupMenu menu(this);
 
@@ -973,27 +975,27 @@ void AssetManager::rmbClicked(QListViewItem* item, const QPoint& pos, int) {
     case NEW_FOLDER:
       NewFolder(folder_name);
       break;
-  }
-}
+  }*/
+//}
 
 void AssetManager::tableAssetMenu(int row, int col, const QPoint& mouse_pos) {
-  gstAssetHandle handle = GetAssetByRow(row);
+  /*gstAssetHandle handle = GetAssetByRow(row);
   if (!handle->isValid())
     return;
-  ShowAssetMenu(handle, mouse_pos);
+  ShowAssetMenu(handle, mouse_pos);*/
 }
 
-void AssetManager::iconAssetMenu(QIconViewItem* item, const QPoint& mouse_pos) {
-  AssetIcon* icon = dynamic_cast<AssetIcon*>(item);
+//void AssetManager::iconAssetMenu(QIconViewItem* item, const QPoint& mouse_pos) {
+  /*AssetIcon* icon = dynamic_cast<AssetIcon*>(item);
   if (icon == NULL)
     return;
 
-  ShowAssetMenu(icon->getAssetHandle(), mouse_pos);
-}
+  ShowAssetMenu(icon->getAssetHandle(), mouse_pos);*/
+//}
 
 void AssetManager::ShowAssetMenu(const gstAssetHandle& asset_handle,
                                  const QPoint& mouse_pos) {
-  enum { BUILD_ASSET, CANCEL_ASSET, MODIFY_ASSET,
+  /*enum { BUILD_ASSET, CANCEL_ASSET, MODIFY_ASSET,
          PUSH_DB, PUBLISH_DB, ASSET_PROPERTIES,
          CURR_VER_PROPERTIES };
   QPopupMenu menu(this);
@@ -1004,7 +1006,7 @@ void AssetManager::ShowAssetMenu(const gstAssetHandle& asset_handle,
   // first item in menu should be the asset name since the table
   // might get redrawn after the menu has popped-up
   AssetDisplayHelper a(current_asset->type, current_asset->subtype);
-  menu.insertItem(a.GetPixmap(), shortAssetName(asset_handle->getName()));
+  //menu.insertItem(a.GetPixmap(), shortAssetName(asset_handle->getName()));
 
   menu.insertSeparator();
   menu.insertSeparator();
@@ -1067,7 +1069,7 @@ void AssetManager::ShowAssetMenu(const gstAssetHandle& asset_handle,
     case PUBLISH_DB:
       PublishDatabase(asset_handle);
       break;
-  }
+  }*/
 }
 
 void AssetManager::showHiddenAssets(bool checked) {
@@ -1097,7 +1099,7 @@ void AssetManager::CurrentAssetChanged(int row, int col) {
 void AssetManager::doubleClicked(int row, int col, int button,
                                  const QPoint& mouse_pos) {
   // clicking on background deselects current asset
-  if (row == -1 || col == -1)
+  /*if (row == -1 || col == -1)
     return;
 
   gstAssetHandle handle = GetAssetByRow(row);
@@ -1107,12 +1109,12 @@ void AssetManager::doubleClicked(int row, int col, int button,
   if (col == 0)
     ModifyAsset(handle);
   if (col == 3 || col == 4)
-    ShowCurrVerProperties(handle);
+    ShowCurrVerProperties(handle);*/
 }
 
 void AssetManager::ShowAssetProperties(const gstAssetHandle& handle) {
-  AssetProperties* properties = new AssetProperties(NULL, handle);
-  properties->show();
+  //AssetProperties* properties = new AssetProperties(NULL, handle);
+  //properties->show();
 }
 
 void AssetManager::ShowCurrVerProperties(const gstAssetHandle& handle) {
@@ -1121,10 +1123,13 @@ void AssetManager::ShowCurrVerProperties(const gstAssetHandle& handle) {
 }
 
 gstAssetHandle AssetManager::GetAssetByRow(int row) {
-  if (row == -1)
+  /*if (row == -1)
     return gstAssetHandleImpl::Create(gstAssetFolder(QString::null),
                                       QString::null);
-  return assetTableView->GetAssetHandle(row);
+  return assetTableView->GetAssetHandle(row);*/
+  return gstAssetHandleImpl::Create(gstAssetFolder(QString::null),
+                                      QString::null);
+
 }
 
 void AssetManager::BuildAsset(const gstAssetHandle& handle) {
@@ -1153,7 +1158,7 @@ class FixCursor {
  public:
   FixCursor(QWidget* p) : parent(p) {}
   ~FixCursor() {
-    parent->setCursor(Qt::arrowCursor);
+    parent->setCursor(Qt::ArrowCursor);
   }
  private:
   QWidget* parent;
@@ -1193,8 +1198,8 @@ void AssetManager::PushDatabase(const gstAssetHandle& handle) {
     return;
   }
 
-  if (push_db_dlg.exec() != QDialog::Accepted)
-    return;
+  //if (push_db_dlg.exec() != QDialog::Accepted)
+  //  return;
 
   AssetVersion db_asset_version();
 
@@ -1218,8 +1223,8 @@ void AssetManager::PushDatabase(const gstAssetHandle& handle) {
   // Update the preferences with the user's choice. We want to remember these
   // choices so that we can automatically select this server next time they
   // push/publish.
-  std::string database_name = shortAssetName(asset->GetRef().toString());
-  Preferences::UpdatePublishServerDbMap(database_name, nickname);
+  std::string database_name = shortAssetName(QString::fromStdString(asset->GetRef().toString())).toStdString();
+  Preferences::UpdatePublishServerDbMap(database_name, nickname.toStdString());
 
   ServerConfig stream_server, search_server;
   for (it = sc_set.combinations.begin();
@@ -1242,14 +1247,14 @@ void AssetManager::PushDatabase(const gstAssetHandle& handle) {
   if (!publisher_client.AddDatabase(
           gedb_path, push_db_dlg.GetSelectedVersion())) {
     QMessageBox::critical(this, "Push Failed",
-            tr("Error: %1 ").arg(publisher_client.ErrMsg()), 0, 0, 0);
+            tr("Error: %1 ").arg(QString::fromStdString(publisher_client.ErrMsg())), 0, 0, 0);
     return;
   }
 
   FixCursor fix_cursor(this);
-  QProgressDialog progress_dialog(tr("Pushing database..."),
-                                  tr("Cancel"), 100, this, "progress", true);
-  progress_dialog.setCaption(tr("Pushing"));
+  QProgressDialog progress_dialog;//(tr("Pushing database..."),
+                                  //tr("Cancel"), 100, this, "progress", true);
+  //progress_dialog.setCaption(tr("Pushing"));
 
   // PublisherClient will now be run in a separate thread,
   // so any calls to the auth dialog now need to be asynchronous.
@@ -1282,7 +1287,7 @@ void AssetManager::PushDatabase(const gstAssetHandle& handle) {
 
   if (!push_thread.retval()) {
     QMessageBox::critical(this, "Push Failed",
-            tr("Error: %1").arg(publisher_client.ErrMsg()), 0, 0, 0);
+            tr("Error: %1").arg(QString::fromStdString(publisher_client.ErrMsg())), 0, 0, 0);
     return;
   }
 
@@ -1325,8 +1330,8 @@ void AssetManager::PublishDatabase(const gstAssetHandle& handle) {
     return;
   }
 
-  if (publish_db_dlg.exec() != QDialog::Accepted)
-    return;
+  //if (publish_db_dlg.exec() != QDialog::Accepted)
+  //  return;
 
   std::string target_path = publish_db_dlg.GetTargetPath();
 
@@ -1352,8 +1357,8 @@ void AssetManager::PublishDatabase(const gstAssetHandle& handle) {
   // Update the preferences with the user's choice. We want to remember these
   // choices so that we can automatically select this server next time they
   // push/publish.
-  std::string database_name = shortAssetName(asset->GetRef().toString());
-  Preferences::UpdatePublishServerDbMap(database_name, nickname);
+  std::string database_name = shortAssetName(QString::fromStdString(asset->GetRef().toString())).toStdString();
+  Preferences::UpdatePublishServerDbMap(database_name, nickname.toStdString());
 
   ServerConfig stream_server, search_server;
   for (it = sc_set.combinations.begin();
@@ -1375,9 +1380,9 @@ void AssetManager::PublishDatabase(const gstAssetHandle& handle) {
                                    stream_server, search_server,
                                    &progress, &auth);
   FixCursor fix_cursor(this);
-  QProgressDialog progress_dialog(tr("Publishing database..."),
-                                  tr("Cancel"), 100, this, "progress", true);
-  progress_dialog.setCaption(tr("Publishing"));
+  QProgressDialog progress_dialog;//(tr("Publishing database..."),
+                                  //tr("Cancel"), 100, this, "progress", true);
+  //progress_dialog.setCaption(tr("Publishing"));
 
   // PublisherClient will now be run in a separate thread,
   // so any calls to the auth dialog now need to be asynchronous.
@@ -1410,7 +1415,7 @@ void AssetManager::PublishDatabase(const gstAssetHandle& handle) {
 
   if (!publish_thread.retval()) {
     QMessageBox::critical(this, "Publish Failed",
-            tr("Error: %1").arg(publisher_client.ErrMsg()), 0, 0, 0);
+            tr("Error: %1").arg(QString::fromStdString(publisher_client.ErrMsg())), 0, 0, 0);
     return;
   }
 
@@ -1421,7 +1426,7 @@ void AssetManager::PublishDatabase(const gstAssetHandle& handle) {
 
 
 void AssetManager::ModifyAsset(const gstAssetHandle& handle) {
-  Asset current_asset = handle->getAsset();
+  /*Asset current_asset = handle->getAsset();
   std::string assetref = current_asset->GetRef();
   if (RestoreExisting(assetref))
     return;
@@ -1563,14 +1568,14 @@ void AssetManager::ModifyAsset(const gstAssetHandle& handle) {
 
   if (asset_window) {
     HandleNewWindow(asset_window);
-  }
+  }*/
 }
 
 void AssetManager::refresh() {
   // int row = assetTableView->currentRow();
 
   // remember which folder is selected
-  QString save_path;
+  /*QString save_path;
   AssetFolder* item = dynamic_cast<AssetFolder*>(categories->selectedItem());
   if (item != NULL) {
     save_path = item->getFolder().relativePath();
@@ -1582,12 +1587,12 @@ void AssetManager::refresh() {
   } else {
     RedrawTree(false);
     OpenFolder(save_path);
-  }
+  }*/
 }
 
 void AssetManager::assetsChanged(const AssetChanges& changes) {
   // figure out the currently selected directory
-  QString currpath;
+  /*QString currpath;
   AssetFolder* item = dynamic_cast<AssetFolder*>(categories->selectedItem());
   if (item != NULL) {
     currpath = item->getFolder().relativePath();
@@ -1615,12 +1620,12 @@ void AssetManager::assetsChanged(const AssetChanges& changes) {
     } else {
       UpdateIconView(folder);
     }
-  }
+  }*/
 }
 
 
 void AssetManager::NewFolder(const QString& folder_name) {
-  assert(theAssetManager != NULL);
+  /*assert(theAssetManager != NULL);
 
   bool ok;
   QString text = QInputDialog::getText(tr("New Subfolder"),
@@ -1678,13 +1683,13 @@ void AssetManager::NewFolder(const QString& folder_name) {
     return;
   }
 
-  categories->setSelected(new_folder, true);
+  categories->setSelected(new_folder, true);*/
 }
 
 
-QListViewItem* AssetManager::OpenFolder(const QString& folder) {
+//QListViewItem* AssetManager::OpenFolder(const QString& folder) {
   // this will always be the root item
-  QListViewItem* item = categories->firstChild();
+  /*QListViewItem* item = categories->firstChild();
 
   QStringList list = QStringList::split('/', folder);
 
@@ -1702,20 +1707,21 @@ QListViewItem* AssetManager::OpenFolder(const QString& folder) {
 
   categories->setSelected(item, true);
 
-  return item;
-}
+  return item;*/
+  //return nullptr;
+//}
 
 gstAssetFolder AssetManager::GetSelectedFolder() const {
-  AssetFolder* asset_folder =
+  /*AssetFolder* asset_folder =
       dynamic_cast<AssetFolder*>(categories->selectedItem());
   if (asset_folder)
-    return asset_folder->getFolder();
+    return asset_folder->getFolder();*/
 
   return gstAssetFolder(QString::null);
 }
 
 void AssetManager::selectFolder() {
-  gstAssetFolder folder = GetSelectedFolder();
+  /*gstAssetFolder folder = GetSelectedFolder();
   if (!folder.isValid())
     return;
 
@@ -1725,7 +1731,7 @@ void AssetManager::selectFolder() {
     UpdateTableView(folder);
   } else {
     UpdateIconView(folder);
-  }
+  }*/
 }
 
 void AssetManager::UpdateTableItem(int row, gstAssetHandle handle,
@@ -1733,7 +1739,7 @@ void AssetManager::UpdateTableItem(int row, gstAssetHandle handle,
   // Only set the AssetTableItem if it doesn't exist yet (new items)
   // If we're doing an assetsChanged update, the AssetTableItem can stay
   // the same.
-  QTableItem *prev = assetTableView->item(row, 0);
+  /*QTableItem *prev = assetTableView->item(row, 0);
   if (!prev) {
     assetTableView->setItem(row, 0,
                             new AssetTableItem(assetTableView, handle));
@@ -1780,14 +1786,14 @@ void AssetManager::UpdateTableItem(int row, gstAssetHandle handle,
     assetTableView->setItem(row, col++,
                             new AssetStateItem(assetTableView, "None"));
   }
-  assetTableView->adjustRow(row);
+  assetTableView->adjustRow(row);*/
 }
 
 
 void AssetManager::TrackChangesInTableView(
     const gstAssetFolder &folder, const std::set<std::string> &changed) {
   // process each changed assetRef
-  for (std::set<std::string>::const_iterator ref = changed.begin();
+  /*for (std::set<std::string>::const_iterator ref = changed.begin();
        ref != changed.end(); ++ref) {
     QString baseRef = khBasename(*ref);
     bool found = false;
@@ -1822,25 +1828,25 @@ void AssetManager::TrackChangesInTableView(
       if (!IsAssetVisible(asset))
         continue;
 
-      int numRows = assetTableView->numRows();
-      assetTableView->setNumRows(numRows + 1);
-      UpdateTableItem(numRows, handle, asset);
+      //int numRows = assetTableView->numRows();
+      //assetTableView->setNumRows(numRows + 1);
+      //UpdateTableItem(numRows, handle, asset);
     }
-  }
+  }*/
 
   // resort in case we just changed a sort key
   // This mostly does the right thing by preserving scroll position, etc
   // But it can end up changing the selection
-  assetTableView->sortColumn
-    (assetTableView->horizontalHeader()->sortIndicatorSection(),
-     assetTableView->horizontalHeader()->sortIndicatorOrder() == Ascending,
-     true /* whole rows */);
+  //assetTableView->sortColumn
+  //  (assetTableView->horizontalHeader()->sortIndicatorSection(),
+  //   assetTableView->horizontalHeader()->sortIndicatorOrder() == Ascending,
+  //   true /* whole rows */);
 }
 
 
 void AssetManager::UpdateTableView(const gstAssetFolder& folder) {
   // reset table
-  assetTableView->setNumCols(0);
+  /*assetTableView->setNumCols(0);
   assetTableView->setNumRows(0);
 
   if (!folder.isValid())
@@ -1886,7 +1892,7 @@ void AssetManager::UpdateTableView(const gstAssetFolder& folder) {
   for (int c = 0; c < assetTableView->numCols(); ++c)
     assetTableView->adjustColumn(c);
 
-  repaint();
+  repaint();*/
 }
 
 void AssetManager::filterType(int menuid) {
@@ -1905,7 +1911,7 @@ void AssetManager::filterSubType(int menuid) {
 
 bool AssetManager::IsAssetVisible(const Asset& asset) const {
   // skip invalid assets
-  if (asset->type == AssetDefs::Invalid)
+  /*if (asset->type == AssetDefs::Invalid)
     return false;
 
   std::string category = asset->PrettySubtype();
@@ -1924,7 +1930,8 @@ bool AssetManager::IsAssetVisible(const Asset& asset) const {
       return false;
   }
 
-  return true;
+  return true;*/
+  return false;
 }
 
 bool AssetManager::MatchFilter(AssetDefs::Type type,
@@ -1965,7 +1972,7 @@ bool AssetManager::MatchFilter(AssetDefs::Type type,
 }
 
 void AssetManager::UpdateIconView(const gstAssetFolder& folder) {
-  assetIconView->clear();
+  /*assetIconView->clear();
 
   if (!folder.isValid())
     return;
@@ -1983,17 +1990,17 @@ void AssetManager::UpdateIconView(const gstAssetFolder& folder) {
       new AssetIcon(assetIconView, item, icon_grid_);
   }
 
-  resetIconView(icon_grid_);
+  resetIconView(icon_grid_);*/
 }
 
 void AssetManager::resetIconView(int grid_size) {
-  assetIconView->setGridX(grid_size + 20);
-  assetIconView->setGridY(grid_size + 20);
-  assetIconView->arrangeItemsInGrid();
+  //assetIconView->setGridX(grid_size + 20);
+  //assetIconView->setGridY(grid_size + 20);
+  //assetIconView->arrangeItemsInGrid();
 }
 
 void AssetManager::resizeIconView(int sz) {
-  if (icon_grid_ != sz) {
+  /*if (icon_grid_ != sz) {
     icon_grid_ = sz;
 
     for (QIconViewItem* item = assetIconView->firstItem();
@@ -2001,11 +2008,11 @@ void AssetManager::resizeIconView(int sz) {
       static_cast<AssetIcon*>(item)->resize(sz);
     }
     resetIconView(sz);
-  }
+  }*/
 }
 
 
-QColorGroup AssetManager::GetStateDrawStyle(
+/*QColorGroup AssetManager::GetStateDrawStyle(
     const std::string& txt, QPainter* p, const QColorGroup& cg) {
   bool bold = false;
   QColor clr = cg.text();
@@ -2031,4 +2038,4 @@ QColorGroup AssetManager::GetStateDrawStyle(
   ngrp.setColor(QColorGroup::Text, clr);
 
   return ngrp;
-}
+}*/

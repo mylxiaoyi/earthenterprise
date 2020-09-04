@@ -44,7 +44,10 @@ env.Append( CXXFLAGS = ['-Wno-unused-function', '-Wno-unused-value'],
                   'gif',
                   'jpeg',
                   'freetype',
-                  'qt-mt',
+                  'Qt5Core',
+                  'Qt5Gui',
+                  'Qt5Widgets',
+                  'Qt5OpenGL',
                   'xerces-c',
                   'GL'])
 
@@ -326,7 +329,8 @@ images = [
   'images/timemachine-off.png'
 ]
 
-qtcpps = env.qtFiles(uifiles, hmocfiles, images, 'fusion')
+#qtcpps = env.qtFiles(uifiles, hmocfiles, images, 'fusion')
+qtcpps = env.qtFiles(uifiles, hmocfiles, None, 'fusion')
 
 objs = map(lambda f: env.SharedObject(f), cpps) + [
     env['BUILDDATE'],

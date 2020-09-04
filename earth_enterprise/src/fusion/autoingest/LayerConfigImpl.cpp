@@ -66,7 +66,7 @@ bool LayerConfig::ValidateIconPresence(QString* message) const
     if (disp->site.style.icon.type == IconReference::External) {
       std::string path = khEnsureExtension(
           khComposePath(IconReference::CustomIconPath(),
-                        disp->site.style.icon.href), ".png");
+                        disp->site.style.icon.href.toStdString()), ".png");
       if (!khExists(path)) {
         *message += "- Label icon missing: \"" + disp->site.style.icon.href + "\"\n";
       }
@@ -76,7 +76,7 @@ bool LayerConfig::ValidateIconPresence(QString* message) const
   if (defaultLocale.icon_.GetValue().type == IconReference::External) {
     std::string path = khEnsureExtension(
         khComposePath(IconReference::CustomIconPath(),
-                      defaultLocale.icon_.GetValue().href), ".png");
+                      defaultLocale.icon_.GetValue().href.toStdString()), ".png");
     if (!khExists(path)) {
       *message += "- Layer icon missing: \"" + defaultLocale.icon_.GetValue().href + "\"\n";
     }
@@ -87,14 +87,14 @@ bool LayerConfig::ValidateIconPresence(QString* message) const
     if (it->second.icon_.GetValue().type == IconReference::External) {
       std::string path = khEnsureExtension(
           khComposePath(IconReference::CustomIconPath(),
-                        it->second.icon_.GetValue().href), ".png");
+                        it->second.icon_.GetValue().href.toStdString()), ".png");
       if (!khExists(path)) {
         *message += "- Layer icon missing: \"" + it->second.icon_.GetValue().href + "\"\n";
       }
     }
   }
 
-  return message->length() == orig_msg_length;
+  return message->length() == static_cast<int>(orig_msg_length);
 }
 
 std::string

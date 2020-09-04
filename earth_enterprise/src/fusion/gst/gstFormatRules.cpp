@@ -16,7 +16,7 @@
 #include <gstFormatRules.h>
 #include <notify.h>
 #include <vector>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 #include <khFileUtils.h>
 
 gstFormatRules *theFormatRules = NULL;
@@ -67,7 +67,7 @@ QString gstFormatRules::reformat(const QString &input) const {
 
   // strip white space at beginning and end
   // replace any sequence of white space with a single space.
-  QString outval = input.lower().simplifyWhiteSpace();
+  QString outval = input.toLower().simplified();
   if (outval.isEmpty())
     return outval;
 
@@ -82,8 +82,8 @@ QString gstFormatRules::reformat(const QString &input) const {
       return QString();
   }
 
-  QStringList fields = QStringList::split(' ', outval);
-  outval.setLength(0);
+  QStringList fields = QString(outval).split(' ');
+  //outval.setLength(0);
   for (QStringList::Iterator it = fields.begin(); it != fields.end(); ++it) {
     QString curr_word = *it;
     bool word_done = false;
@@ -91,7 +91,7 @@ QString gstFormatRules::reformat(const QString &input) const {
     // any word that starts with a number should be capitalized
     // QCharRef first = curr_word[ 0 ];
     if (curr_word[ 0 ].isDigit()) {
-      curr_word = curr_word.upper();
+      curr_word = curr_word.toUpper();
       word_done = true;
     }
 
@@ -101,7 +101,7 @@ QString gstFormatRules::reformat(const QString &input) const {
       for (std::vector<QString>::const_iterator cap = rule.allcapsList.begin();
            cap != rule.allcapsList.end(); ++cap) {
         if (curr_word == (*cap)) {
-          curr_word = curr_word.upper();
+          curr_word = curr_word.toUpper();
           word_done = true;
           break;
         }
@@ -110,28 +110,28 @@ QString gstFormatRules::reformat(const QString &input) const {
 
     if (!word_done) {
       QCharRef first = curr_word[0];
-      first = first.upper();
+      first = first.isUpper();
 
       // handle prefixes
       for (std::vector<QString>::const_iterator pfx = rule.prefixList.begin();
            pfx != rule.prefixList.end(); ++pfx) {
-        if (curr_word.startsWith(*pfx, false) &&
+        if (curr_word.startsWith(*pfx) &&
             curr_word.length() > pfx->length()) {
           QCharRef up = curr_word[pfx->length()];
-          up = up.upper();
+          up = up.isUpper();
         }
       }
 
       // look for hyphens, and capitalize the character immediately following
-      int pos = curr_word.find('-');
+      int pos = curr_word.indexOf('-');
       while (pos != -1) {
         // point to char immediately after hyphen, testing for end of string
-        if (uint(++pos) >= curr_word.length())
+        if (++pos >= curr_word.length())
           break;
         QCharRef up = curr_word[pos];
-        up = up.upper();
+        up = up.isUpper();
         // find the next hyphen
-        pos = curr_word.find('-', pos);
+        pos = curr_word.indexOf('-', pos);
       }
     }
 

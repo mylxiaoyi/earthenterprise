@@ -98,7 +98,7 @@ main(int argc, char *argv[]) {
     }
     QString qlayername = QString::fromUtf8(layername.c_str());
     qlayername.replace("&#47;", "/");
-    layername = qlayername.utf8();
+    layername = qlayername.toUtf8().data();
     if (project.empty()) {
       usage(progname, "--project not specified");
     }
@@ -124,7 +124,7 @@ main(int argc, char *argv[]) {
     for (std::vector<LayerConfig>::iterator layer = vconfig.layers.begin();
          layer != vconfig.layers.end(); ++layer) {
       if (((layerid != 0) && (layer->channelId == layerid)) ||
-          (layer->DefaultNameWithPath() == layername)) {
+          (layer->DefaultNameWithPath().toStdString() == layername)) {
 
         layer->ApplyTemplate(tmplConfig, applyDisplayRules, applyLegend);
 
@@ -137,7 +137,7 @@ main(int argc, char *argv[]) {
           QString error;
           if (!khAssetManagerProxy::VectorProjectEdit(request, error)) {
             notify(NFY_WARN, "Unable to save project: %s", project.c_str());
-            notify(NFY_FATAL, "  REASON: %s", error.latin1());
+            notify(NFY_FATAL, "  REASON: %s", error.toLatin1().data());
           }
         }
         return 0;

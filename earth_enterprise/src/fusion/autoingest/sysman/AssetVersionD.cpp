@@ -522,7 +522,7 @@ AssetVersionImplD::Clean(void)
   if (!OkToClean(&wouldbreak)) {
     throw khException
       (kh::tr("Unable to clean '%1'.\nIt would break the following:\n")
-       .arg(GetRef().toString()) +
+       .arg(QString(GetRef().toString().c_str())).toStdString() +
        join<std::vector<std::string>::iterator>(wouldbreak.begin(), wouldbreak.end(), "\n"));
   }
 

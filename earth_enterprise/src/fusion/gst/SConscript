@@ -125,7 +125,7 @@ gegst = env.sharedLib('gegst', sources,
 
 gesimpleearthstream = env.sharedLib('gesimpleearthstream',
                                     simple_earthstream_sources,
-                                    LIBS=['curl', 'qt-mt'])
+                                    LIBS=['curl', 'Qt5Core'])
 
 # unit tests
 sources_unittest = ['gstUnitTestUtils.cpp']
@@ -135,22 +135,22 @@ gstunittest = env.sharedLib('gstunittest',
                              LIBS=['gtest', 'gegst', 'gecommon'])
 
 env.test('gstGeode_unittest', 'gstGeode_unittest.cpp',
-         LIBS=['gegst', 'gtest', 'sgl', 'gif', 'png12', 'jpeg', 'freetype', 'geos',
-               'geutil', 'gecommon'])
+         LIBS=['gegst', 'gtest', 'sgl', 'gif', 'png', 'jpeg', 'freetype', 'geos',
+               'geutil', 'gecommon', 'Qt5Core'])
 env.test('gstPolygonUtils_unittest', 'gstPolygonUtils_unittest.cpp',
-         LIBS=['gegst', 'gtest', 'sgl', 'gif', 'png12', 'jpeg', 'freetype', 'geos'])
+         LIBS=['gegst', 'gtest', 'sgl', 'gif', 'png', 'jpeg', 'freetype', 'geos'])
 
 env.test('gstGeomUtils_unittest', 'gstGeomUtils_unittest.cpp',
-         LIBS=['gstunittest', 'gegst', 'gtest'])
+         LIBS=['gstunittest', 'gegst', 'gtest', 'Qt5Core'])
 
 env.test('gstPolygonClipper2_unittest', 'gstPolygonClipper2_unittest.cpp',
-         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon'])
+         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon', 'Qt5Core'])
 
 env.test('gstGeometryChecker_unittest', 'gstGeometryChecker_unittest.cpp',
-         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon'])
+         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon', 'Qt5Core'])
 
 env.test('gstPolygonCleaner_unittest', 'gstPolygonCleaner_unittest.cpp',
-         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon'])
+         LIBS=['gstunittest', 'gegst', 'gtest', 'gecommon', 'Qt5Core'])
 
 
 

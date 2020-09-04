@@ -14,8 +14,8 @@
 // limitations under the License.
 
 
-#include <qspinbox.h>
-#include <qlabel.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qlabel.h>
 #include <khTileAddr.h>
 #include <autoingest/Misc.h>
 #include <gstMisc.h>
@@ -24,9 +24,9 @@
 #include "RasterLayerProperties.h"
 
 RasterLayerProperties::RasterLayerProperties( QWidget* parent, const InsetStackItem &cfg, AssetDefs::Type type )
-    : RasterLayerPropertiesBase( parent, 0, false, 0 )
+    //: RasterLayerPropertiesBase( parent, 0, false, 0 )
 {
-  unsigned int startlevel = 0;
+  /*unsigned int startlevel = 0;
   if ( type == AssetDefs::Imagery ) {
     fromPixel = ProductToImageryLevel;
     toPixel = ImageryToProductLevel;
@@ -66,7 +66,7 @@ RasterLayerProperties::RasterLayerProperties( QWidget* parent, const InsetStackI
     peerGroupSpin->hide();
     peerGroupLabel->hide();
   }
-#endif
+#endif*/
 
 }
 
@@ -80,7 +80,7 @@ InsetStackItem RasterLayerProperties::getConfig() const
   //   inset's max level
   // GetInsetLevels() extracts the inset's min/max level from the inset
 
-  cfg.dataAsset = assetNameLabel->text().latin1();
+  /*cfg.dataAsset = assetNameLabel->text().latin1();
 
   unsigned int insetmin = 0;
   unsigned int insetmax = 0;
@@ -99,7 +99,7 @@ InsetStackItem RasterLayerProperties::getConfig() const
     cfg.maxlevel = insetmax;
   } else if (cfg.maxlevel < insetmin) {
     cfg.maxlevel = insetmin;
-  }
+  }*/
 
   return cfg;
 }

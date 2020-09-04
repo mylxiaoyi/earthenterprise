@@ -21,7 +21,7 @@
 #include <providereditbase.h>
 #include <autoingest/.idl/gstProvider.h>
 
-class ProviderEdit : public ProviderEditBase {
+class ProviderEdit : public Ui::ProviderEditBase {
  public:
   ProviderEdit(QWidget* parent);
   int configure(const gstProvider&);

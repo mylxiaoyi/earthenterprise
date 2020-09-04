@@ -18,14 +18,14 @@
 #ifndef _DataViewTable_h_
 #define _DataViewTable_h_
 
-#include <qtable.h>
-#include <qintdict.h>
+#include <QtWidgets/qtableview.h>
+//#include <qintdict.h>
 #include <gstValue.h>
 
 class gstSelector;
 
 
-class DataViewTable : public QTable {
+class DataViewTable : public QTableView {
  public:
   DataViewTable(QWidget* parent = 0, const char* name = 0);
   ~DataViewTable();
@@ -34,8 +34,8 @@ class DataViewTable : public QTable {
   virtual void columnClicked(int col);
 
   virtual void resizeData(int sz) {}
-  virtual QTableItem* item(int r, int c) const { return NULL; }
-  virtual void setItem(int r, int c, QTableItem* i) {}
+  //virtual QTableItem* item(int r, int c) const { return NULL; }
+  //virtual void setItem(int r, int c, QTableItem* i) {}
   virtual void clearCell(int r, int c) {}
 
   virtual QWidget* createEditor(int r, int col, bool initFromCell) const {
@@ -46,8 +46,8 @@ class DataViewTable : public QTable {
 
   virtual QWidget* cellWidget(int r, int c) const { return NULL; }
 
-  virtual void paintCell(QPainter *p, int r, int c,
-                         const QRect& cr, bool sel, const QColorGroup& cg);
+  //virtual void paintCell(QPainter *p, int r, int c,
+  //                       const QRect& cr, bool sel, const QColorGroup& cg);
 
   void setSelector(gstSelector* sel);
 

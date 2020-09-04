@@ -20,12 +20,17 @@
 #define KHSRC_FUSION_FUSIONUI_PREFERENCES_H__
 
 #include <string>
+#include <QtWidgets/QDialog>
 
 #include "preferencesbase.h"
 #include <fusionui/.idl/preferences.h>
 #include <fusionui/.idl/layoutpersist.h>
 
-class Preferences : public PreferencesBase {
+namespace Ui {
+    class PreferencesBase;
+}
+
+class Preferences : public QDialog {
  public:
   Preferences(QWidget* parent);
   static void init();
@@ -60,6 +65,7 @@ class Preferences : public PreferencesBase {
                                        const std::string& server_name);
 
  private:
+  Ui::PreferencesBase *ui;
   // inherited from QDialog
   virtual void accept();
 

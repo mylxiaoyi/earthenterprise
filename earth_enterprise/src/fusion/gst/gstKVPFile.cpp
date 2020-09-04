@@ -447,11 +447,11 @@ gstStatus gstKVPFormat::OpenFile() {
   if (configName.endsWith(QString(".kvp")))
     configName = configName + "/";
   if (configName.endsWith(QString(".kvp/")))
-    configName = configName + kHeaderXmlFile;
+    configName = configName + QString::fromStdString(kHeaderXmlFile);
 
   gstKVPAsset kvpasset;
-  if (!kvpasset.Load(configName.latin1())) {
-    notify(NFY_WARN, "Error opening %s: %s", FormatName(), configName.latin1());
+  if (!kvpasset.Load(configName.toStdString())) {
+    notify(NFY_WARN, "Error opening %s: %s", FormatName(), configName.toStdString().c_str());
     return GST_OPEN_FAIL;
   }
 
@@ -468,7 +468,7 @@ gstStatus gstKVPFormat::OpenFile() {
     const char* fname = (*it).file.c_str();
     gstFileInfo fi(fname);
     if (fi.status() != GST_OKAY) {
-      fi = gstFileInfo(gstFileInfo(configName.latin1()).dirName(), fname);
+      fi = gstFileInfo(gstFileInfo(configName.toStdString().c_str()).dirName(), fname);
       if (fi.status() != GST_OKAY) {
         notify(NFY_WARN, "Unable to find source: %s", fname);
         continue;

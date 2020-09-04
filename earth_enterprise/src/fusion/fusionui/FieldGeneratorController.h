@@ -22,7 +22,7 @@
 #include "fusion/fusionui/WidgetControllers.h"
 #include "fusion/gst/gstSourceManager.h"
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 class QComboBox;
 class QLineEdit;

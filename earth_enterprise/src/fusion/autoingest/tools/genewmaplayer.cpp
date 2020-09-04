@@ -144,7 +144,7 @@ main(int argc, char *argv[]) {
     IconReference& icon =
         req.config.legend.defaultLocale.icon.GetMutableValue();
     IconReference::CheckIconExistence(icon_name, &icon.type);
-    icon.href = icon_name;
+    icon.href = QString(icon_name.c_str());
     if (debug) {
       std::string reqstr;
       req.SaveToString(reqstr, "");
@@ -152,7 +152,7 @@ main(int argc, char *argv[]) {
     } else {
       QString error;
       if (!(*cmd)(req, error, 0 /* timeout */)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
     }
   } catch(const std::exception &e) {

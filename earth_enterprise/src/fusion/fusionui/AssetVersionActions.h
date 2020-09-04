@@ -26,9 +26,9 @@ For history see CVS log (cvs log AssetVersionActions.h -or- Emacs Ctrl-xvl).
 #define __AssetVersionActions_h
 
 
-#include <qaction.h>
-#include <qobject.h>
-#include <qpopupmenu.h>
+#include <QtWidgets/qaction.h>
+#include <QtCore/qobject.h>
+#include <QtWidgets/qmenu.h>
 
 class AssetVersionActions : public QObject
 {
@@ -53,7 +53,7 @@ class AssetVersionActions : public QObject
   void clearbad(void);
 
   AssetVersionActions(QWidget *parent, const std::string &ref);
-  bool Contribute(QPopupMenu *menu);
+  bool Contribute(QMenu *menu);
   void handle(int item);
 };
 

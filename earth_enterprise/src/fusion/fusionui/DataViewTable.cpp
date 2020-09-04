@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#include <qpainter.h>
-#include <qmessagebox.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include <gstSelector.h>
 #include <gstSourceManager.h>
@@ -24,27 +24,27 @@
 
 
 DataViewTable::DataViewTable(QWidget* parent, const char* name)
-    : QTable(parent, name), sort_column_(-1), selector_(NULL) {
-  setNumRows(0);
+    : QTableView(parent), sort_column_(-1), selector_(NULL) {
+  /*setNumRows(0);
   setNumCols(0);
   setShowGrid(true);
   setSelectionMode(QTable::MultiRow);
-  setSorting(true);
+  setSorting(true);*/
 }
 
 DataViewTable::~DataViewTable() {
 }
 
 void DataViewTable::setSelector(gstSelector* sel) {
-  selector_ = sel;
+  //selector_ = sel;
 
-  const SelectList &flist = selector_->pickList();
-  setNumRows(flist.size());
+  //const SelectList &flist = selector_->pickList();
+  //setNumRows(flist.size());
 }
 
 
 void DataViewTable::columnClicked(int col) {
-  if (col == sort_column_) {
+  /*if (col == sort_column_) {
     sort_ascending_ = !sort_ascending_;
   } else {
     sort_ascending_ = true;
@@ -52,12 +52,12 @@ void DataViewTable::columnClicked(int col) {
   }
 
   horizontalHeader()->setSortIndicator(col, sort_ascending_);
-  sortColumn(sort_column_, sort_ascending_, true);
+  sortColumn(sort_column_, sort_ascending_, true);*/
 }
 
 
 void DataViewTable::sortColumn(int col, bool ascending, bool wholeRows) {
-  if (selector_ == NULL)
+  /*if (selector_ == NULL)
     return;
 
   try {
@@ -89,11 +89,11 @@ void DataViewTable::sortColumn(int col, bool ascending, bool wholeRows) {
                          tr("Error sorting column:\n") +
                          "Unknown error",
                          QObject::tr("OK"), 0, 0, 0);
-  }
+  }*/
 }
 
 
-void DataViewTable::paintCell(QPainter* painter, int row, int col,
+/*void DataViewTable::paintCell(QPainter* painter, int row, int col,
                               const QRect& cr, bool selected, const QColorGroup& cg) {
   if (selector_ == NULL || row < 0 || col < 0)
     return;
@@ -177,4 +177,4 @@ void DataViewTable::paintCell(QPainter* painter, int row, int col,
   QRect text_rect(added_cell_margin, 0, cr.width() - added_cell_margin, cr.height());
 
   painter->drawText(text_rect, tf, val->ValueAsUnicode());
-}
+}*/

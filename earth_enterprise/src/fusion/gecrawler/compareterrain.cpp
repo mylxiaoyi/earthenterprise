@@ -56,7 +56,7 @@ bool CompareTerrainPackets(EndianReadBuffer *buffer1,
       success = false;
     }
   }
-  catch (khSimpleException ex) {
+  catch (khSimpleException &ex) {
     *snippet << geterrain::kLinePrefix << "ERROR: Caught exception comparing mesh "
              << mesh_number << ": " << ex.what();
     success = false;

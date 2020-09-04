@@ -33,9 +33,9 @@ env.test('idl_tests',
           map(lambda n: '.idl/'+n+'.cpp', test_idlfiles),
           ],
          LIBS=['gexml', 'gecommon', 'geutil',
-               'QtCore', 'xerces-c', 'gtest'])
+               'Qt5Core', 'xerces-c', 'gtest', 'nss3'])
 
 env.test('khxml_unittest',
          'khxml_unittest.cpp',
-         LIBS=['geutil', 'xerces-c', 'png', 'qt-mt',
+         LIBS=['geutil', 'xerces-c', 'png', 'Qt5Core',
                'gexml', 'gecommon', 'gtest'])

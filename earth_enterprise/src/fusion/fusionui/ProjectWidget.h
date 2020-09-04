@@ -26,11 +26,15 @@ class QListViewItem;
 class ProjectLayerView;
 class LayerItemBase;
 
-class ProjectWidget : public ProjectWidgetBase {
+namespace Ui {
+    class ProjectWidgetBase;
+}
+
+class ProjectWidget : public QWidget {
  public:
   explicit ProjectWidget(QWidget* parent);
 
-  ProjectLayerView* ListView() { return layer_listview; }
+  ProjectLayerView* ListView() { return nullptr; }//layer_listview; }
   void HideGroupButton();
 
  protected:
@@ -73,6 +77,7 @@ class ProjectWidget : public ProjectWidgetBase {
   void SetOverlayTerrainResourcesMinLevelSpinbox(int val);
 
  private:
+  Ui::ProjectWidgetBase *ui;
   // inherited from ProjectWidgetBase
   virtual void AddLayer();
   virtual void AddGroup();

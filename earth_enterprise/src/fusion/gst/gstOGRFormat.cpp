@@ -801,7 +801,7 @@ gstStatus gstOGRSQLFormat::OpenFile(void) {
 
   // use OGR to create source dataset
   data_source_ = (GDALDataset *) GDALOpenEx((const char*)dbSource.
-                                            OGRDataSource.utf8(),
+                                            OGRDataSource.toStdString().c_str(),
                                             GDAL_OF_READONLY, NULL, NULL, NULL);
   if (!data_source_) {
     // more specific error already emitted to console
@@ -815,18 +815,18 @@ gstStatus gstOGRSQLFormat::OpenFile(void) {
   khDeleteGuard<OGRSpatialReference> newsrs;
   if (!dbSource.srsOverride.isEmpty()) {
     newsrs = TransferOwnership(new OGRSpatialReference());
-    InterpretSRSString((const char *)dbSource.srsOverride.utf8(), *newsrs);
+    InterpretSRSString(dbSource.srsOverride.toStdString().c_str(), *newsrs);
   }
 
   if (!dbSource.sql.isEmpty()) {
     // we have a sql query - run it and use its results as the only
     // layer
-    sqlOGRLayer = data_source_->ExecuteSQL((const char *)dbSource.sql.utf8(),
+    sqlOGRLayer = data_source_->ExecuteSQL(dbSource.sql.toStdString().c_str(),
                                            0, /* spatialFilter */
                                            0  /* sqlDialect */);
     if (!sqlOGRLayer) {
       notify(NFY_WARN, "Unable to execute SQL (%s) for DBSource (%s)",
-             (const char *)dbSource.sql.utf8(), name());
+             dbSource.sql.toStdString().c_str(), name());
       return GST_OPEN_FAIL;
     }
 

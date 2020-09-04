@@ -47,7 +47,7 @@
 #include "khgdal/khgdal.h"
 #include "khgdal/khGeoExtents.h"
 #include "khgdal/khGDALDataset.h"
-#include "vrtdataset.h"
+#include <gdal/vrtdataset.h>
 #include "khProgressMeter.h"
 #include "khraster/LevelRasterBand.h"
 #include "khFileUtils.h"

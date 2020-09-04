@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "fusion/fusionui/PublishDatabaseDialog.h"
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qpushbutton.h>
 #include "fusion/autoingest/AssetVersion.h"
 #include "fusion/autoingest/plugins/DatabaseAsset.h"
 #include "fusion/autoingest/plugins/MapDatabaseAsset.h"
@@ -29,9 +29,11 @@ PublishDatabaseDialog::PublishDatabaseDialog(
     QWidget* parent,
     const Asset& asset,
     const std::vector<QString>& nicknames)
-    : PublishDatabaseDialogBase(parent, 0, false, 0) {
+    : QDialog(parent), ui(new Ui::PublishDatabaseDialogBase) {
 
-  std::string database_name = shortAssetName(asset->GetRef().toString());
+  ui->setupUi(this);
+
+  /*std::string database_name = shortAssetName(asset->GetRef().toString());
   db_name_label->setText(database_name);
 
   std::vector<QString>::const_iterator nickname = nicknames.begin();
@@ -87,26 +89,26 @@ PublishDatabaseDialog::PublishDatabaseDialog(
 
   if (valid_versions_.size() > 0) {
     version_combo->setCurrentItem(0);
-  }
+  }*/
 }
 
 bool PublishDatabaseDialog::HasValidVersions() {
-  return (!valid_versions_.empty());
+  return false;//(!valid_versions_.empty());
 }
 
 QString PublishDatabaseDialog::GetSelectedNickname() {
-  return nickname_combo->currentText();
+  return "";//nickname_combo->currentText();
 }
 
 int PublishDatabaseDialog::GetSelectedCombination() {
-  return nickname_combo->currentItem();
+  return 0;//nickname_combo->currentItem();
 }
 
 std::string PublishDatabaseDialog::GetSelectedVersion() {
-  return valid_versions_[version_combo->currentItem()];
+  return "";//valid_versions_[version_combo->currentItem()];
 }
 
 std::string PublishDatabaseDialog::GetTargetPath() {
-  return target_path_edit->text();
+  return "";//target_path_edit->text();
 }
 

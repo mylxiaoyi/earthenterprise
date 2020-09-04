@@ -15,7 +15,7 @@
  */
 
 
-#include <qwidget.h>
+#include <QtWidgets/qwidget.h>
 
 class QSlider;
 class QLineEdit;

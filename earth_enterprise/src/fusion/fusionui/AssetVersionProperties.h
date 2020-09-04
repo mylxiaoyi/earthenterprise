@@ -18,7 +18,7 @@
 #ifndef _AssetVersionProperties_h_
 #define _AssetVersionProperties_h_
 
-#include <qlistview.h>
+#include <QtWidgets/qlistview.h>
 #include <string>
 #include <map>
 #include "assetversionpropertiesbase.h"
@@ -26,17 +26,21 @@
 #include "SystemListener.h"
 #include "AssetVersionActions.h"
 
+namespace Ui {
+    class AssetVersionPropertiesBase;
+}
+
 
 #define ASSET_CHILD 0x00ff0001
 #define ASSET_INPUT 0x00ff0002
 
-class AssetChildItem : public QListViewItem, public AssetWatcher
+class AssetChildItem : public QWidget, public AssetWatcher
 {
  public:
   AssetChildItem( QListView *parent, const AssetVersion &ver);
-  AssetChildItem( QListViewItem *parent, const AssetVersion &ver, const std::string &msg);
+  AssetChildItem( QWidget *parent, const AssetVersion &ver, const std::string &msg);
 
-  void paintCell( QPainter *p, const QColorGroup &cg, int col, int width, int align );
+  //void paintCell( QPainter *p, const QColorGroup &cg, int col, int width, int align );
 
   std::string getVersionRef() const;
 
@@ -51,7 +55,7 @@ class AssetChildItem : public QListViewItem, public AssetWatcher
 
 // ------------------------------------------------------------------------
 
-class AssetVersionProperties : public AssetVersionPropertiesBase
+class AssetVersionProperties : public QDialog 
 {
   Q_OBJECT
 
@@ -62,7 +66,7 @@ class AssetVersionProperties : public AssetVersionPropertiesBase
 
   void refresh();
 
-  void clicked( QListViewItem *item, const QPoint & pos, int col );
+  //void clicked( QListViewItem *item, const QPoint & pos, int col );
 
   static void Open(const std::string &verref);
  private:
@@ -72,7 +76,9 @@ class AssetVersionProperties : public AssetVersionPropertiesBase
   typedef std::map<std::string, AssetVersionProperties*> VerPropMap;
   static VerPropMap openverprops;
 public slots:
-void rmbClicked( QListViewItem *item, const QPoint &pos, int );
+//void rmbClicked( QListViewItem *item, const QPoint &pos, int );
+ private:
+  Ui::AssetVersionPropertiesBase *ui;
 };
 
 #endif // !_AssetVersionProperties_h_

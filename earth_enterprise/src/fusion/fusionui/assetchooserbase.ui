@@ -1,304 +1,277 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>AssetChooserBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
 </comment>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>AssetChooserBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>AssetChooserBase</class>
+  <widget class="QDialog" name="AssetChooserBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>633</width>
-            <height>469</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>633</width>
+        <height>469</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Save</string>
+    <property name="windowTitle">
+      <string>Save</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QComboBox" row="0" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>ancestryCombo</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
+    <layout class="QGridLayout">
+      <item row="0" column="0" rowspan="1" colspan="3">
+        <widget class="QComboBox" name="ancestryCombo">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
         </widget>
-        <widget class="QLayoutWidget" row="4" column="0" rowspan="1" colspan="5">
-            <property name="name">
-                <cstring>layout47</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer26</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>251</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>ok_btn</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Open</string>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>cancel_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Cancel</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLineEdit" row="2" column="1" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>nameEdit</cstring>
-            </property>
-        </widget>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>textLabel2</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>5</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Name:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="3" column="0">
-            <property name="name">
-                <cstring>textLabel2_2</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>5</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Type:</string>
-            </property>
-        </widget>
-        <widget class="QComboBox" row="3" column="1">
-            <property name="name">
-                <cstring>filterCombo</cstring>
-            </property>
-        </widget>
-        <spacer row="3" column="2" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>spacer4</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
+      </item>
+      <item row="4" column="0" rowspan="1" colspan="5">
+        <layout class="QHBoxLayout">
+          <item>
+            <spacer name="spacer26">
+              <property name="sizeHint">
                 <size>
-                    <width>371</width>
-                    <height>20</height>
+                  <width>251</width>
+                  <height>20</height>
                 </size>
-            </property>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="ok_btn">
+              <property name="enabled">
+                <bool>false</bool>
+              </property>
+              <property name="text">
+                <string>Open</string>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="cancel_btn">
+              <property name="text">
+                <string>Cancel</string>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="2" column="1" rowspan="1" colspan="4">
+        <widget class="QLineEdit" name="nameEdit"/>
+      </item>
+      <item row="2" column="0">
+        <widget class="QLabel" name="textLabel2">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>5</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string>Name:</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="3" column="0">
+        <widget class="QLabel" name="textLabel2_2">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>5</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string>Type:</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="3" column="1">
+        <widget class="QComboBox" name="filterCombo"/>
+      </item>
+      <item row="3" column="2" rowspan="1" colspan="3">
+        <spacer name="spacer4">
+          <property name="sizeHint">
+            <size>
+              <width>371</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+          </property>
         </spacer>
-        <widget class="QPushButton" row="0" column="3">
-            <property name="name">
-                <cstring>cdtoparentBtn</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-            <property name="pixmap">
-                <pixmap>cdtoparent.xpm</pixmap>
-            </property>
+      </item>
+      <item row="0" column="3">
+        <widget class="QPushButton" name="cdtoparentBtn">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="icon">
+            <pixmap>cdtoparent.xpm</pixmap>
+          </property>
         </widget>
-        <widget class="QPushButton" row="0" column="4">
-            <property name="name">
-                <cstring>new_dir_btn</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-            <property name="pixmap">
-                <pixmap>newfolder.xpm</pixmap>
-            </property>
+      </item>
+      <item row="0" column="4">
+        <widget class="QPushButton" name="new_dir_btn">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="icon">
+            <pixmap>newfolder.xpm</pixmap>
+          </property>
         </widget>
-        <widget class="QIconView" row="1" column="0" rowspan="1" colspan="5">
-            <property name="name">
-                <cstring>iconView</cstring>
-            </property>
-            <property name="spacing">
-                <number>2</number>
-            </property>
-            <property name="itemTextPos">
-                <enum>Right</enum>
-            </property>
-            <property name="arrangement">
-                <enum>TopToBottom</enum>
-            </property>
-            <property name="resizeMode">
-                <enum>Adjust</enum>
-            </property>
-            <property name="maxItemWidth">
-                <number>500</number>
-            </property>
-            <property name="itemsMovable">
-                <bool>false</bool>
-            </property>
-            <property name="wordWrapIconText">
-                <bool>false</bool>
-            </property>
+      </item>
+      <item row="1" column="0" rowspan="1" colspan="5">
+        <widget class="QLabel" name="iconView">
+            <!--<property name="spacing">
+            <number>2</number>
+          </property>
+          <property name="itemTextPos">
+            <enum>Q3IconView::Right</enum>
+          </property>
+          <property name="arrangement">
+            <enum>Q3IconView::TopToBottom</enum>
+          </property>
+          <property name="resizeMode">
+            <enum>Q3IconView::Adjust</enum>
+          </property>
+          <property name="maxItemWidth">
+            <number>500</number>
+          </property>
+          <property name="itemsMovable">
+            <bool>false</bool>
+          </property>
+          <property name="wordWrapIconText">
+            <bool>false</bool>
+          </property>-->
         </widget>
-    </grid>
-</widget>
-<connections>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <connections>
     <connection>
-        <sender>cancel_btn</sender>
-        <signal>released()</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>reject()</slot>
+      <sender>cancel_btn</sender>
+      <signal>released()</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>reject()</slot>
     </connection>
     <connection>
-        <sender>ok_btn</sender>
-        <signal>released()</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>accept()</slot>
+      <sender>ok_btn</sender>
+      <signal>released()</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>accept()</slot>
     </connection>
     <connection>
-        <sender>iconView</sender>
-        <signal>doubleClicked(QIconViewItem*)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>chooseItem(QIconViewItem*)</slot>
+      <sender>iconView</sender>
+      <signal>doubleClicked(Q3IconViewItem*)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>chooseItem(Q3IconViewItem*)</slot>
     </connection>
     <connection>
-        <sender>cdtoparentBtn</sender>
-        <signal>released()</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>cdtoparent()</slot>
+      <sender>cdtoparentBtn</sender>
+      <signal>released()</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>cdtoparent()</slot>
     </connection>
     <connection>
-        <sender>ancestryCombo</sender>
-        <signal>activated(const QString&amp;)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>chooseAncestor(const QString&amp;)</slot>
+      <sender>ancestryCombo</sender>
+      <signal>activated(QString)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>chooseAncestor(QString)</slot>
     </connection>
     <connection>
-        <sender>iconView</sender>
-        <signal>returnPressed(QIconViewItem*)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>chooseItem(QIconViewItem*)</slot>
+      <sender>iconView</sender>
+      <signal>returnPressed(Q3IconViewItem*)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>chooseItem(Q3IconViewItem*)</slot>
     </connection>
     <connection>
-        <sender>iconView</sender>
-        <signal>currentChanged(QIconViewItem*)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>selectItem(QIconViewItem*)</slot>
+      <sender>iconView</sender>
+      <signal>currentChanged(Q3IconViewItem*)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>selectItem(Q3IconViewItem*)</slot>
     </connection>
     <connection>
-        <sender>iconView</sender>
-        <signal>selectionChanged(QIconViewItem*)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>selectItem(QIconViewItem*)</slot>
+      <sender>iconView</sender>
+      <signal>selectionChanged(Q3IconViewItem*)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>selectItem(Q3IconViewItem*)</slot>
     </connection>
     <connection>
-        <sender>nameEdit</sender>
-        <signal>textChanged(const QString&amp;)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>nameChanged(const QString&amp;)</slot>
+      <sender>nameEdit</sender>
+      <signal>textChanged(QString)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>nameChanged(QString)</slot>
     </connection>
     <connection>
-        <sender>nameEdit</sender>
-        <signal>returnPressed()</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>accept()</slot>
+      <sender>nameEdit</sender>
+      <signal>returnPressed()</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>accept()</slot>
     </connection>
     <connection>
-        <sender>filterCombo</sender>
-        <signal>activated(const QString&amp;)</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>chooseFilter(const QString&amp;)</slot>
+      <sender>filterCombo</sender>
+      <signal>activated(QString)</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>chooseFilter(QString)</slot>
     </connection>
     <connection>
-        <sender>new_dir_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>AssetChooserBase</receiver>
-        <slot>NewDirectory()</slot>
+      <sender>new_dir_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>AssetChooserBase</receiver>
+      <slot>NewDirectory()</slot>
     </connection>
-</connections>
-<slots>
-    <slot>selectItem( QIconViewItem * )</slot>
-    <slot>chooseItem( QIconViewItem * )</slot>
-    <slot>cdtoparent()</slot>
-    <slot>chooseAncestor( const QString &amp; )</slot>
-    <slot>nameChanged( const QString &amp; )</slot>
-    <slot>chooseFilter( const QString &amp;)</slot>
-    <slot>NewDirectory()</slot>
-</slots>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </connections>
+</ui>

@@ -22,7 +22,7 @@
 #include <khArray.h>
 #include <gstValue.h>
 
-#include <qstring.h>
+#include <QtCore/qstring.h>
 
 class gstRegistry {
  public:

@@ -20,11 +20,11 @@
 #ifndef FUSION_FUSIONUI_WIDGETCONTROLLERS_H__
 #define FUSION_FUSIONUI_WIDGETCONTROLLERS_H__
 
-#include <qobject.h>
+#include <QtCore/qobject.h>
 #include <khGuard.h>
 #include <geRange.h>
-#include <qcombobox.h>
-#include <qwidgetstack.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/QStackedWidget>
 #include <khMetaData.h>
 #include <gstSite.h>
 
@@ -498,7 +498,7 @@ class EnumStackController : public ComboController {
  public:
   static std::vector<WidgetControllerManager*>
   Create(WidgetControllerManager &manager,
-                     QComboBox *combo, QWidgetStack *stack,
+                     QComboBox *combo, QStackedWidget *stack,
                      Enum *config, const ComboContents &contents)
   {
     EnumStackController *tmp =
@@ -513,16 +513,16 @@ class EnumStackController : public ComboController {
   }
  protected:
   virtual void SyncToWidgetsImpl(void) {
-    intConfig = static_cast<int>(*config);
+    /*intConfig = static_cast<int>(*config);
     ComboController::DoSyncToWidgets();
     for (unsigned int i = 0; i < subManagers.size(); ++i) {
       subManagers[i]->SyncToWidgets();
     }
-    stack->raiseWidget(intConfig);
+    stack->raiseWidget(intConfig);*/
   }
 
   EnumStackController(WidgetControllerManager &manager,
-                      QComboBox *combo_, QWidgetStack *stack_,
+                      QComboBox *combo_, QStackedWidget *stack_,
                       Enum *config_,
                       const ComboContents &contents_) :
       ComboController(manager, combo_,
@@ -533,7 +533,7 @@ class EnumStackController : public ComboController {
       // intConfig already initialized
       stack(stack_)
   {
-    subManagerOwner.reserve(contents_.size());
+    /*subManagerOwner.reserve(contents_.size());
     subManagers.reserve(contents_.size());
     for (unsigned int i = 0; i < contents_.size(); ++i) {
       subManagerOwner.push_back(
@@ -545,12 +545,12 @@ class EnumStackController : public ComboController {
       subManagers.push_back(subManagerOwner.back());
     }
     stack->raiseWidget(intConfig);
-    connect(combo, SIGNAL(activated(int)), stack, SLOT(raiseWidget(int)));
+    connect(combo, SIGNAL(activated(int)), stack, SLOT(raiseWidget(int)));*/
   }
 
   Enum     *config;
   int      intConfig;
-  QWidgetStack *stack;
+  QStackedWidget *stack;
   khDeletingVector<WidgetControllerManager> subManagerOwner;
   std::vector<WidgetControllerManager*> subManagers;
 };

@@ -83,7 +83,7 @@ main(int argc, char *argv[]) {
     for (; argn < argc; ++argn) {
       req.items.push_back
         (VectorProjectDropFromRequest::Item
-         (std::string(),                              // layerName
+         (QString(),                              // layerName
           AssetDefs::NormalizeAssetName(argv[argn],
                                         AssetDefs::Vector,
                                         kProductSubtype))); // assetRef
@@ -92,7 +92,7 @@ main(int argc, char *argv[]) {
          ln != layernames.end(); ++ln) {
       req.items.push_back
         (VectorProjectDropFromRequest::Item
-         (*ln,                // layerName
+         (QString((*ln).c_str()),                // layerName
           std::string()));    // assetRef
     }
 
@@ -109,7 +109,7 @@ main(int argc, char *argv[]) {
     } else {
       QString error;
       if (!khAssetManagerProxy::VectorProjectDropFrom(req, error)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
     }
   } catch (const std::exception &e) {

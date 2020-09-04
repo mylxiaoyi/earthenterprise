@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#include <qcombobox.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include "SearchFieldDialog.h"
 #include <autoingest/.idl/storage/SearchField.h>
@@ -25,8 +25,8 @@ static QString InsertFieldTxt(QObject::tr("Insert Field"));
 
 SearchFieldDialog::SearchFieldDialog(QWidget* parent,
                                      const QStringList available_fields)
-  : SearchFieldDialogBase(parent, 0, false, 0) {
-  field_use_combo->insertItem(
+  /*: SearchFieldDialogBase(parent, 0, false, 0)*/ {
+  /*field_use_combo->insertItem(
       SearchField::UseTypeToString(SearchField::SEARCH_ONLY));
 
   field_use_combo->insertItem(
@@ -38,13 +38,13 @@ SearchFieldDialog::SearchFieldDialog(QWidget* parent,
   for (QStringList::const_iterator it = available_fields.begin();
        it != available_fields.end(); ++it) {
     field_name_combo->insertItem(*it);
-  }
+  }*/
 }
 
 QString SearchFieldDialog::GetFieldName() {
-  return field_name_combo->currentText();
+  return "";//field_name_combo->currentText();
 }
 
 QString SearchFieldDialog::GetFieldUse() {
-  return field_use_combo->currentText();
+  return "";//field_use_combo->currentText();
 }

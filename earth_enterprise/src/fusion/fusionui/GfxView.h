@@ -19,8 +19,9 @@
 #ifndef _GfxView_h_
 #define _GfxView_h_
 
-#include <qgl.h>
-#include <qaction.h>
+//#include <QtOpenGL/qgl.h>
+#include <QtOpenGL/QGLWidget>
+#include <QtWidgets/qaction.h>
 
 #include <gstGeode.h>
 
@@ -50,7 +51,7 @@ class GfxView : public QGLWidget {
 
   static GfxView* instance;
 
-  GfxView(QWidget* parent, const char *name);
+  GfxView(QWidget* parent);//, const char *name);
   ~GfxView(void);
 
   gstDrawState* state() { return &state_; }
@@ -107,13 +108,13 @@ class GfxView : public QGLWidget {
   void latlonChanged(double, double);
   void drawVectors(const gstDrawState&);
   void drawLabels(QPainter*, const gstDrawState&);
-  void selectBox(const gstDrawState&, Qt::ButtonState);
+  void selectBox(const gstDrawState&, Qt::MouseButton);
   void drawstats(int, double, double);
   void renderbusy(int);
   void dropFile(const QString&);
   void contextMenu(QWidget* parent, const QPoint& pos);
 
-  void MousePress(const gstBBox& b, Qt::ButtonState);
+  void MousePress(const gstBBox& b, Qt::MouseButton);
   void MouseMove(const gstVertex& v);
   void MouseRelease();
 
@@ -154,8 +155,8 @@ class GfxView : public QGLWidget {
   void drawTileMessages(TexTile &tile);
 
  protected:
-  void dragEnterEvent(QDragEnterEvent *e);
-  void dropEvent(QDropEvent *e);
+  //void dragEnterEvent(QDragEnterEvent *e);
+  //void dropEvent(QDropEvent *e);
 
  private:
   int frame_num_;
@@ -174,7 +175,7 @@ class GfxView : public QGLWidget {
 
   DragBox drag_box_;
 
-  void selectFeatures(Qt::ButtonState);
+  void selectFeatures(Qt::MouseButton);
 
   double start_pan_[2];
   double start_scale_;

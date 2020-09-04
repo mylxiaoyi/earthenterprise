@@ -19,7 +19,7 @@
 #include <iostream>
 #include <sstream>
 #include <khFileUtils.h>
-#include <qstring.h>
+#include <QtCore/QString>
 #include <khException.h>
 #include <config/geCapabilities.h>
 
@@ -47,7 +47,7 @@ bool confirm(const std::string &msg, char dflt) {
 }
 
 bool confirm(const QString &msg, char dflt) {
-  return confirm((const char *)msg.utf8(), dflt);
+  return confirm(msg.toStdString(), dflt);
 }
 
 char
@@ -115,7 +115,7 @@ enterDirname(const std::string msg, const std::string &dflt,
       if (confirm(kh::tr(
 "%1 does not exist.\n"
 "Should this tool create it now")
-                  .arg(dir), 'Y')) {
+                  .arg(QString(dir.c_str())), 'Y')) {
         geCapabilitiesGuard cap_guard(
             CAP_DAC_OVERRIDE,     // let me read all files
             CAP_DAC_READ_SEARCH,  // let me traverse all dirs

@@ -21,7 +21,7 @@
 #include <autoingest/.idl/storage/SearchTabReference.h>
 #include "searchtabdetailsbase.h"
 
-class SearchTabDetails : public SearchTabDetailsBase {
+class SearchTabDetails : public Ui::SearchTabDetailsBase {
  public:
   SearchTabDetails(QWidget* parent, const SearchTabReference& ref);
 

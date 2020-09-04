@@ -16,7 +16,7 @@
 
 #include <cstdint>
 #include <string>
-#include <qstring.h>
+#include <QtCore/QString>
 #include <vector>
 #include <set>
 #include "LayerLegend.h"

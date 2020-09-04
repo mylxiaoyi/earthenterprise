@@ -17,7 +17,7 @@
 #ifndef KHSRC_FUSION_GST_GSTPROGRESS_H__
 #define KHSRC_FUSION_GST_GSTPROGRESS_H__
 
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <khThread.h>
 
 class gstProgress {

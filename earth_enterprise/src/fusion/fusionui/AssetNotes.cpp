@@ -13,23 +13,24 @@
 // limitations under the License.
 
 
-#include <qtextedit.h>
-#include <qdatetime.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtCore/qdatetime.h>
 
 #include "AssetNotes.h"
 
 AssetNotes::AssetNotes(QWidget* parent, const QString& text)
-  : AssetNotesBase(parent) {
-  notes_edit->setText(text);
-  notes_edit->setFocus();
-  notes_edit->setCursorPosition(0, 0);
+  : QDialog(parent), ui(new Ui::AssetNotesBase) {
+  ui->setupUi(this);
+  this->ui->notes_edit->setText(text);
+  this->ui->notes_edit->setFocus();
+  //this->ui->notes_edit->setCursorPosition(0, 0);
 }
 
 QString AssetNotes::GetText() const {
-  return notes_edit->text();
+  return this->ui->notes_edit->toPlainText();
 }
 
 void AssetNotes::Timestamp() {
   QDateTime now = QDateTime::currentDateTime();
-  notes_edit->insert(now.toString("yyyy-MM-dd hh:mm"));
+  this->ui->notes_edit->insertPlainText(now.toString("yyyy-MM-dd hh:mm"));
 }

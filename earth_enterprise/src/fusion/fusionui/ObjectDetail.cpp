@@ -16,9 +16,9 @@
 
 #include "fusion/fusionui/ObjectDetail.h"
 
-#include <qlabel.h>
-#include <qtable.h>
-#include <qheader.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qtableview.h>
+//#include <qheader.h>
 
 #include "fusion/fusionui/Preferences.h"
 
@@ -31,7 +31,7 @@ namespace {
 
 template<typename ParentView>
 void FillInGeodeData(ParentView *parent_view, const gstGeode *geode) {
-  QListViewItem* lastPartItem = 0;
+  /*QListViewItem* lastPartItem = 0;
   for (unsigned int part = 0; part < geode->NumParts(); ++part) {
     QListViewItem* partItem =
         new QListViewItem(parent_view, lastPartItem,
@@ -47,32 +47,32 @@ void FillInGeodeData(ParentView *parent_view, const gstGeode *geode) {
                                        QString::number(v), vert);
       lastVertItem = vertItem;
     }
-  }
+  }*/
 }
 
 }  // namespace
 
 // -----------------------------------------------------------------------------
 
-ObjectDetail::VertexItem::VertexItem(QListViewItem* parent,
-                                     QListViewItem* after,
+ObjectDetail::VertexItem::VertexItem(QWidget* parent,
+                                     QWidget* after,
                                      const QString& l,
                                      const gstVertex& v)
-    : QListViewItem(parent, after, l), vertex(v) {
-  setText(1, QString("%1, %2, %3").
+    : QWidget(parent), vertex(v) {
+  /*setText(1, QString("%1, %2, %3").
           arg(v.y * 360 - 180, 0, 'f', 10).
           arg(v.x * 360 - 180, 0, 'f', 10).
-          arg(v.z));
+          arg(v.z));*/
 }
 
 // -----------------------------------------------------------------------------
 
 ObjectDetail::ObjectDetail(QWidget* parent, unsigned int id, gstGeodeHandle geode,
                            gstRecordHandle attrib)
-    : ObjectDetailBase(parent , 0, false, WDestructiveClose),
+    : //ObjectDetailBase(parent , 0, false, WDestructiveClose),
       geode_handle_(geode),
       drawVertex(false) {
-  setCaption(QString("Feature %1 Detail").arg(id));
+  /*setCaption(QString("Feature %1 Detail").arg(id));
   featureTypeLabel->setText(PrettyPrimType(geode_handle_->PrimType()));
   featurePartsLabel->setText(QString::number(geode_handle_->NumParts()));
   featureVertexesLabel->setText(
@@ -127,26 +127,26 @@ ObjectDetail::ObjectDetail(QWidget* parent, unsigned int id, gstGeodeHandle geod
   }
   connect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState &)),
           this, SLOT(drawVectors(const gstDrawState &)));
-  connect(this, SIGNAL(redrawPreview()), GfxView::instance, SLOT(updateGL()));
+  connect(this, SIGNAL(redrawPreview()), GfxView::instance, SLOT(updateGL()));*/
 }
 
 ObjectDetail::~ObjectDetail() {
-  disconnect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState &)),
+  /*disconnect(GfxView::instance, SIGNAL(drawVectors(const gstDrawState &)),
              this, SLOT(drawVectors(const gstDrawState &)));
   disconnect(this, SIGNAL(redrawPreview()),
-             GfxView::instance, SLOT(updateGL()));
+             GfxView::instance, SLOT(updateGL()));*/
 }
 
 void ObjectDetail::drawVectors(const gstDrawState& state) {
-  gstDrawState selectState = state;
+  /*gstDrawState selectState = state;
   selectState.mode |= DrawSelected;
 
   geode_handle_->Draw(selectState, gstFeaturePreviewConfig());
   if (drawVertex)
-    gstGeodeImpl::DrawSelectedVertex(selectState, currentVertex);
+    gstGeodeImpl::DrawSelectedVertex(selectState, currentVertex);*/
 }
 
-void ObjectDetail::selectionChanged(QListViewItem* item) {
+/*void ObjectDetail::selectionChanged(QListViewItem* item) {
   VertexItem* vert_item = dynamic_cast<VertexItem*>(item);
 
   if (vert_item == NULL) {
@@ -157,4 +157,4 @@ void ObjectDetail::selectionChanged(QListViewItem* item) {
   }
 
   emit redrawPreview();
-}
+}*/

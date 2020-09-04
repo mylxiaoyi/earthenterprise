@@ -105,7 +105,7 @@ main(int argc, char *argv[]) {
     // now send the request
     QString error;
     if (!(*cmd)(versionref, error, 0 /* timeout */)) {
-      notify(NFY_FATAL, "%s", error.latin1());
+      notify(NFY_FATAL, "%s", error.toLatin1().data());
     }
   } catch (const std::exception &e) {
     notify(NFY_FATAL, "%s", e.what());

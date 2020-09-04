@@ -19,9 +19,13 @@
 #define KHSRC_FUSION_FUSIONUI_ASSETNOTES_H__
 
 #include "assetnotesbase.h"
+#include <QtWidgets/QDialog>
 
+namespace Ui {
+    class AssetNotesBase;
+}
 
-class AssetNotes : public AssetNotesBase {
+class AssetNotes : public QDialog {
  public:
   AssetNotes(QWidget* parent, const QString& text);
 
@@ -30,6 +34,9 @@ class AssetNotes : public AssetNotesBase {
 
  private:
   virtual void Timestamp();
+  
+ private:
+  Ui::AssetNotesBase *ui;
 };
 
 #endif  // !KHSRC_FUSION_FUSIONUI_ASSETNOTES_H__

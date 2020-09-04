@@ -18,18 +18,19 @@
 #ifndef _SelectionView_h_
 #define _SelectionView_h_
 
-#include <qdockwindow.h>
+//#include <qdockwindow.h>
+#include <QtWidgets/QDockWidget>
 
 #include "selectionviewbase.h"
 #include <gstBBox.h>
 
 class gstSelector;
 
-class SelectionView : public SelectionViewBase {
+class SelectionView : public QObject, public Ui::SelectionViewBase {
   Q_OBJECT
 
  public:
-  SelectionView(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+  SelectionView(QWidget* parent = 0, const char* name = 0);
 
 protected slots:
 void configure(gstSelector* s);
@@ -45,10 +46,10 @@ void configure(gstSelector* s);
   void ExportSelectedFeatures();
 };
 
-class SelectionViewDocker : public QDockWindow {
+class SelectionViewDocker : public QDockWidget {
  public:
-  SelectionViewDocker(Place p = InDock, QWidget* parent = 0,
-                      const char* name = 0, WFlags f = 0, bool mode = FALSE);
+  SelectionViewDocker(/*Place p = InDock,*/ QWidget* parent = 0,
+                      const char* name = 0, bool mode = FALSE);
   ~SelectionViewDocker();
 
   SelectionView* selectionView() const { return selection_view_; }

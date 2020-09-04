@@ -24,12 +24,12 @@
 #include <set>
 #include <map>
 
-#include <qlistview.h>
-#include <qiconview.h>
-#include <qstringlist.h>
-#include <qaction.h>
-#include <qthread.h>
-#include <qtimer.h>
+#include <QtWidgets/qlistview.h>
+#include <QtWidgets/QLabel>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qaction.h>
+#include <QtCore/qthread.h>
+#include <QtCore/qtimer.h>
 
 #include "fusion/autoingest/.idl/storage/AssetDefs.h"
 #include "fusion/fusionui/.idl/layoutpersist.h"
@@ -48,6 +48,10 @@ class geGuiAuth;
 class PublisherClient;
 
 class QProgressDialog;
+
+namespace Ui {
+    class AssetManagerBase;
+}
 
 class AssetAction : public QAction {
   Q_OBJECT
@@ -72,7 +76,7 @@ class AssetAction : public QAction {
 
 // -----------------------------------------------------------------------------
 
-class AssetManager : public AssetManagerBase {
+class AssetManager : public QMainWindow {
   Q_OBJECT
 
  public:
@@ -91,11 +95,11 @@ class AssetManager : public AssetManagerBase {
   // asset chooser
   void addFilter(const QString& f);
 
-  QListViewItem* OpenFolder(const QString& folder);
+  //QListViewItem* OpenFolder(const QString& folder);
   void resetIconView(int grid_size);
 
-  static QColorGroup GetStateDrawStyle(const std::string& txt, QPainter* p,
-                                       const QColorGroup& cg);
+  //static QColorGroup GetStateDrawStyle(const std::string& txt, QPainter* p,
+  //                                     const QColorGroup& cg);
   // inherited from QWidget
   virtual void show();
   virtual void hide();
@@ -109,7 +113,7 @@ class AssetManager : public AssetManagerBase {
   virtual void refresh();
   virtual void filterType(int t);
   virtual void filterSubType(int t);
-  virtual void childCollapsed(QListViewItem* i);
+  //virtual void childCollapsed(QListViewItem* i);
   virtual void showHiddenAssets(bool s);
   virtual void CreateNewAsset();
   virtual void CloseAllWindows();
@@ -133,9 +137,9 @@ class AssetManager : public AssetManagerBase {
   virtual void ToolbarChooserComboActivated(int choice);
 
  public slots:
-  void rmbClicked(QListViewItem* item, const QPoint& pos, int);
+  //void rmbClicked(QListViewItem* item, const QPoint& pos, int);
   void tableAssetMenu(int row, int col, const QPoint& mouse_pos);
-  void iconAssetMenu(QIconViewItem* item, const QPoint& mouse_pos);
+  //void iconAssetMenu(QIconViewItem* item, const QPoint& mouse_pos);
   void doubleClicked(int row, int col, int btn, const QPoint& mouse_pos);
   void assetsChanged(const AssetChanges& a);
   void CurrentAssetChanged(int row, int col);
@@ -150,6 +154,7 @@ class AssetManager : public AssetManagerBase {
   void PublishDatabase(const gstAssetHandle& handle);
 
  private:
+  Ui_AssetManagerBase *ui;
   // inherited from qwidget
   virtual void resizeEvent(QResizeEvent* e);
   virtual void moveEvent(QMoveEvent* e);
@@ -189,7 +194,7 @@ class AssetManager : public AssetManagerBase {
 };
 
 // Thread classes for serving pushing and publishing.
-class ServeThread : public QObject, public QThread {
+class ServeThread : public QThread {
   Q_OBJECT
 
  public:

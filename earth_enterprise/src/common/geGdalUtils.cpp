@@ -16,7 +16,7 @@
 
 
 
-#include <vrtdataset.h>
+#include <gdal/vrtdataset.h>
 
 #include "common/geFilePool.h"
 #include "common/khTileAddr.h"

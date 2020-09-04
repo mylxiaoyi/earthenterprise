@@ -34,7 +34,7 @@ class QColor;
 class MapFilterItem;
 class MapAssetItem;
 
-class MapLayerWidget : public MapLayerWidgetBase,
+class MapLayerWidget : public QObject, public Ui::MapLayerWidgetBase,
                        public AssetWidgetBase {
   Q_OBJECT
 
@@ -57,7 +57,7 @@ class MapLayerWidget : public MapLayerWidgetBase,
   virtual void ChangeFeatureType(int);
   virtual void ChooseAsset();
   virtual void SelectionChanged();
-  virtual void ContextMenu(QListViewItem*, const QPoint& point, int col);
+  //virtual void ContextMenu(QListViewItem*, const QPoint& point, int col);
   virtual void RenameRule();
   virtual void NewRule();
   virtual void CopyRule();
@@ -78,7 +78,7 @@ class MapLayerWidget : public MapLayerWidgetBase,
   virtual void PopulateSearchFields(const MapSubLayerConfig& config);
   virtual void SearchFieldSelectionChanged();
   virtual void AddSearchField();
-  virtual void DeleteSearchField();
+  //virtual void DeleteSearchField();
   virtual void MoveSearchFieldUp();
   virtual void MoveSearchFieldDown();
   virtual void UpdateSearchFieldButtons();
@@ -113,10 +113,10 @@ class MapLayerWidget : public MapLayerWidgetBase,
   QString RuleName(const QString& caption, const QString& orig_name);
   void SelectFilter(MapFilterItem* item);
   void SelectAsset(MapAssetItem* item);
-  void UpdateButtons(QListViewItem* item);
-  virtual void CurrentItemChanged(QListViewItem* item);
+  //void UpdateButtons(QListViewItem* item);
+  //virtual void CurrentItemChanged(QListViewItem* item);
 
-  virtual void customEvent(QCustomEvent *e);
+  //virtual void customEvent(QCustomEvent *e);
 
   bool SubLayerHasSearchField(QString field);
 
@@ -134,7 +134,7 @@ class MapLayerWidget : public MapLayerWidgetBase,
   WidgetControllerManager legendManager;
   WidgetControllerManager displayRuleManager;
   WidgetControllerManager filterManager;
-  QPopupMenu *active_menu_;
+  QMenu *active_menu_;
 };
 
 class MapLayerDefs {

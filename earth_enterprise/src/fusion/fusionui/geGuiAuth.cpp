@@ -15,34 +15,34 @@
 
 #include "geGuiAuth.h"
 #include "authdialogbase.h"
-#include <qlineedit.h>
+#include <QtWidgets/qlineedit.h>
 #include "khThread.h"
 
 geGuiAuth::geGuiAuth(QWidget* parent) {
-  auth_dialog_ = new AuthDialogBase(parent);
+  /*auth_dialog_ = new AuthDialogBase(parent);
   dialog_request_pending_ = false;
   dialog_accept_result_ = false;
 
   // This instance is assumed to be running in the UI Thread by default.
   synchronous_ = true;
   wait_condition_ = new khCondVar();
-  mutex_ = new khMutex();
+  mutex_ = new khMutex();*/
 }
 
 geGuiAuth::~geGuiAuth() {
-  if (auth_dialog_)
+  /*if (auth_dialog_)
     delete auth_dialog_;
   if (wait_condition_)
     delete wait_condition_;
   if (mutex_)
-    delete mutex_;
+    delete mutex_;*/
 }
 
 // Open the auth dialog and wake the process waiting on the dialog
 // results.
 void geGuiAuth::ExecAndSignal()
 {
-  khLockGuard locker(*mutex_);
+  /*khLockGuard locker(*mutex_);
   dialog_request_pending_ = false;
   // Send the calling thread an event.
 
@@ -50,7 +50,7 @@ void geGuiAuth::ExecAndSignal()
   dialog_accept_result_ = (auth_dialog_->exec() == QDialog::Accepted);
 
   // Unblock the calling thread if asynchronously called.
-  wait_condition_->signal_one();
+  wait_condition_->signal_one();*/
 }
 
 // Notify the UI thread that a request is pending from another thread.
@@ -65,7 +65,7 @@ bool geGuiAuth::IsRequestPending() const
 // This pops up a dialog in the UI thread.
 // If "synchronous" is not correctly set, this will likely crash.
 bool geGuiAuth::GetUserPwd(std::string& username, std::string& password) {
-  khLockGuard locker(*mutex_);
+  /*khLockGuard locker(*mutex_);
   // Wait until the dialog is set.
   if (synchronous_) {
     // Synchronous execution in this thread.
@@ -83,6 +83,7 @@ bool geGuiAuth::GetUserPwd(std::string& username, std::string& password) {
     username = auth_dialog_->username_edit->text();
     password = auth_dialog_->password_edit->text();
   }
-  return dialog_accept_result_;
+  return dialog_accept_result_;*/
+  return false;
 }
 

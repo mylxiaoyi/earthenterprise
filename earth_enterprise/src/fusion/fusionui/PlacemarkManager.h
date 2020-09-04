@@ -21,10 +21,10 @@
 #include "placemarkmanagerbase.h"
 
 #include <gst/.idl/gstPlacemark.h>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 
-class PlacemarkManager : public PlacemarkManagerBase {
+class PlacemarkManager : public Ui::PlacemarkManagerBase {
  public:
   PlacemarkManager();
 

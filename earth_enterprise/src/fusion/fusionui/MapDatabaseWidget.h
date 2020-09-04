@@ -28,7 +28,7 @@
 class AssetBase;
 class DatabaseSearchTabs;
 
-class MapDatabaseWidget : public MapDatabaseWidgetBase,
+class MapDatabaseWidget : public Ui::MapDatabaseWidgetBase,
                           public AssetWidgetBase {
  public:
   MapDatabaseWidget(QWidget* parent, AssetBase* base);
@@ -38,9 +38,9 @@ class MapDatabaseWidget : public MapDatabaseWidgetBase,
 
   // inherited from MapDatabaseWidgetBase
   virtual void ChooseMapProject();
-  virtual void ClearMapProject();
+  //virtual void ClearMapProject();
   virtual void ChooseImageryProject();
-  virtual void ClearImageryProject();
+  //virtual void ClearImageryProject();
 
  private:
   void EnableImageryProject(bool state);

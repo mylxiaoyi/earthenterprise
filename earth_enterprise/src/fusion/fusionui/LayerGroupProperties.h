@@ -25,7 +25,7 @@
 
 class gstIcon;
 
-class LayerGroupProperties : public LayerGroupPropertiesBase,
+class LayerGroupProperties : public Ui::LayerGroupPropertiesBase,
                              public WidgetControllerManager {
  public:
   LayerGroupProperties(QWidget* parent, const LayerConfig& config);

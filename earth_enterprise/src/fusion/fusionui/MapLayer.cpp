@@ -16,27 +16,31 @@
 
 #include "fusion/fusionui/MapLayer.h"
 
+#ifdef GL_GLEXT_VERSION
+#undef GL_GLEXT_VERSION
+#endif
+
 #include <utility>
 
-#include <qcolor.h>
-#include <qcolordialog.h>
-#include <qcombobox.h>
-#include <qheader.h>
-#include <qinputdialog.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qmessagebox.h>
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtextedit.h>
-#include <qwidgetstack.h>
-#include <qgroupbox.h>
-#include <qapplication.h>
-#include <qtooltip.h>
-#include <qcheckbox.h>
+#include <QtGui/qcolor.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qcombobox.h>
+//#include <qheader.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qlineedit.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtWidgets/qstackedwidget.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qapplication.h>
+#include <QtWidgets/qtooltip.h>
+#include <QtWidgets/qcheckbox.h>
 
 #include <SkBitmap.h>
 #include <SkImageDecoder.h>
@@ -79,7 +83,7 @@ MapLayerDefs::SubmitFuncType MapLayerDefs::kSubmitFunc =
 
 class MapFilterItem : public LayerItemBase {
  public:
-  MapFilterItem(QListViewItem* parent, const MapDisplayRuleConfig& cfg);
+  MapFilterItem(QWidget* parent, const MapDisplayRuleConfig& cfg);
 
   virtual QString text(int col) const;
 
@@ -94,7 +98,7 @@ class MapFilterItem : public LayerItemBase {
   MapDisplayRuleConfig config_;
 };
 
-MapFilterItem::MapFilterItem(QListViewItem* parent,
+MapFilterItem::MapFilterItem(QWidget* parent,
                              const MapDisplayRuleConfig& cfg)
   : LayerItemBase(parent),
     config_(cfg) {
@@ -141,14 +145,14 @@ class MapAssetItem : public LayerItemBase {
 MapAssetItem::MapAssetItem(QListView* parent, const MapSubLayerConfig& cfg)
   : LayerItemBase(parent),
     config_(cfg) {
-  BuildChildren();
-  setOpen(true);
+  //BuildChildren();
+  //setOpen(true);
 }
 
 void MapAssetItem::BuildChildren() {
   // when importing a template, this is called again so ensure
   // that all children are deleted before adding new ones
-  while (firstChild())
+  /*while (firstChild())
     delete firstChild();
 
   // Insert display rules in reverse order (Qt inserts each at front)
@@ -157,26 +161,27 @@ void MapAssetItem::BuildChildren() {
        it != config_.display_rules.rend();
        ++it) {
     (void) new MapFilterItem(this, *it);
-  }
+  }*/
 }
 
 QString MapAssetItem::text(int col) const {
-  if (col == 0) {
+  /*if (col == 0) {
     return config_.asset_ref;
   } else {
     return QString::null;
-  }
+  }*/
+  return QString::null;
 }
 
 MapSubLayerConfig MapAssetItem::ConfigCopy() {
   MapSubLayerConfig config = config_;
-  config.display_rules.clear();
+  /*config.display_rules.clear();
   QListViewItem* item = firstChild();
   while (item) {
     MapFilterItem* filter_item = static_cast<MapFilterItem*>(item);
     config.display_rules.push_back(filter_item->Config());
     item = filter_item->nextSibling();
-  }
+  }*/
   return config;
 }
 
@@ -210,11 +215,11 @@ const gstSharedSource& MapAssetItem::Source(void) const {
 
 
 std::string MapFilterItem::AssetRef(void) const {
-  return static_cast<const MapAssetItem*>(parent())->AssetRef();
+  return "";//static_cast<const MapAssetItem*>(parent())->AssetRef();
 }
-const gstSharedSource& MapFilterItem::Source(void) const {
-  return static_cast<const MapAssetItem*>(parent())->Source();
-}
+//const gstSharedSource& MapFilterItem::Source(void) const {
+//  return static_cast<const MapAssetItem*>(parent())->Source();
+//}
 
 // -----------------------------------------------------------------------------
 
@@ -222,13 +227,14 @@ namespace {
 const int SwitchFilterEventId = static_cast<int>(QEvent::User);
 }
 
-class SwitchFilterEvent : public QCustomEvent {
+class SwitchFilterEvent : public QEvent {
  public:
-  SwitchFilterEvent(QListViewItem *listItem_)
-      : QCustomEvent(SwitchFilterEventId),
+  SwitchFilterEvent(QWidget *listItem_)
+      //: QEvent(SwitchFilterEventId),
+      : QEvent(QEvent::User),
         listItem(listItem_) { }
 
-  QListViewItem *listItem;
+  QWidget *listItem;
 };
 
 
@@ -237,17 +243,17 @@ namespace {
 }
 
 MapLayerWidget::MapLayerWidget(QWidget* parent, AssetBase* base)
-    : MapLayerWidgetBase(parent),
+    : MapLayerWidgetBase(),
       AssetWidgetBase(base),
       previous_filter_(NULL),
       previous_asset_(NULL),
       legend_config_(),
-      legendManager(this),
-      displayRuleManager(this),
-      filterManager(this),
+      legendManager((QWidget*)this),
+      displayRuleManager((QWidget*)this),
+      filterManager((QWidget*)this),
       active_menu_(0) {
   // create widget controllers for legend
-  LayerLegendController::Create(legendManager,
+  /*LayerLegendController::Create(legendManager,
                                 layer_legend,
                                 LocaleDetails::MapLayerMode,
                                 &legend_config_);
@@ -274,24 +280,24 @@ MapLayerWidget::MapLayerWidget(QWidget* parent, AssetBase* base)
 
   connect(this, SIGNAL(RedrawPreview()),
           GfxView::instance, SLOT(updateGL()));
-  preview_enabled_ = false;
+  preview_enabled_ = false;*/
 }
 
 MapLayerWidget::~MapLayerWidget() {
-  if (texture_) {
+  /*if (texture_) {
     theTextureManager->removeTexture(texture_);
     emit RedrawPreview();
-  }
+  }*/
 }
 
 void MapLayerWidget::PopulateAdvancedDisplayRuleSettings(
   const MapSubLayerConfig& config) {
-  featureDuplicationCheck->setChecked(config.allowFeatureDuplication);
-  emptyLayerCheck->setChecked(config.allowEmptyLayer);
+  //featureDuplicationCheck->setChecked(config.allowFeatureDuplication);
+  //emptyLayerCheck->setChecked(config.allowEmptyLayer);
 }
 
 void MapLayerWidget::PopulateSearchFields(const MapSubLayerConfig& config) {
-  fields_table->verticalHeader()->hide();
+  /*fields_table->verticalHeader()->hide();
   fields_table->setLeftMargin(0);
   fields_table->setColumnStretchable(1, true);
   fields_table->setNumRows(0);
@@ -304,15 +310,15 @@ void MapLayerWidget::PopulateSearchFields(const MapSubLayerConfig& config) {
     fields_table->adjustRow(row);
   }
   for (int col = 0; col < fields_table->numCols(); ++col)
-    fields_table->adjustColumn(col);
+    fields_table->adjustColumn(col);*/
 }
 
 void MapLayerWidget::SearchFieldSelectionChanged() {
-  UpdateSearchFieldButtons();
+  //UpdateSearchFieldButtons();
 }
 
 void MapLayerWidget::AddSearchField() {
-  SearchFieldDialog dialog(this, attributes);
+  /*SearchFieldDialog dialog(this, attributes);
   if (dialog.exec() == QDialog::Accepted) {
     int row = fields_table->numRows();
     fields_table->setNumRows(row + 1);
@@ -339,11 +345,11 @@ void MapLayerWidget::DeleteSearchField() {
     if (previous_asset_)
       UpdateAvailableSearchAttributes(previous_asset_->AssetRef());
   }
-  UpdateSearchFieldButtons();
+  UpdateSearchFieldButtons();*/
 }
 
 void MapLayerWidget::UpdateAvailableSearchAttributes(QString assetRef) {
-  attributes.clear();
+  /*attributes.clear();
 
   Asset vector_resource_asset(assetRef);
   if (vector_resource_asset->type != AssetDefs::Vector ||
@@ -378,47 +384,47 @@ void MapLayerWidget::UpdateAvailableSearchAttributes(QString assetRef) {
         cols.push_back(record_header->Name(col));
     }
   }
-  attributes = cols;
+  attributes = cols;*/
 }
 
 bool MapLayerWidget::SubLayerHasSearchField(QString field) {
-  for (int i = 0; i < fields_table->numRows(); ++i) {
+  /*for (int i = 0; i < fields_table->numRows(); ++i) {
     if (fields_table->text(i, 0) == field) return true;
-  }
+  }*/
   return false;
 }
 
 void MapLayerWidget::MoveSearchFieldUp() {
-  int curr_row = fields_table->currentRow();
+  /*int curr_row = fields_table->currentRow();
   SwapSearchFieldRows(curr_row - 1, curr_row);
-  fields_table->selectRow(curr_row - 1);
+  fields_table->selectRow(curr_row - 1);*/
 }
 
 void MapLayerWidget::MoveSearchFieldDown() {
-  int curr_row = fields_table->currentRow();
+  /*int curr_row = fields_table->currentRow();
   SwapSearchFieldRows(curr_row, curr_row + 1);
-  fields_table->selectRow(curr_row + 1);
+  fields_table->selectRow(curr_row + 1);*/
 }
 
 void MapLayerWidget::SwapSearchFieldRows(int row0, int row1) {
-  for (int col = 0; col < 2; ++col) {
+  /*for (int col = 0; col < 2; ++col) {
     QString tmp = fields_table->text(row0, col);
     fields_table->setText(row0, col, fields_table->text(row1, col));
     fields_table->setText(row1, col, tmp);
-  }
+  }*/
 }
 
 void MapLayerWidget::UpdateSearchFieldButtons() {
-  add_field_btn->setEnabled(attributes.size() > 0);
+  /*add_field_btn->setEnabled(attributes.size() > 0);
   int row = fields_table->currentRow();
   delete_field_btn->setEnabled(row != -1);
   move_field_up_btn->setEnabled(row > 0);
   move_field_down_btn->setEnabled(row != -1 &&
-                                  row < (fields_table->numRows() - 1));
+                                  row < (fields_table->numRows() - 1));*/
 }
 
 void MapLayerWidget::UpdatePolyEnabled(int pos) {
-  switch (static_cast<VectorDefs::PolygonDrawMode>(pos)) {
+  /*switch (static_cast<VectorDefs::PolygonDrawMode>(pos)) {
     case VectorDefs::FillAndOutline:
       poly_fill_frame->setEnabled(true);
       poly_outline_frame->setEnabled(true);
@@ -431,14 +437,14 @@ void MapLayerWidget::UpdatePolyEnabled(int pos) {
       poly_fill_frame->setEnabled(true);
       poly_outline_frame->setEnabled(false);
       break;
-  }
+  }*/
 }
 
 // Update the choosability of "Fill Color", "Outline Width" and "Outline Color"
 // combo boxes depending on choice in Visibility input
 // Outline and Filled / Outline Only / Filled Only
 void MapLayerWidget::UpdatePointDrawStyle(int point_mode) {
-  switch (static_cast<VectorDefs::PolygonDrawMode>(point_mode)) {
+  /*switch (static_cast<VectorDefs::PolygonDrawMode>(point_mode)) {
     case VectorDefs::FillAndOutline:
       point_fill_color_label->setEnabled(true);
       point_fill_color->setEnabled(true);
@@ -471,12 +477,12 @@ void MapLayerWidget::UpdatePointDrawStyle(int point_mode) {
                VectorDefs::FillAndOutline, VectorDefs::OutlineOnly,
                VectorDefs::FillOnly);
       throw khException(kh::tr(buff));
-  }
+  }*/
 }
 
 // Disable or enable choice buttons depending on choice of Marker Type choice
 void MapLayerWidget::UpdatePointMarker(int point_marker) {
-  bool is_point_icon_img = false;
+  /*bool is_point_icon_img = false;
   bool is_point_width = false;
   bool is_point_height = false;
   bool is_point_fill_outline_frame = false;
@@ -511,19 +517,19 @@ void MapLayerWidget::UpdatePointMarker(int point_marker) {
   point_width->setEnabled(is_point_width);
   point_height_label->setEnabled(is_point_height);
   point_height->setEnabled(is_point_height);
-  point_fill_outline_frame->setEnabled(is_point_fill_outline_frame);
+  point_fill_outline_frame->setEnabled(is_point_fill_outline_frame);*/
 }
 
 MapFilterItem* MapLayerWidget::SelectedFilterItem() {
-  return dynamic_cast<MapFilterItem*>(asset_listview->selectedItem());
+  return nullptr; //dynamic_cast<MapFilterItem*>(asset_listview->selectedItem());
 }
 
 MapAssetItem* MapLayerWidget::SelectedAssetItem() {
-  return dynamic_cast<MapAssetItem*>(asset_listview->selectedItem());
+  return nullptr; //dynamic_cast<MapAssetItem*>(asset_listview->selectedItem());
 }
 
 void MapLayerWidget::ChooseAsset() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
                        kProductSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -558,7 +564,7 @@ void MapLayerWidget::ChooseAsset() {
   MapAssetItem *new_item = new MapAssetItem(asset_listview, config);
                                    // note: new item is owned by parent
   while (new_item->CanMoveDown())  // move to last place
-    new_item->MoveDown();
+    new_item->MoveDown();*/
 }
 
 void MapLayerWidget::ChangeDrawMode(int mode) {
@@ -571,7 +577,7 @@ QString MapLayerWidget::RuleName(const QString& caption,
                                    const QString& initial_name) {
   QString text;
 
-  while (1) {
+  /*while (1) {
     bool ok = false;
     text = QInputDialog::getText(caption,
                                  tr("New Rule Name:"),
@@ -595,13 +601,13 @@ QString MapLayerWidget::RuleName(const QString& caption,
     } else {
       break;
     }
-  }
+  }*/
 
   return text;
 }
 
-void MapLayerWidget::customEvent(QCustomEvent* e) {
-  QListViewItem *listItem = 0;
+//void MapLayerWidget::customEvent(QCustomEvent* e) {
+  /*QListViewItem *listItem = 0;
 
   // Make sure this is really an event that we sent.
   switch (static_cast<int>(e->type())) {
@@ -611,7 +617,7 @@ void MapLayerWidget::customEvent(QCustomEvent* e) {
       break;
     }
     default:
-      /* not mine */
+      // not mine 
       return;
   }
 
@@ -640,20 +646,20 @@ void MapLayerWidget::customEvent(QCustomEvent* e) {
       }
       asset_listview->setCurrentItem(listItem);
       break;
-  }
-}
+  }*/
+//}
 
 void MapLayerWidget::SelectionChanged() {
-  QListViewItem* item = asset_listview->selectedItem();
+  /*QListViewItem* item = asset_listview->selectedItem();
 
   UpdateButtons(item);
-  CurrentItemChanged(item);
+  CurrentItemChanged(item);*/
 }
 
-void MapLayerWidget::UpdateButtons(QListViewItem* item) {
+//void MapLayerWidget::UpdateButtons(QListViewItem* item) {
   // always remove all tooltips.
   // valid items will have them added back appropriately
-  QToolTip::remove(new_rule_btn);
+  /*QToolTip::remove(new_rule_btn);
   QToolTip::remove(delete_rule_btn);
   QToolTip::remove(copy_rule_btn);
   QToolTip::remove(move_rule_up_btn);
@@ -696,11 +702,11 @@ void MapLayerWidget::UpdateButtons(QListViewItem* item) {
     QToolTip::add(copy_rule_btn, tr("Copy Rule"));
     QToolTip::add(move_rule_up_btn, tr("Move Rule Up"));
     QToolTip::add(move_rule_down_btn, tr("Move Rule Down"));
-  }
-}
+  }*/
+//}
 
-void MapLayerWidget::CurrentItemChanged(QListViewItem* item) {
-  if (previous_filter_ && (item != previous_filter_)) {
+//void MapLayerWidget::CurrentItemChanged(QListViewItem* item) {
+  /*if (previous_filter_ && (item != previous_filter_)) {
     if (!TrySaveFilter(previous_filter_)) {
       // we can't call asset_listview->setSelected directly
       // since that will confuse out caller (QListView) who is right in the
@@ -729,12 +735,12 @@ void MapLayerWidget::CurrentItemChanged(QListViewItem* item) {
     SelectFilter(filter_item);
   } else {
     details_stack->raiseWidget(1);
-  }
-}
+  }*/
+//}
 
-void MapLayerWidget::ContextMenu(
-    QListViewItem* item, const QPoint& point, int col) {
-  MapAssetItem* asset_item = dynamic_cast<MapAssetItem*>(item);
+//void MapLayerWidget::ContextMenu(
+//    QListViewItem* item, const QPoint& point, int col) {
+  /*MapAssetItem* asset_item = dynamic_cast<MapAssetItem*>(item);
   if (asset_item) {
     QPopupMenu menu;
     int up_id = menu.insertItem(tr("Move Resource Up"),
@@ -786,22 +792,22 @@ void MapLayerWidget::ContextMenu(
     menu.exec(point);
     active_menu_ = 0;
     return;
-  }
-}
+  }*/
+//}
 
 void MapLayerWidget::RenameRule() {
-  MapFilterItem* filter_item = SelectedFilterItem();
+  /*MapFilterItem* filter_item = SelectedFilterItem();
   assert(filter_item);
   MapDisplayRuleConfig cfg = filter_item->Config();
 
   QString filter_name = RuleName(tr("Rename Rule"), cfg.name);
   if (!filter_name.isEmpty()) {
     filter_item->SetName(filter_name);
-  }
+  }*/
 }
 
 void MapLayerWidget::NewRule() {
-  QString filter_name = RuleName(tr("New Rule Name:"), tr("Untitled"));
+  /*QString filter_name = RuleName(tr("New Rule Name:"), tr("Untitled"));
   if (!filter_name.isEmpty()) {
     MapDisplayRuleConfig cfg;
     cfg.name = filter_name;
@@ -817,11 +823,11 @@ void MapLayerWidget::NewRule() {
     assert(new_filter_item);
     while (new_filter_item->CanMoveDown())  // move to last place
       new_filter_item->MoveDown();
-  }
+  }*/
 }
 
 void MapLayerWidget::CopyRule() {
-  if (previous_filter_) {
+  /*if (previous_filter_) {
     if (!TrySaveFilter(previous_filter_))
       return;
     previous_filter_ = 0;
@@ -839,7 +845,7 @@ void MapLayerWidget::CopyRule() {
     MapDisplayRuleConfig cfg = from_cfg;
     cfg.name = filter_name;
     (void) new MapFilterItem(filter_item->parent(), cfg);
-  }
+  }*/
 }
 
 void MapLayerWidget::DeleteItem() {
@@ -847,29 +853,29 @@ void MapLayerWidget::DeleteItem() {
   // new current item if deleted item is in the middle of the list.
   // TODO: Refactoring: remove previous_filter_,
   // previous_asset_ and use selectedItem()?.
-  previous_filter_ = NULL;
+  /*previous_filter_ = NULL;
   previous_asset_ = NULL;
-  delete asset_listview->selectedItem();
+  delete asset_listview->selectedItem();*/
 }
 
 void MapLayerWidget::MoveItemUp() {
-  LayerItemBase* item =
+  /*LayerItemBase* item =
     dynamic_cast<LayerItemBase*>(asset_listview->selectedItem());
   assert(item);
   item->SwapPosition(item->Previous());
-  UpdateButtons(item);
+  UpdateButtons(item);*/
 }
 
 void MapLayerWidget::MoveItemDown() {
-  LayerItemBase* item =
+  /*LayerItemBase* item =
     dynamic_cast<LayerItemBase*>(asset_listview->selectedItem());
   assert(item);
   item->SwapPosition(item->Next());
-  UpdateButtons(item);
+  UpdateButtons(item);*/
 }
 
 void MapLayerWidget::ExportTemplate() {
-  MapAssetItem* item =
+  /*MapAssetItem* item =
     dynamic_cast<MapAssetItem*>(asset_listview->selectedItem());
   assert(item);
 
@@ -889,11 +895,11 @@ void MapLayerWidget::ExportTemplate() {
     QMessageBox::critical(this, "Error",
                           tr("Unable to save file: ") + template_file,
                           tr("OK"), 0, 0, 0);
-  }
+  }*/
 }
 
 void MapLayerWidget::ImportTemplate() {
-  MapAssetItem* item =
+  /*MapAssetItem* item =
     dynamic_cast<MapAssetItem*>(asset_listview->selectedItem());
   assert(item);
 
@@ -922,20 +928,20 @@ void MapLayerWidget::ImportTemplate() {
   MapSubLayerConfig tmp_config = item->ConfigCopy();
   tmp_config.ApplyTemplate(template_cfg);
   item->SetConfig(tmp_config);
-  item->BuildChildren();
+  item->BuildChildren();*/
 }
 
 void MapLayerWidget::ChooseFilterMatchLogic(int index) {
-  if (index == 0 || index == 1) {
+  /*if (index == 0 || index == 1) {
     filter_stack->raiseWidget(0);
   } else {
     filter_stack->raiseWidget(1);
-  }
+  }*/
 }
 
 bool MapLayerWidget::TrySaveFilter(MapFilterItem* item) throw() {
   bool success = false;
-  try {
+  /*try {
     ApplyFilterEdits(item);
     success = true;
   } catch(const khException &e) {
@@ -945,20 +951,20 @@ bool MapLayerWidget::TrySaveFilter(MapFilterItem* item) throw() {
   } catch(...) {
     QMessageBox::critical(this, tr("Error"), tr("Unknown error"),
                           tr("OK"), 0, 0, 0);
-  }
+  }*/
   return success;
 }
 
 void MapLayerWidget::TrySaveFilterThrowExceptionIfFails(MapFilterItem* item) {
-  try {
+  /*try {
     ApplyFilterEdits(item);
   } catch(...) {
     throw;
-  }
+  }*/
 }
 
 void MapLayerWidget::SelectAsset(MapAssetItem* item) {
-  if (item == previous_asset_) {
+  /*if (item == previous_asset_) {
     // we are being put back to the previously selected item due to an error
     // don't do anything else here
     return;
@@ -968,11 +974,11 @@ void MapLayerWidget::SelectAsset(MapAssetItem* item) {
   PopulateSearchFields(config);
   PopulateAdvancedDisplayRuleSettings(config);
 
-  previous_asset_ = item;
+  previous_asset_ = item;*/
 }
 
 void MapLayerWidget::SelectFilter(MapFilterItem* item) {
-  if (item == previous_filter_) {
+  /*if (item == previous_filter_) {
     // we are being put back to the previously selected item due to an error
     // don't do anything else here
     return;
@@ -1346,12 +1352,12 @@ void MapLayerWidget::SelectFilter(MapFilterItem* item) {
                                  "Filter Expression");
   ChooseFilterMatchLogic(workingDisplayRule.filter.match);
 
-  previous_filter_ = item;
+  previous_filter_ = item;*/
 }
 
 void MapLayerWidget::ApplyFilterEdits(MapFilterItem *item) {
   // extract feature tab
-  displayRuleManager.SyncToConfig();
+  /*displayRuleManager.SyncToConfig();
   { // check for sanity
     std::string error;
     if (!workingDisplayRule.IsValid(error)) {
@@ -1370,11 +1376,11 @@ void MapLayerWidget::ApplyFilterEdits(MapFilterItem *item) {
   // filter item so we must copy it over
   QString name = cfg.name;
   cfg = workingDisplayRule;
-  cfg.name = name;
+  cfg.name = name;*/
 }
 
 void MapLayerWidget::ApplyAssetEdits(MapAssetItem *item) {
-  std::vector<SearchField> searchFields;
+  /*std::vector<SearchField> searchFields;
   for (int row = 0; row < fields_table->numRows(); ++row) {
     searchFields.push_back(
         SearchField(
@@ -1385,7 +1391,7 @@ void MapLayerWidget::ApplyAssetEdits(MapAssetItem *item) {
 
   // update Display Rule settings.
   item->Config().allowFeatureDuplication = featureDuplicationCheck->isChecked();
-  item->Config().allowEmptyLayer = emptyLayerCheck->isChecked();
+  item->Config().allowEmptyLayer = emptyLayerCheck->isChecked();*/
 }
 
 // This routine collects all GUI inputs and is used to decide whether save
@@ -1395,7 +1401,7 @@ void MapLayerWidget::ApplyAssetEdits(MapAssetItem *item) {
 // method more than once (in the life-span of this widget).
 void MapLayerWidget::AssembleEditRequest(MapLayerEditRequest* request) {
   // get LayerLegend
-  legendManager.SyncToConfig();
+  /*legendManager.SyncToConfig();
   if (request->assetname != AssetBase::untitled_name) {
     const QString &legend_name = legend_config_.defaultLocale.name.GetValue();
     if (legend_name.stripWhiteSpace().isEmpty()) {
@@ -1422,11 +1428,11 @@ void MapLayerWidget::AssembleEditRequest(MapLayerEditRequest* request) {
     MapAssetItem* asset_item = static_cast<MapAssetItem*>(item);
     request->config.subLayers.push_back(asset_item->ConfigCopy());
     item = asset_item->Next();
-  }
+  }*/
 }
 
 void MapLayerWidget::Prefill(const MapLayerEditRequest& request_orig) {
-  MapLayerEditRequest request = request_orig;
+  /*MapLayerEditRequest request = request_orig;
   CheckFontSanity(this, &request.config.subLayers);
   // sync LayerLegend to widgets
   legend_config_ = request.config.legend;
@@ -1442,11 +1448,11 @@ void MapLayerWidget::Prefill(const MapLayerEditRequest& request_orig) {
     asset_listview->setCurrentItem(asset_listview->lastItem());
   } else {
     UpdateButtons(NULL);
-  }
+  }*/
 }
 
 void MapLayerWidget::TogglePreview() {
-  try {
+  /*try {
     preview_enabled_ = !preview_enabled_;
     if (preview_enabled_) {
       MapLayerEditRequest req;
@@ -1461,7 +1467,7 @@ void MapLayerWidget::TogglePreview() {
           texture_ = NewMapTexture(req.config, texture_, error,
                                    Preferences::getConfig().isMercatorPreview);
         } else {
-          texture_ = NewMapTexture(req.config, gstTextureGuard()/* prev */,
+          texture_ = NewMapTexture(req.config, gstTextureGuard(),
                                    error,
                                    Preferences::getConfig().isMercatorPreview);
         }
@@ -1493,7 +1499,7 @@ void MapLayerWidget::TogglePreview() {
     QMessageBox::critical(this, tr("Error"), tr("Unknown error"),
                           tr("OK"), 0, 0, 0);
   }
-  preview_enabled_ = !preview_enabled_;
+  preview_enabled_ = !preview_enabled_;*/
 }
 
 // ****************************************************************************
@@ -1509,7 +1515,7 @@ MapLayer::MapLayer(QWidget* parent, const Request& req)
 
 // TODO: Add other sanity checks as and when found appropriate.
 bool MapFeatureConfig::IsValid(std::string& error) const {
-  bool check_icon = false;
+  /*bool check_icon = false;
   if (displayType == VectorDefs::LineZ) {
     check_icon = shield.enabled && shield.style_ == MapShieldConfig::IconStyle;
   } else if (displayType == VectorDefs::IconZ) {
@@ -1528,14 +1534,14 @@ bool MapFeatureConfig::IsValid(std::string& error) const {
                "' cannot be read/decoded. Check permissions and/or contents.";
       return false;
     }
-  }
+  }*/
   return true;
 }
 
 // MapLayer, check for font sanity
 bool MapLayerWidget::CheckFontSanity(
     QWidget* widget, std::vector<MapSubLayerConfig>* sub_layers_ptr) {
-  std::vector<MapSubLayerConfig>& sub_layers = *sub_layers_ptr;
+  /*std::vector<MapSubLayerConfig>& sub_layers = *sub_layers_ptr;
   std::set<maprender::FontInfo> missing_fonts;
   const size_t num_sublayers = sub_layers.size();
   for (size_t i = 0; i < num_sublayers; ++i) {
@@ -1554,12 +1560,12 @@ bool MapLayerWidget::CheckFontSanity(
   if (!missing_fonts.empty()) {
     TextStyle::ShowMissingFontsDialog(widget, missing_fonts);
     return false;
-  }
+  }*/
   return true;
 }
 
 void MapLayerWidget::ThematicFilterButtonClicked() {
-  MapAssetItem* asset_item = SelectedAssetItem();
+  /*MapAssetItem* asset_item = SelectedAssetItem();
   if (asset_item == NULL)
     return;  // Only applicable to a MapAssetItem.
 
@@ -1587,9 +1593,9 @@ void MapLayerWidget::ThematicFilterButtonClicked() {
     }
     asset_item->SetConfig(tmp_config);  // Replace the config.
     asset_item->BuildChildren();  // Rebuild the UI for the MapAssetItem.
-  }
+  }*/
 }
 
 void MapLayerWidget::ToggleDrawAsRoads(int state) {
-  line_shield_box->setEnabled(QCheckBox::On == state);
+  //line_shield_box->setEnabled(QCheckBox::On == state);
 }

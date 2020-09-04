@@ -32,14 +32,14 @@
  ***  modified (will modify) it to make it look and feel more like our own.
  ******************************************************************************/
 
-#include "cpl_vsi.h"
-#include "cpl_conv.h"
-#include "cpl_string.h"
-#include "gdal_priv.h"
-#include "ogr_spatialref.h"
+#include <gdal/cpl_vsi.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/cpl_string.h>
+#include <gdal/gdal_priv.h>
+#include <gdal/ogr_spatialref.h>
 
 // this one is not exported in normal gdal distributions only in keyhole's
-#include "vrtdataset.h"
+#include <gdal/vrtdataset.h>
 #include <khgdal/khGDALDataset.h>
 
 static int ArgIsNumeric( const char * );

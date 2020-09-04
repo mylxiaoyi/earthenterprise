@@ -29,9 +29,9 @@
  * ***************************************************************************/
 
 
-#include <gdal.h>
-#include <cpl_string.h>
-#include <ogr_spatialref.h>
+#include <gdal/gdal.h>
+#include <gdal/cpl_string.h>
+#include <gdal/ogr_spatialref.h>
 #include "khgdal.h"
 #include "khConstants.h"
 #include "khGDALDataset.h"
@@ -564,7 +564,7 @@ int main( int argc, char ** argv )
     std::string srsStr = dataset->GetProjectionRef();
     if (srsStr.size()) {
       const char *wkt = srsStr.c_str();
-      if ((tmpSRS.importFromWkt((char**)&wkt) == OGRERR_NONE) &&
+      if ((tmpSRS.importFromWkt(&wkt) == OGRERR_NONE) &&
           tmpSRS.GetRoot()) {
         srs = &tmpSRS;
       }

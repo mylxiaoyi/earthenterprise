@@ -65,6 +65,7 @@ SUPPORTED_OS_LIST=("Ubuntu", "Red Hat Enterprise Linux (RHEL)", "CentOS", "Linux
 UBUNTUKEY="ubuntu"
 REDHATKEY="rhel"
 CENTOSKEY="centos"
+DEBIANKEY="debian"
 OS_RELEASE1="/etc/os-release"
 OS_RELEASE2="/etc/system-release"
 
@@ -83,7 +84,7 @@ is_package_installed()
     # args: $1: Ubuntu package
     # args: $2: RHEL package
 
-    if [ "$MACHINE_OS" == "$UBUNTUKEY" ] && [ ! -z "$1" ]; then
+    if { [ "$MACHINE_OS" == "$UBUNTUKEY" ] || [ "$MACHINE_OS" == "$DEBIANKEY" ]; } && [ ! -z "$1" ]; then
         if [[ ! -z "$(dpkg -l $1 | grep "^ii")" ]]; then
             return 0
         fi
@@ -105,7 +106,7 @@ software_check()
     # args: $3: RHEL package
 
     if ! is_package_installed $2 $3 ; then
-        if [ "$MACHINE_OS" == "$UBUNTUKEY" ] && [ ! -z "$2" ]; then
+        if { [ "$MACHINE_OS" == "$UBUNTUKEY" ] || [ "$MACHINE_OS" == "$DEBIANKEY" ]; } && [ ! -z "$2" ]; then
             echo -e "\nInstall $2 and restart the $1."
             software_check_retval=1
         elif { [ "$MACHINE_OS" == "$REDHATKEY" ] || [ "$MACHINE_OS" == "$CENTOSKEY" ]; } && [ ! -z "$3" ]; then
@@ -147,6 +148,8 @@ determine_os()
             MACHINE_OS=$REDHATKEY
         elif [[ "${test_os,,}" == "centos"* ]]; then
             MACHINE_OS=$CENTOSKEY
+        elif [[ "${test_os,,}" == "debian "* ]]; then
+            MACHINE_OS=$DEBIANKEY
         else
             MACHINE_OS=""
             echo -e "\nThe installer could not determine your machine's operating system."

@@ -19,10 +19,10 @@
 #define __khgdal_h
 
 #include <string>
-#include <gdal.h>
-#include <gdal_priv.h>
-#include <cpl_conv.h>
-#include <ogr_spatialref.h>
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/ogr_spatialref.h>
 #include "common/notify.h"
 #include "common/khTypes.h"
 #include <cstdint>

@@ -18,12 +18,13 @@
 #ifndef KHSRC_FUSION_FUSIONUI_LAYERITEMBASE_H__
 #define KHSRC_FUSION_FUSIONUI_LAYERITEMBASE_H__
 
-#include <qlistview.h>
+#include <QtWidgets/qlistview.h>
+#include <QtWidgets/QWidget>
 
-class LayerItemBase : public QListViewItem {
+class LayerItemBase : public QWidget{
  public:
   LayerItemBase(QListView* parent);
-  LayerItemBase(QListViewItem* parent);
+  LayerItemBase(QWidget* parent);
 
   virtual bool CanMoveUp() const;
   virtual bool CanMoveDown() const;

@@ -13,16 +13,16 @@
 // limitations under the License.
 
 
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qlayout.h>
+//#include <qvgroupbox.h>
+//#include <qhgroupbox.h>
+#include <QtWidgets/qlayout.h>
 
 #include "ProjectDocker.h"
 #include "ProjectManager.h"
 
-ProjectDocker::ProjectDocker(Place p, QWidget* parent, const char* name)
-    : QDockWindow(p, parent, name, 0) {
-  setResizeEnabled(true);
+ProjectDocker::ProjectDocker(/*Place p,*/ QWidget* parent, const char* name)
+    : QDockWidget(parent) {
+  /*setResizeEnabled(true);
   setCloseMode(QDockWindow::Always);
   setCaption(name);
 
@@ -33,26 +33,26 @@ ProjectDocker::ProjectDocker(Place p, QWidget* parent, const char* name)
   setWidget(box);
 
   // Preview project
-  preview_ = new ProjectManager(box, "Preview", ProjectManager::Preview);
+  preview_ = new ProjectManager(box, "Preview", ProjectManager::Preview);*/
 }
 
-void ProjectDocker::selectBox(const gstDrawState& draw_state,
-                              Qt::ButtonState btn_state) {
-  preview_->selectBox(draw_state, btn_state);
-}
+//void ProjectDocker::selectBox(const gstDrawState& draw_state,
+//                              Qt::ButtonState btn_state) {
+  //preview_->selectBox(draw_state, btn_state);
+//}
 
 void ProjectDocker::enableAllLayers() {
-  preview_->enableAllLayers(true);
+  //preview_->enableAllLayers(true);
 }
 
 void ProjectDocker::disableAllLayers() {
-  preview_->enableAllLayers(false);
+  //preview_->enableAllLayers(false);
 }
 
 void ProjectDocker::expandAllLayers() {
-  preview_->openAllLayers(true);
+  //preview_->openAllLayers(true);
 }
 
 void ProjectDocker::collapseAllLayers() {
-  preview_->openAllLayers(false);
+  //preview_->openAllLayers(false);
 }

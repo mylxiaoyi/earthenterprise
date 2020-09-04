@@ -19,7 +19,7 @@
 #define FUSION_GST_VECTORPREP_FUSEPREPARER_H__
 
 #include <vector>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 #include <mttypes/Queue.h>
 #include <mttypes/Semaphore.h>
 #include "WorkflowProcessor.h"

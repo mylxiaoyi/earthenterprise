@@ -20,8 +20,8 @@
 #ifndef COMMON_KHJS_KHJSCONTEXT_H__
 #define COMMON_KHJS_KHJSCONTEXT_H__
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <khMTTypes.h>
 
 // ****************************************************************************

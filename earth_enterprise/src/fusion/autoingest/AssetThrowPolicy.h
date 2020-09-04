@@ -27,14 +27,14 @@ class AssetThrowPolicy {
     if (allow_throw) {
       throw khException(msg);
     } else {
-      notify(NFY_WARN, "%s", msg.latin1());
+      notify(NFY_WARN, "%s", msg.toLatin1().data());
     }
   }
   static void FatalOrThrow(const QString &msg) {
     if (allow_throw) {
       throw khException(msg);
     } else {
-      notify(NFY_FATAL, "%s", msg.latin1());
+      notify(NFY_FATAL, "%s", msg.toLatin1().data());
     }
   }
 };

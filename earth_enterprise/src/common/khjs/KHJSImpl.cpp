@@ -23,15 +23,15 @@
 // ****************************************************************************
 // ***  KHJSRuntime
 // ****************************************************************************
-KHJSRuntime::KHJSRuntime(void) :
-    runtime(JS_NewRuntime(32 * 1024 * 1024))
+KHJSRuntime::KHJSRuntime(void)// :
+    //runtime(JS_NewRuntime(32 * 1024 * 1024))
 {
-  if (!runtime) {
+  /*if (!runtime) {
     throw khException("Unable to create Javascript runtime");
-  }
+  }*/
 }
 KHJSRuntime::~KHJSRuntime(void) {
-  (void)JS_DestroyRuntime(runtime);
+  //(void)JS_DestroyRuntime(runtime);
 }
 KHJSRuntime* KHJSRuntime::Singleton(void) {
   static KHJSRuntime* singleton = 0;
@@ -46,43 +46,43 @@ KHJSRuntime* KHJSRuntime::Singleton(void) {
 // ****************************************************************************
 JSContextUser::JSContextUser(const KHJSContext &cx_) :
     cx(cx_),
-    rawcx(cx->cx_),
-    rawglobal(JS_GetGlobalObject(rawcx))
+    rawcx(cx->cx_)//,
+    //rawglobal(JS_GetGlobalObject(rawcx))
 {
-  JS_BeginRequest(rawcx);
+  //JS_BeginRequest(rawcx);
 }
 JSContextUser::~JSContextUser(void) {
-  JS_EndRequest(rawcx);
+  //JS_EndRequest(rawcx);
 }
 
 void JSContextUser::AddNamedRoot(void *rp, const std::string &name) {
-  if (!JS_AddNamedRoot(rawcx, rp, name.c_str())) {
-    throwError(kh::tr("Unable to add root for %1 object").arg(name));
-  }
+  /*if (!JS_AddNamedRoot(rawcx, rp, name.c_str())) {
+    throwError(kh::tr("Unable to add root for %1 object").arg(QString(name.c_str())));
+  }*/
 }
 
 void JSContextUser::RemoveRoot(void *rp) throw() {
-  (void)JS_RemoveRoot(rawcx, rp);
+  //(void)JS_RemoveRoot(rawcx, rp);
 }
 
 void JSContextUser::ClearErrors(void) {
-  (void)JS_ClearPendingException(cx->cx_);
-  cx->pendingErrorMsg = QString();
+  //(void)JS_ClearPendingException(cx->cx_);
+  //cx->pendingErrorMsg = QString();
 }
 
-void* JSContextUser::GetPrivate(JSObject *obj) {
+/*void* JSContextUser::GetPrivate(JSObject *obj) {
   return JS_GetPrivate(rawcx, obj);
-}
+}*/
 
-void JSContextUser::SetPrivate(JSObject *obj, void* priv) {
+/*void JSContextUser::SetPrivate(JSObject *obj, void* priv) {
   (void) JS_SetPrivate(rawcx, obj, priv);
-}
+}*/
 
 bool JSContextUser::IsIdentifier(const QString &str) {
-  return JS_IsIdentifier(rawcx, str.ucs2(), str.length());
+  return false;//JS_IsIdentifier(rawcx, str.utf16(), str.length());
 }
 
-void JSContextUser::ExecuteScript(JSScript *script, jsval *rval) {
+/*void JSContextUser::ExecuteScript(JSScript *script, jsval *rval) {
   ClearErrors();
   if (!JS_ExecuteScript(rawcx, rawglobal, script, rval)) {
     throwError(kh::tr("Error running script"));
@@ -111,9 +111,9 @@ float64 JSContextUser::ValueToFloat64(jsval v) {
   float64 f = 0.0;
   (void)JS_ValueToNumber(rawcx, v, &f);
   return f;
-}
+}*/
 
-QString JSContextUser::ValueToString(jsval val) {
+/*QString JSContextUser::ValueToString(jsval val) {
   JSString *str = JS_ValueToString(rawcx, val);
   JSAddRootGuard guard(*this, &str, "Temporary String");
   if (str) {
@@ -121,14 +121,14 @@ QString JSContextUser::ValueToString(jsval val) {
   } else {
     return QString();
   }
-}
+}*/
 
 void JSContextUser::throwError(const QString &header) {
   throw khException(MakeErrorMessage(header));
 }
 
 void JSContextUser::FindGlobalFunctionNames(QStringList &fnames) {
-  JSObject *glob = rawglobal;
+  /*JSObject *glob = rawglobal;
   JSObject *iter = JS_NewPropertyIterator(rawcx, glob);
   if (!iter) {
     throwError(kh::tr("Cannot make new property iterator"));
@@ -167,51 +167,51 @@ void JSContextUser::FindGlobalFunctionNames(QStringList &fnames) {
         }
       }
     }
-  }
+  }*/
 }
 
-void JSContextUser::DefineReadOnlyPropertyWithTinyId
+/*void JSContextUser::DefineReadOnlyPropertyWithTinyId
 (JSObject *obj, const QString &name, std::int8_t tinyid, JSPropertyOp getter)
 {
   if (!JS_DefineUCPropertyWithTinyId(rawcx, obj,
-                                     name.ucs2(), name.length(),
+                                     name.utf16(), name.length(),
                                      tinyid,
-                                     0 /* default jsval */,
+                                     0,
                                      getter,
-                                     0 /* setter */,
+                                     0,
                                      JSPROP_READONLY)) {
     throwError(kh::tr("Unable to add properry %1").arg(name));
   }
-}
+}*/
 
-void JSContextUser::AddNamedGlobalObject(const QString &name, JSObject *obj)
+/*void JSContextUser::AddNamedGlobalObject(const QString &name, JSObject *obj)
 {
   if (!JS_DefineUCProperty(rawcx, rawglobal,
-                           name.ucs2(), name.length(),
+                           name.utf16(), name.length(),
                            OBJECT_TO_JSVAL(obj),
-                           0 /* getter */, 0 /* setter */,
+                           0, 0,
                            JSPROP_READONLY)) {
     throwError(kh::tr("Unable to global object %1").arg(name));
   }
-}
+}*/
 
 void JSContextUser::DeleteNamedGlobalObject(const QString &name)
 {
-  jsval rval;
+  /*jsval rval;
   (void) JS_DeleteUCProperty2(rawcx, rawglobal,
-                              name.ucs2(), name.length(),
-                              &rval);
+                              name.utf16(), name.length(),
+                              &rval);*/
 }
 
 void JSContextUser::MaybeGC(void)
 {
-  (void) JS_MaybeGC(rawcx);
+  //(void) JS_MaybeGC(rawcx);
 }
 
 // ****************************************************************************
 // ***  JSLocalRootScopeGuard
 // ****************************************************************************
-JSLocalRootScopeGuard::JSLocalRootScopeGuard(JSContextUser &jsuser_) :
+/*JSLocalRootScopeGuard::JSLocalRootScopeGuard(JSContextUser &jsuser_) :
     jsuser(jsuser_) {
   if (!JS_EnterLocalRootScope(jsuser.rawcx)) {
     jsuser.throwError(kh::tr("Unable to enter local root scope"));
@@ -219,16 +219,16 @@ JSLocalRootScopeGuard::JSLocalRootScopeGuard(JSContextUser &jsuser_) :
 }
 JSLocalRootScopeGuard::~JSLocalRootScopeGuard(void) {
   JS_LeaveLocalRootScope(jsuser.rawcx);
-}
+}*/
 
 
-JSObject* JSLocalRootScopeGuard::CompileScript(const QString &scriptText,
+/*JSObject* JSLocalRootScopeGuard::CompileScript(const QString &scriptText,
                                                const QString &errorContext) {
   jsuser.ClearErrors();
   JSScript *script =
     JS_CompileUCScript(jsuser.rawcx, jsuser.rawglobal,
-                       scriptText.ucs2(), scriptText.length(),
-                       errorContext.latin1(), 0 /* linenum */);
+                       scriptText.utf16(), scriptText.length(),
+                       errorContext.toLatin1().data(), 0);
   if (!script) {
     jsuser.throwError(kh::tr("Error compiling script"));
   }
@@ -246,16 +246,16 @@ JSObject* JSLocalRootScopeGuard::CompileScript(const QString &scriptText,
   }
 
   return obj;
-}
+}*/
 
-JSObject* JSLocalRootScopeGuard::NewObject(JSClass *clasp, JSObject *parent) {
+/*JSObject* JSLocalRootScopeGuard::NewObject(JSClass *clasp, JSObject *parent) {
   if (parent == 0) {
     parent = jsuser.rawglobal;
   }
-  JSObject *obj = JS_NewObject(jsuser.rawcx, clasp, 0 /* prototype */, parent);
+  JSObject *obj = JS_NewObject(jsuser.rawcx, clasp, 0, parent);
   if (!obj) {
     jsuser.throwError(kh::tr("Unable to make new %1 object")
                       .arg(clasp->name));
   }
   return obj;
-}
+}*/

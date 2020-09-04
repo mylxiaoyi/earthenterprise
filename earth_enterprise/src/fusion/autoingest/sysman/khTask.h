@@ -22,7 +22,7 @@
 #include <autoingest/sysman/.idl/TaskStorage.h>
 #include "Reservation.h"
 #include "TaskRequirements.h"
-#include <qstring.h>
+#include <QtCore/QString>
 #include "common/performancelogger.h"
 
 

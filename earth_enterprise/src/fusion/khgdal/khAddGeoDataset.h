@@ -17,7 +17,7 @@
 #ifndef __khAddGeoDataset_h
 #define __khAddGeoDataset_h
 
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 #include <khGuard.h>
 #include <string>
 

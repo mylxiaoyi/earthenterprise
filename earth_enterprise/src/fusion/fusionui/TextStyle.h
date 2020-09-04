@@ -21,9 +21,9 @@
 #define FUSION_FUSIONUI_TEXTSTYLE_H__
 
 #include "textstylebase.h"
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
 #include <autoingest/.idl/storage/MapSubLayerConfig.h>
 #include <autoingest/.idl/MapTextStyle.h>
 #include "WidgetControllers.h"
@@ -42,7 +42,7 @@ namespace maprender {
   class FontInfo;
 }
 
-class TextStyle : public TextStyleBase {
+class TextStyle : public QObject, public Ui::TextStyleBase {
   Q_OBJECT
 
  public:
@@ -148,9 +148,9 @@ class StyleSaveButton : public QPushButton {
 
   // inherited from QWidget
   // support drop
-  virtual void dragEnterEvent(QDragEnterEvent* event);
-  virtual void dropEvent(QDropEvent* event);
-  virtual void dragLeaveEvent(QDragLeaveEvent* event);
+  //virtual void dragEnterEvent(QDragEnterEvent* event);
+  //virtual void dropEvent(QDropEvent* event);
+  //virtual void dragLeaveEvent(QDragLeaveEvent* event);
 
  signals:
   void StyleChanged(QWidget* btn);

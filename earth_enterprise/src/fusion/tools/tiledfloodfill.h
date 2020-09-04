@@ -47,7 +47,7 @@
 #include <stack>
 #include <vector>
 
-#include <qdatetime.h>
+#include <QtCore/qdatetime.h>
 
 
 // A Span is a horizontal segment of len pixels to flood into. It is

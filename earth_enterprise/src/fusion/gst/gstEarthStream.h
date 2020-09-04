@@ -18,7 +18,6 @@
 #ifndef KHSRC_FUSION_GST_GSTEARTHSTREAM_H__
 #define KHSRC_FUSION_GST_GSTEARTHSTREAM_H__
 
-#include <qcstring.h>
 #include <curl/curl.h>
 #include <khThread.h>
 #include <khEndian.h>

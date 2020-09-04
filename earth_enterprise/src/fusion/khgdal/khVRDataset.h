@@ -26,7 +26,7 @@
 #include <khExtents.h>
 #include "khGDALDataset.h"
 
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 
 class khVirtualRaster;
 class khGDALBuffer;
@@ -100,7 +100,7 @@ class khVRDataset : public GDALDataset
       //(GDALDataset*)GDALOpen(filename.c_str(), GA_ReadOnly)) {
       if (!dataset.get()) {
         throw khException(kh::tr("Unable to load tile %1")
-                          .arg(filename));
+                          .arg(QString(filename.c_str())));
       }
     }
     CacheNode(const CacheNode &o)

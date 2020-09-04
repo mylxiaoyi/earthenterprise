@@ -18,8 +18,8 @@
 #ifndef KHSRC_FUSION_FUSIONUI_LOCALEDETAILS_H__
 #define KHSRC_FUSION_FUSIONUI_LOCALEDETAILS_H__
 
-#include <qtable.h>
-#include <qcheckbox.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qcheckbox.h>
 #include <map>
 #include "WidgetControllers.h"
 #include <autoingest/.idl/storage/LayerConfig.h>
@@ -56,7 +56,7 @@ private slots:
   void ContextMenu(int row, int col, const QPoint& pos);
   void FilterToggled(bool on);
 
- private:
+ public:
   enum FieldEnum {
     FIELD_ICON,
     FIELD_NAME,
@@ -86,7 +86,7 @@ private slots:
                  const LocaleConfig& config,
                  bool is_defaultable = true);
 
-  QTable *table_;
+  //QTable *table_;
 
   LocaleConfig *default_locale_config_;
   LocaleMap    *locale_map_config_;

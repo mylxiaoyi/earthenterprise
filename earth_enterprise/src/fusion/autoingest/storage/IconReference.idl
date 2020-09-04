@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-#include <qstring.h>
+#include <QtCore/QString>
 #include <khConstants.h>
 #requiresgetheapusage
 
@@ -21,7 +21,7 @@ class IconReference {
   enum Type { Internal = 0, External = 1 };
 
   Type type    = IconReference::Internal;
-  QString href = QString(kDefaultIconName);    // dot
+  QString href = QString(kDefaultIconName.c_str());    // dot
 
 #hquote
   bool operator<(const IconReference &o) const;
@@ -33,11 +33,11 @@ class IconReference {
   static void CheckIconExistence(const std::string& icon_name,
                                  IconReference::Type* type);
 
-  std::string LegendHref(void) const { return std::string(href) + "_l.png"; }
-  std::string NormalHref(void) const { return std::string(href) + "_n.png"; }
-  std::string HighlightHref(void) const { return std::string(href) + "_h.png"; }
+  std::string LegendHref(void) const { return href.toStdString() + "_l.png"; }
+  std::string NormalHref(void) const { return href.toStdString() + "_n.png"; }
+  std::string HighlightHref(void) const { return href.toStdString() + "_h.png"; }
   std::string NormalHighlightHref(void) const {
-    return std::string(href) + "_nh.png";
+    return href.toStdString() + "_nh.png";
   }
 #/hquote
 
@@ -66,18 +66,18 @@ class IconReference {
     return khComposePath(((type == IconReference::Internal)
                           ? kGESiteIconsPath
                           : CustomIconPath()),
-                         href + ".png");
+                         href.toStdString() + ".png");
   }
 
   void IconReference::CheckIconExistence(const std::string& icon_name,
                                IconReference::Type* type) {
-    IconReference internal(IconReference::Internal, icon_name);
+    IconReference internal(IconReference::Internal, QString(icon_name.c_str()));
     std::string internal_path = internal.SourcePath();
     if (khIsFileReadable(internal_path)) {
       *type = IconReference::Internal;
       return;
     }
-    IconReference external(IconReference::External, icon_name);
+    IconReference external(IconReference::External, QString(icon_name.c_str()));
     std::string external_path = external.SourcePath();
     if (khIsFileReadable(external_path)) {
       *type = IconReference::External;

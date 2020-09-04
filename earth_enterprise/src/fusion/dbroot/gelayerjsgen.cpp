@@ -110,7 +110,7 @@ main(int argc, char **argv)
     std::set<IconReference> used_icons;
 
     // emit the default layers.js
-    EmitLayersJSFile(config, outdir, kDefaultLocaleSuffix, used_icons);
+    EmitLayersJSFile(config, outdir, QString::fromStdString(kDefaultLocaleSuffix), used_icons);
 
     // emit localized layer.js files
     for (std::vector<QString>::const_iterator locale =
@@ -149,14 +149,14 @@ void EmitImageryLayer(FILE* fp, const LegendLocale &legend_locale,
                       std::set<IconReference> &used_icons)
 {
   used_icons.insert(legend_locale.icon.GetValue());
-  QString icon_name("icons/" + legend_locale.icon.GetValue().LegendHref());
+  QString icon_name = QString::fromStdString("icons/" + legend_locale.icon.GetValue().LegendHref());
 
   fprintf(fp, "tile_layer_defs.push(\n");
   fprintf(fp, "{\n");
   fprintf(fp, "  img: stream_url + \"/query?request=Icon&icon_path=%s\",\n",
-          (const char *)icon_name.utf8());
+          icon_name.toStdString().c_str());
   fprintf(fp, "  txt: \"%s\",\n",
-          (const char *)legend_locale.name.GetValue().utf8());
+          legend_locale.name.GetValue().toStdString().c_str());
   fprintf(fp, "  initial_state: %s,\n",
           legend_locale.isChecked.GetValue() ? "true" : "false");
   fprintf(fp, "  opacity: 1.0,\n");
@@ -177,14 +177,14 @@ void EmitVectorRasterLayer(FILE* fp, const LegendLocale &legend_locale,
                            std::set<IconReference> &used_icons)
 {
   used_icons.insert(legend_locale.icon.GetValue());
-  QString icon_name("icons/" + legend_locale.icon.GetValue().LegendHref());
+  QString icon_name = QString::fromStdString("icons/" + legend_locale.icon.GetValue().LegendHref());
 
   fprintf(fp, "tile_layer_defs.push(\n");
   fprintf(fp, "{\n");
   fprintf(fp, "  img: stream_url + \"/query?request=Icon&icon_path=%s\",\n",
-          (const char *)icon_name.utf8());
+          icon_name.toStdString().c_str());
   fprintf(fp, "  txt: \"%s\",\n",
-          (const char *)legend_locale.name.GetValue().utf8());
+          legend_locale.name.GetValue().toStdString().c_str());
   fprintf(fp, "  initial_state: %s,\n",
           legend_locale.isChecked.GetValue() ? "true" : "false");
   fprintf(fp, "  opacity: 1.0,\n");
@@ -208,11 +208,11 @@ void EmitLayersJSFile(const MapLayerJSConfig &config,
 {
   // open the file for writing
   std::string outfile =
-    khComposePath(outdir, kLayerDefsPrefix + "." + locale.latin1());
+    khComposePath(outdir, kLayerDefsPrefix + "." + locale.toStdString());
   FILE* fp = ::fopen(outfile.c_str(), "w");
   if (!fp) {
     throw khErrnoException(kh::tr("Unable to open %1 for writing")
-                           .arg(outfile));
+                           .arg(QString::fromStdString(outfile)));
   }
   khFILECloser closer(fp);
 
@@ -221,7 +221,7 @@ void EmitLayersJSFile(const MapLayerJSConfig &config,
 
   for (LayerIterator layer = config.layers_.begin();
        layer != config.layers_.end(); ++layer) {
-    LegendLocale legend_locale = (locale == kDefaultLocaleSuffix)
+    LegendLocale legend_locale = (locale.toStdString() == kDefaultLocaleSuffix)
                                  ? layer->legend_.defaultLocale
                                  : layer->legend_.GetLegendLocale(locale);
     switch (layer->type_) {

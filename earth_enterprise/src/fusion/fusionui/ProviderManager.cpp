@@ -14,10 +14,10 @@
 // limitations under the License.
 
 
-#include <qtable.h>
-#include <qpopupmenu.h>
-#include <qmessagebox.h>
-#include <qheader.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qmessagebox.h>
+//#include <qheader.h>
 #include <notify.h>
 
 #include <autoingest/.idl/gstProvider.h>
@@ -26,21 +26,21 @@
 #include "ProviderEdit.h"
 
 // used for the name column, but holds entire copy of the provider
-class ProviderNameItem : public QTableItem {
+class ProviderNameItem : public QWidget {
  public:
-  ProviderNameItem(QTable* table, const gstProvider &provider) :
-      QTableItem(table, QTableItem::Never, provider.name),
+  ProviderNameItem(QTableView* table, const gstProvider &provider) :
+      //QWidget(table, QTableItem::Never, provider.name),
       provider_(provider)
   {
   }
 
   void SetProvider(const gstProvider &provider) {
-    provider_ = provider;
-    setText(provider_.name);
+    /*provider_ = provider;
+    setText(provider_.name);*/
   }
 
   gstProvider GetProvider(void) const {
-    provider_.name = text();
+    //provider_.name = text();
     return provider_;
   }
 
@@ -48,9 +48,9 @@ class ProviderNameItem : public QTableItem {
   mutable gstProvider provider_;
 };
 
-ProviderManager::ProviderManager(QWidget* parent, bool modal, WFlags flags)
-  : ProviderManagerBase(parent, 0, modal, flags) {
-  providerTable->verticalHeader()->hide();
+ProviderManager::ProviderManager(QWidget* parent, bool modal)
+  /*: ProviderManagerBase(parent, 0, modal, flags)*/ {
+  /*providerTable->verticalHeader()->hide();
   providerTable->setLeftMargin(0);
   providerTable->setColumnStretchable(0, true);
 
@@ -68,30 +68,31 @@ ProviderManager::ProviderManager(QWidget* parent, bool modal, WFlags flags)
   }
 
   for (int col = 0; col < providerTable->numCols(); ++col)
-    providerTable->adjustColumn(col);
+    providerTable->adjustColumn(col);*/
 }
 
 void ProviderManager::SetRow(int row, const gstProvider& provider) {
-  int num_rows = providerTable->numRows();
+  /*int num_rows = providerTable->numRows();
   if (row > (num_rows - 1))
     providerTable->setNumRows(row + 1);
   providerTable->setItem(row, 0, new ProviderNameItem(providerTable,
                                                       provider));
   providerTable->setText(row, 1, QString::fromUtf8(provider.key.c_str()));
   providerTable->setText(row, 2, provider.copyright);
-  providerTable->adjustRow(row);
+  providerTable->adjustRow(row);*/
 }
 
 gstProvider ProviderManager::GetProviderFromRow(int row) {
-  gstProvider p = static_cast<ProviderNameItem*>(
+  /*gstProvider p = static_cast<ProviderNameItem*>(
       providerTable->item(row, 0))->GetProvider();
   p.key = providerTable->text(row, 1).utf8();
   p.copyright = providerTable->text(row, 2);
-  return p;
+  return p;*/
+  return gstProvider();
 }
 
 void ProviderManager::accept() {
-  gstProviderSet new_providers;
+  /*gstProviderSet new_providers;
   (void)new_providers.Load();
 
   // see if the providers have changed since I loaded them
@@ -118,12 +119,12 @@ void ProviderManager::accept() {
       return;
     }
   }
-  ProviderManagerBase::accept();
+  ProviderManagerBase::accept();*/
 }
 
 gstProvider ProviderManager::EditProvider(const gstProvider& current_provider) {
   gstProvider new_provider = current_provider;
-  ProviderEdit edit(this);
+  /*ProviderEdit edit(this);
 
   bool unique = true;
   do {
@@ -147,12 +148,12 @@ gstProvider ProviderManager::EditProvider(const gstProvider& current_provider) {
         trUtf8("Please provide a unique provider key.\n\n"),
         QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
     }
-  } while (!unique);
+  } while (!unique);*/
   return new_provider;
 }
 
 void ProviderManager::modifyProvider() {
-  int row = providerTable->currentRow();
+  /*int row = providerTable->currentRow();
   if (row == -1)
     return;
 
@@ -172,19 +173,19 @@ void ProviderManager::modifyProvider() {
     SetRow(row, new_provider);
     for (int col = 0; col < providerTable->numCols(); ++col)
       providerTable->adjustColumn(col);
-  }
+  }*/
 }
 
 void ProviderManager::newProvider() {
-  gstProvider new_provider = EditProvider(gstProvider());
+  /*gstProvider new_provider = EditProvider(gstProvider());
   if (new_provider != gstProvider()) {
     new_provider.id = provider_set_.GetNextId();
     SetRow(providerTable->numRows(), new_provider);
-  }
+  }*/
 }
 
 void ProviderManager::deleteProvider() {
-  int row = providerTable->currentRow();
+  /*int row = providerTable->currentRow();
   if (row == -1)
     return;
 
@@ -194,11 +195,11 @@ void ProviderManager::deleteProvider() {
       trUtf8("does not reference this provider.  This may cause \n") +
       trUtf8("assets to point to non-existent providers."),
       tr("OK"), tr("Cancel"), QString::null, 1, 1) == 0)
-    providerTable->removeRow(row);
+    providerTable->removeRow(row);*/
 }
 
 void ProviderManager::contextMenu(int row, int col, const QPoint& pos) {
-  enum { NEW_PROVIDER, MODIFY_PROVIDER, DELETE_PROVIDER };
+  /*enum { NEW_PROVIDER, MODIFY_PROVIDER, DELETE_PROVIDER };
 
   QPopupMenu menu(this);
   menu.insertItem(tr("&New Provider"), NEW_PROVIDER);
@@ -217,5 +218,5 @@ void ProviderManager::contextMenu(int row, int col, const QPoint& pos) {
     case DELETE_PROVIDER:
       deleteProvider();
       break;
-  }
+  }*/
 }

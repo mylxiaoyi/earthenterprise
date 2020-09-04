@@ -38,7 +38,7 @@ template <class Defs, class FinalClass>
 AssetDerived<Defs, FinalClass>::AssetDerived(QWidget *parent) :
     AssetBase(parent),
     saved_edit_request_(FinalClass::FinalMakeNewRequest()) {
-  saved_edit_request_.assetname = AssetBase::untitled_name;
+  saved_edit_request_.assetname = AssetBase::untitled_name.toStdString();
   Init();
 }
 
@@ -68,7 +68,8 @@ QString AssetDerived<Defs, FinalClass>::AssetPrettyName() const {
 template <class Defs, class FinalClass>
 QWidget* AssetDerived<Defs, FinalClass>::BuildMainWidget(QWidget* parent) {
   main_widget_ = new typename Defs::Widget(parent, this);
-  return main_widget_;
+  //return main_widget_;
+  return nullptr;
 }
 
 template <class Defs, class FinalClass>
@@ -138,7 +139,7 @@ void AssetDerived<Defs, FinalClass>::Init(bool re_init) {
   if (re_init == false) {
     InstallMainWidget();
 
-    SetName(saved_edit_request_.assetname);
+    SetName(QString::fromStdString(saved_edit_request_.assetname));
     SetMeta(saved_edit_request_.meta);
 
     main_widget_->Prefill(saved_edit_request_);
@@ -155,7 +156,7 @@ template <class Defs, class FinalClass>
 typename Defs::Request
 AssetDerived<Defs, FinalClass>::AssembleEditRequest(void) {
   typename Defs::Request request = saved_edit_request_;
-  request.assetname = Name();
+  request.assetname = Name().toStdString();
   request.meta = Meta();
 
   main_widget_->AssembleEditRequest(&request);

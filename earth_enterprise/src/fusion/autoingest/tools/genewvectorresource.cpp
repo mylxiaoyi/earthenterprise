@@ -26,8 +26,8 @@
 #include "autoingest/.idl/storage/AssetDefs.h"
 #include "autoingest/.idl/gstProvider.h"
 #include "autoingest/khAssetManagerProxy.h"
-#include <qtextcodec.h>
-
+#include <QtCore/QTextCodec>
+#include <QtCore/QList>
 
 std::string GetSupportedEncodings(void) {
   std::vector<std::string> encodings;
@@ -35,8 +35,10 @@ std::string GetSupportedEncodings(void) {
 
   // fetch QT's supported encodings & sort them alphbetically
   QTextCodec *codec;
-  for (int i = 0; (codec = QTextCodec::codecForIndex(i)); i++) {
-    std::string encoding = codec->name();
+  QList<QByteArray> codec_list = QTextCodec::availableCodecs();
+  for (int i = 0; i<codec_list.size(); i++) {
+    codec = QTextCodec::codecForName(codec_list[i]);
+    std::string encoding = codec->name().data();
     encodings.push_back(encoding);
     longest = std::max((size_t)(encoding.size()), (size_t)longest);
   }
@@ -234,7 +236,7 @@ main(int argc, char *argv[]) {
       QString error;
       if (!khAssetManagerProxy::ProductReImport(req.assetname, updated,
                                                 error)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
       if (updated) {
         printf("The asset is updated: %s\n", req.assetname.c_str());
@@ -307,7 +309,7 @@ main(int argc, char *argv[]) {
     } else {
       QString error;
       if (!khAssetManagerProxy::VectorProductImport(req, error)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
     }
   } catch(const std::exception &e) {

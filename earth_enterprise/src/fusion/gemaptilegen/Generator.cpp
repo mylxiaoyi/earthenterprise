@@ -368,13 +368,13 @@ class PreparerMergeSource : public MergeSource<Generator::MergeEntry> {
     // DO NOT pull a full batch, just pull one. We only need to seed the
     // merge source and don't want to wait for an entire batch
     in_puller_.ReleaseOldAndPull(curr_, 1);
-    if (!curr_ || !curr_->Data()) {
+    /*if (!curr_ || !curr_->Data()) {
       QString warn(kh::tr("No element for merge source for layer %1").arg(
           layer_no + 1));
       notify(NFY_WARN, "%s", warn.latin1());
     } else {
       curr_entry_.first = curr_->Data();
-    }
+    }*/
   }
   virtual const MergeEntry &Current(void) const {
     return curr_entry_;
@@ -779,7 +779,7 @@ Generator::Generator(geFilePool &file_pool, const std::string &outdir,
     render_queue_(),
     free_render_item_queue_(),
     is_mercator_(is_mercator) {
-  const khTilespace& client_map_tile_space =
+  /*const khTilespace& client_map_tile_space =
       is_mercator_ ? ClientMapMercatorTilespace : ClientMapFlatTilespace;
   CompressorJob::InitializeOnce(
       client_map_tile_space.tileSize,           // width
@@ -903,7 +903,7 @@ Generator::Generator(geFilePool &file_pool, const std::string &outdir,
            "Map Layer edit dialog.");
   }
   target_coverage_.cropToWorld(client_map_tile_space);
-  fusion_coverage_.cropToWorld(task_config.fusion_tilespace_);
+  fusion_coverage_.cropToWorld(task_config.fusion_tilespace_);*/
 }
 
 Generator::~Generator(void) {

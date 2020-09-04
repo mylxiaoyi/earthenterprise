@@ -13,22 +13,22 @@
 // limitations under the License.
 
 
-#include <qcheckbox.h>
-#include <qtextedit.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qtextedit.h>
 
 #include "SRSDetails.h"
 
 SRSDetails::SRSDetails( QWidget *p, const QString &wkt, bool prj )
-    : SRSDetailsBase( p )
+    //: SRSDetailsBase( p )
 {
-  wktEdit->setWrapPolicy( QTextEdit::Anywhere );
+  /*wktEdit->setWrapPolicy( QTextEdit::Anywhere );
   wktEdit->setTextFormat( Qt::PlainText );
 
   wktEdit->setText( wkt );
-  savePrjCheck->setChecked( prj );
+  savePrjCheck->setChecked( prj );*/
 }
 
 bool SRSDetails::savePrj() const
 {
-  return savePrjCheck->isChecked();
+  return false;//savePrjCheck->isChecked();
 }

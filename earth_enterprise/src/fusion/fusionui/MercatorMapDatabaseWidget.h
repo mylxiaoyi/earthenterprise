@@ -28,7 +28,7 @@
 class AssetBase;
 class DatabaseSearchTabs;
 
-class MercatorMapDatabaseWidget : public MercatorMapDatabaseWidgetBase,
+class MercatorMapDatabaseWidget : public Ui::MercatorMapDatabaseWidgetBase,
                                   public AssetWidgetBase {
  public:
   MercatorMapDatabaseWidget(QWidget* parent, AssetBase* base);
@@ -38,16 +38,16 @@ class MercatorMapDatabaseWidget : public MercatorMapDatabaseWidgetBase,
 
   // inherited from MercatorMapDatabaseWidgetBase
   virtual void ChooseMapProject();
-  virtual void ClearMapProject();
+  //virtual void ClearMapProject();
   virtual void ChooseImageryProject();
-  virtual void ClearImageryProject();
+  //virtual void ClearImageryProject();
   virtual void UseGoogleImagery(bool state);
 
  private:
   void EnableImageryProject(bool state);
   void SetImageryProject(const QString& path);
   inline std::string GetImageryProjectPath() const {
-    return imagery_project_path_.latin1();
+    return imagery_project_path_.toStdString();
   }
 
   static QString empty_text;

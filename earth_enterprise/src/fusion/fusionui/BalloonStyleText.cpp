@@ -13,9 +13,9 @@
 // limitations under the License.
 
 
-#include <qtextedit.h>
-#include <qregexp.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtCore/qregexp.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include "BalloonStyleText.h"
 
@@ -24,13 +24,13 @@ static const char kDefaultBalloonStyleText[] =
     "<h3>$[name]</h3>$[description]<br><br>$[geDirections]";
 
 BalloonStyleText::BalloonStyleText(QWidget* parent, const QString& text)
-    : BalloonStyleTextBase(parent, 0, false, 0) {
-  text_edit->setText(text);
+    /*: BalloonStyleTextBase(parent, 0, false, 0)*/ {
+  //text_edit->setText(text);
 }
 
 void BalloonStyleText::accept() {
   // test for the only invalid character
-  if (text_edit->text().find('"') != -1) {
+  /*if (text_edit->text().find('"') != -1) {
       QMessageBox::critical(
         this, tr("Error"),
         tr("Using the double-quote character: \" is not allowed.") +
@@ -39,9 +39,9 @@ void BalloonStyleText::accept() {
     return;
   }
   text_ = text_edit->text();
-  BalloonStyleTextBase::accept();
+  BalloonStyleTextBase::accept();*/
 }
 
 void BalloonStyleText::InsertDefault() {
-  text_edit->insert(kDefaultBalloonStyleText);
+  //text_edit->insert(kDefaultBalloonStyleText);
 }

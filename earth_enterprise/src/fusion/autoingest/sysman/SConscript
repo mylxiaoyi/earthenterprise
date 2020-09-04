@@ -113,15 +113,15 @@ sysmanExtraObjs = [TaskStorageObj, JobStorageObj, NextTaskIdObj, TaskRuleObj,
   env.ObjFromOtherDir(otherDirObjs)
 sysmanObjs = map(lambda f: str(f).replace(".cpp", ".o"), sysmanFiles)
 sysmanLibs = ['gegdal', 'geraster', 'gesearchtabs', 'genet', 'gepublish', 'gefconfigutil',
-  'geindex_r', 'geutil', 'gecommon', 'gexml', 'gemiscconfig', 'qt-mt', 'xerces-c', 'geos',
-  'gomp']
+  'geindex_r', 'geutil', 'gecommon', 'gexml', 'gemiscconfig', 'Qt5Core', 'QtGui', 'xerces-c', 'geos',
+  'gomp', 'Qt5Core']
 sysmanTestLibs = sysmanLibs + ['gtest']
 
 resprovFiles = ['khResourceProvider.cpp', 'khResourceManagerProxy.cpp',
   'khResourceProviderDispatch.cpp']
 resprovObjs = map(lambda f: str(f).replace(".cpp", ".o"), resprovFiles)
 resprovExtraObjs = [TaskStorageObj, JobStorageObj, env['FUSIONVER'], env['BUILDDATE']]
-resprovLibs = ['geautoingest', 'geconfigutil', 'gefconfigutil', 'geutil', 'gecommon', 'gexml', 'gemiscconfig', 'xerces-c', 'qt-mt']
+resprovLibs = ['geautoingest', 'geconfigutil', 'gefconfigutil', 'geutil', 'gecommon', 'gexml', 'gemiscconfig', 'xerces-c', 'Qt5Core']
 resprovTestLibs = resprovLibs + ['gtest']
 
 

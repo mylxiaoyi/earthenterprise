@@ -16,8 +16,8 @@
 #include <string>
 #include <dlfcn.h>
 #include <ctype.h>
-#include <qstringlist.h>
-#include <qregexp.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qregexp.h>
 
 #include <khFileUtils.h>
 #include <khConstants.h>
@@ -122,11 +122,12 @@ MetaFormat::MetaFormat(gstFormatNewFmtFunc format_func,
       description_(desc),
       short_description_(short_desc),
       filter_(filter) {
-  QStringList filters = QStringList::split(' ', filter_);
+  QStringList filters = QString(filter_).split(' ');
   for (QStringList::Iterator it = filters.begin();
        it != filters.end(); ++it) {
     QRegExp* rx = new QRegExp(*it);
-    rx->setWildcard(true);
+    //rx->setWildcard(true);
+    rx->setPatternSyntax(QRegExp::Wildcard);
     patterns_.push_back(rx);
   }
 }

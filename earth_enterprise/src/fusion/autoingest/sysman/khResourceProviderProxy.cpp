@@ -173,7 +173,7 @@ khResourceProviderProxy::StartTask
       notify(NFY_WARN,
              "Unable to send StartJob for %s: %s.\n"
              "    Will send a TaskLost message.",
-             task->verref().c_str(), error.latin1());
+             task->verref().c_str(), error.toLatin1().data());
       khTask::LoseTask(task);
 
       // If I can't send a message, assume the resource provider I'm
@@ -223,7 +223,7 @@ khResourceProviderProxy::StopTask(khTask *task) throw()
       if (!providerProxy.StopJob(StopJobMsg(task->taskid()),
                                  error, SYSMAN_PROVIDER_TIMEOUT)) {
         notify(NFY_WARN, "Unable to send StopJob for %d: %s.",
-               task->taskid(), error.latin1());
+               task->taskid(), error.toLatin1().data());
 
         // If I can't send a message, assume the resource provider I'm
         // connected to is dead.

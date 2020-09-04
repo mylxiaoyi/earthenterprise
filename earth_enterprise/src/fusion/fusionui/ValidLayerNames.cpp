@@ -16,8 +16,8 @@
 
 #include "ValidLayerNames.h"
 
-#include <qvalidator.h>
-#include <qobject.h>
+#include <QtGui/qvalidator.h>
+#include <QtCore/qobject.h>
 
 
 // A valid Layer name cannot have '|', '[', or ']'

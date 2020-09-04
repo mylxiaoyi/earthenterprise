@@ -17,8 +17,8 @@
 #include "ScriptFilterController.h"
 #include "LabelFormat.h"
 #include "ScriptEditor.h"
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qpushbutton.h>
 #include <gst/gstRecordJSContext.h>
 #include <khException.h>
 
@@ -32,16 +32,16 @@ ScriptFilterController::Create(WidgetControllerManager &manager,
                                const QStringList &contextScripts_,
                                const QString &errorContext)
 {
-  (void) new ScriptFilterController(manager, lineEdit_, button_,
+  /*(void) new ScriptFilterController(manager, lineEdit_, button_,
                                     config_, source_, contextScripts_,
-                                    errorContext);
+                                    errorContext);*/
 }
 
 
 void
 ScriptFilterController::moreButtonClicked(void)
 {
-  QString script = lineEdit->text();
+  /*QString script = lineEdit->text();
   if (ScriptEditor::Run(PopupParent(), source,
                         script, ScriptEditor::Expression,
                         contextScripts)) {
@@ -49,13 +49,13 @@ ScriptFilterController::moreButtonClicked(void)
       lineEdit->setText(script);
       EmitChanged();
     }
-  }
+  }*/
 }
 
 void
 ScriptFilterController::SyncToConfig(void)
 {
-  *config = lineEdit->text();
+  /**config = lineEdit->text();
   if (!config->isEmpty()) {
     QString compilationError;
     if (!gstRecordJSContextImpl::CompileCheck(
@@ -64,7 +64,7 @@ ScriptFilterController::SyncToConfig(void)
       throw khException(kh::tr("JavaScript Error (%1):\n%2")
                         .arg(errorContext).arg(compilationError));
     }    
-  }
+  }*/
 }
 
 void
@@ -76,7 +76,7 @@ ScriptFilterController::SyncToWidgetsImpl(void)
 void
 ScriptFilterController::MySyncToWidgetsImpl(void)
 {
-  lineEdit->setText(*config);
+  //lineEdit->setText(*config);
 }
 
 ScriptFilterController::ScriptFilterController(
@@ -95,10 +95,10 @@ ScriptFilterController::ScriptFilterController(
     contextScripts(contextScripts_),
     errorContext(errorContext_)
 {
-  MySyncToWidgetsImpl();
+  /*MySyncToWidgetsImpl();
 
   // connect all the widgets to me
   connect(button, SIGNAL(clicked()), this, SLOT(moreButtonClicked()));
   connect(lineEdit, SIGNAL(textChanged(const QString &)),
-          this, SLOT(EmitTextChanged()));
+          this, SLOT(EmitTextChanged()));*/
 }

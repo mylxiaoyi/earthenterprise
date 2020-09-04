@@ -15,9 +15,10 @@
 
 
 #include <khConstants.h>
-#include <qmime.h>
-#include <qdragobject.h>
+//#include <qmime.h>
+//#include <qdragobject.h>
 #include <map>
+#include <QtGui/QPixmap>
 
 #include "AssetDisplayHelper.h"
 
@@ -181,10 +182,10 @@ QString AssetDisplayHelper::PrettyName(AssetKey key)  {
 }
 
 QPixmap AssetDisplayHelper::LoadPixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }

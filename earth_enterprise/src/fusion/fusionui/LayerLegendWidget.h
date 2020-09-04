@@ -19,24 +19,24 @@
 #ifndef FUSION_FUSIONUI_LAYERLEGENDWIDGET_H__
 #define FUSION_FUSIONUI_LAYERLEGENDWIDGET_H__
 
-#include <qwidget.h>
+#include <QtWidgets/qwidget.h>
 
 class QVBoxLayout;
 class QCheckBox;
-class QTable;
+class QTableView;
 class EndEditTable;
 
 class LayerLegendWidget : public QWidget {
   Q_OBJECT
 
  public:
-  LayerLegendWidget( QWidget* parent, const char* name = 0, WFlags fl = 0 );
+  LayerLegendWidget( QWidget* parent);//, const char* name = 0, WFlags fl = 0 );
   ~LayerLegendWidget(void);
 
   QVBoxLayout*  vlayout;
   QCheckBox*    filter_check;
 
-  QTable* GetTable();
+  //QTable* GetTable();
   void EndEdit();
 
  protected slots:

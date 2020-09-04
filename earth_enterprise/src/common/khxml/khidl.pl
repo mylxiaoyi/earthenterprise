@@ -1929,7 +1929,7 @@ sub EmitEnumDOMReader
       print $fh $indent, $indent, "return;\n";
     }
     print $fh $indent, "}\n";
-    print $fh $indent, "throw khException(kh::tr(\"Invalid string '%1' for enum '%2'\").arg(enumStr).arg(\"$enum->{qualname}\"));\n";
+    print $fh $indent, "throw khException(kh::tr(\"Invalid string '%1' for enum '%2'\").arg(QString(enumStr.c_str())).arg(QString(\"$enum->{qualname}\")));\n";
     print $fh "}\n\n";
 }
 

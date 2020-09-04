@@ -91,7 +91,7 @@ bool etArray<T>::expand(int len)
   T * ptr = new T[size+chunk];
   if(!ptr) return false;
 
-  if(array) memcpy(ptr, array, sizeof(T) * len);
+  if(array) memcpy((void*)ptr, array, sizeof(T) * len);
   delete [] array;
   array = ptr;
   size += chunk;
@@ -105,7 +105,7 @@ template <class T>
 int etArray<T>::add(const T *elm)
 {
   if(!expand(length+1)) return -1;
-  memcpy(&(array[length]), elm, sizeof(T));
+  memcpy((void*)&(array[length]), elm, sizeof(T));
   return length++;
 }
 

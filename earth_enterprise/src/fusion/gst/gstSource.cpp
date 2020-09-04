@@ -16,9 +16,9 @@
 
 #include "fusion/gst/gstSource.h"
 
-#include <qfile.h>
-#include <qtextcodec.h>
-#include <qtextstream.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qtextcodec.h>
+#include <QtCore/qtextstream.h>
 
 #include "common/khException.h"
 #include "common/khFileUtils.h"
@@ -28,7 +28,7 @@
 
 
 gstSource::gstSource(const QString &fname)
-    : gstMemory(fname.latin1()),
+    : gstMemory(fname.toStdString().c_str()),
       opened_(false),
       format_(NULL),
       status_(GST_UNKNOWN),
@@ -46,7 +46,7 @@ void gstSource::SetEnabled(bool enabled) {
 
 void gstSource::DefineSrs(const QString &wkt, bool save_prj) {
   if (format_ && !wkt.isEmpty()) {
-    const std::string wktbuf(wkt.latin1());
+    const std::string wktbuf(wkt.toStdString());
     OGRSpatialReference srs(wktbuf.c_str());
     if (srs.Validate() == OGRERR_NONE) {
       format_->SetSpatialRef(new gstSpatialRef(&srs));
@@ -57,7 +57,7 @@ void gstSource::DefineSrs(const QString &wkt, bool save_prj) {
     }
   } else {
     notify(NFY_WARN, "Unable to define Spatial Reference! wkt=%s",
-           wkt.latin1());
+           wkt.toStdString().c_str());
   }
 }
 
@@ -93,7 +93,7 @@ void gstSource::Close() {
 void gstSource::SavePrj(const QString& wkt) {
   std::string prjname = khReplaceExtension(name(), ".prj");
   QFile prjfile(prjname.c_str());
-  if (prjfile.open(IO_WriteOnly)) {
+  if (prjfile.open(QIODevice::WriteOnly)) {
     QTextStream stream(&prjfile);
     stream << wkt << "\n";
     prjfile.close();
@@ -117,9 +117,9 @@ bool gstSource::SetCodec(const QString& codec) {
     return false;
   }
 
-  QTextCodec* qcodec = QTextCodec::codecForName(codec.latin1());
+  QTextCodec* qcodec = QTextCodec::codecForName(codec.toLatin1());
   if (qcodec == NULL) {
-    notify(NFY_WARN, "Unable to find codec named %s", codec.latin1());
+    notify(NFY_WARN, "Unable to find codec named %s", codec.toStdString().c_str());
     return false;
   }
 

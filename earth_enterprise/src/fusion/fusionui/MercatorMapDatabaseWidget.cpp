@@ -18,11 +18,11 @@
 
 #include <string>
 #include <vector>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qcheckbox.h>
+#include <QtWidgets/qframe.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qcheckbox.h>
 
 #include <autoingest/.idl/AssetStorage.h>
 #include <autoingest/plugins/MapProjectAsset.h>
@@ -33,15 +33,15 @@
 #include "fusion/fusionui/AssetChooser.h"
 #include "fusion/fusionversion.h"
 
-QString MercatorMapDatabaseWidget::empty_text(tr("<none>"));
+//QString MercatorMapDatabaseWidget::empty_text(tr("<none>"));
 
 MercatorMapDatabaseWidget::MercatorMapDatabaseWidget(QWidget* parent,
                                                      AssetBase* base)
-  : MercatorMapDatabaseWidgetBase(parent), AssetWidgetBase(base) {
+  : MercatorMapDatabaseWidgetBase(), AssetWidgetBase(base) {
 }
 
 void MercatorMapDatabaseWidget::Prefill(const MapDatabaseEditRequest& request) {
-  std::vector<std::string> projects;
+  /*std::vector<std::string> projects;
 
   if (request.config.mapProject.size() != 0) {
     projects.push_back(request.config.mapProject);
@@ -62,11 +62,11 @@ void MercatorMapDatabaseWidget::Prefill(const MapDatabaseEditRequest& request) {
     }
   }
 
-  use_google_imagery_check->setChecked(request.config.useGoogleImagery);
+  use_google_imagery_check->setChecked(request.config.useGoogleImagery);*/
 }
 
 void MercatorMapDatabaseWidget::EnableImageryProject(bool state) {
-  static QString save_imagery_project = empty_text;
+  /*static QString save_imagery_project = empty_text;
   if (state == false) {
     save_imagery_project = imagery_project_path_;
     ClearImageryProject();
@@ -78,7 +78,7 @@ void MercatorMapDatabaseWidget::EnableImageryProject(bool state) {
   clear_mercator_imagery_btn->setEnabled(state);
   choose_mercator_imagery_btn->setEnabled(state);
   imagery_pixmap->setEnabled(state);
-  imagery_pre_label->setEnabled(state);
+  imagery_pre_label->setEnabled(state);*/
 }
 
 void MercatorMapDatabaseWidget::UseGoogleImagery(bool state) {
@@ -87,7 +87,7 @@ void MercatorMapDatabaseWidget::UseGoogleImagery(bool state) {
 
 void MercatorMapDatabaseWidget::AssembleEditRequest(
     MapDatabaseEditRequest* request) {
-  if (map_project_label->text() != empty_text) {
+  /*if (map_project_label->text() != empty_text) {
     request->config.mapProject =
         map_project_label->text().latin1() + kMapProjectSuffix;
   } else {
@@ -101,11 +101,11 @@ void MercatorMapDatabaseWidget::AssembleEditRequest(
   }
 
   request->config.useGoogleImagery = use_google_imagery_check->isOn();
-  request->config.is_mercator = true;
+  request->config.is_mercator = true;*/
 }
 
 void MercatorMapDatabaseWidget::ChooseMapProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Map,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Map,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -114,11 +114,11 @@ void MercatorMapDatabaseWidget::ChooseMapProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  map_project_label->setText(shortAssetName(newpath));
+  map_project_label->setText(shortAssetName(newpath));*/
 }
 
 void MercatorMapDatabaseWidget::ChooseImageryProject() {
-  std::vector<AssetChooser::AssetCategoryDef> compatible_asset_defs;
+  /*std::vector<AssetChooser::AssetCategoryDef> compatible_asset_defs;
   compatible_asset_defs.push_back(
       AssetChooser::AssetCategoryDef(AssetDefs::Imagery,
                                      kMercatorProjectSubtype));
@@ -137,23 +137,23 @@ void MercatorMapDatabaseWidget::ChooseImageryProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  SetImageryProject(newpath);
+  SetImageryProject(newpath);*/
 }
 
-void MercatorMapDatabaseWidget::ClearMapProject() {
-  map_project_label->setText(empty_text);
-}
+//void MercatorMapDatabaseWidget::ClearMapProject() {
+  //map_project_label->setText(empty_text);
+//}
 
-void MercatorMapDatabaseWidget::ClearImageryProject() {
-  imagery_project_path_ = "";
-  imagery_project_label->setText(empty_text);
-}
+//void MercatorMapDatabaseWidget::ClearImageryProject() {
+  //imagery_project_path_ = "";
+  //imagery_project_label->setText(empty_text);
+//}
 
 void MercatorMapDatabaseWidget::SetImageryProject(const QString& path) {
-  if (path == empty_text) {
+  /*if (path == empty_text) {
     ClearImageryProject();
   } else {
     imagery_project_path_ = path;
     imagery_project_label->setText(shortAssetName(imagery_project_path_));
-  }
+  }*/
 }

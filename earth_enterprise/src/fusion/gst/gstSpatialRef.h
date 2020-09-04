@@ -17,9 +17,9 @@
 #ifndef KHSRC_FUSION_GST_GSTSPATIAL_H__
 #define KHSRC_FUSION_GST_GSTSPATIAL_H__
 
-#include <ogr_spatialref.h>
-#include <cpl_conv.h>
-#include <cpl_string.h>
+#include <gdal/ogr_spatialref.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/cpl_string.h>
 
 class gstSpatialRef {
  public:

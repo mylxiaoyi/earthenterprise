@@ -23,8 +23,9 @@
 #include "fusion/autoingest/Asset.h"
 #include "pushdatabasedialogbase.h"
 
+#include <QtWidgets/QDialog>
 
-class PushDatabaseDialog : public PushDatabaseDialogBase {
+class PushDatabaseDialog : public QDialog {
  public:
   PushDatabaseDialog(QWidget* parent, const Asset& asset,
                      const std::vector<QString>& nicknames);
@@ -35,6 +36,7 @@ class PushDatabaseDialog : public PushDatabaseDialogBase {
   std::string GetSelectedVersion();
 
  private:
+  Ui_PushDatabaseDialogBase *ui;
   std::vector<std::string> valid_versions_;
 };
 

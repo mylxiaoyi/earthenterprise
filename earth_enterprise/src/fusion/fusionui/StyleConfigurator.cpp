@@ -15,8 +15,8 @@
 
 #include "StyleConfigurator.h"
 
-StyleConfigurator::StyleConfigurator(QWidget* parent, const char* name, WFlags f)
-  : QScrollView(parent, name, f) {
-  setVScrollBarMode(QScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(parent->paletteBackgroundColor());
+StyleConfigurator::StyleConfigurator(QWidget* parent, const char* name)
+  : QScrollArea(parent) {
+  //setVScrollBarMode(QScrollView::AlwaysOn);
+  //viewport()->setPaletteBackgroundColor(parent->paletteBackgroundColor());
 }

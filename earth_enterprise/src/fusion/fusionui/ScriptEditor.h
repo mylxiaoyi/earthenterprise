@@ -23,15 +23,15 @@
 #include <vector>
 #include <map>
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #include "scripteditorbase.h"
 #include <gstRecord.h>
 #include <gstSourceManager.h>
 
 class gstFormat;
 
-class ScriptEditor : public ScriptEditorBase {
+class ScriptEditor : public Ui::ScriptEditorBase {
  public:
   enum Type {StatementBlock, Expression};
   static bool Run(QWidget *parent,
@@ -42,7 +42,7 @@ class ScriptEditor : public ScriptEditorBase {
   // From ScriptEditorBase
   virtual void fieldHighlighted(int);
   virtual void insertField(int);
-  virtual void insertValue(QListBoxItem*);
+  //virtual void insertValue(QListBoxItem*);
   virtual void getValues();
   virtual void insertButtonClicked(int);
   virtual void compileAndAccept();

@@ -33,7 +33,7 @@ inline QString tr(const char *srcText, const char *comment = 0) {
   return QObject::tr(srcText, comment);
 }
 inline QString no_tr(const char *srcText) {
-  return QString::fromAscii(srcText);
+  return QString(srcText);
 }
 };
 

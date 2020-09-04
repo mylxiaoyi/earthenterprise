@@ -15,14 +15,14 @@
 
 #include "fusion/fusionui/ProjectWidget.h"
 
-#include <qpushbutton.h>
-#include <qlistview.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qlistview.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qspinbox.h>
 
 #include "fusion/fusionui/LayerItemBase.h"
 #include "fusion/fusionui/ProjectLayerView.h"
@@ -30,40 +30,40 @@
 #include "common/khTileAddrConsts.h"
 
 ProjectWidget::ProjectWidget(QWidget* parent)
-    : ProjectWidgetBase(parent),
+    : QWidget(parent), ui(new Ui::ProjectWidgetBase),
       start_level_validator_(StartTmeshLevel, MaxTmeshLevel) {
   // Set overlay_terrain_start_level_spinbox.
-  overlay_terrain_start_level_spinbox->setValidator(&start_level_validator_);
+  /*overlay_terrain_start_level_spinbox->setValidator(&start_level_validator_);
 
   HideUuid();
   HideTimeMachineCheckbox();
   HideOverlayTerrainControls();
-  SelectLayer();
+  SelectLayer();*/
 }
 
 void ProjectWidget::AddLayer() {
-  LayerItemBase* item = NewLayerItem();
+  /*LayerItemBase* item = NewLayerItem();
   if (item) {
     ListView()->SelectItem(item);
-  }
+  }*/
 }
 
 void ProjectWidget::DropAsset(const QString& assetref) {
-  LayerItemBase* item = NewLayerItem(assetref);
+  /*LayerItemBase* item = NewLayerItem(assetref);
   if (item) {
     ListView()->SelectItem(item);
-  }
+  }*/
 }
 
 void ProjectWidget::HideGroupButton() {
-  add_group_btn->hide();
+  //add_group_btn->hide();
 }
 
 void ProjectWidget::AddGroup() {
 }
 
 void ProjectWidget::DeleteLayer() {
-  LayerItemBase* item =
+  /*LayerItemBase* item =
       static_cast<LayerItemBase*>(layer_listview->currentItem());
   if (item == NULL)
     return;
@@ -78,11 +78,11 @@ void ProjectWidget::DeleteLayer() {
 
   delete item;
 
-  layer_listview->setSelected(select_after_delete, true);
+  layer_listview->setSelected(select_after_delete, true);*/
 }
 
 void ProjectWidget::MoveLayerUp() {
-  LayerItemBase* item =
+  /*LayerItemBase* item =
       static_cast<LayerItemBase*>(layer_listview->currentItem());
   if (item == NULL)
     return;
@@ -92,11 +92,11 @@ void ProjectWidget::MoveLayerUp() {
     return;
 
   item->SwapPosition(prev);
-  ListView()->SelectItem(item);
+  ListView()->SelectItem(item);*/
 }
 
 void ProjectWidget::MoveLayerDown() {
-  LayerItemBase* item =
+  /*LayerItemBase* item =
       static_cast<LayerItemBase*>(layer_listview->currentItem());
   if (item == NULL)
     return;
@@ -106,11 +106,11 @@ void ProjectWidget::MoveLayerDown() {
     return;
 
   item->SwapPosition(next);
-  ListView()->SelectItem(item);
+  ListView()->SelectItem(item);*/
 }
 
 void ProjectWidget::SelectLayer() {
-  QListViewItem* item = layer_listview->selectedItem();
+  /*QListViewItem* item = layer_listview->selectedItem();
   LayerItemBase* layer_item = static_cast<LayerItemBase*>(item);
   if (layer_item) {
     delete_layer_btn->setEnabled(true);
@@ -121,51 +121,51 @@ void ProjectWidget::SelectLayer() {
     delete_layer_btn->setEnabled(false);
     move_down_btn->setEnabled(false);
     move_up_btn->setEnabled(false);
-  }
+  }*/
 }
 
 void ProjectWidget::HideGenericCheckbox() {
-  generic_check->hide();
+  //generic_check->hide();
 }
 
 void ProjectWidget::HideLegend() {
-  legend_group_box->hide();
+  //legend_group_box->hide();
 }
 
 void ProjectWidget::HideUuid() {
-  uuid_label->hide();
-  uuid_edit->hide();
+  //uuid_label->hide();
+  //uuid_edit->hide();
 }
 
 void ProjectWidget::ShowUuid() {
-  uuid_label->show();
-  uuid_edit->show();
+  //uuid_label->show();
+  //uuid_edit->show();
 }
 
 
 bool ProjectWidget::GetTimeMachineCheckboxState() const {
-  return is_timemachine_checkbox->isChecked();
+  return false;//is_timemachine_checkbox->isChecked();
 }
 
 void ProjectWidget::SetTimeMachineCheckboxState(bool state) {
-  is_timemachine_checkbox->setChecked(state);
+  /*is_timemachine_checkbox->setChecked(state);
   if (state) {
     timemachine_pixmap->setPixmap(
                                 QPixmap::fromMimeSource("timemachine-on.png"));
   } else {
     timemachine_pixmap->setPixmap(
                                 QPixmap::fromMimeSource("timemachine-off.png"));
-  }
+  }*/
 }
 
 void ProjectWidget::HideTimeMachineCheckbox() {
-  timemachine_pixmap->hide();
-  is_timemachine_checkbox->hide();
+  //timemachine_pixmap->hide();
+  //is_timemachine_checkbox->hide();
 }
 
 void ProjectWidget::ShowTimeMachineCheckbox() {
-  timemachine_pixmap->show();
-  is_timemachine_checkbox->show();
+  //timemachine_pixmap->show();
+  //is_timemachine_checkbox->show();
 }
 
 void ProjectWidget::TimeMachineCheckboxToggled(bool state) {
@@ -174,65 +174,66 @@ void ProjectWidget::TimeMachineCheckboxToggled(bool state) {
 
 // OverlayTerrain controls.
 void ProjectWidget::HideOverlayTerrainControls() {
-  build_overlay_terrain_checkbox->hide();
+  /*build_overlay_terrain_checkbox->hide();
   overlay_terrain_resources_min_level_label->hide();
   overlay_terrain_resources_min_level_spinbox->hide();
   overlay_terrain_start_level_label->hide();
-  overlay_terrain_start_level_spinbox->hide();
+  overlay_terrain_start_level_spinbox->hide();*/
 }
 
 void ProjectWidget::ShowOverlayTerrainControls() {
-  bool enabled = GetBuildOverlayTerrainCheckboxState();
+  /*bool enabled = GetBuildOverlayTerrainCheckboxState();
   SetEnabledOverlayTerrainParametersControls(enabled);
 
   build_overlay_terrain_checkbox->show();
   overlay_terrain_resources_min_level_label->show();
   overlay_terrain_resources_min_level_spinbox->show();
   overlay_terrain_start_level_label->show();
-  overlay_terrain_start_level_spinbox->show();
+  overlay_terrain_start_level_spinbox->show();*/
 }
 
 void ProjectWidget::SetEnabledOverlayTerrainParametersControls(bool enabled) {
-  overlay_terrain_resources_min_level_label->setEnabled(enabled);
+  /*overlay_terrain_resources_min_level_label->setEnabled(enabled);
   overlay_terrain_resources_min_level_spinbox->setEnabled(enabled);
   overlay_terrain_start_level_label->setEnabled(enabled);
-  overlay_terrain_start_level_spinbox->setEnabled(enabled);
+  overlay_terrain_start_level_spinbox->setEnabled(enabled);*/
 }
 
 void ProjectWidget::BuildOverlayTerrainCheckboxToggled(bool state) {
-  SetEnabledOverlayTerrainParametersControls(state);
+  //SetEnabledOverlayTerrainParametersControls(state);
 }
 
 bool ProjectWidget::GetBuildOverlayTerrainCheckboxState() const {
-  return build_overlay_terrain_checkbox->isChecked();
+  return false;//build_overlay_terrain_checkbox->isChecked();
 }
 
 void ProjectWidget::SetBuildOverlayTerrainCheckboxState(bool state) {
-  build_overlay_terrain_checkbox->setChecked(state);
+  //build_overlay_terrain_checkbox->setChecked(state);
 }
 
 int ProjectWidget::GetOverlayTerrainStartLevelSpinbox() const {
-  return overlay_terrain_start_level_spinbox->value();
+  return 0;//overlay_terrain_start_level_spinbox->value();
 }
 
 void ProjectWidget::SetOverlayTerrainStartLevelSpinbox(int val) {
-  overlay_terrain_start_level_spinbox->setValue(val);
+  //overlay_terrain_start_level_spinbox->setValue(val);
 }
 
 int ProjectWidget::GetOverlayTerrainResourcesMinLevelSpinbox() const {
-  return overlay_terrain_resources_min_level_spinbox->value();
+  //return overlay_terrain_resources_min_level_spinbox->value();
+  return 0;
 }
 
 void ProjectWidget::SetOverlayTerrainResourcesMinLevelSpinbox(int val) {
-  overlay_terrain_resources_min_level_spinbox->setValue(val);
+  //overlay_terrain_resources_min_level_spinbox->setValue(val);
 }
 
 bool ProjectWidget::GetGenericCheckboxState() const {
-  return generic_check->isChecked();
+  return false;//generic_check->isChecked();
 }
 
 void ProjectWidget::SetGenericCheckboxState(bool state) {
-  generic_check->setChecked(state);
+  //generic_check->setChecked(state);
 }
 
 void ProjectWidget::GenericCheckboxToggled(bool state) {
@@ -240,7 +241,7 @@ void ProjectWidget::GenericCheckboxToggled(bool state) {
 }
 
 void ProjectWidget::SetGenericCheckboxText(const QString& text) {
-  generic_check->setText(text);
+  //generic_check->setText(text);
 }
 
 void ProjectWidget::ContextMenu(

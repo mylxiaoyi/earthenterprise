@@ -13,30 +13,30 @@
 // limitations under the License.
 
 
-#include <qcombobox.h>
-#include <qstringlist.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qobjectlist.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qlineedit.h>
+//#include <qobjectlist.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include <gstSelectRule.h>
 
 #include "QueryRules.h"
 
-QueryRules::QueryRules(QWidget* parent, const char* name, WFlags f)
-  : QScrollView(parent, name, f) {
-  rule_count_ = rule_modified_ = 0;
+QueryRules::QueryRules(QWidget* parent)
+  : QScrollArea(parent) {
+  /*rule_count_ = rule_modified_ = 0;
   setVScrollBarMode(QScrollView::AlwaysOn);
   viewport()->setPaletteBackgroundColor(parent->paletteBackgroundColor());
 
   rb_item_height_ = 0;
-  field_descriptors_ = NULL;
+  field_descriptors_ = NULL;*/
 }
 
 void QueryRules::init(const FilterConfig& config) {
   // clear out any previous children
-  const QObjectList* c = viewport()->children();
+  /*const QObjectList* c = viewport()->children();
   if (c != NULL) {
     QObjectListIt it(*c);
     QObject* obj;
@@ -58,21 +58,21 @@ void QueryRules::init(const FilterConfig& config) {
     rval_[id]->setText((*it).rvalue);
   }
 
-  rule_modified_ = 0;
+  rule_modified_ = 0;*/
 }
 
 void QueryRules::ruleModified() {
-  notify(NFY_VERBOSE, "QueryRules::ruleModified()");
-  ++rule_modified_;
+  //notify(NFY_VERBOSE, "QueryRules::ruleModified()");
+  //++rule_modified_;
 }
 
 FilterConfig QueryRules::getConfig() const {
   FilterConfig cfg;
-  for (int id = 0; id < rule_count_; ++id) {
+  /*for (int id = 0; id < rule_count_; ++id) {
     cfg.selectRules.push_back(SelectRuleConfig(
       (SelectRuleConfig::Operator)oper_[id]->currentItem(),
       uint(field_[id]->currentItem()), rval_[id]->text()));
-  }
+  }*/
 
   return cfg;
 }
@@ -83,7 +83,7 @@ int QueryRules::BuildRule() {
   //
   // create a box to hold our new rule in
   //
-  QGroupBox* box = new QGroupBox(viewport());
+  /*QGroupBox* box = new QGroupBox(viewport());
   box->setOrientation(Qt::Horizontal);
   box->setColumns(3);
   box->setInsideSpacing(kRuleBoxMargin);
@@ -139,7 +139,8 @@ int QueryRules::BuildRule() {
 
   ++rule_count_;
 
-  return rule_count_;
+  return rule_count_;*/
+  return 0;
 }
 
 void QueryRules::moreRules() {
@@ -148,7 +149,7 @@ void QueryRules::moreRules() {
   // from getting carried away.  if more are needed, probably a different
   // approach should be taken
   //
-  if (rule_count_ == kMaxRuleCount) {
+  /*if (rule_count_ == kMaxRuleCount) {
     QMessageBox::warning(
       this, "Maximum rules",
       QString(trUtf8("You now have %1 rules, which is the maximum supported."))
@@ -159,11 +160,11 @@ void QueryRules::moreRules() {
 
   BuildRule();
 
-  ++rule_modified_;
+  ++rule_modified_;*/
 }
 
 void QueryRules::fewerRules() {
-  if (rule_count_ == 0)
+  /*if (rule_count_ == 0)
     return;
 
   const QObjectList* c = viewport()->children();
@@ -177,7 +178,7 @@ void QueryRules::fewerRules() {
 
   ensureVisible(0, rb_item_height_ * rule_count_);
 
-  ++rule_modified_;
+  ++rule_modified_;*/
 }
 
 //
@@ -185,7 +186,7 @@ void QueryRules::fewerRules() {
 // vertical is solved by the scroll bar
 //
 void QueryRules::viewportResizeEvent(QResizeEvent* event) {
-  QSize sz = event->size();
+  /*QSize sz = event->size();
 
   const QObjectList* c = viewport()->children();
   if (c != NULL) {
@@ -199,10 +200,10 @@ void QueryRules::viewportResizeEvent(QResizeEvent* event) {
     }
   }
 
-  QScrollView::viewportResizeEvent(event);
+  QScrollView::viewportResizeEvent(event);*/
 }
 
 void QueryRules::setFieldDesc(const QStringList& from) {
-  delete field_descriptors_;
-  field_descriptors_ = new QStringList(from);
+  //delete field_descriptors_;
+  //field_descriptors_ = new QStringList(from);
 }

@@ -94,7 +94,7 @@ gstRecordHandle gstFeatureConfigs::Expand(gstRecordHandle src_rec,
         if (!jsbundle.cx->TryExecuteScript
             (jsbundle.displayJS[filterId].roadLabelScript, outval, error)) {
           notify(NFY_WARN, "Error executing JS: %s",
-                 (const char *)error.utf8());
+                 error.toStdString().c_str());
           outval = QString();
           return gstRecordHandle();
         }
@@ -104,7 +104,7 @@ gstRecordHandle gstFeatureConfigs::Expand(gstRecordHandle src_rec,
 
         // strip white space at beginning and end
         // replace any sequence of white space with a single space.
-        outval = label_fmt_->out(src_rec).simplifyWhiteSpace();
+        outval = label_fmt_->out(src_rec).simplified();
       }
       JOBSTATS_END(feature_stats, JOBSTATS_FORMAT);
 

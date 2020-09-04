@@ -107,7 +107,7 @@ void VectorDbrootContext::EmitAll(const std::string &out_dir,
   {
     std::string outfile =
         out_dir + "/" + kPostamblePrefix + "." + kDefaultLocaleSuffix;
-    VectorDbrootGenerator dbrootgen(this, kDefaultLocaleSuffix, outfile);
+    VectorDbrootGenerator dbrootgen(this, QString::fromStdString(kDefaultLocaleSuffix), outfile);
     dbrootgen.Emit(output_format);
   }
 
@@ -116,7 +116,7 @@ void VectorDbrootContext::EmitAll(const std::string &out_dir,
     typedef std::set<QString>::const_iterator SetIterator;
     for (SetIterator i = used_locales.begin(); i != used_locales.end(); ++i) {
       std::string outfile = out_dir + "/" + kPostamblePrefix +
-          "." + i->latin1();
+          "." + i->toStdString();
       VectorDbrootGenerator dbrootgen(this, *i /* locale */, outfile);
       dbrootgen.Emit(output_format);
     }
@@ -149,7 +149,7 @@ int VectorDbrootContext::GetIconWidth(const IconReference &icon_ref) const {
       static_cast<GDALDataset*>(GDALOpen(icon_ref.SourcePath().c_str(),
                                          GA_ReadOnly));
   if (!srcDataset) {
-    throw khException(kh::tr("Unable to open %1").arg(icon_ref.SourcePath()));
+    throw khException(kh::tr("Unable to open %1").arg(QString(icon_ref.SourcePath().c_str())));
   }
   int srcXSize = srcDataset->GetRasterXSize();
   delete srcDataset;

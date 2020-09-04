@@ -43,10 +43,10 @@
 
 #include <set>
 
-#include <qurl.h>
-#include <qstring.h>
-#include <qdir.h>
-#include <qstringlist.h>
+#include <QtCore/QUrl>
+#include <QtCore/QString>
+#include <QtCore/QDir>
+#include <QtCore/QStringList>
 
 #include "fusion/autoingest/JsonUtils.h"
 #include "fusion/autoingest/.idl/storage/MapLayerJSConfig.h"
@@ -659,16 +659,16 @@ bool DbManifest::GetDbrootsAndServerConfig(
   std::set<std::string> icon_set;
   for (unsigned int i = 0; i < fusion_config_.icons_dirs_.size(); ++i) {
     const std::string ith_icon_dir = Prefixed(fusion_config_.icons_dirs_[i]);
-    QDir dir(ith_icon_dir);
+    QDir dir(ith_icon_dir.c_str());
     QStringList list = dir.entryList(QDir::Files);
-    for (unsigned int j = 0; j < list.size(); ++j) {
+    for (int j = 0; j < list.size(); ++j) {
       // We are merging icons from 3 different sources. Avoid duplicate entries.
-      const std::string icon_entry = kIconsDir + list[j];
+      const std::string icon_entry = kIconsDir + list[j].toStdString();
       // Add server config entry (Relative path).
       if (icon_set.insert(icon_entry).second) {
         // Add manifest entry (Absolute path).
         const std::string dst_file = icon_entry;
-        const std::string src_file = khComposePath(ith_icon_dir, list[j]);
+        const std::string src_file = khComposePath(ith_icon_dir, list[j].toStdString());
         manifest.push_back(ManifestEntry(dst_file, src_file));
       }
     }
@@ -791,16 +791,16 @@ bool DbManifest::GetLayerDefsAndServerConfig(
   std::set<std::string> icon_set;
   for (unsigned int i = 0; i < fusion_config_.icons_dirs_.size(); ++i) {
     const std::string ith_icon_dir = Prefixed(fusion_config_.icons_dirs_[i]);
-    QDir dir(ith_icon_dir);
+    QDir dir(ith_icon_dir.c_str());
     QStringList list = dir.entryList(QDir::Files);
-    for (unsigned int j = 0; j < list.size(); ++j) {
+    for (int j = 0; j < list.size(); ++j) {
       // We are merging icons from different sources. Avoid duplicate entries.
-      const std::string icon_entry = kIconsDir + list[j];
+      const std::string icon_entry = kIconsDir + list[j].toStdString();
       // Add server config entry (Relative path).
       if (icon_set.insert(icon_entry).second) {
         // Add manifest entry (Absolute path).
         const std::string dst_file = icon_entry;
-        const std::string src_file = khComposePath(ith_icon_dir, list[j]);
+        const std::string src_file = khComposePath(ith_icon_dir, list[j].toStdString());
         manifest.push_back(ManifestEntry(dst_file, src_file));
       }
     }
@@ -883,12 +883,12 @@ void DbManifest::GetGEJsonFiles(const std::string& stream_url,
   for (int i = -1; i < static_cast<int>(locale_set.supportedLocales.size());
        ++i) {
     std::string locale = i < 0 ?
-        kDefaultLocaleSuffix : std::string(locale_set.supportedLocales[i]);
+        kDefaultLocaleSuffix : locale_set.supportedLocales[i].toStdString();
 
     // Create the JSON buffer for the database and this locale.
     std::string json_text = JsonUtils::GEJsonBuffer(stream_url,
-                                                    qurl.host(),
-                                                    qurl.protocol(),
+                                                    qurl.host().toStdString(),
+                                                    qurl.scheme().toStdString(),
                                                     raster_layers,
                                                     vector_layers,
                                                     locale);
@@ -961,12 +961,12 @@ void DbManifest::GetMapsJsonFiles(
   for (int i = -1; i < static_cast<int>(locale_set.supportedLocales.size());
        ++i) {
     std::string locale = i < 0 ?
-        kDefaultLocaleSuffix : std::string(locale_set.supportedLocales[i]);
+        kDefaultLocaleSuffix : locale_set.supportedLocales[i].toStdString();
 
     // Create the JSON buffer for the database and this locale.
     std::string json_text = JsonUtils::MapsJsonBuffer(stream_url,
-                                                      qurl.host(),
-                                                      qurl.protocol(),
+                                                      qurl.host().toStdString(),
+                                                      qurl.scheme().toStdString(),
                                                       layers,
                                                       fusion_config_,
                                                       locale);

@@ -18,8 +18,8 @@
 #ifndef KHSRC_FUSION_FUSIONUI_ASSETBASE_H__
 #define KHSRC_FUSION_FUSIONUI_ASSETBASE_H__
 
-#include <qvariant.h>
-#include <qmainwindow.h>
+#include <QtCore/qvariant.h>
+#include <QtWidgets/qmainwindow.h>
 #include <khMetaData.h>
 #include <autoingest/.idl/storage/AssetDefs.h>
 
@@ -30,7 +30,7 @@ class QSpacerItem;
 class QAction;
 class QActionGroup;
 class QToolBar;
-class QPopupMenu;
+class QMenu;
 class QLabel;
 class QFrame;
 
@@ -72,8 +72,8 @@ class AssetBase : public QMainWindow {
 
   QFrame* main_frame_;
   QMenuBar* menu_bar_;
-  QPopupMenu* file_menu_;
-  QPopupMenu* edit_menu_;
+  QMenu* file_menu_;
+  QMenu* edit_menu_;
   QLabel* error_msg_label_;
 
   QAction* save_action_;

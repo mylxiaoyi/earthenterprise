@@ -13,15 +13,15 @@
 // limitations under the License.
 
 
-#include <qlineedit.h>
-#include <qslider.h>
-#include <qlayout.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qslider.h>
+#include <QtWidgets/qlayout.h>
 
 #include "ConfigWidgets.h"
 
 LevelSlider::LevelSlider(int min_val, int max_val, int val, QWidget* parent)
   : QWidget(parent) {
-  QHBoxLayout* layout = new QHBoxLayout(this, 0, 0);
+  /*QHBoxLayout* layout = new QHBoxLayout(this, 0, 0);
   slider_ = new QSlider(min_val, max_val, 1, val, Qt::Horizontal, this);
   layout->addWidget(slider_);
 
@@ -35,7 +35,7 @@ LevelSlider::LevelSlider(int min_val, int max_val, int val, QWidget* parent)
   resize(QSize(124, 26).expandedTo(minimumSizeHint()));
 
   connect(slider_, SIGNAL(valueChanged(int)),
-          this, SLOT(ValueChanged(int)));
+          this, SLOT(ValueChanged(int)));*/
 }
 
 #if 0

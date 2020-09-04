@@ -71,20 +71,21 @@ else:
   third_party_libs = [
       'date',
       'gtest',
-      'libjs',
-      'openssl',
-      'openldap',
-      'libcurl',
-      'qt',
+      #'libjs',
+      #'openssl',
+      #'xerces-c',
+      #'openldap',
+      #'libcurl',
+      #'qt',
       'glu',
-      'openjpeg',
-      'gdal',
-      'postgresql',
-      'postgis',  # requires postgresql config, geos, proj libs.
+      #'openjpeg',
+      #'gdal',
+      #'postgresql',
+      #'postgis',  # requires postgresql config, geos, proj libs.
       'apache2',
       'mod_wsgi',
-      'psycopg2', # requires postgresql.
-      'mgrs',
+      #'psycopg2', # requires postgresql.
+      #'mgrs',
       'PIL',
       'skia',
       'pyyaml',

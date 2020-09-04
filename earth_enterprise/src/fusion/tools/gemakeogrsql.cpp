@@ -21,10 +21,10 @@ For history see CVS log (cvs log makeogrsql.cpp -or- Emacs Ctrl-xvl).
 ******************************************************************************/
 
 
-#include <ogr_spatialref.h>
-#include <cpl_conv.h>
-#include <cpl_string.h>
-#include <ogrsf_frmts.h>
+#include <gdal/ogr_spatialref.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/cpl_string.h>
+#include <gdal/ogrsf_frmts.h>
 
 #include <notify.h>
 #include <khgdal/khgdal.h>
@@ -180,8 +180,8 @@ int main(int argc, char *argv[]) {
     // save it out to XML
     gstDBSource dbSource;
     dbSource.OGRDataSource = ogrsrcstr;
-    dbSource.srsOverride = overridesrs;
-    dbSource.sql = sqlstr;
+    dbSource.srsOverride = QString::fromStdString(overridesrs);
+    dbSource.sql = QString::fromStdString(sqlstr);
     if (!dbSource.Save(output)) {
       notify(NFY_FATAL, "Unable to write %s", output.c_str());
     }

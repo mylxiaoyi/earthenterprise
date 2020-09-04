@@ -13,16 +13,16 @@
 // limitations under the License.
 
 
-#include <qfiledialog.h>
-#include <qdatetimeedit.h>
-#include <qspinbox.h>
-#include <qtextcodec.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qcheckbox.h>
-#include <qmessagebox.h>
-#include <qlabel.h>
-#include <qinputdialog.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qdatetimeedit.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtCore/qtextcodec.h>
+#include <QtWidgets/qcombobox.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qinputdialog.h>
 
 #include "common/khFileUtils.h"
 #include "common/khException.h"
@@ -99,24 +99,25 @@ struct ForceFeatureTypeConversion {
 };
 
 int GetNumForceFeatureTypeConversions() {
-  static const int NumForceFeatureTypeConversions =
+  /*static const int NumForceFeatureTypeConversions =
       static_cast<int>(sizeof(ForceFeatureTypeConversions) /
                        sizeof(ForceFeatureTypeConversions[0]));
 
   // "-1"- Hide last element ("force 3D").
   return (Preferences::GoogleInternal ?
           NumForceFeatureTypeConversions :
-          (NumForceFeatureTypeConversions - 1));
+          (NumForceFeatureTypeConversions - 1));*/
+  return 0;
 }
 
 }  // namespace
 
 
 VectorAssetWidget::VectorAssetWidget(QWidget* parent, AssetBase* base)
-  : VectorAssetWidgetBase(parent),
+  : //VectorAssetWidgetBase(parent),
     AssetWidgetBase(base),
     file_dialog_(NULL) {
-  int count = 0;
+  /*int count = 0;
   for (QTextCodec* codec; (codec = QTextCodec::codecForIndex(count)); ++count)
     codec_combo->insertItem(codec->name(), 1);
 
@@ -174,11 +175,11 @@ VectorAssetWidget::VectorAssetWidget(QWidget* parent, AssetBase* base)
       new qt_fusion::QDateWrapper(this,
                                   acquisition_date_year,
                                   acquisition_date_month,
-                                  acquisition_date_day);
+                                  acquisition_date_day);*/
 }
 
 QFileDialog* VectorAssetWidget::FileDialog() {
-  if (!file_dialog_) {
+  /*if (!file_dialog_) {
     file_dialog_ = new QFileDialog(this);
     file_dialog_->setMode(QFileDialog::ExistingFiles);
     file_dialog_->setCaption(tr("Open Source"));
@@ -209,30 +210,31 @@ QFileDialog* VectorAssetWidget::FileDialog() {
     file_dialog_->setSelectedFilter(1);
   }
 
-  return file_dialog_;
+  return file_dialog_;*/
+  return nullptr;
 }
 
 void VectorAssetWidget::AddSource() {
-  if (FileDialog()->exec() != QDialog::Accepted)
+  /*if (FileDialog()->exec() != QDialog::Accepted)
     return;
 
   QStringList files = FileDialog()->selectedFiles();
 
   for (QStringList::Iterator it = files.begin(); it != files.end(); ++it) {
     source_list->insertItem(*it);
-  }
+  }*/
 }
 
 void VectorAssetWidget::DeleteSource() {
-  int row = source_list->currentItem();
+  /*int row = source_list->currentItem();
   if (row != -1)
-    source_list->removeItem(row);
+    source_list->removeItem(row);*/
 }
 
 void VectorAssetWidget::CustomConversion(const QString& str) {
   // need to track the selected item in order to reset it
   // if the user cancels the custom dialog below
-  if (str != custom_conversion) {
+  /*if (str != custom_conversion) {
     last_conv_index_ = elev_units_combo->currentItem();
     return;
   }
@@ -247,12 +249,12 @@ void VectorAssetWidget::CustomConversion(const QString& str) {
     UpdateElevUnits(conv);
   } else {
     elev_units_combo->setCurrentItem(last_conv_index_);
-  }
+  }*/
 }
 
 
 void VectorAssetWidget::UpdateElevUnits(double conv) {
-  int i = 0;
+  /*int i = 0;
   for (; i < NumStdConversions; ++i) {
     if (conv == StdConversions[i].scale) {
       elev_units_combo->setCurrentItem(i);
@@ -276,49 +278,51 @@ void VectorAssetWidget::UpdateElevUnits(double conv) {
   }
 
   // make sure the combobox now has the new custom entry selected
-  last_conv_index_ = elev_units_combo->currentItem();
+  last_conv_index_ = elev_units_combo->currentItem();*/
 }
 
 double VectorAssetWidget::GetElevUnits() const {
-  int currItem = elev_units_combo->currentItem();
+  /*int currItem = elev_units_combo->currentItem();
   if (currItem < NumStdConversions) {
     return StdConversions[currItem].scale;
   }
 
   assert(elev_units_combo->currentItem() == NumStdConversions);
 
-  return elev_units_combo->currentText().toDouble();
+  return elev_units_combo->currentText().toDouble();*/
+  return 0.0;
 }
 
 void VectorAssetWidget::SetForceFeatureType(const int val) {
-  assert(val < GetNumForceFeatureTypeConversions());
-  force_feature_type_combo->setCurrentItem(val);
+  //assert(val < GetNumForceFeatureTypeConversions());
+  //force_feature_type_combo->setCurrentItem(val);
 }
 
 int VectorAssetWidget::GetForceFeatureType() const {
-  int currItem = force_feature_type_combo->currentItem();
+  /*int currItem = force_feature_type_combo->currentItem();
   assert(currItem < GetNumForceFeatureTypeConversions());
-  return currItem;
+  return currItem;*/
+  return 0;
 }
 
 void VectorAssetWidget::SetIgnoreBadFeaturesCheck(const bool val) {
-  ignore_bad_features_check->setChecked(val);
+  //ignore_bad_features_check->setChecked(val);
 }
 
 bool VectorAssetWidget::GetIgnoreBadFeaturesCheck() const {
-  return ignore_bad_features_check->isChecked();
+  return false;//ignore_bad_features_check->isChecked();
 }
 
 void VectorAssetWidget::SetDoNotFixInvalidGeometriesCheck(const bool val) {
-  do_not_fix_invalid_geometries_check->setChecked(val);
+  //do_not_fix_invalid_geometries_check->setChecked(val);
 }
 
 bool VectorAssetWidget::GetDoNotFixInvalidGeometriesCheck() const {
-  return do_not_fix_invalid_geometries_check->isChecked();
+  return false;//do_not_fix_invalid_geometries_check->isChecked();
 }
 
 void VectorAssetWidget::Prefill(const VectorProductImportRequest& request) {
-  acquisition_date_wrapper_->SetDate(0, 0, 0);
+  /*acquisition_date_wrapper_->SetDate(0, 0, 0);
   std::string date = request.meta.GetValue("sourcedate");
   if (!date.empty()) {
     acquisition_date_wrapper_->SetDate(date);
@@ -389,12 +393,12 @@ void VectorAssetWidget::Prefill(const VectorProductImportRequest& request) {
   }
   if (request.sources != request_modified.sources) {
     source_changed_label->show();
-  }
+  }*/
 }
 
 void VectorAssetWidget::AssembleEditRequest(
     VectorProductImportRequest* request) {
-  request->config.encoding = codec_combo->currentText().latin1();
+  /*request->config.encoding = codec_combo->currentText().latin1();
   if (request->config.encoding == "<none>")
     request->config.encoding = "";
 
@@ -512,5 +516,5 @@ void VectorAssetWidget::AssembleEditRequest(
   }
   if (!boundary_error.empty()) {
     throw khException(boundary_error);
-  }
+  }*/
 }

@@ -18,30 +18,35 @@
 #ifndef _AssetProperties_h_
 #define _AssetProperties_h_
 
-#include <qlistview.h>
+#include <QtWidgets/qlistview.h>
+#include <QtWidgets/QWidget>
 #include <autoingest/AssetVersion.h>
 #include "SystemListener.h"
 #include "assetpropertiesbase.h"
 
 #include <gstAssetGroup.h>
 
-class AssetVersionItem : public QListViewItem, public AssetWatcher
+namespace Ui {
+    class AssetPropertiesBase;
+}
+
+class AssetVersionItem : public QWidget, public AssetWatcher
 {
  public:
   AssetVersionItem( QListView *parent, const AssetVersion & );
 
   std::string getVersionRef() const { return ref; }
 
-  int compare( QListViewItem *item, int, bool ) const;
+  //int compare( QListViewItem *item, int, bool ) const;
 
-  void paintCell( QPainter *, const QColorGroup &cg, int column, int width, int alignment );
+  //void paintCell( QPainter *, const QColorGroup &cg, int column, int width, int alignment );
 
   virtual void changed(void);
 };
 
 // ------------------------------------------------------------------------
 
-class AssetProperties : public AssetPropertiesBase
+class AssetProperties : public QDialog
 {
   Q_OBJECT
 
@@ -52,13 +57,15 @@ class AssetProperties : public AssetPropertiesBase
   void refresh();
 
  protected:
-  void selectVersion( QListViewItem * );
+  //void selectVersion( QListViewItem * );
 
  private:
   const gstAssetHandle assetHandle;
 
 public slots:
-void rmbClicked( QListViewItem *item, const QPoint &pos, int );
+//void rmbClicked( QListViewItem *item, const QPoint &pos, int );
+ private:
+    Ui::AssetPropertiesBase *ui;
 };
 
 #endif // !_AssetProperties_h_

@@ -17,7 +17,7 @@
 #include "fusion/gepublish/PublisherClient.h"
 
 #include <time.h>
-#include <qurl.h>
+#include <QtCore/QUrl>
 
 #include "fusion/gepublish/PublisherConstants.h"
 #include "fusion/gepublish/CurlRequest.h"

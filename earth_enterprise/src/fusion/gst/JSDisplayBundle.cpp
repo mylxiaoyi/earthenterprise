@@ -15,7 +15,7 @@
 
 #include "JSDisplayBundle.h"
 #include "gstLayer.h"
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 void JSDisplayBundle::EnsureContext(gstLayer *layer) {
   if (!cx) {

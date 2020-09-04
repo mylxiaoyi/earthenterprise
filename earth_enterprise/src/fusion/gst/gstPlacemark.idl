@@ -15,7 +15,7 @@
 
 #include <string>
 #include <vector>
-#include <qstring.h>
+#include <QtCore/qstring.h>
 
 class gstPlacemark
 {

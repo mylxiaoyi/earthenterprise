@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "fusion/fusionui/PushDatabaseDialog.h"
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
 #include "fusion/autoingest/AssetVersion.h"
 #include "fusion/autoingest/plugins/DatabaseAsset.h"
 #include "fusion/autoingest/plugins/MapDatabaseAsset.h"
@@ -28,9 +28,9 @@ PushDatabaseDialog::PushDatabaseDialog(
     QWidget* parent,
     const Asset& asset,
     const std::vector<QString>& nicknames)
-    : PushDatabaseDialogBase(parent, 0, false, 0) {
+    /*: PushDatabaseDialogBase(parent, 0, false, 0)*/ {
 
-  std::string database_name = shortAssetName(asset->GetRef().toString());
+  /*std::string database_name = shortAssetName(asset->GetRef().toString());
   db_name_label->setText(database_name);
 
   std::vector<QString>::const_iterator nickname = nicknames.begin();
@@ -87,21 +87,21 @@ PushDatabaseDialog::PushDatabaseDialog(
 
   if (valid_versions_.size() > 0) {
     version_combo->setCurrentItem(0);
-  }
+  }*/
 }
 
 bool PushDatabaseDialog::HasValidVersions() {
-  return (!valid_versions_.empty());
+  return false;//(!valid_versions_.empty());
 }
 
 QString PushDatabaseDialog::GetSelectedNickname() {
-  return nickname_combo->currentText();
+  return "";//nickname_combo->currentText();
 }
 
 int PushDatabaseDialog::GetSelectedCombination() {
-  return nickname_combo->currentItem();
+  return 0;//nickname_combo->currentItem();
 }
 
 std::string PushDatabaseDialog::GetSelectedVersion() {
-  return valid_versions_[version_combo->currentItem()];
+  return "";//valid_versions_[version_combo->currentItem()];
 }

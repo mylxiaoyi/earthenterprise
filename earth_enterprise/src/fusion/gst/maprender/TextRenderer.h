@@ -20,7 +20,7 @@
 #ifndef FUSION_GST_MAPRENDER_TEXTRENDERER_H__
 #define FUSION_GST_MAPRENDER_TEXTRENDERER_H__
 
-#include <qpixmap.h>
+#include <QtGui/qpixmap.h>
 #include <SkPaint.h>
 
 class MapTextStyleConfig;

@@ -16,11 +16,11 @@
 
 #include "fusion/fusionui/MapDatabaseWidget.h"
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qcheckbox.h>
+#include <QtWidgets/qframe.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qcheckbox.h>
 
 #include <autoingest/.idl/AssetStorage.h>
 #include <autoingest/plugins/MapProjectAsset.h>
@@ -31,14 +31,14 @@
 #include "fusion/fusionui/AssetChooser.h"
 #include "fusion/fusionversion.h"
 
-QString MapDatabaseWidget::empty_text(tr("<none>"));
+//QString MapDatabaseWidget::empty_text(tr("<none>"));
 
 MapDatabaseWidget::MapDatabaseWidget(QWidget* parent, AssetBase* base)
-  : MapDatabaseWidgetBase(parent), AssetWidgetBase(base) {
+  : MapDatabaseWidgetBase(), AssetWidgetBase(base) {
 }
 
 void MapDatabaseWidget::Prefill(const MapDatabaseEditRequest& request) {
-  std::vector<std::string> projects;
+  /*std::vector<std::string> projects;
 
   if (request.config.mapProject.size() != 0) {
     projects.push_back(request.config.mapProject);
@@ -57,11 +57,11 @@ void MapDatabaseWidget::Prefill(const MapDatabaseEditRequest& request) {
     } else {
       imagery_project_label->setText(empty_text);
     }
-  }
+  }*/
 }
 
 void MapDatabaseWidget::EnableImageryProject(bool state) {
-  static QString save_imagery_project = empty_text;
+  /*static QString save_imagery_project = empty_text;
   if (state == false) {
     save_imagery_project = imagery_project_label->text();
     imagery_project_label->setText(empty_text);
@@ -73,11 +73,11 @@ void MapDatabaseWidget::EnableImageryProject(bool state) {
   clear_imagery_btn->setEnabled(state);
   choose_imagery_btn->setEnabled(state);
   imagery_pixmap->setEnabled(state);
-  imagery_pre_label->setEnabled(state);
+  imagery_pre_label->setEnabled(state);*/
 }
 
 void MapDatabaseWidget::AssembleEditRequest(MapDatabaseEditRequest* request) {
-  if (map_project_label->text() != empty_text) {
+ /* if (map_project_label->text() != empty_text) {
     request->config.mapProject =
         map_project_label->text().latin1() + kMapProjectSuffix;
   } else {
@@ -93,11 +93,11 @@ void MapDatabaseWidget::AssembleEditRequest(MapDatabaseEditRequest* request) {
   }
 
   request->config.useGoogleImagery = false;
-  request->config.is_mercator = false;
+  request->config.is_mercator = false;*/
 }
 
 void MapDatabaseWidget::ChooseMapProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Map,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Map,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -106,11 +106,11 @@ void MapDatabaseWidget::ChooseMapProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  map_project_label->setText(shortAssetName(newpath));
+  map_project_label->setText(shortAssetName(newpath));*/
 }
 
 void MapDatabaseWidget::ChooseImageryProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -119,13 +119,13 @@ void MapDatabaseWidget::ChooseImageryProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  imagery_project_label->setText(shortAssetName(newpath));
+  imagery_project_label->setText(shortAssetName(newpath));*/
 }
 
-void MapDatabaseWidget::ClearMapProject() {
-  map_project_label->setText(empty_text);
-}
+//void MapDatabaseWidget::ClearMapProject() {
+  //map_project_label->setText(empty_text);
+//}
 
-void MapDatabaseWidget::ClearImageryProject() {
-  imagery_project_label->setText(empty_text);
-}
+//void MapDatabaseWidget::ClearImageryProject() {
+  //imagery_project_label->setText(empty_text);
+//}

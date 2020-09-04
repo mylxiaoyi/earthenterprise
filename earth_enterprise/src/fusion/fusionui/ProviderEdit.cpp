@@ -13,17 +13,17 @@
 // limitations under the License.
 
 
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qpushbutton.h>
 
 #include "ProviderEdit.h"
 
 ProviderEdit::ProviderEdit(QWidget* parent)
-  : ProviderEditBase(parent, 0, false, 0) {
+  /*: ProviderEditBase(parent, 0, false, 0)*/ {
 }
 
 int ProviderEdit::configure(const gstProvider &provider) {
-  orig_ = provider;
+  /*orig_ = provider;
   if (provider.name.length() != 0) {
     nameEdit->setText(provider.name);
     keyEdit->setText(QString::fromUtf8(provider.key.c_str()));
@@ -38,22 +38,23 @@ int ProviderEdit::configure(const gstProvider &provider) {
 
   nameEdit->setFocus();
 
-  return exec();
+  return exec();*/
+  return 0;
 }
 
 gstProvider ProviderEdit::getProvider() const {
   gstProvider provider = orig_;
-  provider.name = nameEdit->text();
+  /*provider.name = nameEdit->text();
   provider.key = keyEdit->text().utf8();
-  provider.copyright = copyrightEdit->text();
+  provider.copyright = copyrightEdit->text();*/
   return provider;
 }
 
 
 void ProviderEdit::nameChanged(const QString& txt) {
-  if (txt.isEmpty()) {
+  /*if (txt.isEmpty()) {
     okBtn->setEnabled(false);
   } else {
     okBtn->setEnabled(true);
-  }
+  }*/
 }

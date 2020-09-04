@@ -15,7 +15,7 @@
 
 
 #include <cstdint>
-#include <qstring.h>
+#include <QtCore/QString>
 #include <gst/gstTypes.h>
 
 class VectorDefs {

@@ -15,48 +15,52 @@
 
 #include "AdvancedLabelOptions.h"
 
-#include <qradiobutton.h>
-#include <qvalidator.h>
-#include <qlineedit.h>
+#include <QtWidgets/qradiobutton.h>
+#include <QtGui/qvalidator.h>
+#include <QtWidgets/qlineedit.h>
 
-AdvancedLabelOptions::AdvancedLabelOptions( QWidget* parent, int maxquad )
-    : AdvancedLabelOptionsBase( parent )
-{
-  subsetText->setValidator( new QIntValidator( 1, 10000, this ) );
+#include "advancedlabeloptionsbase.h"
 
-  setMax( maxquad );
+//AdvancedLabelOptions::AdvancedLabelOptions( QWidget* parent, int maxquad)
+    //: QDialog( parent ), ui(new Ui::AdvancedLabelOptionsBase)
+//{
+  //ui->setupUi(this);
+
+  /*this->ui->subsetText->setValidator( new QIntValidator( 1, 10000, this ) );
+
+  //setMax( maxquad );
 
   if ( maxquad == 0 ) {
-    maxBtn->setChecked( true );
-    subsetBtn->setChecked( false );
+    this->ui->maxBtn->setChecked( true );
+    this->ui->subsetBtn->setChecked( false );
   } else { 
-    maxBtn->setChecked( false );
-    subsetBtn->setChecked( true );
-  }
-}
+    this->ui->maxBtn->setChecked( false );
+    this->ui->subsetBtn->setChecked( true );
+  }*/
+//}
 
 
-void AdvancedLabelOptions::decimationChange( int id )
-{
-  if ( id == 0 && !subsetText->text().isEmpty() )
+//void AdvancedLabelOptions::decimationChange( int id )
+//{
+  /*if ( id == 0 && !this->ui->subsetText->text().isEmpty() )
     setMax( 0 );
-  else if ( id == 1 && subsetText->text().isEmpty() )
-    setMax( 100 );
-}
+  else if ( id == 1 && this->ui->subsetText->text().isEmpty() )
+    setMax( 100 );*/
+//}
 
 void AdvancedLabelOptions::setMax( int max )
 {
-  if ( max == 0 ) {
-    subsetText->setEnabled( false );
-    subsetText->clear();
+  /*if ( max == 0 ) {
+    this->ui->subsetText->setEnabled( false );
+    this->ui->subsetText->clear();
   } else {
-    subsetText->setEnabled( true );
-    subsetText->setText( QString::number( max ) );
-  }
+    this->ui->subsetText->setEnabled( true );
+    this->ui->subsetText->setText( QString::number( max ) );
+  }*/
 }
 
 
 int AdvancedLabelOptions::getMax() const
 {
-  return subsetText->text().toInt();
+  return 0;//this->ui->subsetText->text().toInt();
 }

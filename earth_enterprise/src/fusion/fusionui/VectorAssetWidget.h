@@ -30,7 +30,7 @@ class QFileDialog;
 class QStringList;
 class VectorProductImportRequest;
 
-class VectorAssetWidget : public VectorAssetWidgetBase,
+class VectorAssetWidget : public Ui::VectorAssetWidgetBase,
                           public AssetWidgetBase {
  public:
   VectorAssetWidget(QWidget* parent, AssetBase* base);

@@ -21,16 +21,17 @@
 
 #include "advancedlabeloptionsbase.h"
 
-class AdvancedLabelOptions : public AdvancedLabelOptionsBase 
+class AdvancedLabelOptions : public QObject, public Ui::AdvancedLabelOptionsBase
 {
- public:
-  AdvancedLabelOptions( QWidget* parent, int maxquad );
+    Q_OBJECT
 
-  virtual void decimationChange( int );
+ public:
+  //AdvancedLabelOptions( QWidget* parent, int maxquad);
+
+  //virtual void decimationChange( int );
 
   void setMax( int max );
   int getMax() const;
-
 };
 
 #endif  // !_AdvancedLabelOptions_h_

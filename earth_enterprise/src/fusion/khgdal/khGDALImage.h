@@ -20,7 +20,7 @@
 
 #include <cstdint>
 #include <string>
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 #include <khGuard.h>
 #include <khRefCounter.h>
 #include <notify.h>

@@ -22,22 +22,22 @@
 #include <string.h>
 #include <fcntl.h>
 
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 
 #include <gstIconManager.h>
 #include <notify.h>
 #include <gstMisc.h>
 #include <khGuard.h>
 #include <khFileUtils.h>
-#include <vrtdataset.h>
+#include <gdal/vrtdataset.h>
 #include <khConstants.h>
 #include <geInstallPaths.h>
 
 gstIcon::gstIcon(const QString& href, IconReference::Type t)
   : config(t, href) {
   // trim extension if given one
-  if (khHasExtension(href.latin1(), ".png"))
-    config.href.setLength(config.href.length() - 4);
+  //if (khHasExtension(href.toStdString(), ".png"))
+    //config.href.setLength(config.href.length() - 4);
 }
 
 gstIconManager* theIconManager = NULL;
@@ -99,7 +99,7 @@ void gstIconManager::SetPath(IconReference::Type ctype,
 
     const std::string& name = d->d_name;
     if (Validate(khComposePath(path, name)) == true) {
-      collection_[ctype].push_back(gstIcon(name, ctype));
+      collection_[ctype].push_back(gstIcon(QString::fromStdString(name), ctype));
     }
   }
 
@@ -114,7 +114,7 @@ const std::string& gstIconManager::GetPath(IconReference::Type ctype) const {
 
 std::string gstIconManager::GetFullPath(IconReference::Type type, int idx) const {
   std::string path = khComposePath(GetPath(type),
-                                   collection_[type][idx].href().latin1());
+                                   collection_[type][idx].href().toStdString());
   return khEnsureExtension(path, ".png");
 }
 
@@ -148,7 +148,7 @@ bool gstIconManager::AddIcon(const std::string& path) {
 
   if (CopyIcon(path, outfile) == true) {
     collection_[IconReference::External].push_back(gstIcon(
-        base, IconReference::External));
+        QString::fromStdString(base), IconReference::External));
     return true;
   }
 
@@ -311,7 +311,7 @@ bool gstIconManager::DeleteIcon(const std::string& name) {
   std::vector<gstIcon>& ext_collection = collection_[IconReference::External];
   for (std::vector<gstIcon>::iterator it = ext_collection.begin();
        it != ext_collection.end(); ++it) {
-    if (it->href() == name) {
+    if (it->href().toStdString() == name) {
       found = true;
       ext_collection.erase(it);
       break;

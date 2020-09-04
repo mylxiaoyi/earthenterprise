@@ -126,7 +126,7 @@ void ComputeQuadtreePacketFormat1(
 
       KhQuadTreeQuantum16 *node = packet.GetPtr(node_count);
       ++node_count;
-      memset(node, 0, sizeof(KhQuadTreeQuantum16));
+      memset((void*)node, 0, sizeof(KhQuadTreeQuantum16));
 
       const QuadsetGroup<QuadtreePacketItem>::NodeContents
         &contents = group.Node(i);

@@ -19,9 +19,10 @@
 #ifndef KHSRC_FUSION_FUSIONUI_PROJECTMANAGER_H__
 #define KHSRC_FUSION_FUSIONUI_PROJECTMANAGER_H__
 
-#include <qlistview.h>
-#include <qfiledialog.h>
-#include <qdragobject.h>
+#include <QtWidgets/qlistview.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/QLabel>
+//#include <qdragobject.h>
 #include <vector>
 
 #include <limits.h>
@@ -121,9 +122,9 @@ class ProjectManager : public QListView {
   virtual void contentsMouseMoveEvent(QMouseEvent* e);
   virtual void contentsMouseReleaseEvent(QMouseEvent* e);
   // inherited from qscrollview
-  virtual void contentsDragMoveEvent(QDragMoveEvent* e);
-  virtual void contentsDragLeaveEvent(QDragLeaveEvent* e);
-  virtual void contentsDropEvent(QDropEvent* e);
+  //virtual void contentsDragMoveEvent(QDragMoveEvent* e);
+  //virtual void contentsDragLeaveEvent(QDragLeaveEvent* e);
+  //virtual void contentsDropEvent(QDropEvent* e);
 
  signals:
   void zoomToSource(const gstBBox& b);
@@ -138,34 +139,34 @@ class ProjectManager : public QListView {
   void FileOpen();
 
  protected slots:
-  void contextMenu(QListViewItem* i, const QPoint& pos, int);
-  void itemDoubleClicked(QListViewItem* i);
-  void selectBox(const gstDrawState& state, Qt::ButtonState b);
+  //void contextMenu(QListViewItem* i, const QPoint& pos, int);
+  //void itemDoubleClicked(QListViewItem* i);
+  //void selectBox(const gstDrawState& state, Qt::ButtonState b);
 
   void DrawFeatures(const gstDrawState& state);
   void DrawLabels(QPainter* p, const gstDrawState& state);
 
-  void removeLayer(QListViewItem* a = NULL);
-  void moveLayerUp(QListViewItem* item = NULL);
-  void moveLayerDown(QListViewItem* item = NULL);
+  //void removeLayer(QListViewItem* a = NULL);
+  //void moveLayerUp(QListViewItem* item = NULL);
+  //void moveLayerDown(QListViewItem* item = NULL);
 
   void makeTopLevel(LayerItem* i);
 
-  void selectItem(QListViewItem* i);
+  //void selectItem(QListViewItem* i);
   void addLayer();
   void addLayerGroup();
 
-  void pressed(QListViewItem* item);
-  void selectionChanged(QListViewItem* item);
+  //void pressed(QListViewItem* item);
+  //void selectionChanged(QListViewItem* item);
 
   // from QWidget
-  virtual void customEvent(QCustomEvent*);
+  //virtual void customEvent(QCustomEvent*);
  private:
   void DrawEditBuffer(const gstDrawState& state);
   GeodeList edit_buffer_;
 
   void exportDisplayTemplate(gstLayer* layer);
-  void importDisplayTemplate(QCheckListItem* item);
+  //void importDisplayTemplate(QCheckListItem* item);
   void configureDisplayRules(LayerItem* layer, int id);
   LayerConfig MakeDefaultLayerConfig(const QString &name,
                                      gstPrimType primType,
@@ -177,17 +178,17 @@ class ProjectManager : public QListView {
                            const std::string &assetRef);
   gstSource* openSource(const char* src, const char* codec,
                         bool nofileok);
-  void updateButtons(QListViewItem* item);
-  bool canRaise(QListViewItem* item);
-  bool canLower(QListViewItem* item);
+  //void updateButtons(QListViewItem* item);
+  //bool canRaise(QListViewItem* item);
+  //bool canLower(QListViewItem* item);
   void RefreshLayerList(bool setLegends, bool setSortIds);
-  bool EnsureUniqueLayerName(QListViewItem* item);
-  bool FindLayerNameAmongSiblings(QListViewItem* item, const QString& name);
-  bool LayerNameSanityCheck(QListViewItem *item, const QString& name);
-  bool FindUuid(QListViewItem* parent, QListViewItem* item, const QString& uuid);
-  bool UuidSanityCheck(QListViewItem* item,
-                           const std::string &old_uuid,
-                           std::string &new_uuid);
+  //bool EnsureUniqueLayerName(QListViewItem* item);
+  //bool FindLayerNameAmongSiblings(QListViewItem* item, const QString& name);
+  //bool LayerNameSanityCheck(QListViewItem *item, const QString& name);
+  //bool FindUuid(QListViewItem* parent, QListViewItem* item, const QString& uuid);
+  //bool UuidSanityCheck(QListViewItem* item,
+  //                         const std::string &old_uuid,
+  //                         std::string &new_uuid);
   void removeAllLayers(void);
   void ClearSelection();
 
@@ -201,7 +202,7 @@ class ProjectManager : public QListView {
   QPoint press_pos_;
   bool mouse_pressed_;
   LayerItem* drag_layer_;
-  QListViewItem* old_current_;
+  //QListViewItem* old_current_;
 
   bool show_max_count_reached_message_;
 };

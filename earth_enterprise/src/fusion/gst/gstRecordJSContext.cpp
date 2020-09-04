@@ -47,7 +47,7 @@ class gstRecordJSWrapperImpl : public khRefCounter {
 // ****************************************************************************
 // ***  static helper functions
 // ****************************************************************************
-JSBool GetValue(JSContext *cx, JSObject *obj, int index, jsval *ret) {
+/*JSBool GetValue(JSContext *cx, JSObject *obj, int index, jsval *ret) {
   gstRecordJSWrapperImpl* wrapper =
     static_cast<gstRecordJSWrapperImpl*>(JS_GetPrivate(cx, obj));
   if (!wrapper) {
@@ -82,7 +82,7 @@ JSBool GetValue(JSContext *cx, JSObject *obj, int index, jsval *ret) {
           if (str.isEmpty()) {
             *ret = JS_GetEmptyStringValue(cx);
           } else {
-            JSString *newstr = JS_NewUCStringCopyN(cx, str.ucs2(), str.length());
+            JSString *newstr = JS_NewUCStringCopyN(cx, str.utf16(), str.length());
             if (!newstr) {
               // out of memory error already reported
               return JS_FALSE;
@@ -99,10 +99,10 @@ JSBool GetValue(JSContext *cx, JSObject *obj, int index, jsval *ret) {
     JS_ReportError(cx, "field index out of range: %d", index);
   }
   return JS_FALSE;
-}
+}*/
 
 
-JSBool GetGstValueField(JSContext *cx, JSObject *obj, jsval id, jsval *ret) {
+/*JSBool GetGstValueField(JSContext *cx, JSObject *obj, jsval id, jsval *ret) {
   if (JSVAL_IS_INT(id)) {
     int f = JSVAL_TO_INT(id);
     return GetValue(cx, obj, f, ret);
@@ -110,44 +110,44 @@ JSBool GetGstValueField(JSContext *cx, JSObject *obj, jsval id, jsval *ret) {
     JS_ReportError(cx, "field index is not a number");
   }
   return JS_FALSE;
-}
+}*/
 
-JSBool GetGstValueFieldByIndex(JSContext *cx, JSObject *obj,
+/*JSBool GetGstValueFieldByIndex(JSContext *cx, JSObject *obj,
                                jsval id, jsval *ret) {
   int f = JSVAL_TO_INT(id);
   return GetValue(cx, obj, f, ret);
-}
+}*/
 
-JSBool GetGstValueFieldByIndexPlus128(JSContext *cx, JSObject *obj,
+/*JSBool GetGstValueFieldByIndexPlus128(JSContext *cx, JSObject *obj,
                                       jsval id, jsval *ret) {
   int f = JSVAL_TO_INT(id) + 128;
   return GetValue(cx, obj, f, ret);
-}
+}*/
 
-JSBool GetGstValueFieldByIndexPlus256(JSContext *cx, JSObject *obj,
+/*JSBool GetGstValueFieldByIndexPlus256(JSContext *cx, JSObject *obj,
                                       jsval id, jsval *ret) {
   int f = JSVAL_TO_INT(id) + 256;
   return GetValue(cx, obj, f, ret);
-}
-JSBool GetGstValueFieldByIndexPlus384(JSContext *cx, JSObject *obj,
+}*/
+/*JSBool GetGstValueFieldByIndexPlus384(JSContext *cx, JSObject *obj,
                                       jsval id, jsval *ret) {
   int f = JSVAL_TO_INT(id) + 384;
   return GetValue(cx, obj, f, ret);
-}
+}*/
 
-JSPropertyOp TinyIdGetterFuncs[] = {
+/*JSPropertyOp TinyIdGetterFuncs[] = {
   GetGstValueFieldByIndex,
   GetGstValueFieldByIndexPlus128,
   GetGstValueFieldByIndexPlus256,
   GetGstValueFieldByIndexPlus384,
-};
+};*/
 const unsigned int gstRecordJSContextImpl::MaxNumProperties = 512;
 
-JSClass gstRecord_wrapper_class = {
+/*JSClass gstRecord_wrapper_class = {
     "gstRecord_wrapper_class", JSCLASS_HAS_PRIVATE,
     JS_PropertyStub,JS_PropertyStub,GetGstValueField,JS_PropertyStub,
     JS_EnumerateStub,JS_ResolveStub,JS_ConvertStub,JS_FinalizeStub
-};
+};*/
 
 
 // ****************************************************************************
@@ -163,7 +163,7 @@ gstRecordJSWrapperImpl::gstRecordJSWrapperImpl(KHJSContext &cx_,
 {
 
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(cx);
+  /*JSContextUser jsuser(cx);
 
   // Make sure all newborns can't be GC'd until we're done here.
   JSLocalRootScopeGuard rootGuard(jsuser);
@@ -180,7 +180,7 @@ gstRecordJSWrapperImpl::gstRecordJSWrapperImpl(KHJSContext &cx_,
     QString name = headerHandle->Name(f);
     if (cx->IsIdentifier(name)) {
       jsuser.DefineReadOnlyPropertyWithTinyId(wrapperObj, name,
-                                              f % 128 /* tiny index */,
+                                              f % 128,
                                               TinyIdGetterFuncs[f / 128]);
     }
   }
@@ -189,13 +189,13 @@ gstRecordJSWrapperImpl::gstRecordJSWrapperImpl(KHJSContext &cx_,
   jsuser.AddNamedGlobalObject(name, wrapperObj);
 
   // protect scriptObj from GC
-  jsuser.AddNamedRoot(&wrapperObj, "gstRecordJSWrapper");
+  jsuser.AddNamedRoot(&wrapperObj, "gstRecordJSWrapper");*/
 }
 
 gstRecordJSWrapperImpl::~gstRecordJSWrapperImpl(void)
 {
   // Give this thread permission to execute in the context
-  JSContextUser jsuser(cx);
+  /*JSContextUser jsuser(cx);
 
   // delete the named object from the global object
   jsuser.DeleteNamedGlobalObject(name);
@@ -203,7 +203,7 @@ gstRecordJSWrapperImpl::~gstRecordJSWrapperImpl(void)
   // clear myself out of private slot since I'm no longer here
   jsuser.SetPrivate(wrapperObj, 0);
 
-  jsuser.RemoveRoot(&wrapperObj);
+  jsuser.RemoveRoot(&wrapperObj);*/
 }
 
 

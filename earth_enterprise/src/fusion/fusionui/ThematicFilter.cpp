@@ -16,16 +16,16 @@
 
 #include "fusion/fusionui/ThematicFilter.h"
 
-#include <qprogressdialog.h>
-#include <qapplication.h>
-#include <qlistbox.h>
-#include <qcolordialog.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qtable.h>
-#include <qheader.h>
-#include <qwidgetstack.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qprogressdialog.h>
+#include <QtWidgets/qapplication.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qtableview.h>
+//#include <qheader.h>
+#include <QtWidgets/qstackedwidget.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include "fusion/fusionui/PixmapManager.h"
 #include "fusion/gst/gstFormat.h"
@@ -34,9 +34,9 @@
 #include "fusion/fusionui/.idl/thematicstyles.h"
 #include "fusion/autoingest/.idl/storage/MapLayerConfig.h"
 
-class ColorItem : public QTableItem {
+class ColorItem /*: public QTableItem*/ {
  public:
-  ColorItem(QTable* table, const QColor& color);
+  //ColorItem(QTable* table, const QColor& color);
 
   void SetColor(const QColor& color);
   QColor GetColor() const;
@@ -45,18 +45,18 @@ class ColorItem : public QTableItem {
   QColor color_;
 };
 
-ColorItem::ColorItem(QTable* table, const QColor& color)
+/*ColorItem::ColorItem(QTable* table, const QColor& color)
     : QTableItem(table, QTableItem::Never) {
   SetColor(color);
-}
+}*/
 
 void ColorItem::SetColor(const QColor& color) {
-  color_ = color;
+  /*color_ = color;
   setPixmap(ColorBox::Pixmap(
       color.red(), color.green(), color.blue(),
       color.red(), color.green(), color.blue()));
   setText(QString(
-      "%1,%2,%3").arg(color.red()).arg(color.green()).arg(color.blue()));
+      "%1,%2,%3").arg(color.red()).arg(color.green()).arg(color.blue()));*/
 }
 
 QColor ColorItem::GetColor() const {
@@ -72,7 +72,7 @@ class Histogram {
  public:
   class ValueCount {
    public:
-    ValueCount() : value(QString(0)), count(0) {}
+    ValueCount() : value(QString()), count(0) {}
     QString value;
     int count;
   };
@@ -88,13 +88,13 @@ class Histogram {
 };
 
 void Histogram::Insert(const gstValue& val) {
-  HistMapIterator found = hist_map_.find(val);
+  /*HistMapIterator found = hist_map_.find(val);
   if (found == hist_map_.end()) {
     hist_map_.insert(std::make_pair(val, 1));
   } else {
     ++found->second;
   }
-  ++num_elements_;
+  ++num_elements_;*/
 }
 
 std::vector<Histogram::ValueCount> Histogram::ClassBreaks(int num_breaks) {
@@ -103,7 +103,7 @@ std::vector<Histogram::ValueCount> Histogram::ClassBreaks(int num_breaks) {
 
   // Handle the case when the number of classes is not more than the specified
   // number of breaks - just report all classes.
-  if (static_cast<int>(hist_map_.size()) <= num_breaks) {
+  /*if (static_cast<int>(hist_map_.size()) <= num_breaks) {
     int curr_break = 0;
     for (HistMapIterator it = hist_map_.begin();
          it != hist_map_.end(); ++it, ++curr_break) {
@@ -131,14 +131,14 @@ std::vector<Histogram::ValueCount> Histogram::ClassBreaks(int num_breaks) {
     current_count += it->second;
     total_count += it->second;
   }
-  class_breaks[num_breaks - 1].count = current_count;
+  class_breaks[num_breaks - 1].count = current_count;*/
   return class_breaks;
 }
 
 // -----------------------------------------------------------------------------
 
 ThematicFilter::ThematicFilter(QWidget* parent, gstLayer* layer)
-    : ThematicFilterBase(parent, 0, false, 0),
+    : //ThematicFilterBase(parent, 0, false, 0),
       record_header_(layer->GetSourceAttr()),
       source_(layer->GetSource()),
       src_layer_num_(layer->GetSourceLayerNum()) {
@@ -148,7 +148,7 @@ ThematicFilter::ThematicFilter(QWidget* parent, gstLayer* layer)
 ThematicFilter::ThematicFilter(QWidget* parent,
                                gstSource* source,
                                int src_layer_num)
-               : ThematicFilterBase(parent, 0, false, 0),
+               : //ThematicFilterBase(parent, 0, false, 0),
                  record_header_(source->GetAttrDefs(src_layer_num)),
                  source_(source),
                  src_layer_num_(src_layer_num) {
@@ -156,7 +156,7 @@ ThematicFilter::ThematicFilter(QWidget* parent,
 }
 
 void ThematicFilter::Init() {
-  if (record_header_->numColumns() != 0) {
+  /*if (record_header_->numColumns() != 0) {
     for (unsigned int col = 0; col < record_header_->numColumns(); ++col)
       field_names_box->insertItem(record_header_->Name(col));
   }
@@ -169,14 +169,14 @@ void ThematicFilter::Init() {
   results_table->setNumCols(kNumCols);
   results_table->horizontalHeader()->adjustHeaderSize();
 
-  ChangeNumClasses();
+  ChangeNumClasses();*/
 }
 
 ThematicFilter::~ThematicFilter() {
 }
 
 bool ThematicFilter::DefineNewFilters(std::vector<DisplayRuleConfig>* configs) {
-  if (exec() == QDialog::Rejected)
+  /*if (exec() == QDialog::Rejected)
     return false;
 
   int field_num = field_names_box->currentItem();
@@ -219,14 +219,14 @@ bool ThematicFilter::DefineNewFilters(std::vector<DisplayRuleConfig>* configs) {
       // last added filter is default: match all of the following.
       break;
     }
-  }
+  }*/
 
   return true;
 }
 
 bool ThematicFilter::DefineNewFilters(
   std::vector<MapDisplayRuleConfig>* configs) {
-  if (exec() == QDialog::Rejected)
+  /*if (exec() == QDialog::Rejected)
     return false;
 
   int field_num = field_names_box->currentItem();
@@ -263,40 +263,40 @@ bool ThematicFilter::DefineNewFilters(
       // last added filter is default: match all of the following.
       break;
     }
-  }
+  }*/
 
   return true;
 }
 
 void ThematicFilter::ChooseStartColor() {
-  QRgb init_color = start_color_btn->paletteBackgroundColor().rgb();
+  /*QRgb init_color = start_color_btn->paletteBackgroundColor().rgb();
   QRgb new_color = QColorDialog::getRgba(init_color);
   if (new_color != init_color) {
     start_color_btn->setPaletteBackgroundColor(QColor(new_color));
     RedrawColors();
-  }
+  }*/
 }
 
 void ThematicFilter::ChooseEndColor() {
-  QRgb init_color = end_color_btn->paletteBackgroundColor().rgb();
+  /*QRgb init_color = end_color_btn->paletteBackgroundColor().rgb();
   QRgb new_color = QColorDialog::getRgba(init_color);
   if (new_color != init_color) {
     end_color_btn->setPaletteBackgroundColor(QColor(new_color));
     RedrawColors();
-  }
+  }*/
 }
 
 void ThematicFilter::ChangeNumClasses() {
   // setting num rows to zero clears out all the contents
-  results_table->setNumRows(0);
+  /*results_table->setNumRows(0);
   results_table->setNumRows(classes_combo->currentText().toInt());
 
   RedrawColors();
-  ComputeStatistics(field_names_box->currentItem());
+  ComputeStatistics(field_names_box->currentItem());*/
 }
 
 void ThematicFilter::RedrawColors() {
-  int num_classes = classes_combo->currentText().toInt();
+  /*int num_classes = classes_combo->currentText().toInt();
 
   // linear interpolation
   QColor start_color = start_color_btn->paletteBackgroundColor().rgb();
@@ -311,16 +311,16 @@ void ThematicFilter::RedrawColors() {
                start_color.green() + (c * g_step),
                start_color.blue() + (c * b_step));
     results_table->setItem(c, kFieldNameCol, new ColorItem(results_table, clr));
-  }
+  }*/
 }
 
-void ThematicFilter::SelectAttribute(QListBoxItem* item) {
-  ComputeStatistics(field_names_box->currentItem());
-}
+//void ThematicFilter::SelectAttribute(QListBoxItem* item) {
+  //ComputeStatistics(field_names_box->currentItem());
+//}
 
 void ThematicFilter::ComputeStatistics(int field) {
   // it's possible nothing has been selected yet
-  if (field == -1)
+  /*if (field == -1)
     return;
 
   try {
@@ -385,5 +385,5 @@ void ThematicFilter::ComputeStatistics(int field) {
                          tr("Error gathering statistics:\n") +
                          "Unknown error",
                          QObject::tr("OK"), 0, 0, 0);
-  }
+  }*/
 }

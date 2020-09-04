@@ -22,22 +22,22 @@
 #include <assert.h>
 #include <functional>
 
-#include <qapplication.h>
-#include <qpushbutton.h>
-#include <qcursor.h>
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qprogressdialog.h>
-#include <qmessagebox.h>
-#include <qheader.h>
-#include <qinputdialog.h>
-#include <qthread.h>
-#include <qstringlist.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qtooltip.h>
+#include <QtWidgets/qapplication.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtGui/qcursor.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qprogressdialog.h>
+#include <QtWidgets/qmessagebox.h>
+//#include <qheader.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtCore/qthread.h>
+#include <QtCore/qstringlist.h>
+#include <QtGui/qevent.h>
+#include <QtWidgets/qlayout.h>
+//#include <qvgroupbox.h>
+//#include <qhgroupbox.h>
+#include <QtWidgets/qtooltip.h>
 
 #include <khConstants.h>
 #include <khGuard.h>
@@ -79,56 +79,56 @@
 #include <autoingest/.idl/storage/VectorProjectConfig.h>
 #include <third_party/rfc_uuid/uuid.h>
 
-namespace {
+/*namespace {
 const int ConfigDispRuleEventId  = (int)QEvent::User;
 const int RemoveLayerEventId     = (int)QEvent::User + 1;
 const int RemoveAllLayersEventId = (int)QEvent::User + 2;
-}
+}*/
 
-class ConfigDispRuleEvent : public QCustomEvent {
+class ConfigDispRuleEvent : public QEvent {
  public:
-  ConfigDispRuleEvent(QListViewItem *listItem_, int filterId_)
-      : QCustomEvent(ConfigDispRuleEventId),
-        listItem(listItem_), filterId(filterId_) { }
+  ConfigDispRuleEvent(QWidget *listItem_, int filterId_)
+      : QEvent(QEvent::User),
+        /*listItem(listItem_),*/ filterId(filterId_) { }
 
-  QListViewItem *listItem;
+  //QListViewItem *listItem;
   int filterId;
 };
 
-class RemoveLayerEvent : public QCustomEvent {
+class RemoveLayerEvent : public QEvent {
  public:
-  RemoveLayerEvent(QListViewItem *listItem_)
-      : QCustomEvent(RemoveLayerEventId),
-        listItem(listItem_) { }
+  RemoveLayerEvent(QWidget *listItem_)
+      : QEvent(QEvent::User)//,
+        /*listItem(listItem_)*/ { }
 
-  QListViewItem *listItem;
+  //QListViewItem *listItem;
 };
 
-class RemoveAllLayersEvent : public QCustomEvent {
+class RemoveAllLayersEvent : public QEvent {
  public:
-  RemoveAllLayersEvent(void) : QCustomEvent(RemoveAllLayersEventId) { }
+  RemoveAllLayersEvent(void) : QEvent(QEvent::User) { }
 };
 
 
 static QPixmap LoadPixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
 // -----------------------------------------------------------------------------
 
-class FilterItem : public QListViewItem {
+class FilterItem : public QWidget {
  public:
-  FilterItem(QListViewItem* parent, gstFilter* filter);
+  FilterItem(QWidget* parent, gstFilter* filter);
   ~FilterItem();
 
   virtual QString text(int) const;
   virtual int rtti() const { return FILTER; }
-  virtual int compare(QListViewItem* i, int col, bool ascending) const;
+  //virtual int compare(QListViewItem* i, int col, bool ascending) const;
 
   int FilterId() const { return filter_id_; }
 
@@ -139,19 +139,19 @@ class FilterItem : public QListViewItem {
 
 // -----------------------------------------------------------------------------
 
-class LayerItem : public QCheckListItem {
+class LayerItem : public QWidget {
  public:
   LayerItem(QListView* parent, gstLayer* l);
-  LayerItem(QListViewItem* parent, gstLayer* l);
+  LayerItem(QWidget* parent, gstLayer* l);
   ~LayerItem();
 
   virtual int rtti() const { return LAYER; }
   virtual QString text(int n) const;
-  virtual int compare(QListViewItem* i, int col, bool ascending) const;
+  //virtual int compare(QListViewItem* i, int col, bool ascending) const;
   virtual void stateChange(bool s);
   virtual int width(const QFontMetrics& fm, const QListView* lv, int c) const;
-  virtual void paintCell(QPainter* p, const QColorGroup& cg,
-                         int col, int width, int align);
+  //virtual void paintCell(QPainter* p, const QColorGroup& cg,
+  //                       int col, int width, int align);
 
   void orphan();
   gstLayer* layer() const { return layer_; }
@@ -166,24 +166,24 @@ class LayerItem : public QCheckListItem {
 
 // -----------------------------------------------------------------------------
 
-class LayerGroupItem : public QCheckListItem {
+class LayerGroupItem : public QWidget {
  public:
   LayerGroupItem(QListView* parent, gstLayer* l);
-  LayerGroupItem(QListViewItem* parent, gstLayer* l);
+  LayerGroupItem(QWidget* parent, gstLayer* l);
   ~LayerGroupItem();
 
   virtual int rtti() const { return GROUP; }
   virtual QString text(int col) const;
-  virtual int compare(QListViewItem* i, int col, bool ascending) const;
+  //virtual int compare(QListViewItem* i, int col, bool ascending) const;
   virtual void stateChange(bool s);
-  virtual void paintCell(QPainter* p, const QColorGroup& cg,
-                         int col, int width, int align);
+  //virtual void paintCell(QPainter* p, const QColorGroup& cg,
+  //                       int col, int width, int align);
 
   void orphan();
   gstLayer* layer() const { return layer_; }
 
   void update();
-  bool isChildOf(QListViewItem* item);
+  //bool isChildOf(QListViewItem* item);
 
  private:
   ProjectManager* myProjectManager() const;
@@ -192,9 +192,9 @@ class LayerGroupItem : public QCheckListItem {
 
 
 
-FilterItem::FilterItem(QListViewItem* parent, gstFilter* filter)
-    : QListViewItem(parent), filter_id_(filter->Id()) {
-  std::vector< unsigned int>  fill_rgba, outline_rgba;
+FilterItem::FilterItem(QWidget* parent, gstFilter* filter)
+    : QWidget(parent), filter_id_(filter->Id()) {
+  /*std::vector< unsigned int>  fill_rgba, outline_rgba;
   fill_rgba.resize(4, 255);
   outline_rgba.resize(4, 255);
 
@@ -209,19 +209,19 @@ FilterItem::FilterItem(QListViewItem* parent, gstFilter* filter)
   setPixmap(0, ColorBox::Pixmap(
       fill_rgba[0], fill_rgba[1], fill_rgba[2],
       outline_rgba[0], outline_rgba[1], outline_rgba[2]));
-  setDragEnabled(true);
+  setDragEnabled(true);*/
 }
 
 FilterItem::~FilterItem() {
 }
 
 gstFilter* FilterItem::GetFilter() const {
-  return static_cast<LayerItem*>(parent())->layer()->GetFilterById(filter_id_);
+  return nullptr;//static_cast<LayerItem*>(parent())->layer()->GetFilterById(filter_id_);
 }
 
 QString FilterItem::text(int col) const {
   QString display_text;
-  gstFilter* filter = GetFilter();
+  /*gstFilter* filter = GetFilter();
   if (!filter) {
     // just in case we still have some races between the gstLayer's filters and
     // the GUI's FilterItems
@@ -235,21 +235,22 @@ QString FilterItem::text(int col) const {
           QString("F:%1 ").arg(filter->FeatureConfigs().config.style.id);
     if (filter->Site().config.enabled)
       display_text += QString("L:%1").arg(filter->Site().config.style.id);
-  }
+  }*/
   return display_text;
 }
 
-int FilterItem::compare(QListViewItem* item, int, bool) const {
-  FilterItem* pi = static_cast<FilterItem*>(item);
-  return (FilterId() - pi->FilterId());
-}
+/*int FilterItem::compare(QListViewItem* item, int, bool) const {
+  //FilterItem* pi = static_cast<FilterItem*>(item);
+  //return (FilterId() - pi->FilterId());
+  return 0;
+}*/
 
 // -----------------------------------------------------------------------------
 
 //
 // convenience routine to extract layer from LayerItem and LayerGroupItem
 //
-gstLayer* extractLayer(QListViewItem* item) {
+/*gstLayer* extractLayer(QListViewItem* item) {
   int rtti = item->rtti();
   if (rtti == FILTER)
     item = item->parent();
@@ -263,11 +264,11 @@ gstLayer* extractLayer(QListViewItem* item) {
   assert(0);
 
   return NULL;
-}
+}*/
 
 // -----------------------------------------------------------------------------
 
-void LayerItem::paintCell(QPainter* p, const QColorGroup& cg,
+/*void LayerItem::paintCell(QPainter* p, const QColorGroup& cg,
                           int col, int width, int align)
 
 {
@@ -275,36 +276,36 @@ void LayerItem::paintCell(QPainter* p, const QColorGroup& cg,
   f.setStrikeOut(extractLayer(this)->GetConfig().skipLayer);
   p->setFont(f);
   QCheckListItem::paintCell(p, cg, col, width, align);
-}
+}*/
 
 LayerItem::LayerItem(QListView* p, gstLayer* l)
-    : QCheckListItem(p, l->GetShortName(), QCheckListItem::CheckBox),
+    : //QCheckListItem(p, l->GetShortName(), QCheckListItem::CheckBox),
       layer_(l) {
-  update();
+  //update();
 }
 
-LayerItem::LayerItem(QListViewItem* p, gstLayer* l)
-    : QCheckListItem(p, l->GetShortName(), QCheckListItem::CheckBox),
+LayerItem::LayerItem(QWidget* p, gstLayer* l)
+    : //QCheckListItem(p, l->GetShortName(), QCheckListItem::CheckBox),
       layer_(l) {
-  update();
+  //update();
 }
 
 LayerItem::~LayerItem() {
 }
 
 void LayerItem::update() {
-  QImage img;
+  /*QImage img;
   img = thePixmapManager->GetPixmap(gstIcon(layer_->Icon(), layer_->IconType()),
                                     PixmapManager::LayerIcon);
-  setPixmap(0, img);
+  setPixmap(0, img);*/
 }
 
 ProjectManager* LayerItem::myProjectManager() const {
-  return dynamic_cast<ProjectManager*>(listView());
+  return nullptr; //dynamic_cast<ProjectManager*>(listView());
 }
 
 QString LayerItem::text(int col) const {
-  if (col == 0) {
+  /*if (col == 0) {
     if (Preferences::GlobalEnableAll) {
       QString id = QString("  SortID=%1 ").arg(layer_->SortId());
       QString legend = layer_->Legend().isEmpty() ? QString::null :
@@ -315,17 +316,17 @@ QString LayerItem::text(int col) const {
     }
   } else if (col == 1 && Preferences::ExpertMode) {
     return QString().setNum(layer_->Id());
-  }
+  }*/
   return QString::null;
 }
 
-int LayerItem::compare(QListViewItem* item, int, bool) const {
-  return layer()->SortId() - extractLayer(item)->SortId();
-}
+//int LayerItem::compare(QListViewItem* item, int, bool) const {
+//  return 0; //layer()->SortId() - extractLayer(item)->SortId();
+//}
 
 // make this item parent-less
 void LayerItem::orphan() {
-  QListViewItem* p = parent();
+  /*QListViewItem* p = parent();
   // reset the sortId
   this->layer_->SetSortId(myProjectManager()->numLayers());
 
@@ -336,19 +337,20 @@ void LayerItem::orphan() {
       p->setOpen(false);
   } else {
     listView()->takeItem(this);
-  }
+  }*/
 }
 
 int LayerItem::width(const QFontMetrics& fm, const QListView* lv, int c) const {
-  if (!parent()) {
+  /*if (!parent()) {
     return QCheckListItem::width(fm, lv, c);
   } else {
     return QListViewItem::width(fm, lv, c);
-  }
+  }*/
+  return 0;
 }
 
 void LayerItem::stateChange(bool state) {
-  myProjectManager()->cancelDrag();
+  /*myProjectManager()->cancelDrag();
 
   if (state) {
     // make sure we have a valid source
@@ -375,12 +377,12 @@ void LayerItem::stateChange(bool state) {
   //emit redrawPreview();
   myProjectManager()->forcePreviewRedraw();
   setOn(state);
-  listView()->repaint();
+  listView()->repaint();*/
 }
 
 void LayerItem::UpdateFilters() {
   // clear out any children
-  while (firstChild() != NULL) {
+  /*while (firstChild() != NULL) {
     delete firstChild();
   }
 
@@ -389,12 +391,12 @@ void LayerItem::UpdateFilters() {
       gstFilter* filter = layer_->GetFilterById(kk);
       new FilterItem(this, filter);
     }
-  }
+  }*/
 }
 
 // -----------------------------------------------------------------------------
 
-void LayerGroupItem::paintCell(QPainter* p, const QColorGroup& cg,
+/*void LayerGroupItem::paintCell(QPainter* p, const QColorGroup& cg,
                           int col, int width, int align)
 
 {
@@ -402,30 +404,30 @@ void LayerGroupItem::paintCell(QPainter* p, const QColorGroup& cg,
   f.setStrikeOut(extractLayer(this)->GetConfig().skipLayer);
   p->setFont(f);
   QCheckListItem::paintCell(p, cg, col, width, align);
-}
+}*/
 
 LayerGroupItem::LayerGroupItem(QListView* parent, gstLayer* l)
-  : QCheckListItem(parent, l->GetShortName(), QCheckListItem::CheckBox),
+  : //QCheckListItem(parent, l->GetShortName(), QCheckListItem::CheckBox),
     layer_(l) {
-  setOpen(false);
+  /*setOpen(false);
   setExpandable(false);
   setDragEnabled(true);
   QImage img;
   img = thePixmapManager->GetPixmap(gstIcon(layer_->Icon(), layer_->IconType()),
                                     PixmapManager::LayerIcon);
-  setPixmap(0, img);
+  setPixmap(0, img);*/
 }
 
-LayerGroupItem::LayerGroupItem(QListViewItem* parent, gstLayer* l)
-  : QCheckListItem(parent, l->GetShortName(), QCheckListItem::CheckBox),
+LayerGroupItem::LayerGroupItem(QWidget * parent, gstLayer* l)
+  : //QCheckListItem(parent, l->GetShortName(), QCheckListItem::CheckBox),
     layer_(l) {
-  setOpen(false);
+  /*setOpen(false);
   setExpandable(false);
   setDragEnabled(true);
   QImage img;
   img = thePixmapManager->GetPixmap(gstIcon(layer_->Icon(), layer_->IconType()),
                                     PixmapManager::LayerIcon);
-  setPixmap(0, img);
+  setPixmap(0, img);*/
 }
 
 LayerGroupItem::~LayerGroupItem() {
@@ -434,7 +436,7 @@ LayerGroupItem::~LayerGroupItem() {
 
 // make this item parent-less
 void LayerGroupItem::orphan() {
-  QListViewItem* p = parent();
+  /*QListViewItem* p = parent();
   // reset the sortId
   this->layer_->SetSortId(myProjectManager()->numLayers());
 
@@ -445,17 +447,17 @@ void LayerGroupItem::orphan() {
       p->setOpen(false);
   } else {
     listView()->takeItem(this);
-  }
+  }*/
 }
 
 void LayerGroupItem::update() {
-  QImage img;
+  /*QImage img;
   img = thePixmapManager->GetPixmap(gstIcon(layer_->Icon(), layer_->IconType()),
                                     PixmapManager::LayerIcon);
-  setPixmap(0, img);
+  setPixmap(0, img);*/
 }
 
-bool LayerGroupItem::isChildOf(QListViewItem* item) {
+/*bool LayerGroupItem::isChildOf(QListViewItem* item) {
   QListViewItem* p = parent();
   while (p) {
     if (item == p)
@@ -463,7 +465,7 @@ bool LayerGroupItem::isChildOf(QListViewItem* item) {
     p = p->parent();
   }
   return false;
-}
+}*/
 
 QString LayerGroupItem::text(int col) const {
   if (col == 0) {
@@ -482,16 +484,16 @@ QString LayerGroupItem::text(int col) const {
   return QString::null;
 }
 
-int LayerGroupItem::compare(QListViewItem* item, int, bool) const {
-  return layer()->SortId() - extractLayer(item)->SortId();
-}
+//int LayerGroupItem::compare(QListViewItem* item, int, bool) const {
+//  return layer()->SortId() - extractLayer(item)->SortId();
+//}
 
 ProjectManager* LayerGroupItem::myProjectManager() const {
-  return dynamic_cast<ProjectManager*>(listView());
+  return nullptr; //dynamic_cast<ProjectManager*>(listView());
 }
 
 void LayerGroupItem::stateChange(bool state) {
-  myProjectManager()->cancelDrag();
+  /*myProjectManager()->cancelDrag();
   LayerItem* layerItem;
   LayerGroupItem* layerGroupItem;
   QListViewItem* item = firstChild();
@@ -506,39 +508,39 @@ void LayerGroupItem::stateChange(bool state) {
     item = item->nextSibling();
   }
   setOn(state);
-  listView()->repaint();
+  listView()->repaint();*/
 }
 
 
 // -----------------------------------------------------------------------------
 
-class LayerDrag : public QTextDrag {
+class LayerDrag : public QWidget {
  public:
   LayerDrag(const QString& text, QWidget* parent);
-  static bool canDecode(QMimeSource* e);
+  //static bool canDecode(QMimeSource* e);
 };
 
 LayerDrag::LayerDrag(const QString& str, QWidget* parent)
-    : QTextDrag(str, parent, 0) {
-  setSubtype("KeyholeLayer");
+    : QWidget(parent) {
+  //setSubtype("KeyholeLayer");
 }
 
-bool LayerDrag::canDecode(QMimeSource* e) {
+/*bool LayerDrag::canDecode(QMimeSource* e) {
   return e->provides("text/KeyholeLayer");
-}
+}*/
 
 // -----------------------------------------------------------------------------
 
 
 ProjectManager::ProjectManager(QWidget* parent, const char* name, Type t)
-  : QListView(parent, name, 0),
+  : QListView(parent),
       type_(t),
       mouse_pressed_(false),
       drag_layer_(0),
-      old_current_(0),
+      //old_current_(0),
       show_max_count_reached_message_(true)
 {
-  setAcceptDrops(true);
+  /*setAcceptDrops(true);
   viewport()->setAcceptDrops(true);
   setResizePolicy(QScrollView::Manual);
 
@@ -578,7 +580,7 @@ ProjectManager::ProjectManager(QWidget* parent, const char* name, Type t)
   connect(this, SIGNAL(zoomToSource(const gstBBox&)),
           GfxView::instance, SLOT(zoomToBox(const gstBBox&)));
 
-  project_ = new gstVectorProject(std::string());
+  project_ = new gstVectorProject(std::string());*/
 }
 
 ProjectManager::~ProjectManager() {
@@ -599,17 +601,17 @@ unsigned int ProjectManager::numLayers() {
 // this signal is only needed for de-select
 // selectionChanged() below will get called with valid items
 // but pressed() won't get called with keyboard actions (arrows)
-void ProjectManager::pressed(QListViewItem* item) {
+/*void ProjectManager::pressed(QListViewItem* item) {
   if (item == NULL)
     selectItem(NULL);
 }
 
 void ProjectManager::selectionChanged(QListViewItem* item) {
   selectItem(item);
-}
+}*/
 
 
-void ProjectManager::selectItem(QListViewItem* item) {
+/*void ProjectManager::selectItem(QListViewItem* item) {
   assert(project_ != NULL);
 
   //
@@ -632,10 +634,10 @@ void ProjectManager::selectItem(QListViewItem* item) {
   }
 
   emit redrawPreview();
-}
+}*/
 
 
-bool ProjectManager::canRaise(QListViewItem* item) {
+/*bool ProjectManager::canRaise(QListViewItem* item) {
   if (item->rtti() == FILTER)
     item = item->parent();
 
@@ -647,26 +649,26 @@ bool ProjectManager::canRaise(QListViewItem* item) {
   }
 
   return (item != firstChild);
-}
+}*/
 
 
-bool ProjectManager::canLower(QListViewItem* item) {
+/*bool ProjectManager::canLower(QListViewItem* item) {
   if (item->rtti() == FILTER)
     item = item->parent();
 
   return (item->nextSibling() != 0);
-}
+}*/
 
 //
 // update moveup, movedown, and delete buttons
 //
-void ProjectManager::updateButtons(QListViewItem* item) {
+/*void ProjectManager::updateButtons(QListViewItem* item) {
   if (item ==  NULL) {
     emit layerStateChange(0, 0, 0);
   } else {
     emit layerStateChange(canRaise(item), canLower(item), 1);
   }
-}
+}*/
 
 QColor getRandomColor() {
   // try to get a semi-random color that doesn't repeat very often
@@ -682,7 +684,7 @@ ProjectManager::MakeDefaultLayerConfig(const QString &name,
                                        const std::string &assetRef) const {
   LayerConfig cfg;
 
-  cfg.assetRef = assetRef;
+  /*cfg.assetRef = assetRef;
   cfg.defaultLocale.ClearDefaultFlags();
   cfg.defaultLocale.name_ = name;
   cfg.defaultLocale.icon_ = IconReference(IconReference::Internal,
@@ -718,7 +720,7 @@ ProjectManager::MakeDefaultLayerConfig(const QString &name,
   if (primType == gstPoint) {
     site.enabled = true;
     site.enablePopup = true;
-  }
+  }*/
 
   return cfg;
 }
@@ -727,10 +729,10 @@ LayerConfig
 ProjectManager::MakeDefaultGroupConfig(const QString &name) const {
   LayerConfig cfg;
 
-  cfg.defaultLocale.ClearDefaultFlags();
-  cfg.defaultLocale.name_ = name;
-  cfg.defaultLocale.icon_ = IconReference(IconReference::Internal,
-                                          kDefaultIconName);
+  //cfg.defaultLocale.ClearDefaultFlags();
+  //cfg.defaultLocale.name_ = name;
+  //cfg.defaultLocale.icon_ = IconReference(IconReference::Internal,
+  //                                        kDefaultIconName);
 
   return cfg;
 }
@@ -738,7 +740,7 @@ ProjectManager::MakeDefaultGroupConfig(const QString &name) const {
 void ProjectManager::addLayerGroup() {
   // loop over the dialog until we get a valid layer name,
   // or cancel is pressed
-  QString name;
+  /*QString name;
   while (true) {
     bool ok = false;
     name = QInputDialog::getText(tr("New Layer Group"),
@@ -762,7 +764,7 @@ void ProjectManager::addLayerGroup() {
       MakeDefaultGroupConfig(name);
 
     gstLayer* grp = new gstLayer(project_,
-                                 0 /*src*/, 0 /*srcLayerNum*/,
+                                 0, 0,
                                  grpConfig);
     grp->SetSortId(project_->layers_.size());
 
@@ -776,11 +778,11 @@ void ProjectManager::addLayerGroup() {
     item->setOpen(false);
     RefreshLayerList(true, true);
     break;
-  }
+  }*/
 }
 
-void ProjectManager::itemDoubleClicked(QListViewItem* item) {
-  if (item == NULL || item->rtti() != FILTER)
+//void ProjectManager::itemDoubleClicked(QListViewItem* item) {
+  /*if (item == NULL || item->rtti() != FILTER)
     return;
   int idx = static_cast<FilterItem*>(item)->FilterId();
 
@@ -789,11 +791,11 @@ void ProjectManager::itemDoubleClicked(QListViewItem* item) {
   // after we return. Post an event back to myself with the layerItem
   // (as QListViewItem) and the filter id
   QApplication::postEvent(this,
-                          new ConfigDispRuleEvent(item->parent(), idx));
-}
+                          new ConfigDispRuleEvent(item->parent(), idx));*/
+//}
 
 void ProjectManager::configureDisplayRules(LayerItem* item, int id) {
-  gstLayer* layer = item->layer();
+  /*gstLayer* layer = item->layer();
 
   gstHeaderHandle hdr = layer->GetSourceAttr();
 
@@ -812,16 +814,16 @@ void ProjectManager::configureDisplayRules(LayerItem* item, int id) {
           item->setOn(true);
       }
     }
-  }
+  }*/
 }
 
 void SetSkipLayer(gstLayer *layer, bool skip) {
-  LayerConfig config = layer->GetConfig();
-  config.skipLayer = skip;
-  layer->SetConfig(config);
+  //LayerConfig config = layer->GetConfig();
+  //config.skipLayer = skip;
+  //layer->SetConfig(config);
 }
 
-template <class Func>
+/*template <class Func>
 void ProcessGroupAndChildren(QListViewItem *item, const Func &func) {
   if (item->rtti() == LAYER) {
     func(extractLayer(item));
@@ -835,11 +837,11 @@ void ProcessGroupAndChildren(QListViewItem *item, const Func &func) {
       child = child->nextSibling();
     }
   }
-}
+}*/
 
 // Do a check for unique layer name in the current project.
 // If it is not unique, warn the user and return false.
-bool ProjectManager::LayerNameSanityCheck(QListViewItem *item, const QString& name) {
+/*bool ProjectManager::LayerNameSanityCheck(QListViewItem *item, const QString& name) {
   bool ok_to_proceed_with_name = true;
 
   if (FindLayerNameAmongSiblings(item, name)) {
@@ -851,7 +853,7 @@ bool ProjectManager::LayerNameSanityCheck(QListViewItem *item, const QString& na
     ok_to_proceed_with_name = false;
   }
   return ok_to_proceed_with_name;
-}
+}*/
 
 // For the release of the Google Earth Javascript API (Tumbler),
 // internal vector production will be using UUIDs for
@@ -868,7 +870,7 @@ bool ProjectManager::LayerNameSanityCheck(QListViewItem *item, const QString& na
 // Return true if it's ok, false if the user needs to try again to enter a valid UUID.
 // The new_uuid is modified on return if deemed necessary
 // (possibly reverting it or creating a new one) and should be used as the valid value of the uuid.
-bool ProjectManager::UuidSanityCheck(QListViewItem* item,
+/*bool ProjectManager::UuidSanityCheck(QListViewItem* item,
                                          const std::string& old_uuid, std::string& new_uuid)
 {
   bool ok_to_proceed_with_uuid = true;
@@ -928,10 +930,10 @@ bool ProjectManager::UuidSanityCheck(QListViewItem* item,
   }
 
   return ok_to_proceed_with_uuid;
-}
+}*/
 
-void ProjectManager::contextMenu(QListViewItem* item, const QPoint& pos, int) {
-  if (item && !item->isEnabled())
+//void ProjectManager::contextMenu(QListViewItem* item, const QPoint& pos, int) {
+  /*if (item && !item->isEnabled())
     return;
 
   enum { ZOOM_TO_LAYER,
@@ -1217,11 +1219,11 @@ void ProjectManager::contextMenu(QListViewItem* item, const QPoint& pos, int) {
     case FILE_OPEN:
       FileOpen();
       break;
-  }
-}
+  }*/
+//}
 
 void ProjectManager::exportDisplayTemplate(gstLayer* layer) {
-  QFileDialog fd(this);
+  /*QFileDialog fd(this);
   fd.setCaption(tr("Export Template"));
   fd.setMode(QFileDialog::AnyFile);
   fd.addFilter(tr("Fusion Template File (*.khdsp)"));
@@ -1261,7 +1263,7 @@ void ProjectManager::exportDisplayTemplate(gstLayer* layer) {
     QMessageBox::critical(this, "Error",
                           tr("Unable to save file:") + khdsp ,
                           tr("OK"), 0, 0, 0);
-  }
+  }*/
 }
 
 class LayerTemplateLoadDialog : public OpenWithHistoryDialog {
@@ -1269,7 +1271,7 @@ class LayerTemplateLoadDialog : public OpenWithHistoryDialog {
   LayerTemplateLoadDialog(QWidget *parent, bool groupMode)
     : OpenWithHistoryDialog(parent, tr("Import Template"),
                             "vectorlayertemplatehistory.xml") {
-    addFilter(tr("Fusion Template File (*.khdsp)"));
+    /*addFilter(tr("Fusion Template File (*.khdsp)"));
 
     // provide checkboxes to specify what to apply
     apply_display_rules_check = new QCheckBox(tr("Apply display rules"), this);
@@ -1282,7 +1284,7 @@ class LayerTemplateLoadDialog : public OpenWithHistoryDialog {
 
     if (groupMode) {
       apply_display_rules_check->hide();
-    }
+    }*/
   }
 
   bool ApplyDisplayRules(void) const {
@@ -1297,8 +1299,8 @@ class LayerTemplateLoadDialog : public OpenWithHistoryDialog {
   QCheckBox* apply_legend_check;
 };
 
-void ProjectManager::importDisplayTemplate(QCheckListItem* item) {
-  LayerTemplateLoadDialog fd(this, (item->rtti() == GROUP));
+//void ProjectManager::importDisplayTemplate(QCheckListItem* item) {
+  /*LayerTemplateLoadDialog fd(this, (item->rtti() == GROUP));
 
   //
   // restore previous layout
@@ -1358,12 +1360,12 @@ void ProjectManager::importDisplayTemplate(QCheckListItem* item) {
 
   if (item->rtti() == LAYER) {
     static_cast<LayerItem*>(item)->UpdateFilters();
-  }
-}
+  }*/
+//}
 
 
-void ProjectManager::moveLayerUp(QListViewItem* item) {
-  if (item == NULL)
+//void ProjectManager::moveLayerUp(QListViewItem* item) {
+  /*if (item == NULL)
     item = selectedItem();
   if (item == NULL)
     return;
@@ -1389,11 +1391,11 @@ void ProjectManager::moveLayerUp(QListViewItem* item) {
   }
 
   RefreshLayerList(false, true);
-  updateButtons(item);
-}
+  updateButtons(item);*/
+//}
 
-void ProjectManager::moveLayerDown(QListViewItem* item) {
-  if (item == NULL)
+//void ProjectManager::moveLayerDown(QListViewItem* item) {
+  /*if (item == NULL)
     item = selectedItem();
   if (item == NULL)
     return;
@@ -1408,20 +1410,20 @@ void ProjectManager::moveLayerDown(QListViewItem* item) {
   }
 
   RefreshLayerList(false, true);
-  updateButtons(item);
-}
+  updateButtons(item);*/
+//}
 
 void ProjectManager::makeTopLevel(LayerItem* item) {
-  item->orphan();
+  /*item->orphan();
   insertItem(item);
   item->update();
   RefreshLayerList(true, true);
-  updateButtons(item);
+  updateButtons(item);*/
 }
 
 
 void ProjectManager::FileOpen() {
-  SourceFileDialog* dialog = SourceFileDialog::self();
+  /*SourceFileDialog* dialog = SourceFileDialog::self();
 
   if (dialog->exec() != QDialog::Accepted)
     return;
@@ -1445,12 +1447,12 @@ void ProjectManager::FileOpen() {
 
   progress.setProgress(100);
 
-  emit redrawPreview();
+  emit redrawPreview();*/
 }
 
 
 void ProjectManager::addLayers(const char* src, const char* codec) {
-  gstSource* new_source = openSource(src, codec, false);
+  /*gstSource* new_source = openSource(src, codec, false);
 
   if (new_source == NULL)
     return;
@@ -1462,19 +1464,19 @@ void ProjectManager::addLayers(const char* src, const char* codec) {
     if (numLayers != 1)
       layername += QString(":%1").arg(i);
     (void)CreateNewLayer(layername, new_source, i,
-                         std::string() /* asset name */);
+                         std::string() );// asset name /);
   }
 
   parentWidget()->parentWidget()->show();
   qApp->processEvents();
 
-  new_source->unref(); // selector now own this and has incremented ref
+  new_source->unref(); // selector now own this and has incremented ref*/
 }
 
 
 gstSource* ProjectManager::openSource(const char* src, const char* codec,
                                       bool nofileok) {
-  gstSource* new_source = new gstSource(src);
+  /*gstSource* new_source = new gstSource(src);
   khDeleteGuard<gstSource> srcGuard(TransferOwnership(new_source));
   new_source->SetNoFile(nofileok);
 
@@ -1499,11 +1501,12 @@ gstSource* ProjectManager::openSource(const char* src, const char* codec,
   if (!validateSrs(new_source))
     return NULL;
 
-  return srcGuard.take();
+  return srcGuard.take();*/
+  return nullptr;
 }
 
 bool ProjectManager::validateSrs(gstSource* src) {
-  const gstBBox maxbbox(-0.1, 1.1, -0.1, 1.1);
+  /*const gstBBox maxbbox(-0.1, 1.1, -0.1, 1.1);
   while (true) {
     gstBBox bb = src->BoundingBox(0);
     if (bb.Valid() && maxbbox.Contains(bb))
@@ -1529,12 +1532,13 @@ bool ProjectManager::validateSrs(gstSource* src) {
 
       src->DefineSrs(srs.getWKT(), srs.getSavePrj());
     }
-  }
+  }*/
+  return false;
 }
 
 // GUI Add Layer btn triggers this
 void ProjectManager::addLayer() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector, kProductSubtype);
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector, kProductSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
 
@@ -1542,13 +1546,13 @@ void ProjectManager::addLayer() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  AddAssetLayer(newpath.latin1());
+  AddAssetLayer(newpath.latin1());*/
 }
 
 
 // from drop event
 void ProjectManager::AddAssetLayer(const char* assetname) {
-  Asset asset(AssetDefs::FilenameToAssetPath(assetname));
+  /*Asset asset(AssetDefs::FilenameToAssetPath(assetname));
   AssetVersion ver(asset->GetLastGoodVersionRef());
   if (ver) {
     bool isasset = (ver->type == AssetDefs::Imagery ||
@@ -1561,7 +1565,7 @@ void ProjectManager::AddAssetLayer(const char* assetname) {
     if (newsource) {
       QString layername = shortAssetName(khBasename(asset->GetRef()));
       gstLayer* layer = CreateNewLayer(layername,
-                                       newsource, 0 /* src layer num */,
+                                       newsource, 0 // src layer num ,
                                        asset->GetRef());
       if (!layer) {
         // will already have reported error
@@ -1589,24 +1593,24 @@ void ProjectManager::AddAssetLayer(const char* assetname) {
                               tr("OK"), 0, 0, 0);
       }
     }
-  }
+  }*/
 }
 
 // re-implement clearselection ourself since the one provided
 // as QListView::clearSelection() doesn't work.
 void ProjectManager::ClearSelection() {
-  QListViewItemIterator it(this);
+  /*QListViewItemIterator it(this);
   while (it.current()) {
     QListViewItem* i = it.current();
     i->setSelected(false);
     ++it;
-  }
+  }*/
 }
 
 gstLayer* ProjectManager::CreateNewLayer(const QString& origLayername,
                                          gstSource* src, int lnum,
                                          const std::string &assetRef) {
-  assert(src);
+  /*assert(src);
   ClearSelection();
 
   // Just in case this layer name contains invalid characters
@@ -1647,7 +1651,8 @@ gstLayer* ProjectManager::CreateNewLayer(const QString& origLayername,
   item->setOn(false);
 
   RefreshLayerList(true, true);
-  return layer;
+  return layer;*/
+  return nullptr;
 }
 
 class QueryThread : public QThread {
@@ -1667,7 +1672,7 @@ class QueryThread : public QThread {
 };
 
 bool ProjectManager::applyQueries(gstLayer* layer) {
-  if (layer->QueryComplete())
+  /*if (layer->QueryComplete())
     return true;
 
   QProgressDialog progress_dialog(tr("Please wait while applying queries..."),
@@ -1723,7 +1728,7 @@ bool ProjectManager::applyQueries(gstLayer* layer) {
                             tr("OK"), 0, 0, 0);
       return false;
     }
-  }
+  }*/
 
   // unreached but silences warnings
   return false;
@@ -1733,7 +1738,7 @@ bool ProjectManager::applyQueries(gstLayer* layer) {
 
 void ProjectManager::RefreshLayerList(bool setLegends,
                                       bool setSortIds) {
-  project_->layers_.clear();
+  /*project_->layers_.clear();
   QListViewItemIterator it(this);
   while (it.current()) {
     // we dont need filters in the layer list
@@ -1752,14 +1757,14 @@ void ProjectManager::RefreshLayerList(bool setLegends,
     }
     project_->layers_.push_back(layer);
     ++it;
-  }
+  }*/
 }
 
 
 // FindLayerNameAmongSiblings checks the sibling items to discover if
 // a sibling other than "item" has the same name.
 // It returns true, if another item with name is found.
-bool ProjectManager::FindLayerNameAmongSiblings(QListViewItem* item, const QString& name) {
+/*bool ProjectManager::FindLayerNameAmongSiblings(QListViewItem* item, const QString& name) {
   QListViewItem* next;
   if (item->parent())
     next = item->parent()->firstChild();
@@ -1777,12 +1782,12 @@ bool ProjectManager::FindLayerNameAmongSiblings(QListViewItem* item, const QStri
   }
 
   return false;
-}
+}*/
 
 // FindUuid uses a depth first search of a QListViewItem tree rooted at parent to discover if
 // a node other than "item" has the same UUID.
 // It returns true, if another item with UUID is found.
-bool ProjectManager::FindUuid(QListViewItem* parent, QListViewItem* item, const QString& uuid) {
+/*bool ProjectManager::FindUuid(QListViewItem* parent, QListViewItem* item, const QString& uuid) {
 
   // Check to see if an tree element other than item has the same uuid.
   // Return immediately if the current element matches the uuid.
@@ -1813,9 +1818,9 @@ bool ProjectManager::FindUuid(QListViewItem* parent, QListViewItem* item, const 
   }
 
   return false;
-}
+}*/
 
-bool ProjectManager::EnsureUniqueLayerName(QListViewItem* item) {
+/*bool ProjectManager::EnsureUniqueLayerName(QListViewItem* item) {
   gstLayer* layer = extractLayer(item);
   if (!layer)
     return false;
@@ -1831,13 +1836,13 @@ bool ProjectManager::EnsureUniqueLayerName(QListViewItem* item) {
     }
     ++index;
   }
-}
+}*/
 
 //
 // draw labels on OpenGL window after buffers have swapped
 //
 void ProjectManager::DrawLabels(QPainter* painter, const gstDrawState& state) {
-  QFont label_font("Times", 16);
+  /*QFont label_font("Times", 16);
   QFontMetrics label_font_metrics(label_font);
 
   for (unsigned int ii = 0; ii < project_->layers_.size(); ++ii) {
@@ -1896,11 +1901,11 @@ void ProjectManager::DrawLabels(QPainter* painter, const gstDrawState& state) {
         }
       }
     }
-  }
+  }*/
 }
 
 void ProjectManager::DrawFeatures(const gstDrawState& state) {
-  const int kMaxCount = 200000;
+  /*const int kMaxCount = 200000;
   int max_count = kMaxCount;
 
   for (unsigned int ii = 0; ii < project_->layers_.size(); ++ii) {
@@ -1936,12 +1941,12 @@ void ProjectManager::DrawFeatures(const gstDrawState& state) {
                      .arg(gstValue::dcount).arg(gstValue::scount));
 
   if (edit_buffer_.size() != 0)
-    DrawEditBuffer(state);
+    DrawEditBuffer(state);*/
 }
 
 void ProjectManager::DrawEditBuffer(const gstDrawState& state) {
   // assemble simple red style
-  gstFeaturePreviewConfig style;
+  /*gstFeaturePreviewConfig style;
   style.line_color_[0] = 255;
   style.line_color_[1] = 0;
   style.line_color_[2] = 0;
@@ -1950,11 +1955,11 @@ void ProjectManager::DrawEditBuffer(const gstDrawState& state) {
   for (GeodeListIterator g = edit_buffer_.begin();
        g != edit_buffer_.end(); ++g) {
     (*g)->Draw(state, style);
-  }
+  }*/
 }
 
 gstLayer* ProjectManager::getSelectedLayer() {
-  QListViewItem* item = selectedItem();
+  /*QListViewItem* item = selectedItem();
   if (item == NULL)
     return NULL;
 
@@ -1963,13 +1968,13 @@ gstLayer* ProjectManager::getSelectedLayer() {
 
   if (item->rtti() == LAYER || item->rtti() == GROUP) {
     return extractLayer(item);
-  }
+  }*/
 
   return NULL;
 }
 
 
-void ProjectManager::selectBox(const gstDrawState& drawState,
+/*void ProjectManager::selectBox(const gstDrawState& drawState,
                                Qt::ButtonState btnState) {
   // quick exit if nothing selected
   gstLayer* layer = getSelectedLayer();
@@ -2005,10 +2010,10 @@ void ProjectManager::selectBox(const gstDrawState& drawState,
   emit selectionView(layer->GetSelector());
   //MainWindow::self->updateGfx();
   emit redrawPreview();
-}
+}*/
 
 
-void ProjectManager::removeLayer(QListViewItem *item) {
+/*void ProjectManager::removeLayer(QListViewItem *item) {
   assert(project_ != NULL);
 
   if (item == 0) {
@@ -2062,14 +2067,14 @@ void ProjectManager::removeLayer(QListViewItem *item) {
   }
 
   RefreshLayerList(true, true);
-}
+}*/
 
 void ProjectManager::paintEvent(QPaintEvent* e) {
-  QListView::paintEvent(e);
+  //QListView::paintEvent(e);
 }
 
 void ProjectManager::UpdateWidgets() {
-  clear();
+  /*clear();
 
   QMap<QString, LayerGroupItem*> groupMap;
 
@@ -2099,28 +2104,28 @@ void ProjectManager::UpdateWidgets() {
     }
   }
 
-  parentWidget()->parentWidget()->show();
+  parentWidget()->parentWidget()->show();*/
 }
 
 void ProjectManager::enableAllLayers(bool state) {
-  LayerItem* item = static_cast<LayerItem*>(firstChild());
+  /*LayerItem* item = static_cast<LayerItem*>(firstChild());
   while (item) {
     item->setOn(state);
     item = static_cast<LayerItem*>(item->nextSibling());
-  }
+  }*/
 }
 
 void ProjectManager::openAllLayers(bool state) {
-  LayerItem* item = static_cast<LayerItem*>(firstChild());
+  /*LayerItem* item = static_cast<LayerItem*>(firstChild());
   while (item) {
     item->setOpen(state);
     item = static_cast<LayerItem*>(item->nextSibling());
-  }
+  }*/
 }
 
 
 void ProjectManager::contentsMousePressEvent(QMouseEvent* e) {
-  if (e->button() == LeftButton) {
+  /*if (e->button() == LeftButton) {
     QPoint p(contentsToViewport(e->pos()));
     QListViewItem* i = itemAt(p);
     if (i && (i->rtti() == LAYER || i->rtti() == GROUP)) {
@@ -2136,11 +2141,11 @@ void ProjectManager::contentsMousePressEvent(QMouseEvent* e) {
     }
   }
 
-  QListView::contentsMousePressEvent(e);
+  QListView::contentsMousePressEvent(e);*/
 }
 
 void ProjectManager::contentsMouseMoveEvent(QMouseEvent* e) {
-  if (mouse_pressed_ && (press_pos_ - e->pos()).manhattanLength() >
+  /*if (mouse_pressed_ && (press_pos_ - e->pos()).manhattanLength() >
       QApplication::startDragDistance()) {
     mouse_pressed_ = false;
     QListViewItem* item = itemAt(contentsToViewport(press_pos_));
@@ -2150,7 +2155,7 @@ void ProjectManager::contentsMouseMoveEvent(QMouseEvent* e) {
       LayerDrag* ld = new LayerDrag(layer->GetShortName(), viewport());
       ld->drag();
     }
-  }
+  }*/
 }
 
 void ProjectManager::contentsMouseReleaseEvent(QMouseEvent* e) {
@@ -2161,7 +2166,7 @@ void ProjectManager::cancelDrag() {
   mouse_pressed_ = false;
 }
 
-void ProjectManager::contentsDragMoveEvent(QDragMoveEvent* e) {
+/*void ProjectManager::contentsDragMoveEvent(QDragMoveEvent* e) {
   if (getType() == Project &&
       AssetDrag::canDecode(e, AssetDefs::Vector, kProductSubtype)) {
     e->accept(true);
@@ -2198,16 +2203,16 @@ void ProjectManager::contentsDragMoveEvent(QDragMoveEvent* e) {
   } else {
     e->ignore();
   }
-}
+}*/
 
-void ProjectManager::contentsDragLeaveEvent(QDragLeaveEvent* e) {
+/*void ProjectManager::contentsDragLeaveEvent(QDragLeaveEvent* e) {
   setCurrentItem(drag_layer_);
   setSelected(drag_layer_, true);
-}
+}*/
 
-void ProjectManager::contentsDropEvent(QDropEvent* e) {
+//void ProjectManager::contentsDropEvent(QDropEvent* e) {
   // reposition layers
-  if (LayerDrag::canDecode(e)) {
+  /*if (LayerDrag::canDecode(e)) {
     if (!drag_layer_)
       return;
     QString text;
@@ -2293,21 +2298,22 @@ void ProjectManager::contentsDropEvent(QDropEvent* e) {
       QString fname = CleanupDropText(*it);
       addLayers(fname.latin1(), NULL);
     }
-  }
-}
+  }*/
+//}
 
 QString ProjectManager::CleanupDropText(const QString &text) {
   // cleanup string to be a standard file name
-  QString modstr = QString(text).stripWhiteSpace();
+  /*QString modstr = QString(text).stripWhiteSpace();
   if (modstr.startsWith("file:"))
     modstr.remove(0, 5);
   while (modstr.startsWith("//"))
     modstr.remove(0, 1);
-  return modstr;
+  return modstr;*/
+  return QString::null;
 }
 
-void ProjectManager::customEvent(QCustomEvent *e) {
-  int filterId = 0;
+//void ProjectManager::customEvent(QCustomEvent *e) {
+  /*int filterId = 0;
   QListViewItem *listItem = 0;
 
   // Make sure this is really an event that we sent.
@@ -2328,7 +2334,7 @@ void ProjectManager::customEvent(QCustomEvent *e) {
       return;
     }
     default:
-      /* not mine */
+      // not mine 
       return;
   }
 
@@ -2367,12 +2373,12 @@ void ProjectManager::customEvent(QCustomEvent *e) {
     case RemoveAllLayersEventId:
       // noop - we did the work above
       break;
-  }
-}
+  }*/
+//}
 
 
 void ProjectManager::removeAllLayers(void) {
-  if (QMessageBox::warning
+  /*if (QMessageBox::warning
       (this, "Warning",
        QString(tr("Are you sure you want to remove all layers?\n\n")),
        tr("OK"), tr("Cancel"), 0, 1) == 1) {
@@ -2385,7 +2391,7 @@ void ProjectManager::removeAllLayers(void) {
   }
   RefreshLayerList(true, true);
   selectItem(NULL);
-  emit redrawPreview();
+  emit redrawPreview();*/
 }
 
 
@@ -2393,7 +2399,7 @@ void ProjectManager::removeAllLayers(void) {
 
 ProjectManagerHolder::ProjectManagerHolder(QWidget* parent, AssetBase* base)
   : QWidget(parent), AssetWidgetBase(base) {
-  QGridLayout* base_layout = new QGridLayout(this, 2, 2, 0, 4);
+  /*QGridLayout* base_layout = new QGridLayout(this, 2, 2, 0, 4);
 
   project_manager_ = new ProjectManager(this, kVectorType.c_str(), ProjectManager::Project);
   base_layout->addWidget(project_manager_, 0, 0);
@@ -2460,7 +2466,7 @@ ProjectManagerHolder::ProjectManagerHolder(QWidget* parent, AssetBase* base)
   connect(down_layer_, SIGNAL(released()), project_manager_,
           SLOT(moveLayerDown()));
   connect(delete_layer_, SIGNAL(released()), project_manager_,
-          SLOT(removeLayer()));
+          SLOT(removeLayer()));*/
 }
 
 void ProjectManagerHolder::Prefill(const VectorProjectEditRequest &req) {

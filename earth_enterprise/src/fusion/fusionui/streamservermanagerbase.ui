@@ -1,169 +1,149 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
-<class>StreamServerManagerBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
 </comment>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>StreamServerManagerBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>StreamServerManagerBase</class>
+  <widget class="QDialog" name="StreamServerManagerBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>750</width>
-            <height>278</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>750</width>
+        <height>278</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Stream Server Manager</string>
+    <property name="windowTitle">
+      <string>Stream Server Manager</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QTable" row="0" column="0">
-            <column>
-                <property name="text">
-                    <string>Name</string>
-                </property>
-                <property name="pixmap">
-                    <pixmap></pixmap>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Host Name</string>
-                </property>
-                <property name="pixmap">
-                    <pixmap></pixmap>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Virtual Host Name</string>
-                </property>
-                <property name="pixmap">
-                    <pixmap></pixmap>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Description</string>
-                </property>
-                <property name="pixmap">
-                    <pixmap></pixmap>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>serverTable</cstring>
+    <layout class="QGridLayout">
+      <item row="0" column="0">
+        <widget class="Q3Table" name="serverTable">
+          <property name="numRows">
+            <number>0</number>
+          </property>
+          <property name="numCols">
+            <number>4</number>
+          </property>
+          <property name="readOnly">
+            <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+            <enum>SingleRow</enum>
+          </property>
+          <column>
+            <property name="text">
+              <string>Name</string>
             </property>
-            <property name="numRows">
-                <number>0</number>
+            <property name="pixmap">
+              <pixmap/>
             </property>
-            <property name="numCols">
-                <number>4</number>
+          </column>
+          <column>
+            <property name="text">
+              <string>Host Name</string>
             </property>
-            <property name="readOnly">
-                <bool>true</bool>
+            <property name="pixmap">
+              <pixmap/>
             </property>
-            <property name="selectionMode">
-                <enum>SingleRow</enum>
+          </column>
+          <column>
+            <property name="text">
+              <string>Virtual Host Name</string>
             </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Description</string>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+          </column>
         </widget>
-        <widget class="QLayoutWidget" row="0" column="1">
-            <property name="name">
-                <cstring>layout104</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>newBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>New Stream Server</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>modifyBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Modify Stream Server</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>deleteBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Delete Stream Server</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer72</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>31</width>
-                            <height>110</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
-        </widget>
-    </grid>
-</widget>
-<connections>
+      </item>
+      <item row="0" column="1">
+        <layout class="QVBoxLayout">
+          <item>
+            <widget class="QPushButton" name="newBtn">
+              <property name="text">
+                <string>New Stream Server</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="modifyBtn">
+              <property name="text">
+                <string>Modify Stream Server</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="deleteBtn">
+              <property name="text">
+                <string>Delete Stream Server</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer72">
+              <property name="sizeHint">
+                <size>
+                  <width>31</width>
+                  <height>110</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Vertical</enum>
+              </property>
+            </spacer>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
     <connection>
-        <sender>newBtn</sender>
-        <signal>released()</signal>
-        <receiver>StreamServerManagerBase</receiver>
-        <slot>newServer()</slot>
+      <sender>newBtn</sender>
+      <signal>released()</signal>
+      <receiver>StreamServerManagerBase</receiver>
+      <slot>newServer()</slot>
     </connection>
     <connection>
-        <sender>modifyBtn</sender>
-        <signal>released()</signal>
-        <receiver>StreamServerManagerBase</receiver>
-        <slot>modifyServer()</slot>
+      <sender>modifyBtn</sender>
+      <signal>released()</signal>
+      <receiver>StreamServerManagerBase</receiver>
+      <slot>modifyServer()</slot>
     </connection>
     <connection>
-        <sender>deleteBtn</sender>
-        <signal>released()</signal>
-        <receiver>StreamServerManagerBase</receiver>
-        <slot>deleteServer()</slot>
+      <sender>deleteBtn</sender>
+      <signal>released()</signal>
+      <receiver>StreamServerManagerBase</receiver>
+      <slot>deleteServer()</slot>
     </connection>
     <connection>
-        <sender>serverTable</sender>
-        <signal>contextMenuRequested(int,int,const QPoint&amp;)</signal>
-        <receiver>StreamServerManagerBase</receiver>
-        <slot>contextMenu(int,int,const QPoint&amp;)</slot>
+      <sender>serverTable</sender>
+      <signal>contextMenuRequested(int,int,QPoint)</signal>
+      <receiver>StreamServerManagerBase</receiver>
+      <slot>contextMenu(int,int,QPoint)</slot>
     </connection>
-</connections>
-<slots>
-    <slot>newServer()</slot>
-    <slot>modifyServer()</slot>
-    <slot>deleteServer()</slot>
-    <slot>contextMenu( int, int, const QPoint &amp; )</slot>
-</slots>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </connections>
+</ui>

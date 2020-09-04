@@ -18,16 +18,17 @@
 #ifndef KHSRC_FUSION_FUSIONUI_ASSETDRAG_H__
 #define KHSRC_FUSION_FUSIONUI_ASSETDRAG_H__
 
-#include <qdragobject.h>
+//#include <qdragobject.h>
 #include <autoingest/Asset.h>
+#include <QtWidgets/QWidget>
 
-class AssetDrag : public QTextDrag {
+class AssetDrag : public QWidget{
  public:
   AssetDrag(QWidget* drag_source, Asset asset);
 
-  static bool canDecode(QMimeSource *e,
-                        AssetDefs::Type asset_type,
-                        const std::string& asset_subtype);
+  //static bool canDecode(QMimeSource *e,
+  //                      AssetDefs::Type asset_type,
+  //                      const std::string& asset_subtype);
 };
 
 #endif  // !KHSRC_FUSION_FUSIONUI_ASSETDRAG_H__

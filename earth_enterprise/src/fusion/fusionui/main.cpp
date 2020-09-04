@@ -17,17 +17,18 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qstylefactory.h>
+#include <QtWidgets/qapplication.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qstylefactory.h>
 #include <gstRegistry.h>
-#include <qtranslator.h>
-#include <qtextcodec.h>
-#include <qgl.h>
-#include <qwidget.h>
-#include <qimage.h>
-#include <qfile.h>
-#include <qeventloop.h>
+#include <QtCore/qtranslator.h>
+#include <QtCore/qtextcodec.h>
+//#include <qgl.h>
+#include <QtWidgets/qwidget.h>
+#include <QtGui/qimage.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qeventloop.h>
+#include <QtWidgets/QSplashScreen>
 
 #include <builddate.h>
 #include "fusion/fusionversion.h"
@@ -43,77 +44,7 @@
 #include "common/khFileUtils.h"
 #include "common/khGetopt.h"
 
-// pre-qt3.1 workaround
-// #ifndef WStyle_Splash
-// #define WStyle_Splash WStyle_NoBorder | WStyle_StaysOnTop | WStyle_Tool | WWinOwnDC | WX11BypassWM
-// #endif
-
-#if defined(Q_WS_X11)
-void qt_wait_for_window_manager(QWidget* widget);
-#endif
-
-class SplashScreen : public QWidget {
- public:
-  explicit SplashScreen(const QPixmap& pix);
-  void setStatus(const QString &message, int alignment = AlignLeft,
-                 const QColor &color = white);
-  void finish(QWidget* main_win);
-  void repaint();
-
- private:
-  QPixmap pix_;
-};
-
-SplashScreen::SplashScreen(const QPixmap& pix)
-    : QWidget(0, 0, WStyle_Customize | WStyle_Splash),
-      pix_(pix) {
-  resize(pix_.size());
-  QRect scr = QApplication::desktop()->screenGeometry();
-  move(scr.center() - rect().center());
-
-  QString versionText = QString("%1 v%2")
-                        .arg(GetFusionProductShortName())
-                        .arg(GEE_VERSION);
-
-  setFont(QFont("arial", 13));
-  QPainter painter(&pix_, this);
-  QColor dark_green(3, 158, 40);
-  painter.setPen(dark_green);
-  QRect r = rect();
-  painter.boundingRect(r, AlignLeft | AlignTop, versionText);
-  painter.drawText(5, r.height() - 16, versionText);
-
-  setErasePixmap(pix_);
-
-  show();
-  repaint();
-}
-
-void SplashScreen::repaint() {
-  QWidget::repaint();
-  QApplication::flush();
-}
-
-void SplashScreen::finish(QWidget* main_win) {
-#if defined(Q_WS_X11)
-  qt_wait_for_window_manager(main_win);
-#endif
-
-  close();
-}
-
-void SplashScreen::setStatus(const QString& message, int alignment,
-                             const QColor& color) {
-  setFont(QFont("Times", 10, QFont::Bold));
-  QPixmap text_pix = pix_;
-  QPainter painter(&text_pix, this);
-  painter.setPen(color);
-  QRect r = rect();
-  r.setRect(r.x() + 10, r.y() + 10, r.width() - 20, r.height() - 20);
-  painter.drawText(r, alignment, message);
-  setErasePixmap(text_pix);
-  repaint();
-}
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 
@@ -161,22 +92,26 @@ int main(int argc, char** argv) {
   //
   QString pixname("fusion_splash.png");
   if (!QFile::exists(pixname)) {
-    pixname = khComposePath(kGESharePath, pixname);
+    pixname = QString::fromStdString(khComposePath(kGESharePath, pixname.toStdString()));
+    std::cout << "pixname = " << pixname.toStdString();
     if (!QFile::exists(pixname))
-      pixname.setLength(0);
+      pixname = QString("");
   }
 
-  SplashScreen* splash = NULL;
+  QSplashScreen* splash = NULL;
   if (!pixname.isEmpty()) {
     QPixmap pixmap(pixname);
-    splash = new SplashScreen(pixmap);
+    splash = new QSplashScreen(pixmap);
     a.processEvents();
   }
+
+  splash->show();
+  return a.exec();
 
   //
   // initialize the gst library
   //
-  geFilePool file_pool;
+  /*geFilePool file_pool;
   gstInit(&file_pool);
 
   //
@@ -247,19 +182,19 @@ int main(int argc, char** argv) {
       delete splash;
     }
 
-    a.connect(&a, SIGNAL(lastWindowClosed()), w, SLOT(fileExit()));
+    //a.connect(&a, SIGNAL(lastWindowClosed()), w, SLOT(fileExit()));
 
-    a.setMainWidget(w);
+    //a.setMainWidget(w);
 
     int status = a.exec();
 
-    delete w;
+    //delete w;
 
     return status;
   } catch(const std::exception& e) {
     notify(NFY_FATAL, "Caught exception: %s", e.what());
   } catch(...) {
     notify(NFY_FATAL, "Caught unknown exception");
-  }
+  }*/
   return 1;
 }

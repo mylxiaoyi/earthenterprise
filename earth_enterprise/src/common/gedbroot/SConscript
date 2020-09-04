@@ -34,7 +34,7 @@ gedbroot = env.sharedLib('gedbroot',
                           ],
                          LIBS=['gecommon',
                                'geprotobuf',
-                               'qt-mt',
+                               'Qt5Core',
                                ])
 
 # scons seems to have issues resolving dependencies of dependencies when 
@@ -57,7 +57,7 @@ gedumpdbroot = env.executable('gedumpdbroot',
                               ],
                              LIBS=['gedbroot',
                                    'gecommon',
-                                   'png12'])
+                                   'png', 'Qt5Core'])
 
 env.install('common_bin', [gedumpdbroot])
 
@@ -66,7 +66,7 @@ geencryptdbroot = env.executable('geencryptdbroot',
                                   ],
                                  LIBS=['gedbroot',
                                        'gecommon',
-                                       'png12'])
+                                       'png', 'Qt5Core'])
 
 env.install('tools_bin', [geencryptdbroot])
 
@@ -76,7 +76,7 @@ protobuf_walker = env.sharedLib('protobuf_walker',
                                  ],
                                 LIBS=['gecommon',
                                       'geprotobuf',
-                                      'png12'
+                                      'png'
                                       ])
 
 env.install('common_lib', [protobuf_walker])
@@ -89,7 +89,7 @@ dbroot_google_url_remover = env.sharedLib('dbroot_google_url_remover',
                                           LIBS=['protobuf_walker',
                                                 'gecommon',
                                                 'geprotobuf',
-                                                'png12'
+                                                'png'
                                                 ])
 
 env.install('common_lib', [dbroot_google_url_remover])
@@ -100,7 +100,7 @@ dbroot_google_url_remover_test = env.test(
     ['dbroot_google_url_remover_test.cpp'],
     LIBS=['dbroot_google_url_remover',
           'protobuf_walker',
-          'gtest', 'gedbroot', 'geprotobuf', 'gecommon', 'png12'])
+          'gtest', 'gedbroot', 'geprotobuf', 'gecommon', 'png'])
 
 
 # The application
@@ -112,7 +112,7 @@ gedbrootgoogleurlremover = env.executable(
           'gedbroot',
           'gecommon',
           'geprotobuf',
-          'png12'
+          'png', 'Qt5Core'
           ])
 
 env.install('tools_bin', [gedbrootgoogleurlremover])

@@ -18,17 +18,17 @@
 
 #include <assert.h>
 
-#include <qtable.h>
-#include <qmessagebox.h>
-#include <qheader.h>
-#include <qpushbutton.h>
-#include <qurl.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qmessagebox.h>
+//#include <qheader.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtCore/qurl.h>
 
 #include "fusion/fusionui/ServerCombinationEdit.h"
 
-Publisher::Publisher(QWidget* parent, bool modal, WFlags flags)
-  : PublisherBase(parent, 0, modal, flags) {
-  server_combination_table->verticalHeader()->hide();
+Publisher::Publisher(QWidget* parent, bool modal)
+  /*: PublisherBase(parent, 0, modal, flags)*/ {
+  /*server_combination_table->verticalHeader()->hide();
   server_combination_table->setLeftMargin(0);
   server_combination_table->setColumnStretchable(0, true);
 
@@ -49,11 +49,11 @@ Publisher::Publisher(QWidget* parent, bool modal, WFlags flags)
     server_combination_table->adjustColumn(col);
 
   if (server_combination_table->numRows() != 0)
-    server_combination_table->selectRow(0);
+    server_combination_table->selectRow(0);*/
 }
 
 void Publisher::SetRow(int row, const ServerCombination& c) {
-  int num_rows = server_combination_table->numRows();
+  /*int num_rows = server_combination_table->numRows();
   if (row > (num_rows - 1))
     server_combination_table->setNumRows(row + 1);
   server_combination_table->setText(row, 0, c.nickname);
@@ -69,23 +69,23 @@ void Publisher::SetRow(int row, const ServerCombination& c) {
     assert(c.stream.cacert_ssl.empty());
     assert(!c.stream.insecure_ssl);
   }
-  server_combination_table->adjustRow(row);
+  server_combination_table->adjustRow(row);*/
 }
 
 ServerCombination Publisher::GetCombinationFromRow(int row) {
   ServerCombination c;
-  c.nickname = server_combination_table->text(row, 0);
+  /*c.nickname = server_combination_table->text(row, 0);
   c.stream.url = server_combination_table->text(row, 1);
   c.stream.cacert_ssl = server_combination_table->text(row, 2);
-  c.stream.insecure_ssl = (server_combination_table->text(row, 3) == "True");
+  c.stream.insecure_ssl = (server_combination_table->text(row, 3) == "True");*/
   return c;
 }
 
 ServerCombination Publisher::EditCombination(
     const ServerCombination& current_combination) {
-  bool unique = true;
+  //bool unique = true;
   ServerCombination new_combination = current_combination;
-  do {
+  /*do {
     unique = true;
     ServerCombinationEdit edit(this, new_combination);
     if (edit.exec() != QDialog::Accepted)
@@ -110,69 +110,69 @@ ServerCombination Publisher::EditCombination(
         trUtf8("Please provide a unique nickname.\n\n"),
         QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
     }
-  } while (!unique);
+  } while (!unique);*/
   return new_combination;
 }
 
 void Publisher::EditCombination() {
-  int row = server_combination_table->currentRow();
+  /*int row = server_combination_table->currentRow();
   if (row == -1)
     return;
 
   ServerCombination current_combination = GetCombinationFromRow(row);
   ServerCombination new_combination = EditCombination(current_combination);
   if (new_combination != current_combination)
-    SetRow(row, new_combination);
+    SetRow(row, new_combination);*/
 }
 
 void Publisher::AddCombination() {
-  ServerCombination c;
+  /*ServerCombination c;
   ServerCombination new_combination = EditCombination(c);
   if (new_combination != c) {
     SetRow(server_combination_table->numRows(), new_combination);
-  }
+  }*/
 }
 
 void Publisher::DeleteCombination() {
-  int row = server_combination_table->currentRow();
+  /*int row = server_combination_table->currentRow();
   if (row == -1)
     return;
 
   if (QMessageBox::warning(this, "Confirm Delete",
       trUtf8("Confirm Delete."),
       tr("OK"), tr("Cancel"), QString::null, 1, 1) == 0)
-    server_combination_table->removeRow(row);
+    server_combination_table->removeRow(row);*/
 }
 
 void Publisher::MoveDown() {
-  int row = server_combination_table->currentRow();
+  /*int row = server_combination_table->currentRow();
   if (row == -1 || row == server_combination_table->numRows() - 1)
     return;
 
   SwapRows(row, row + 1);
 
-  server_combination_table->selectRow(row + 1);
+  server_combination_table->selectRow(row + 1);*/
 }
 
 void Publisher::MoveUp() {
-  int row = server_combination_table->currentRow();
+  /*int row = server_combination_table->currentRow();
   if (row == -1 || row == 0)
     return;
 
   SwapRows(row - 1, row);
 
-  server_combination_table->selectRow(row - 1);
+  server_combination_table->selectRow(row - 1);*/
 }
 
 void Publisher::SwapRows(int a, int b) {
-  ServerCombination tmp = GetCombinationFromRow(a);
+  /*ServerCombination tmp = GetCombinationFromRow(a);
   SetRow(a, GetCombinationFromRow(b));
-  SetRow(b, tmp);
+  SetRow(b, tmp);*/
 }
 
 void Publisher::CurrentChanged(int row, int col) {
   // none selected
-  if (row == -1) {
+  /*if (row == -1) {
     delete_btn->setEnabled(false);
     move_up_btn->setEnabled(false);
     move_down_btn->setEnabled(false);
@@ -181,11 +181,11 @@ void Publisher::CurrentChanged(int row, int col) {
     move_up_btn->setEnabled(row != 0);
     move_down_btn->setEnabled(row != server_combination_table->numRows() - 1);
     server_combination_table->selectRow(row);
-  }
+  }*/
 }
 
 void Publisher::accept() {
-  server_combination_set_.combinations.clear();
+  /*server_combination_set_.combinations.clear();
   for (int row = 0; row < server_combination_table->numRows(); row++) {
     server_combination_set_.combinations.push_back(GetCombinationFromRow(row));
   }
@@ -197,5 +197,5 @@ void Publisher::accept() {
         tr("Check console for more information"),
         tr("OK"), 0, 0, 0);
   }
-  PublisherBase::accept();
+  PublisherBase::accept();*/
 }

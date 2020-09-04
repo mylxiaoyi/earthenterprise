@@ -1,454 +1,392 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>VectorProjectBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
 </comment>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>VectorProjectBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>VectorProjectBase</class>
+  <widget class="QDialog" name="VectorProjectBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>515</width>
-            <height>494</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>515</width>
+        <height>494</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Vector Project</string>
+    <property name="windowTitle">
+      <string>Vector Project</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>2</number>
-        </property>
-        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>name_layout</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>name_label_2</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Name:</string>
-                    </property>
-                </widget>
-                <widget class="QWidgetStack">
-                    <property name="name">
-                        <cstring>name_stack</cstring>
-                    </property>
-                    <widget class="QWidget">
-                        <property name="name">
-                            <cstring>WStackPage</cstring>
-                        </property>
-                        <attribute name="id">
-                            <number>0</number>
-                        </attribute>
-                        <grid>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <property name="margin">
-                                <number>0</number>
-                            </property>
-                            <property name="spacing">
-                                <number>0</number>
-                            </property>
-                            <widget class="QLineEdit" row="0" column="0">
-                                <property name="name">
-                                    <cstring>asset_name_edit</cstring>
-                                </property>
-                            </widget>
-                        </grid>
-                    </widget>
-                    <widget class="QWidget">
-                        <property name="name">
-                            <cstring>WStackPage</cstring>
-                        </property>
-                        <attribute name="id">
-                            <number>1</number>
-                        </attribute>
-                        <grid>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <property name="margin">
-                                <number>0</number>
-                            </property>
-                            <property name="spacing">
-                                <number>0</number>
-                            </property>
-                            <widget class="QLabel" row="0" column="0">
-                                <property name="name">
-                                    <cstring>asset_name_label</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>asset name goes here ...</string>
-                                </property>
-                            </widget>
-                        </grid>
-                    </widget>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QListView" row="1" column="0">
-            <column>
-                <property name="text">
-                    <string>Display Label</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Asset</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>layer_listview</cstring>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="1" column="1">
-            <property name="name">
-                <cstring>layout21</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="spacing">
-                    <number>2</number>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>add_layer_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>filenew</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>add_group_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>folder_new.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>delete_layer_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>editdelete.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>move_up_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>up.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>move_down_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>down.png</pixmap>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer12_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>31</width>
-                            <height>131</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
-        </widget>
-        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>layout141</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer12_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>380</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>ok_btn</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>&amp;OK</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+O</string>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>cancel_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Cancel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>groupBox16</cstring>
-            </property>
-            <property name="sizePolicy">
+    <layout class="QGridLayout">
+      <property name="margin">
+        <number>2</number>
+      </property>
+      <item row="0" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <widget class="QLabel" name="name_label_2">
+              <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>5</vsizetype>
+                  <hsizetype>0</hsizetype>
+                  <vsizetype>5</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                </sizepolicy>
+              </property>
+              <property name="text">
+                <string>Name:</string>
+              </property>
+              <property name="wordWrap">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="Q3WidgetStack" name="name_stack">
+              <widget class="QWidget" name="WStackPage">
+                <attribute name="id">
+                  <number>0</number>
+                </attribute>
+                <layout class="QGridLayout">
+                  <property name="margin">
+                    <number>0</number>
+                  </property>
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                    <widget class="QLineEdit" name="asset_name_edit"/>
+                  </item>
+                </layout>
+              </widget>
+              <widget class="QWidget" name="WStackPage">
+                <attribute name="id">
+                  <number>1</number>
+                </attribute>
+                <layout class="QGridLayout">
+                  <property name="margin">
+                    <number>0</number>
+                  </property>
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                    <widget class="QLabel" name="asset_name_label">
+                      <property name="text">
+                        <string>asset name goes here ...</string>
+                      </property>
+                      <property name="wordWrap">
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </widget>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="1" column="0">
+        <widget class="Q3ListView" name="layer_listview">
+          <column>
+            <property name="text">
+              <string>Display Label</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Asset</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+        </widget>
+      </item>
+      <item row="1" column="1">
+        <layout class="QVBoxLayout">
+          <property name="spacing">
+            <number>2</number>
+          </property>
+          <item>
+            <widget class="QPushButton" name="add_layer_btn">
+              <property name="text">
+                <string/>
+              </property>
+              <property name="icon">
+                <pixmap>filenew</pixmap>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="add_group_btn">
+              <property name="text">
+                <string/>
+              </property>
+              <property name="icon">
+                <pixmap>folder_new.png</pixmap>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="delete_layer_btn">
+              <property name="text">
+                <string/>
+              </property>
+              <property name="icon">
+                <pixmap>editdelete.png</pixmap>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="move_up_btn">
+              <property name="text">
+                <string/>
+              </property>
+              <property name="icon">
+                <pixmap>up.png</pixmap>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="move_down_btn">
+              <property name="text">
+                <string/>
+              </property>
+              <property name="icon">
+                <pixmap>down.png</pixmap>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer12_2">
+              <property name="sizeHint">
+                <size>
+                  <width>31</width>
+                  <height>131</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Vertical</enum>
+              </property>
+            </spacer>
+          </item>
+        </layout>
+      </item>
+      <item row="3" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <spacer name="Spacer12_2">
+              <property name="sizeHint">
+                <size>
+                  <width>380</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="ok_btn">
+              <property name="enabled">
+                <bool>false</bool>
+              </property>
+              <property name="text">
+                <string>&amp;OK</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+O</string>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="cancel_btn">
+              <property name="text">
+                <string>&amp;Cancel</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+C</string>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="2" column="0" rowspan="1" colspan="2">
+        <widget class="Q3GroupBox" name="groupBox16">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>5</hsizetype>
+              <vsizetype>5</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="title">
+            <string>Properties</string>
+          </property>
+          <layout class="QGridLayout">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item row="0" column="3">
+              <widget class="QPushButton" name="notes_btn">
+                <property name="enabled">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="title">
-                <string>Properties</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+                  </sizepolicy>
                 </property>
-                <property name="spacing">
-                    <number>2</number>
+                <property name="text">
+                  <string>&amp;Notes...</string>
                 </property>
-                <widget class="QPushButton" row="0" column="3">
-                    <property name="name">
-                        <cstring>notes_btn</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Notes...</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="0" column="0">
-                    <property name="name">
-                        <cstring>hidden_check</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Hidden</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>starred_check</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Starred</string>
-                    </property>
-                </widget>
-                <spacer row="0" column="2">
-                    <property name="name">
-                        <cstring>spacer108</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>211</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-            </grid>
+                <property name="shortcut">
+                  <string>Alt+N</string>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="0">
+              <widget class="QCheckBox" name="hidden_check">
+                <property name="text">
+                  <string>Hidden</string>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="1">
+              <widget class="QCheckBox" name="starred_check">
+                <property name="text">
+                  <string>Starred</string>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="2">
+              <spacer name="spacer108">
+                <property name="sizeHint">
+                  <size>
+                    <width>211</width>
+                    <height>20</height>
+                  </size>
+                </property>
+                <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                </property>
+                <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                </property>
+              </spacer>
+            </item>
+          </layout>
         </widget>
-    </grid>
-</widget>
-<connections>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
     <connection>
-        <sender>cancel_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>reject()</slot>
+      <sender>cancel_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>reject()</slot>
     </connection>
     <connection>
-        <sender>ok_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>accept()</slot>
+      <sender>ok_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>accept()</slot>
     </connection>
     <connection>
-        <sender>notes_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>EditNotes()</slot>
+      <sender>notes_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>EditNotes()</slot>
     </connection>
     <connection>
-        <sender>add_layer_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>AddLayer()</slot>
+      <sender>add_layer_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>AddLayer()</slot>
     </connection>
     <connection>
-        <sender>add_group_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>AddGroup()</slot>
+      <sender>add_group_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>AddGroup()</slot>
     </connection>
     <connection>
-        <sender>delete_layer_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>DeleteLayer()</slot>
+      <sender>delete_layer_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>DeleteLayer()</slot>
     </connection>
     <connection>
-        <sender>move_up_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>MoveUp()</slot>
+      <sender>move_up_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>MoveUp()</slot>
     </connection>
     <connection>
-        <sender>move_down_btn</sender>
-        <signal>clicked()</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>MoveDown()</slot>
+      <sender>move_down_btn</sender>
+      <signal>clicked()</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>MoveDown()</slot>
     </connection>
     <connection>
-        <sender>asset_name_edit</sender>
-        <signal>textChanged(const QString&amp;)</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>NameChanged(const QString&amp;)</slot>
+      <sender>asset_name_edit</sender>
+      <signal>textChanged(QString)</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>NameChanged(QString)</slot>
     </connection>
     <connection>
-        <sender>layer_listview</sender>
-        <signal>selectionChanged(QListViewItem*)</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>SelectLayer(QListViewItem*)</slot>
+      <sender>layer_listview</sender>
+      <signal>selectionChanged(Q3ListViewItem*)</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>SelectLayer(Q3ListViewItem*)</slot>
     </connection>
     <connection>
-        <sender>layer_listview</sender>
-        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>ContextMenu(QListViewItem*,const QPoint&amp;,int)</slot>
+      <sender>layer_listview</sender>
+      <signal>contextMenuRequested(Q3ListViewItem*,QPoint,int)</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>ContextMenu(Q3ListViewItem*,QPoint,int)</slot>
     </connection>
     <connection>
-        <sender>layer_listview</sender>
-        <signal>doubleClicked(QListViewItem*,const QPoint&amp;,int)</signal>
-        <receiver>VectorProjectBase</receiver>
-        <slot>ModifyItem(QListViewItem*,const QPoint&amp;,int)</slot>
+      <sender>layer_listview</sender>
+      <signal>doubleClicked(Q3ListViewItem*,QPoint,int)</signal>
+      <receiver>VectorProjectBase</receiver>
+      <slot>ModifyItem(Q3ListViewItem*,QPoint,int)</slot>
     </connection>
-</connections>
-<slots>
-    <slot>EditNotes()</slot>
-    <slot>AddLayer()</slot>
-    <slot>AddGroup()</slot>
-    <slot>DeleteLayer()</slot>
-    <slot>MoveUp()</slot>
-    <slot>MoveDown()</slot>
-    <slot>NameChanged( const QString &amp; )</slot>
-    <slot>SelectLayer( QListViewItem * )</slot>
-    <slot>ContextMenu( QListViewItem *, const QPoint &amp;, int )</slot>
-    <slot>ModifyItem(QListViewItem *, const QPoint &amp;, int)</slot>
-</slots>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </connections>
+</ui>

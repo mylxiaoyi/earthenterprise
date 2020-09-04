@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
     if (reloadconfig) {
       QString error;
       if (!khAssetManagerProxy::ReloadConfig("dummy", error)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
       exit(0);
     }

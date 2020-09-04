@@ -16,7 +16,7 @@
 #include "fusion/gst/maprender/SGLHelps.h"
 
 #include <SkForceLinking.h>
-#include <qcolor.h>
+#include <QtGui/qcolor.h>
 
 #include "common/khFileUtils.h"
 #include "common/notify.h"
@@ -141,12 +141,12 @@ bool FontInfo::CheckTextStyleSanity(MapTextStyleConfig* config,
     style = SkTypeface::kItalic;
   else if (config->weight == MapTextStyleConfig::BoldItalic)
     style = SkTypeface::kBoldItalic;
-  const FontInfo font_info(config->font, style);
+  const FontInfo font_info(config->font.toStdString(), style);
   if (font_map_.count(font_info) != 0) {
     return true;
   }
   missing_fonts->insert(font_info);
-  config->font = QString(kDefaultFont);
+  config->font = QString::fromStdString(kDefaultFont);
   config->weight = MapTextStyleConfig::Regular;
   return false;
 }

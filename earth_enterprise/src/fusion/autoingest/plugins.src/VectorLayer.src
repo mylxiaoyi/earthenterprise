@@ -53,7 +53,7 @@ class VectorLayerAssetVersionImplD {
 #include <autoingest/sysman/plugins/VectorPOIAssetD.h>
 #include <khFileUtils.h>
 #include <khstl.h>
-#include <qstringlist.h>
+#include <QtCore/QStringList>
 
 bool VectorLayerAssetVersionImplD::MustForceUpdate(void) const {
   return (!config.poi_config_.empty() && (children.size() < 3));

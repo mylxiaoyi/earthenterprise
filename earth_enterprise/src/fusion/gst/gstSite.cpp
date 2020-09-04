@@ -95,7 +95,7 @@ gstRecordHandle gstSite::Expand(gstRecordHandle srcrec,
       QString error;
       if (!jsbundle.cx->TryExecuteScript
           (jsbundle.displayJS[filterId].labelScript, outval, error)) {
-        notify(NFY_WARN, "Error executing JS: %s", (const char *)error.utf8());
+        notify(NFY_WARN, "Error executing JS: %s", error.toStdString().c_str());
         outval = QString();
         return gstRecordHandle();
       }
@@ -121,7 +121,7 @@ gstRecordHandle gstSite::Expand(gstRecordHandle srcrec,
       QString error;
       if (!jsbundle.cx->TryExecuteScript
           (jsbundle.displayJS[filterId].popupTextScript, outval, error)) {
-        notify(NFY_WARN, "Error executing JS: %s", (const char *)error.utf8());
+        notify(NFY_WARN, "Error executing JS: %s", error.toStdString().c_str());
         outval = QString();
         return gstRecordHandle();
       }

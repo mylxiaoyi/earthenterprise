@@ -29,7 +29,7 @@
 #include "fusion/gst/gstGeode.h"
 #include "fusion/gst/gstGeoIndex.h"
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 class LayerConfig;
 class FuseConfig;

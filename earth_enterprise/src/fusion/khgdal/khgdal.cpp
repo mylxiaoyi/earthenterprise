@@ -19,8 +19,8 @@
 #include <cmath>
 
 #include "common/khstl.h"
-#include <gdal_priv.h>
-#include <gdalwarper.h>
+#include <gdal/gdal_priv.h>
+#include <gdal/gdalwarper.h>
 #include "common/notify.h"
 #include "common/khFileUtils.h"
 #include "common/khGuard.h"
@@ -95,8 +95,9 @@ GetMercatorProjString(void) {
 
 bool IsMercator(const char* projectionReference) {
   OGRSpatialReference srs;
-  char* wkt = const_cast<char*>(projectionReference);
-  srs.importFromWkt(&wkt);
+  //char* wkt = const_cast<char*>(projectionReference);
+  //srs.importFromWkt(&wkt);
+  srs.importFromWkt(&projectionReference);
   return GetMercatorOGRSpatialReference().IsSame(&srs);
 }
 
@@ -285,10 +286,10 @@ ValidateGDALCreateFormat(const std::string &fmt)
   GDALDriverH driver = GDALGetDriverByName(fmt.c_str());
   QString msg;
   if (!driver) {
-    msg = kh::tr("%1 is not a recognized format").arg(fmt);
+    msg = kh::tr("%1 is not a recognized format").arg(QString(fmt.c_str()));
   } else if ((GDALGetMetadataItem(driver, GDAL_DCAP_CREATE, 0) == 0) &&
              (GDALGetMetadataItem(driver, GDAL_DCAP_CREATECOPY, 0) == 0)) {
-    msg = kh::tr("%1 format does not support writing").arg(fmt);
+    msg = kh::tr("%1 format does not support writing").arg(QString(fmt.c_str()));
   } else {
     return;
   }
@@ -304,13 +305,13 @@ LoadPRJFile(const std::string &fname, OGRSpatialReference &ogrSRS)
     try {
       InterpretSRSString(buf, ogrSRS);
     } catch (const std::exception &e) {
-      throw khException(kh::tr("%1: %2").arg(fname).arg(e.what()));
+      throw khException(kh::tr("%1: %2").arg(QString(fname.c_str())).arg(e.what()));
     } catch (...) {
-      throw khException(kh::tr("%1: Unknown exception in LoadPRJFile").arg(fname));
+      throw khException(kh::tr("%1: Unknown exception in LoadPRJFile").arg(QString(fname.c_str())));
     }
   } else {
     // more specific message will already have been emitted with NFY_WARN
-    throw khException(kh::tr("Unable to read %1").arg(fname));
+    throw khException(kh::tr("Unable to read %1").arg(QString(fname.c_str())));
   }
 }
 
@@ -333,7 +334,7 @@ InterpretSRSString(const std::string &buf, OGRSpatialReference &ogrSRS)
     // importFromWkt can change contents of string :-(
     // this copies and makes sure it's nul terminated
     std::string tmp = buf.c_str();
-    char *wkt = &tmp[0];
+    const char *wkt = &tmp[0];
     err = ogrSRS.importFromWkt(&wkt);
   } else {
     err = ogrSRS.SetFromUserInput(buf.c_str());

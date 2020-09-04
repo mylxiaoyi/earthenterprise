@@ -29,16 +29,16 @@ const char kSep = ':';
 
 
 AssetDrag::AssetDrag(QWidget* drag_source, Asset asset)
-  : QTextDrag(drag_source)
+  : QWidget(drag_source)
 {
-  setText(asset->GetRef().toString());
-  std::string subtype = ToString(asset->type) + kSep + asset->subtype;
-  setSubtype(subtype.c_str());
+  //setText(asset->GetRef().toString());
+  //std::string subtype = ToString(asset->type) + kSep + asset->subtype;
+  //setSubtype(subtype.c_str());
 }
 
-bool AssetDrag::canDecode(QMimeSource *e,
+/*bool AssetDrag::canDecode(QMimeSource *e,
                           AssetDefs::Type asset_type,
                           const std::string& asset_subtype) {
   std::string subtype = "text/" + ToString(asset_type) + kSep + asset_subtype;
   return e->provides(subtype.c_str());
-}
+}*/

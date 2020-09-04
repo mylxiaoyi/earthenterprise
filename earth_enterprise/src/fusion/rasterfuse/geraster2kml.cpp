@@ -127,7 +127,7 @@ class TileStats {
   int total_tiles;
 
   TileStats() {
-    memset(opacity, 0, 4);
+    memset(opacity, 0, 4*sizeof(int));
     jpg_uncompressed = 0;
     jpg_compressed = 0;
     jpg_total = 0;

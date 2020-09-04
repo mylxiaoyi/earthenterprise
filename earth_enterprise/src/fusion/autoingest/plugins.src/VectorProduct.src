@@ -38,7 +38,7 @@ class VectorProductAssetVersionImpl {
 namespace {
 void GetProviderFromMeta(VectorProductConfig &config, khMetaData &meta) {
   if (config.provider_id_ == 0) {
-    std::string providerkey = meta.GetValue("provider");
+    std::string providerkey = meta.GetValue("provider").toStdString();
     if (!providerkey.empty()) {
       config.provider_id_ = gstProviderSet::LoadAndGetIdFromKey(providerkey);
       meta.Erase("provider");
@@ -96,7 +96,7 @@ VectorProductAssetImplD::HandleImportRequest(const VectorProductImportRequest &r
          req.meta,
          req.config);
   if (!asset) {
-    throw khException(kh::tr("Unable to create vector asset ") + assetname);
+    throw khException(kh::tr("Unable to create vector asset ") + QString(assetname.c_str()));
   }
 
   // Get our source asset
@@ -140,7 +140,7 @@ VectorProductAssetVersionImplD::DoSubmitTask(void)
     khEnsureParentDir(filelist);
     FILE *FILELIST = fopen(filelist.c_str(), "w");
     if (!FILELIST)
-      throw khErrnoException(kh::tr("Unable to write ") + filelist);
+      throw khErrnoException(kh::tr("Unable to write ") + QString(filelist.c_str()));
     {
       // guarantee that the file will be closed (even in case of exception)
       khFILECloser fileCloser(FILELIST);

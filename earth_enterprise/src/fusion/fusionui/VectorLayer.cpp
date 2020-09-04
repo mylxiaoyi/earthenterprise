@@ -14,7 +14,7 @@
 
 
 #include <autoingest/khAssetManagerProxy.h>
-#include <qlabel.h>
+#include <QtWidgets/qlabel.h>
 #include <VectorLayer.h>
 #include "AssetDerivedImpl.h"
 #include <gstAssetGroup.h>
@@ -31,7 +31,7 @@ VectorLayerDefs::SubmitFuncType VectorLayerDefs::kSubmitFunc =
 // ****************************************************************************
 
 VectorLayerWidget::VectorLayerWidget(QWidget* parent, AssetBase* base)
-  : VectorLayerWidgetBase(parent),
+  : //VectorLayerWidgetBase(parent),
     AssetWidgetBase(base) {}
 
 VectorLayerWidget::~VectorLayerWidget() {}
@@ -39,25 +39,25 @@ VectorLayerWidget::~VectorLayerWidget() {}
 QString empty_text(kh::tr("<none>"));
 
 void VectorLayerWidget::Prefill(const VectorLayerXEditRequest& req) {
-  if (req.config.vectorResource.empty()) {
+  /*if (req.config.vectorResource.empty()) {
     vector_resource_label->setText(empty_text);
   } else {
     vector_resource_label->setText(shortAssetName(req.config.vectorResource));
-  }
+  }*/
 }
 
 void VectorLayerWidget::AssembleEditRequest(VectorLayerXEditRequest* req) {
-  if (vector_resource_label->text() != empty_text) {
+  /*if (vector_resource_label->text() != empty_text) {
     req->config.vectorResource =
         vector_resource_label->text().latin1() +
         AssetDefs::FileExtension(AssetDefs::Vector, kProductSubtype);
   } else {
     req->config.vectorResource = std::string();
-  }
+  }*/
 }
 
 void VectorLayerWidget::chooseVectorResource() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
                        kProductSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -66,7 +66,7 @@ void VectorLayerWidget::chooseVectorResource() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  vector_resource_label->setText(shortAssetName(newpath));
+  vector_resource_label->setText(shortAssetName(newpath));*/
 }
 
 // ****************************************************************************

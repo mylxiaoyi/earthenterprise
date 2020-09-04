@@ -19,9 +19,9 @@
 #include "fusion/fusionui/LabelFormat.h"
 #include "fusion/fusionui/ScriptEditor.h"
 
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qpushbutton.h>
 
 #include "fusion/gst/gstRecordJSContext.h"
 #include "common/khException.h"
@@ -36,20 +36,20 @@ void FieldGeneratorController::Create(WidgetControllerManager &manager,
                                       const gstSharedSource &source_,
                                       const QStringList &contextScripts_,
                                       const QString &errorContext) {
-  (void) new FieldGeneratorController(manager, combo_, lineEdit_,
+  /*(void) new FieldGeneratorController(manager, combo_, lineEdit_,
                                       lineEditEmptyOk_, button_,
                                       config_, source_, contextScripts_,
-                                      errorContext);
+                                      errorContext);*/
 }
 
 
 void FieldGeneratorController::modeChanged(void) {
-  lineEdit->setText(QString(""));
-  EmitChanged();
+  //lineEdit->setText(QString(""));
+  //EmitChanged();
 }
 
 void FieldGeneratorController::moreButtonClicked(void) {
-  switch ((FieldGenerator::FieldGenerationMode)combo->currentItem()) {
+  /*switch ((FieldGenerator::FieldGenerationMode)combo->currentItem()) {
     case FieldGenerator::RecordFormatter: {
       LabelFormat label_format(PopupParent(),
                                source ? source->GetAttrDefs(0)
@@ -77,11 +77,11 @@ void FieldGeneratorController::moreButtonClicked(void) {
     }
     default:
       assert(0);
-  }
+  }*/
 }
 
 void FieldGeneratorController::SyncToConfig(void) {
-  config->mode = (FieldGenerator::FieldGenerationMode)combo->currentItem();
+  /*config->mode = (FieldGenerator::FieldGenerationMode)combo->currentItem();
   config->value = lineEdit->text();
   if (!lineEditEmptyOk && config->empty()) {
     throw khException(
@@ -95,7 +95,7 @@ void FieldGeneratorController::SyncToConfig(void) {
       throw khException(kh::tr("JavaScript Error (%1):\n%2")
                         .arg(errorContext).arg(compilationError));
     }
-  }
+  }*/
 }
 
 void FieldGeneratorController::SyncToWidgetsImpl(void) {
@@ -103,8 +103,8 @@ void FieldGeneratorController::SyncToWidgetsImpl(void) {
 }
 
 void FieldGeneratorController::MySyncToWidgetsImpl(void) {
-  combo->setCurrentItem(static_cast<int>(config->mode));
-  lineEdit->setText(config->value);
+  //combo->setCurrentItem(static_cast<int>(config->mode));
+  //lineEdit->setText(config->value);
 }
 
 FieldGeneratorController::FieldGeneratorController(
@@ -126,7 +126,7 @@ FieldGeneratorController::FieldGeneratorController(
     source(source_),
     contextScripts(contextScripts_),
     errorContext(errorContext_) {
-  combo->clear();
+  /*combo->clear();
   combo->insertItem("Text");
   combo->insertItem("JS Text");
 
@@ -136,5 +136,5 @@ FieldGeneratorController::FieldGeneratorController(
   connect(combo, SIGNAL(activated(int)), this, SLOT(modeChanged()));
   connect(button, SIGNAL(clicked()), this, SLOT(moreButtonClicked()));
   connect(lineEdit, SIGNAL(textChanged(const QString &)),
-          this, SLOT(EmitTextChanged()));
+          this, SLOT(EmitTextChanged()));*/
 }

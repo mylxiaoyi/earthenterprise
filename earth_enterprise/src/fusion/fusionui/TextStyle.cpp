@@ -16,16 +16,16 @@
 //
 
 #include "TextStyle.h"
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qimage.h>
-#include <qdragobject.h>
-#include <qpixmap.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qbuttongroup.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtGui/qimage.h>
+//#include <qdragobject.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qmessagebox.h>
 #include <SkFontHost.h>
 
 #include <common/geInstallPaths.h>
@@ -36,7 +36,7 @@
 
 void TextStyle::ShowMissingFontsDialog(
   QWidget* widget, const std::set<maprender::FontInfo>& missing_fonts) {
-    std::string message = "The following fonts are not found in ";
+  /*  std::string message = "The following fonts are not found in ";
   message.append(khComposePath(kGESharePath, "fonts/fontlist"));
   std::set<maprender::FontInfo>::const_iterator const end = missing_fonts.end();
   for (std::set<maprender::FontInfo>::const_iterator i = missing_fonts.begin();
@@ -51,7 +51,7 @@ void TextStyle::ShowMissingFontsDialog(
     }
   }
   message.append("\nUsing default Sans font instead");
-  QMessageBox::critical(widget, "Error", message, "OK", 0, 0, 0);
+  QMessageBox::critical(widget, "Error", message, "OK", 0, 0, 0);*/
 }
 
 
@@ -60,14 +60,14 @@ void TextStyle::ShowMissingFontsDialog(
 // ****************************************************************************
 TextStyle::TextStyle(QWidget *parent,
                      const MapTextStyleConfig &config_) :
-    TextStyleBase(parent),
+    //TextStyleBase(parent),
     config(config_),
     haveSave(kMaxSavedStyles, false),
     savedConfigs(kMaxSavedStyles),
-    manager(this)
+    manager((QWidget*)this)
 {
   // Populate list with avilable fonts
-  const std::map<maprender::FontInfo, SkTypeface*>& font_map = maprender::FontInfo::GetFontMap();
+  /*const std::map<maprender::FontInfo, SkTypeface*>& font_map = maprender::FontInfo::GetFontMap();
   const std::map<maprender::FontInfo, SkTypeface*>::const_iterator end = font_map.end();
   for (std::map<maprender::FontInfo, SkTypeface*>::const_iterator i = font_map.begin();
        i != end;) {
@@ -143,7 +143,7 @@ TextStyle::TextStyle(QWidget *parent,
         button->setPixmap(
           maprender::TextStyleToPixmap(
           savedConfigs[it->first], button->paletteBackgroundColor(),
-          12 /* fixedSize */));
+          12 ));
       }
     }
     if (!missing_fonts.empty()) {
@@ -155,14 +155,14 @@ TextStyle::TextStyle(QWidget *parent,
         tr("Unable to load saved text styles.\n") +
         tr("Check console for more details."),
         tr("OK"), QString::null, QString::null);
-  }
+  }*/
 }
 
 TextStyle::~TextStyle(void) {
 }
 
 void TextStyle::accept() {
-  MapTextStyleSet new_text_styles;
+  /*MapTextStyleSet new_text_styles;
   for (unsigned int i = 0; i < kMaxSavedStyles; ++i) {
     if (haveSave[i]) {
       new_text_styles.configs[i] = savedConfigs[i];
@@ -177,46 +177,46 @@ void TextStyle::accept() {
           tr("OK"), QString::null, QString::null);
     }
   }
-  TextStyleBase::accept();
+  TextStyleBase::accept();*/
 }
 
 void
 TextStyle::FontChanged(int pos)
 {
-  UpdateWeightCombo(pos);
-  WidgetChanged();
+  //UpdateWeightCombo(pos);
+  //WidgetChanged();
 }
 
 void
 TextStyle::WidgetChanged(void)
 {
-  SyncToConfig();
-  GeneratePreview();
+  //SyncToConfig();
+  //GeneratePreview();
 }
 
 void
 TextStyle::SavedClicked(int pos)
 {
-  if (haveSave[pos]) {
+  /*if (haveSave[pos]) {
     if (savedConfigs[pos] != config) {
       config = savedConfigs[pos];
       SyncToWidgets();
       GeneratePreview();
     }
-  }
+  }*/
 }
 
 void TextStyle::StoreStyle(QWidget* btn) {
-  int id = saved_buttongroup->id(static_cast<QButton*>(btn));
+  /*int id = saved_buttongroup->id(static_cast<QButton*>(btn));
   haveSave[id] = true;
-  savedConfigs[id] = config;
+  savedConfigs[id] = config;*/
 }
 
 void
 TextStyle::UpdateWeightCombo(int fontPos)
 {
   // populate the style (weight) combo
-  style_combo->clear();
+  /*style_combo->clear();
   int weightPos = 0;
   for (unsigned int i = 0 ; i < fonts[fontPos].weights.size(); ++i) {
     if (fonts[fontPos].weights[i] == config.weight) {
@@ -229,14 +229,14 @@ TextStyle::UpdateWeightCombo(int fontPos)
     style_combo->setEnabled(true);
   } else {
     style_combo->setEnabled(false);
-  }
+  }*/
 }
 
 void
 TextStyle::UpdateFontCombos(void)
 {
   // Find which font is specified in the config
-  unsigned int pos = 0;
+  /*unsigned int pos = 0;
   for (; pos < fonts.size(); ++pos) {
     if (config.font == fonts[pos].name)
       break;
@@ -249,34 +249,34 @@ TextStyle::UpdateFontCombos(void)
   // set the font widget
   font_combo->setCurrentItem(pos);
 
-  UpdateWeightCombo(pos);
+  UpdateWeightCombo(pos);*/
 }
 
 
 void
 TextStyle::SyncToWidgets(void)
 {
-  manager.SyncToWidgets();
+  //manager.SyncToWidgets();
 
-  UpdateFontCombos();
+  //UpdateFontCombos();
 }
 
 void
 TextStyle::SyncToConfig(void)
 {
-  manager.SyncToConfig();
+  /*manager.SyncToConfig();
 
   // get the configs from the font combos
   int fontPos = font_combo->currentItem();
   int weightPos = style_combo->currentItem();
   config.font = fonts[fontPos].name;
-  config.weight = fonts[fontPos].weights[weightPos];
+  config.weight = fonts[fontPos].weights[weightPos];*/
 }
 
 void
 TextStyle::GeneratePreview(void)
 {
-  preview_label->UpdateConfig(config);
+  //preview_label->UpdateConfig(config);
 }
 
 
@@ -289,9 +289,9 @@ namespace {
 void
 TextStyleToButton(QPushButton *button, const MapTextStyleConfig &config)
 {
-  button->setPixmap(maprender::TextStyleToPixmap(
-                        config, button->paletteBackgroundColor(),
-                        12 /* fixedSize */));
+  //button->setPixmap(maprender::TextStyleToPixmap(
+  //                      config, button->paletteBackgroundColor(),
+  //                      12 /* fixedSize */));
 }
 
 }
@@ -302,14 +302,14 @@ TextStyleToButton(QPushButton *button, const MapTextStyleConfig &config)
 void
 TextStyleButtonController::clicked(void)
 {
-  TextStyle textStyle(button, workingConfig);
+  /*TextStyle textStyle(button, workingConfig);
   if (textStyle.exec() == QDialog::Accepted) {
     if (textStyle.Config() != workingConfig) {
       workingConfig = textStyle.Config();
       TextStyleToButton(button, workingConfig);
       EmitChanged();
     }
-  }
+  }*/
 }
 
 TextStyleButtonController::TextStyleButtonController(
@@ -321,22 +321,22 @@ TextStyleButtonController::TextStyleButtonController(
     config(config_),
     workingConfig(*config)
 {
-  TextStyleToButton(button, workingConfig);
-  connect(button, SIGNAL(clicked()), this, SLOT(clicked()));
+  //TextStyleToButton(button, workingConfig);
+  //connect(button, SIGNAL(clicked()), this, SLOT(clicked()));
 }
 
 
 void
 TextStyleButtonController::SyncToConfig(void)
 {
-  *config = workingConfig;
+  //*config = workingConfig;
 }
 
 void
 TextStyleButtonController::SyncToWidgetsImpl(void)
 {
-  workingConfig = *config;
-  TextStyleToButton(button, workingConfig);
+  //workingConfig = *config;
+  //TextStyleToButton(button, workingConfig);
 }
 
 void
@@ -344,7 +344,7 @@ TextStyleButtonController::Create(WidgetControllerManager &manager,
                                   QPushButton *button_,
                                   MapTextStyleConfig *config_)
 {
-  (void) new TextStyleButtonController(manager, button_, config_);
+  //(void) new TextStyleButtonController(manager, button_, config_);
 }
 
 
@@ -353,36 +353,36 @@ TextStyleButtonController::Create(WidgetControllerManager &manager,
 // ****************************************************************************
 
 TextPreviewLabel::TextPreviewLabel(QWidget* parent, const char* name)
-  : QLabel(parent, name),
+  : QLabel(parent),
     dragging_(false) {
-  setFrameShape(QLabel::LineEditPanel);
+  /*setFrameShape(QLabel::LineEditPanel);
   setFrameShadow(QLabel::Sunken);
   setScaledContents(false);
-  setAlignment(int(QLabel::AlignCenter));
+  setAlignment(int(QLabel::AlignCenter));*/
 }
 
 void TextPreviewLabel::mousePressEvent(QMouseEvent* event) {
-  QLabel::mousePressEvent(event);
-  dragging_ = true;
+  //QLabel::mousePressEvent(event);
+  //dragging_ = true;
 }
 
 void TextPreviewLabel::mouseMoveEvent(QMouseEvent* event) {
-  if (dragging_) {
+  /*if (dragging_) {
     QPixmap preview_pix = maprender::TextStyleToPixmap(
         config_, paletteBackgroundColor(),
-        12 /* fixedSize */);
+        12 );
     QImageDrag* drag = new QImageDrag(preview_pix.convertToImage(), this);
     drag->setPixmap(preview_pix);
     drag->dragCopy();
     dragging_ = false;
-  }
+  }*/
 }
 
 void TextPreviewLabel::UpdateConfig(const MapTextStyleConfig& config) {
-  setPixmap(maprender::TextStyleToPixmap(
+  /*setPixmap(maprender::TextStyleToPixmap(
       config,
       paletteBackgroundColor()));
-  config_ = config;
+  config_ = config;*/
 }
 
 // ****************************************************************************
@@ -390,23 +390,23 @@ void TextPreviewLabel::UpdateConfig(const MapTextStyleConfig& config) {
 // ****************************************************************************
 
 StyleSaveButton::StyleSaveButton(QWidget* parent, const char* name)
-  : QPushButton(parent, name) {
+  : QPushButton(parent) {
 }
 
-void StyleSaveButton::dragEnterEvent(QDragEnterEvent* event) {
+/*void StyleSaveButton::dragEnterEvent(QDragEnterEvent* event) {
   if (QImageDrag::canDecode(event)) {
     event->accept();
     setDown(true);
   }
-}
+}*/
 
-void StyleSaveButton::dragLeaveEvent(QDragLeaveEvent* event) {
+/*void StyleSaveButton::dragLeaveEvent(QDragLeaveEvent* event) {
   setDown(false);
-}
+}*/
 
-void StyleSaveButton::dropEvent(QDropEvent* event) {
-  QPixmap pixmap;
+//void StyleSaveButton::dropEvent(QDropEvent* event) {
+  /*QPixmap pixmap;
   if (QImageDrag::decode(event, pixmap))
     setPixmap(pixmap);
-  emit StyleChanged(this);
-}
+  emit StyleChanged(this);*/
+//}

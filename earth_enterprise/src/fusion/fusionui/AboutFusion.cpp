@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-#include <qlabel.h>
+#include <QtWidgets/qlabel.h>
 
 #include <builddate.h>
 #include <fusionversion.h>
@@ -21,16 +21,18 @@
 
 #include "AboutFusion.h"
 
-AboutFusion::AboutFusion(QWidget* parent)
-    : AboutFusionBase(parent, 0, false, 0) {
-  setCaption(GetFusionProductName());
+/*AboutFusion::AboutFusion(QWidget* parent)
+    : QDialog(parent), ui(new Ui::AboutFusionBase) {
+  ui->setupUi(this);
 
-  fusionNameLabel->setText(GetFusionProductName());
-  versionLabel->setText(QString("%1").arg(GEE_LONG_VERSION));
+  setWindowTitle(QString::fromStdString(GetFusionProductName()));
 
-  buildDateLabel->setText(QString("%1").arg(BUILD_DATE));
+  this->ui->fusionNameLabel->setText(QString::fromStdString(GetFusionProductName()));
+  this->ui->versionLabel->setText(QString("%1").arg(GEE_LONG_VERSION));
 
-  maxTextureLabel->setText(GfxView::MaxTexSize);
+  this->ui->buildDateLabel->setText(QString("%1").arg(BUILD_DATE));
 
-  bitsPerCompLabel->setText(GfxView::BitsPerComp);
-}
+  this->ui->maxTextureLabel->setText(GfxView::MaxTexSize);
+
+  this->ui->bitsPerCompLabel->setText(GfxView::BitsPerComp);
+}*/

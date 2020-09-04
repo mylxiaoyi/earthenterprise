@@ -22,7 +22,7 @@ For history see CVS log (cvs log SystemListener.cpp -or- Emacs Ctrl-xvl).
 ******************************************************************************/
 #include "SystemListener.h"
 #include <notify.h>
-#include <qapplication.h>
+#include <QtWidgets/qapplication.h>
 
 
 SystemListener *SystemListener::instance = 0;
@@ -30,29 +30,29 @@ SystemListener *SystemListener::instance = 0;
 SystemListener::SystemListener(void)
     : listener(*this)
 {
-  if (instance) {
+  /*if (instance) {
     notify(NFY_FATAL, "Internal Error: Attempted to start a second SystemListener");
   }
   instance = this;
 
   if (!listener.run()) {
     notify(NFY_WARN, "Unable to start listener");
-  }
+  }*/
 
 }
 
 SystemListener::~SystemListener(void)
 {
-  if (listener.needJoin()) {
+  /*if (listener.needJoin()) {
     listener.setWantAbort();
     listener.join();
-  }
+  }*/
 }
 
 bool
 SystemListener::event(QEvent *event)
 {
-  if (event->type() == QEvent::User) {
+  /*if (event->type() == QEvent::User) {
     AssetChanges tosend;
     {
       // copy the changes we need to send so we don't need to hold
@@ -67,21 +67,22 @@ SystemListener::event(QEvent *event)
     return true;
   } else {
     return false;
-  }
+  }*/
+  return false;
 }
 
 void
 SystemListener::addChanges(const AssetChanges &changes_)
 {
   // this runs in the listener thread. Don't do any GUI work here
-  {
+  /*{
     // add the message to the list
     khLockGuard guard(lock);
     std::copy(changes_.items.begin(), changes_.items.end(),
               back_inserter(changes.items));
   }
   // post an event to the QUI thread
-  QApplication::postEvent(this, new QCustomEvent(QEvent::User));
+  QApplication::postEvent(this, new QCustomEvent(QEvent::User));*/
 }
 
 
@@ -95,18 +96,18 @@ AssetWatcherManager* AssetWatcherManager::instance = 0;
 void
 AssetWatcherManager::assetsChanged(const AssetChanges &changes)
 {
-  for (AssetChanges::CIterator c = changes.items.begin();
+  /*for (AssetChanges::CIterator c = changes.items.begin();
        c != changes.items.end(); ++c) {
     WatcherRange found = watchers.equal_range(c->ref);
     for (WatchersType::iterator w = found.first; w != found.second; ++w) {
       w->second->changed();
     }
-  }
+  }*/
 }
 
 AssetWatcherManager::AssetWatcherManager(void)
 {
-  if (instance) {
+  /*if (instance) {
     notify(NFY_FATAL, "Internal Error: Attempted to start a second AssetWatcherManager");
   }
   instance = this;
@@ -114,34 +115,34 @@ AssetWatcherManager::AssetWatcherManager(void)
   connect(SystemListener::instance,
           SIGNAL(assetsChanged(const AssetChanges &)),
           this,
-          SLOT(assetsChanged(const AssetChanges &)));
+          SLOT(assetsChanged(const AssetChanges &)));*/
 }
 
 AssetWatcherManager::~AssetWatcherManager(void)
 {
-  disconnect(SystemListener::instance,
+  /*disconnect(SystemListener::instance,
              SIGNAL(assetsChanged(const AssetChanges &)),
              this,
              SLOT(assetsChanged(const AssetChanges &)));
 
-  instance = 0;
+  instance = 0;*/
 }
 
 
 void
 AssetWatcherManager::AddWatcher(AssetWatcher *watcher)
 {
-  watchers.insert(std::make_pair(watcher->ref, watcher));
+  //watchers.insert(std::make_pair(watcher->ref, watcher));
 }
 
 void
 AssetWatcherManager::DropWatcher(AssetWatcher *watcher)
 {
-  WatcherRange found = watchers.equal_range(watcher->ref);
+  /*WatcherRange found = watchers.equal_range(watcher->ref);
   for (WatchersType::iterator w = found.first; w != found.second; ++w) {
     if (w->second == watcher) {
       watchers.erase(w);
       break;
     }
-  }
+  }*/
 }

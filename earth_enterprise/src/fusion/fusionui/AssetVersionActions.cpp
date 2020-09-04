@@ -21,7 +21,7 @@ Description:
 For history see CVS log (cvs log AssetVersionActions.cpp -or- Emacs Ctrl-xvl).
 ******************************************************************************/
 #include "AssetVersionActions.h"
-#include <qmessagebox.h>
+#include <QtWidgets/qmessagebox.h>
 #include <autoingest/AssetVersion.h>
 #include <autoingest/khAssetManagerProxy.h>
 
@@ -31,16 +31,16 @@ AssetVersionActions::AssetVersionActions(QWidget *parent_,
     parent(parent_),
     verref(ref)
 {
-  connect(parent, SIGNAL(destroyed()), this, SLOT(parentDestroyed()));
+  //connect(parent, SIGNAL(destroyed()), this, SLOT(parentDestroyed()));
 }
 
 void AssetVersionActions::parentDestroyed(void) {
-  parent = 0;
+  //parent = 0;
 }
 
 
 void AssetVersionActions::handle(int item) {
-  switch (item) {
+  /*switch (item) {
     case REBUILD_ACTION:
       rebuild();
       break;
@@ -56,14 +56,14 @@ void AssetVersionActions::handle(int item) {
     case CLEARBAD_ACTION:
       clearbad();
       break;
-  }
+  }*/
 }
 
 
 bool
-AssetVersionActions::Contribute(QPopupMenu *menu)
+AssetVersionActions::Contribute(QMenu *menu)
 {
-  AssetVersion version(verref);
+  /*AssetVersion version(verref);
   if (!version)
     return false;
 
@@ -89,36 +89,37 @@ AssetVersionActions::Contribute(QPopupMenu *menu)
     added = true;
   }
 
-  return added;
+  return added;*/
+  return false;
 }
 
 
 void
 AssetVersionActions::rebuild(void)
 {
-  QString error;
+  /*QString error;
   if (!khAssetManagerProxy::RebuildVersion(verref, error)) {
     QMessageBox::critical( parent, QMessageBox::tr( "Error" ),
                            error,
                            QMessageBox::tr( "OK" ), 0, 0, 0 );
-  }
+  }*/
 }
 
 void
 AssetVersionActions::cancel(void)
 {
-  QString error;
+  /*QString error;
   if (!khAssetManagerProxy::CancelVersion(verref, error)) {
     QMessageBox::critical( parent, QMessageBox::tr( "Error" ),
                            error,
                            QMessageBox::tr( "OK" ), 0, 0, 0 );
-  }
+  }*/
 }
 
 void
 AssetVersionActions::clean(void)
 {
-  if ( QMessageBox::question
+  /*if ( QMessageBox::question
        ( parent, "Confirm Clean",
          QMessageBox::tr( "Cleaning an asset version will remove all of its output files.\n"
                           "It will also remove all of its intermediate files that are not shared with\n"
@@ -134,28 +135,28 @@ AssetVersionActions::clean(void)
                              error,
                              QMessageBox::tr( "OK" ), 0, 0, 0 );
     }
-  }
+  }*/
 }
 
 void
 AssetVersionActions::setbad(void)
 {
-  QString error;
+  /*QString error;
   if (!khAssetManagerProxy::SetBadVersion(verref, error)) {
     QMessageBox::critical( parent, QMessageBox::tr( "Error" ),
                            error,
                            QMessageBox::tr( "OK" ), 0, 0, 0 );
-  }
+  }*/
 }
 
 void
 AssetVersionActions::clearbad(void)
 {
-  QString error;
+  /*QString error;
   if (!khAssetManagerProxy::ClearBadVersion(verref, error)) {
     QMessageBox::critical( parent, QMessageBox::tr( "Error" ),
                            error,
                            QMessageBox::tr( "OK" ), 0, 0, 0 );
-  }
+  }*/
 }
 

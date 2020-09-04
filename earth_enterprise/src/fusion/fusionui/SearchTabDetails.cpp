@@ -13,19 +13,19 @@
 // limitations under the License.
 
 
-#include <qtable.h>
-#include <qlabel.h>
-#include <qmessagebox.h>
-#include <qinputdialog.h>
-#include <qradiobutton.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qradiobutton.h>
 #include "SearchTabDetails.h"
 
 SearchTabDetails::SearchTabDetails(QWidget* parent,
                                    const SearchTabReference& ref)
-  : SearchTabDetailsBase(parent, 0, 0), ref_(ref) {
+  : Ui::SearchTabDetailsBase(), ref_(ref) {
 
   
-  try {
+  /*try {
     SearchTabDefinition config = ref_.Bind();
 
     // Populate the widget from the search tab definition.
@@ -47,5 +47,5 @@ SearchTabDetails::SearchTabDetails(QWidget* parent,
     label1_edit->hide();
     label2_text->hide();
     label2_edit->hide();
-  }
+  }*/
 }

@@ -20,7 +20,7 @@
 
 #include "srsdetailsbase.h"
 
-class SRSDetails : public SRSDetailsBase
+class SRSDetails : public Ui::SRSDetailsBase
 {
  public:
   SRSDetails( QWidget *, const QString &, bool );

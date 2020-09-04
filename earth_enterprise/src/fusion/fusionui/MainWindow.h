@@ -23,7 +23,7 @@
 #include "fusion/gst/gstTypes.h"
 #include "fusion/gst/gstBBox.h"
 
-#include <qaction.h>
+#include <QtWidgets/qaction.h>
 
 #include "mainwindowbase.h"
 
@@ -52,12 +52,12 @@ class NameAction : public QAction {
 
 // -----------------------------------------------------------------------------
 
-class MainWindow : public MainWindowBase {
+class MainWindow : public QObject, public Ui::MainWindowBase {
   Q_OBJECT
 
  public:
-  MainWindow(QWidget* parent = 0, const char* name = 0,
-             WFlags fl = WType_TopLevel);
+  MainWindow(QWidget* parent = 0, const char* name = 0);
+             //WFlags fl = WType_TopLevel);
   ~MainWindow();
 
   void Init();

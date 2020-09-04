@@ -21,9 +21,9 @@
 #include <publisherbase.h>
 #include <autoingest/.idl/ServerCombination.h>
 
-class Publisher : public PublisherBase {
+class Publisher : public Ui::PublisherBase {
  public:
-  Publisher(QWidget* parent, bool modal, WFlags flags);
+  Publisher(QWidget* parent, bool modal);
 
   // inherited from QDialog
   virtual void accept();

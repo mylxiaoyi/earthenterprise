@@ -104,7 +104,7 @@ env['CPPFLAGS'] += ['-Wno-error=terminate', '-Wno-error=misleading-indentation']
 
 # TODO: consider to move geGdalUtils to khgdal?!
 gecommon = env.sharedLib('gecommon', commonsources,
-                         LIBS = ['keyholeutils', 'geprotobuf', 'z', 'jpeg', 'png', 'gdal'])
+                         LIBS = ['keyholeutils', 'geprotobuf', 'z', 'jpeg', 'png', 'gdal', 'Qt5Core'])
 
 utilsources = [
     'ff.cpp',
@@ -143,11 +143,11 @@ utilsources = [
     ]
 # TODO: consider to remove dependency from qt
 geutil = env.sharedLib('geutil', utilsources,
-                       LIBS = ['gecommon', 'QtCore'])
+                       LIBS = ['gecommon', 'Qt5Core'])
 
 env.test('quadtreepath_unittest',
          'quadtreepath_unittest.cpp',
-         LIBS=['geutil', 'gecommon', 'qt-mt'])
+         LIBS=['geutil', 'gecommon', 'Qt5Core'])
 
 env.test('crc_unittest',
          '../third_party/rsa_md5/crc_unittest.cpp',
@@ -155,11 +155,11 @@ env.test('crc_unittest',
 
 env.test('filebundle_unittest',
          'filebundle/filebundle_unittest.cpp',
-         LIBS=['geutil', 'gecommon', 'qt-mt'])
+         LIBS=['geutil', 'gecommon', 'Qt5Core'])
 
 env.test('cachedreadaccessor_unittest',
          'filebundle/cachedreadaccessor_unittest.cpp',
-         LIBS=['gecommon', 'geutil'])
+         LIBS=['gecommon', 'geutil', 'Qt5Core'])
 
 env.test('merge_unittest',
         'merge/merge_unittest.cpp',
@@ -167,11 +167,11 @@ env.test('merge_unittest',
 
 env.test('packetfile_unittest',
         ['packetfile/packetfile_unittest.cpp'],
-         LIBS=['geutil', 'gecommon', 'getests'])
+         LIBS=['geutil', 'gecommon', 'getests', 'Qt5Core'])
 
 env.test('packetcompress_unittest',
          'packetcompress_unittest.cpp',
-         LIBS=['geutil', 'gecommon', 'qt-mt'])
+         LIBS=['geutil', 'gecommon', 'Qt5Core'])
 
 env.test('uuid_unittest',
          '../third_party/rfc_uuid/uuid_unittest.cpp',
@@ -187,11 +187,11 @@ env.test('procpidstats_unittest',
 
 env.test('tile_resampler_unittest',
          'tile_resampler_unittest.cpp',
-         LIBS=['gecommon', 'gtest', 'qt-mt'])
+         LIBS=['gecommon', 'gtest', 'Qt5Core'])
 
 env.test('verref_storage_unittest',
          'verref_storage_unittest.cpp',
-         LIBS=['geutil', 'gecommon', 'gtest'])
+         LIBS=['geutil', 'gecommon', 'gtest', 'Qt5Core'])
 
 env.test('timeutils_unittest',
          'timeutils_unittest.cpp',

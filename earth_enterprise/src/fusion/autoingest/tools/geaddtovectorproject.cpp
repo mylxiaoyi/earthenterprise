@@ -147,7 +147,7 @@ main(int argc, char *argv[]) {
     }
 
     if (!result) {
-      notify(NFY_FATAL, "%s", error.latin1());
+      notify(NFY_FATAL, "%s", error.toLatin1().data());
     }
   } catch (const std::exception &e) {
     notify(NFY_FATAL, "%s", e.what());

@@ -14,8 +14,8 @@
 
 
 #include <vector>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <autoingest/.idl/storage/FilterConfig.h>
 #requiresgetheapusage
 

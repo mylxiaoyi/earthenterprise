@@ -16,22 +16,22 @@
 //
 
 #include "fusion/fusionui/RasterAssetWidget.h"
-#include "cpl_port.h"
+#include <gdal/cpl_port.h>
 
 #include <algorithm>
-#include <gdal.h>
+#include <gdal/gdal.h>
 #include "fusion/khgdal/khgdal.h"
-#include <qcheckbox.h>
-#include <qcolordialog.h>
-#include <qcombobox.h>
-#include <qfiledialog.h>
-#include <qgroupbox.h>
-#include <qinputdialog.h>
-#include <qlabel.h>
-#include <qlistbox.h>
-#include <qmessagebox.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qlabel.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qspinbox.h>
 
 #include "autoingest/.idl/gstProvider.h"
 #include "autoingest/.idl/storage/RasterProductConfig.h"
@@ -75,18 +75,18 @@ static struct StdConversion {
 };
 
 
-static unsigned int NumStdConversions =
-    sizeof(StdConversions)/sizeof(StdConversions[0]);
+//static unsigned int NumStdConversions =
+//    sizeof(StdConversions)/sizeof(StdConversions[0]);
 
 namespace {
 const QString custom_conversion(QObject::tr("Other..."));
 }
 
 RasterAssetWidget::RasterAssetWidget(QWidget* parent, AssetDefs::Type type)
-  : RasterAssetWidgetBase(parent),
+  : //RasterAssetWidgetBase(parent),
     asset_type_(type),
     file_dialog_(NULL) {
-  last_conv_index_ = 0;
+  /*last_conv_index_ = 0;
   last_mosaic_fill_index_ = 0;
 
   // clear the combobox to be certain nothing has been
@@ -157,11 +157,11 @@ RasterAssetWidget::RasterAssetWidget(QWidget* parent, AssetDefs::Type type)
                                   acquisition_date_day,
                                   acquisition_date_hours,
                                   acquisition_date_minutes,
-                                  acquisition_date_seconds);
+                                  acquisition_date_seconds);*/
 }
 
 QFileDialog* RasterAssetWidget::FileDialog() {
-  if (!file_dialog_) {
+  /*if (!file_dialog_) {
     // will be automatically deleted with this
     file_dialog_ = new QFileDialog(this);
     file_dialog_->setMode(QFileDialog::ExistingFiles);
@@ -246,16 +246,17 @@ QFileDialog* RasterAssetWidget::FileDialog() {
     // The first one is the default "All Files (*)".
     file_dialog_->setSelectedFilter(1);
   }
-  return file_dialog_;
+  return file_dialog_;*/
+  return nullptr;
 }
 
 void RasterAssetWidget::AdjustMosaicEnabled(void) {
-  bool enabled = (source_list->numRows() > 1);
-  mosaic_group_box->setEnabled(enabled);
+  //bool enabled = (source_list->numRows() > 1);
+  //mosaic_group_box->setEnabled(enabled);
 }
 
 void RasterAssetWidget::AddSource() {
-  if (FileDialog()->exec() != QDialog::Accepted)
+  /*if (FileDialog()->exec() != QDialog::Accepted)
     return;
 
   bool modified = false;
@@ -289,11 +290,11 @@ void RasterAssetWidget::AddSource() {
   AdjustMosaicEnabled();
 
   // disable "Have Mask" option if more than one source is chosen
-  AdjustMaskType();
+  AdjustMaskType();*/
 }
 
 void RasterAssetWidget::DeleteSource() {
-  int row = source_list->currentItem();
+  /*int row = source_list->currentItem();
 
   if (row == -1)
     return;
@@ -305,13 +306,13 @@ void RasterAssetWidget::DeleteSource() {
   AdjustMosaicEnabled();
 
   // enable "Have Mask" option if source list is reduced to one or less
-  AdjustMaskType();
+  AdjustMaskType();*/
 }
 
 void RasterAssetWidget::MosaicFillActivated(const QString& str) {
   // need to track the selected item in order to reset it
   // if the user cancels the custom dialog below
-  if (str != tr("Other...")) {
+  /*if (str != tr("Other...")) {
     last_mosaic_fill_index_ = mosaic_fill_combo->currentItem();
     SyncMosaicTolerance();
     return;
@@ -343,11 +344,11 @@ void RasterAssetWidget::MosaicFillActivated(const QString& str) {
     UpdateMosaicFill(fill);
   } else {
     mosaic_fill_combo->setCurrentItem(last_mosaic_fill_index_);
-  }
+  }*/
 }
 
 void RasterAssetWidget::UpdateMosaicFill(const std::string& fill) {
-  if (fill.empty()) {
+  /*if (fill.empty()) {
     mosaic_fill_combo->setCurrentItem(0);
   } else if (AssetType() == AssetDefs::Terrain) {
     if (mosaic_fill_combo->count() == 2) {
@@ -358,7 +359,7 @@ void RasterAssetWidget::UpdateMosaicFill(const std::string& fill) {
       mosaic_fill_combo->changeItem(fill, 1);
     }
     mosaic_fill_combo->setCurrentItem(1);
-  } else /* AssetType() == AssetDefs::Imagery */ {
+  } else { // AssetType() == AssetDefs::Imagery  {
     if (fill == "0,0,0") {
       mosaic_fill_combo->setCurrentItem(1);
     } else if (fill == "255,255,255") {
@@ -377,18 +378,18 @@ void RasterAssetWidget::UpdateMosaicFill(const std::string& fill) {
 
   // make sure the combobox now has the new custom entry selected
   last_mosaic_fill_index_ = mosaic_fill_combo->currentItem();
-  SyncMosaicTolerance();
+  SyncMosaicTolerance();*/
 }
 
 void RasterAssetWidget::SyncMosaicTolerance(void) {
-  bool enable_tolerance = (last_mosaic_fill_index_ != 0);
+  /*bool enable_tolerance = (last_mosaic_fill_index_ != 0);
   mosaic_tolerance_label->setEnabled(enable_tolerance);
-  mosaic_tolerance_spin->setEnabled(enable_tolerance);
+  mosaic_tolerance_spin->setEnabled(enable_tolerance);*/
 }
 
 
 std::string RasterAssetWidget::GetMosaicFill() const {
-  int curr_item = mosaic_fill_combo->currentItem();
+  /*int curr_item = mosaic_fill_combo->currentItem();
   if (curr_item == 0)
     return std::string();
 
@@ -401,11 +402,12 @@ std::string RasterAssetWidget::GetMosaicFill() const {
     }
   }
 
-  return mosaic_fill_combo->currentText().latin1();
+  return mosaic_fill_combo->currentText().latin1();*/
+  return "";
 }
 
 void RasterAssetWidget::ChangeMaskType(int mode) {
-  bool enabled = (mode == 0);
+  /*bool enabled = (mode == 0);
   mask_feather_label->setEnabled(enabled);
   mask_feather_spin->setEnabled(enabled);
   mask_tolerance_label->setEnabled(enabled);
@@ -423,13 +425,13 @@ void RasterAssetWidget::ChangeMaskType(int mode) {
   } else {
     automaskGroupBox->setEnabled(false);
   }
-#endif
+#endif*/
 }
 
 void RasterAssetWidget::CustomConversion(const QString& str) {
   // need to track the selected item in order to reset it
   // if the user cancels the custom dialog below
-  if (str != custom_conversion) {
+  /*if (str != custom_conversion) {
     last_conv_index_ = elev_units_combo->currentItem();
     return;
   }
@@ -444,11 +446,11 @@ void RasterAssetWidget::CustomConversion(const QString& str) {
     UpdateElevUnits(conv);
   } else {
     elev_units_combo->setCurrentItem(last_conv_index_);
-  }
+  }*/
 }
 
 void RasterAssetWidget::UpdateElevUnits(double conv) {
-  unsigned int i = 0;
+  /*unsigned int i = 0;
   for (; i < NumStdConversions; ++i) {
     if (conv == StdConversions[i].scale) {
       elev_units_combo->setCurrentItem(i);
@@ -472,11 +474,11 @@ void RasterAssetWidget::UpdateElevUnits(double conv) {
   }
 
   // make sure the combobox now has the new custom entry selected
-  last_conv_index_ = elev_units_combo->currentItem();
+  last_conv_index_ = elev_units_combo->currentItem();*/
 }
 
 double RasterAssetWidget::GetElevUnits() const {
-  int curr_item = elev_units_combo->currentItem();
+  /*int curr_item = elev_units_combo->currentItem();
   if (curr_item < static_cast<int>(NumStdConversions)) {
     return StdConversions[curr_item].scale;
   }
@@ -484,26 +486,27 @@ double RasterAssetWidget::GetElevUnits() const {
   assert(elev_units_combo->currentItem() ==
          static_cast<int>(NumStdConversions));
 
-  return elev_units_combo->currentText().toDouble();
+  return elev_units_combo->currentText().toDouble();*/
+  return 0;
 }
 
 void RasterAssetWidget::ChooseLutfile() {
-  QFileDialog lutDialog(this, "Choose a Keyhole LUT file", true);
+  /*QFileDialog lutDialog(this, "Choose a Keyhole LUT file", true);
   lutDialog.addFilter("Keyhole LUT file ( *.lut )");
 
   if (lutDialog.exec() == QDialog::Accepted)
-    lutfile_name_label->setText(lutDialog.selectedFile());
+    lutfile_name_label->setText(lutDialog.selectedFile());*/
 }
 
 void RasterAssetWidget::DeleteLutfile() {
-  lutfile_name_label->setText("<none>");
+  //lutfile_name_label->setText("<none>");
 }
 
 
 void RasterAssetWidget::Prefill(const RasterProductImportRequest& request) {
   // always fill in lutfile so that it is available for final import request
   // however, the widget might be hidden if not in expert mode
-  if (!request.config.lutfile.empty())
+  /*if (!request.config.lutfile.empty())
     lutfile_name_label->setText(request.config.lutfile.c_str());
 
   acquisition_date_wrapper_->SetDate(0, 0, 0, 0, 0, 0);
@@ -582,12 +585,12 @@ void RasterAssetWidget::Prefill(const RasterProductImportRequest& request) {
   }
   if (request.sources != request_modified.sources) {
     source_changed_label->show();
-  }
+  }*/
 }
 
 void RasterAssetWidget::AssignMaskType(RasterProductImportRequest* request,
                                        MaskType masktype) {
-  switch (masktype) {
+  /*switch (masktype) {
     case AutoMask:
       request->config.havemask = false;
       request->config.nomask = false;
@@ -602,13 +605,13 @@ void RasterAssetWidget::AssignMaskType(RasterProductImportRequest* request,
       request->config.nomask = true;
       request->config.havemask = false;
       break;
-  }
+  }*/
 }
 
 void RasterAssetWidget::AssembleEditRequest(
     RasterProductImportRequest* request) {
   // Terrain fields
-  if (AssetType() == AssetDefs::Terrain)
+  /*if (AssetType() == AssetDefs::Terrain)
     request->config.scale = GetElevUnits();
   request->config.clampNonnegative = clamp_elev_check->isChecked();
 
@@ -749,21 +752,22 @@ void RasterAssetWidget::AssembleEditRequest(
   }
   if (!boundary_error.empty()) {
     throw khException(boundary_error);
-  }
+  }*/
 }
 
 RasterAssetWidget::MaskType RasterAssetWidget::GetMaskType() const {
-  if (mask_type_combo->currentItem() == 0) {
+  /*if (mask_type_combo->currentItem() == 0) {
     return AutoMask;
   } else if (mask_type_combo->currentItem() == 2) {
     return NoMask;
   }
 
-  return (mask_type_combo->count() == 3) ? HaveMask : NoMask;
+  return (mask_type_combo->count() == 3) ? HaveMask : NoMask;*/
+  return NoMask;
 }
 
 void RasterAssetWidget::AdjustMaskType() {
-  if (source_list->numRows() > 1 && mask_type_combo->count() == 3) {
+  /*if (source_list->numRows() > 1 && mask_type_combo->count() == 3) {
     if (GetMaskType() == HaveMask) {
       QMessageBox::warning(this, "Warning",
         tr("Mask Type cannot be \"Have Mask\" when more than one"
@@ -780,11 +784,11 @@ void RasterAssetWidget::AdjustMaskType() {
   } else if (source_list->numRows() <= 1 && mask_type_combo->count() < 3) {
     RestoreAllMaskOptions();
   }
-  ChangeMaskType(mask_type_combo->currentItem());
+  ChangeMaskType(mask_type_combo->currentItem());*/
 }
 
 void RasterAssetWidget::RestoreAllMaskOptions() {
-  if (mask_type_combo->count() < 3) {
+  /*if (mask_type_combo->count() < 3) {
     int currMask = mask_type_combo->currentItem();
 
     mask_type_combo->insertItem(tr("Have Mask"), 1);
@@ -792,7 +796,7 @@ void RasterAssetWidget::RestoreAllMaskOptions() {
     // if mask was set to 'no mask' this is the 3rd item
     if (currMask == 1)
       mask_type_combo->setCurrentItem(2);
-  }
+  }*/
 }
 
 void RasterAssetWidget::AdjustAcquisitionTimeEnabled(bool enabled) {

@@ -43,7 +43,7 @@ std::string Quoted(const std::string& input) {
 
 // Utility to wrap the input QString in quotes.
 std::string Quoted(const QString& input) {
-  std::string temp(input.utf8());
+  std::string temp(input.toUtf8());
   return Quoted(temp);
 }
 
@@ -155,7 +155,7 @@ std::string JsonUtils::SearchTabsJson(
 std::string JsonUtils::SearchTabJson(const SearchTabDefinition& search_tab) {
   // The JSON publishes the MapsSearchAdapter for all search url's, since the
   // JS processing code is the same for all JSON based clients.
-  std::string url = search_tab.url.utf8().data();
+  std::string url = search_tab.url.toUtf8().data();
   url = ReplaceString(url, kEarthClientSearchAdapter, kMapsSearchAdapter);
 
   // Collect the arg fields into a vector.
@@ -204,7 +204,7 @@ std::string JsonUtils::GELayersJson(
 
 std::string JsonUtils::GELayerJson(const LayerConfig& layer,
                                    const std::string& locale) {
-  LocaleConfig locale_config = layer.GetLocale(locale);
+  LocaleConfig locale_config = layer.GetLocale(QString(locale.c_str()));
 
   // Create the map of field name-value pairs for the output JSON.
   std::map<std::string, std::string> field_map;
@@ -216,7 +216,7 @@ std::string JsonUtils::GELayerJson(const LayerConfig& layer,
   field_map["isExpandable"] = JsonUtils::JsonBool(layer.isExpandable);
   field_map["isEnabled"] = JsonUtils::JsonBool(layer.isEnabled);
   field_map["isVisible"] = JsonUtils::JsonBool(layer.isVisible);
-  std::string lookAt(locale_config.look_at_.GetValue().utf8());
+  std::string lookAt(locale_config.look_at_.GetValue().toUtf8());
   field_map["lookAt"] = JsonUtils::LookAtJson(lookAt);
   return JsonObject(field_map);
 }
@@ -224,7 +224,7 @@ std::string JsonUtils::GELayerJson(const LayerConfig& layer,
 std::string JsonUtils::GERasterLayerJson(
   const RasterDBRootGenConfig::Layer& layer,
   const std::string& locale) {
-  LegendLocale locale_config = layer.legend_.GetLegendLocale(locale);
+  LegendLocale locale_config = layer.legend_.GetLegendLocale(QString(locale.c_str()));
 
   // Create the map of field name-value pairs for the output JSON.
   std::map<std::string, std::string> field_map;
@@ -236,7 +236,7 @@ std::string JsonUtils::GERasterLayerJson(
   field_map["isExpandable"] = JsonUtils::JsonBool(false);
   field_map["isEnabled"] = JsonUtils::JsonBool(true);
   field_map["isVisible"] = JsonUtils::JsonBool(true);
-  std::string lookAt(locale_config.lookAt.GetValue().utf8());
+  std::string lookAt(locale_config.lookAt.GetValue().toUtf8());
   field_map["lookAt"] = JsonUtils::LookAtJson(lookAt);
   return JsonObject(field_map);
 }
@@ -259,7 +259,7 @@ std::string JsonUtils::MapLayerJson(const MapLayerJSConfig::Layer& layer,
                                     const DbHeader& db_header,
                                     const std::string& locale) {
   // Get the legend for the specified locale.
-  const LegendLocale& legend_locale = layer.legend_.GetLegendLocale(locale);
+  const LegendLocale& legend_locale = layer.legend_.GetLegendLocale(QString(locale.c_str()));
   // Create the map of field name-value pairs for the output JSON.
   std::string icon_name =
       "icons/" + legend_locale.icon.GetValue().LegendHref();
@@ -281,7 +281,7 @@ std::string JsonUtils::MapLayerJson(const MapLayerJSConfig::Layer& layer,
   // TODO: add new locale fields
   // opacity (needs locale entry and ui)
   // look_at (needs ui)
-  std::string lookAt(legend_locale.lookAt.GetValue().utf8());
+  std::string lookAt(legend_locale.lookAt.GetValue().toUtf8());
   field_map["lookAt"] = JsonUtils::LookAtJson(lookAt);
   return JsonObject(field_map);
 }

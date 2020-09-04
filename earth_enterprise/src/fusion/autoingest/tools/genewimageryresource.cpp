@@ -269,7 +269,7 @@ main(int argc, char *argv[]) {
       QString error;
       if (!khAssetManagerProxy::ProductReImport(req.assetname, updated,
                                                 error)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
       if (updated) {
         printf("The asset is updated: %s\n", req.assetname.c_str());
@@ -339,7 +339,7 @@ main(int argc, char *argv[]) {
         mercator ? khAssetManagerProxy::MercatorRasterProductImport(req, error)
                  : khAssetManagerProxy::RasterProductImport(req, error);
       if (!return_status) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
     }
   } catch (const std::exception &e) {

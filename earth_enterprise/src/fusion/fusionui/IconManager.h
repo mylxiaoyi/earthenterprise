@@ -18,15 +18,14 @@
 #ifndef KHSRC_FUSION_FUSIONUI_ICONMANAGER_H__
 #define KHSRC_FUSION_FUSIONUI_ICONMANAGER_H__
 
-#include <qfiledialog.h>
-#include <qscrollview.h>
-#include <qpixmap.h>
-#include <qurl.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qscrollarea.h>
+#include <QtGui/qpixmap.h>
+#include <QtCore/qurl.h>
 
 #include "iconmanagerbase.h"
 
-class PixmapView : public QScrollView,
-                   public QFilePreview {
+class PixmapView : public QScrollArea {
  public:
   PixmapView(QWidget* parent);
   void setPixmap(const QPixmap& pix);
@@ -41,9 +40,9 @@ class PixmapView : public QScrollView,
   QPixmap pixmap;
 };
 
-class IconManager : public IconManagerBase {
+class IconManager : public Ui::IconManagerBase {
  public:
-  IconManager(QWidget* parent, bool modal, WFlags flags);
+  IconManager(QWidget* parent, bool modal);//, WFlags flags);
 
   // inherited from QWidget
   virtual void show();

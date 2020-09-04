@@ -466,7 +466,7 @@ khResourceManager::TryActivate(void) throw()
                 (*t)->activationError =
                   kh::tr("Unable to bind outfiles.");
                 notify(NFY_WARN, "    %s",
-                       (*t)->activationError.latin1());
+                       (*t)->activationError.toLatin1().data());
               }
             } else {
               (*t)->activationError =
@@ -474,7 +474,7 @@ khResourceManager::TryActivate(void) throw()
                        " no CPU(s) is available to start the task %1.")
                 .arg(ToQString((*t)->verref()));
               notify(NFY_DEBUG, "    %s",
-                     (*t)->activationError.latin1());
+                     (*t)->activationError.toLatin1().data());
             }
 
             fixedReservations.clear();
@@ -505,7 +505,7 @@ khResourceManager::CheckVolumeHosts(khTask *task)
       task->activationError = kh::tr("Volume host '%1' unavailable")
                               .arg(ToQString(*rvh));
       notify(NFY_DEBUG, "    %s",
-             task->activationError.latin1());
+             task->activationError.toLatin1().data());
       return false;
     }
   }
@@ -541,7 +541,7 @@ khResourceManager::MakeFixedVolumeReservations(khTask *task,
           .arg(ToQString(reqo->path))
           .arg(ToQString(reqo->size));
         notify(NFY_DEBUG, "    %s",
-               task->activationError.latin1());
+               task->activationError.toLatin1().data());
         reservations.clear();
         return false;
       } else {

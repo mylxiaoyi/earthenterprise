@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <gdal_priv.h>
+#include <gdal/gdal_priv.h>
 
 #include <gstTypes.h>
 #include <gstMemory.h>

@@ -24,7 +24,7 @@ File:        RasterGenerator.h
 #include <string>
 #include <khraster/khRasterProduct.h>
 #include <khgdal/khGDALDataset.h>
-#include <gdalwarper.h>
+#include <gdal/gdalwarper.h>
 
 class khProgressMeter;
 

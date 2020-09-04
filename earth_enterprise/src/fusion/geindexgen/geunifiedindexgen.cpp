@@ -174,7 +174,7 @@ int main(int argc, char **argv) {
         if (!PacketFile::IsPacketFile(entry->indexdir_)) {
           throw khException(
               kh::tr("INTERNAL ERROR: Terrain path must be a packetfile: %1")
-              .arg(entry->indexdir_));
+              .arg(QString::fromStdString(entry->indexdir_)));
         }
 
         // register packetfile
@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
           throw khException(
               kh::tr("INTERNAL ERROR: VectorMaps "
                      "path must be a packetfile: %1")
-              .arg(entry->indexdir_));
+              .arg(QString::fromStdString(entry->indexdir_)));
         }
 
         // register packetfile
@@ -261,7 +261,7 @@ int main(int argc, char **argv) {
           throw khException(
               kh::tr("INTERNAL ERROR: VectorMapsRaster "
                      "path must be a packetfile: %1")
-              .arg(entry->indexdir_));
+              .arg(QString::fromStdString(entry->indexdir_)));
         }
 
         // register packetfile
@@ -286,7 +286,7 @@ int main(int argc, char **argv) {
         if (!PacketFile::IsPacketFile(entry->indexdir_)) {
           throw khException(
               kh::tr("INTERNAL ERROR: QTPacket path must be a packetfile: %1")
-              .arg(entry->indexdir_));
+              .arg(QString::fromStdString(entry->indexdir_)));
         }
 
         // register packetfile
@@ -320,7 +320,7 @@ int main(int argc, char **argv) {
       } else {
         throw khException(
             kh::tr("INTERNAL ERROR: Unknown input type: %1")
-            .arg(entry->type_));
+            .arg(QString::fromStdString(entry->type_)));
       }
     }
 

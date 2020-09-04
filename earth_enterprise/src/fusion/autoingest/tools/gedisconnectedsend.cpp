@@ -287,7 +287,7 @@ int main(int argc, char *argv[]) {
       time_t ftime;
       if (!khGetFileInfo(*extra, fsize, ftime)) {
         throw khErrnoException(kh::tr("Unable to get filesize for %1")
-                               .arg(*extra));
+                               .arg(QString((*extra).c_str())));
       }
       totalsize += fsize;
       needed_files.push_back(std::make_pair(*extra,

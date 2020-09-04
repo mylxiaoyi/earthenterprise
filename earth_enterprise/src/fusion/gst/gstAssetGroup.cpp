@@ -15,7 +15,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <qregexp.h>
+#include <QtCore/qregexp.h>
 #include <gstAssetManager.h>
 #include <khConstants.h>
 
@@ -24,13 +24,13 @@
 QString shortAssetName(const QString& n) {
   QString sname = n;
   QStringList suffix;
-  suffix << kVectorAssetSuffix << kImageryAssetSuffix
-         << kMercatorImageryAssetSuffix << kTerrainAssetSuffix
-         << kVectorProjectSuffix << kImageryProjectSuffix
-         << kMercatorImageryProjectSuffix << kTerrainProjectSuffix
-         << kDatabaseSuffix << kMapLayerSuffix << kMapProjectSuffix
-         << kMapDatabaseSuffix << kMercatorMapDatabaseSuffix
-         << kVectorLayerSuffix;
+  suffix << QString::fromStdString(kVectorAssetSuffix) << QString::fromStdString(kImageryAssetSuffix)
+         << QString::fromStdString(kMercatorImageryAssetSuffix) << QString::fromStdString(kTerrainAssetSuffix)
+         << QString::fromStdString(kVectorProjectSuffix) << QString::fromStdString(kImageryProjectSuffix)
+         << QString::fromStdString(kMercatorImageryProjectSuffix) << QString::fromStdString(kTerrainProjectSuffix)
+         << QString::fromStdString(kDatabaseSuffix) << QString::fromStdString(kMapLayerSuffix) << QString::fromStdString(kMapProjectSuffix)
+         << QString::fromStdString(kMapDatabaseSuffix) << QString::fromStdString(kMercatorMapDatabaseSuffix)
+         << QString::fromStdString(kVectorLayerSuffix);
   for (QStringList::Iterator it = suffix.begin(); it != suffix.end(); ++it) {
     if (sname.endsWith(*it)) {
       sname.truncate(sname.length() - (*it).length());
@@ -45,7 +45,7 @@ bool isAssetPath(const QString& str) {
                     ".*\\.k[i](masset|mproject)$|"
                     ".*\\.kdatabase$|"
                     ".*\\.km(layer|project|database|mdatabase)|"
-                    ".*\\.kvlayer", true, false);
+                    ".*\\.kvlayer");
   return rx.exactMatch(str);
 }
 
@@ -65,12 +65,12 @@ const gstAssetFolder &gstAssetHandleImpl::getParentFolder() const {
 
 bool gstAssetHandleImpl::isValid() const {
   return (parent_folder_.isValid() &&
-          AssetDefs::HaveAssetFile(std::string(relativePath().latin1())) &&
+          AssetDefs::HaveAssetFile(relativePath().toStdString()) &&
           getAsset()->type != AssetDefs::Invalid);
 }
 
 Asset gstAssetHandleImpl::getAsset() const {
-  return Asset(relativePath());
+  return Asset(relativePath().toStdString());
 }
 
 QString gstAssetHandleImpl::getName() const {
@@ -106,7 +106,7 @@ QString gstAssetFolder::name() const {
 gstAssetFolder gstAssetFolder::getParentFolder() const {
   QDir dir(dir_name_);
   dir.cdUp();
-  return gstAssetFolder(dir.absPath());
+  return gstAssetFolder(dir.absolutePath());
 }
 
 gstAssetFolder gstAssetFolder::getChildFolder(const QString& name) const {
@@ -131,9 +131,10 @@ std::vector<gstAssetHandle> gstAssetFolder::getAssetHandles() const {
   std::vector<gstAssetHandle> list;
 
   QDir dir(dir_name_);
-  dir.setNameFilter(
-      "*.k?asset;*.kimasset;*.k?project;*.kimproject;*.kdatabase;"
-      "*.kmlayer;*.kmproject;*.kmdatabase;*.kmmdatabase;*.kvlayer");
+  QStringList strList;
+  strList << "*.k?asset" << "*.kimasset" << "*.k?project" << "*.kimproject" << "*.kdatabase"
+      << "*.kmlayer" << "*.kmproject" << "*.kmdatabase" << "*.kmmdatabase" << "*.kvlayer";
+  dir.setNameFilters(strList);
   QStringList files = dir.entryList(QDir::Dirs, QDir::Name | QDir::IgnoreCase);
   for (QStringList::Iterator it = files.begin(); it != files.end(); ++it) {
     gstAssetHandle handle = gstAssetHandleImpl::Create(*this, *it);
@@ -141,7 +142,7 @@ std::vector<gstAssetHandle> gstAssetFolder::getAssetHandles() const {
       list.push_back(handle);
     } else {
       notify(NFY_DEBUG, "Invalid asset found! dirname=%s file=%s",
-             dir_name_.latin1(), (*it).latin1());
+             dir_name_.toStdString().c_str(), (*it).toStdString().c_str());
     }
   }
 
@@ -168,5 +169,5 @@ bool gstAssetFolder::newFolder(const QString& name,
   QDir dir(dir_name_);
 
   return theAssetManager->makeDir
-    (AssetDefs::FilenameToAssetPath(dir.filePath(name).latin1()), error);
+    (AssetDefs::FilenameToAssetPath(dir.filePath(name).toStdString()), error);
 }

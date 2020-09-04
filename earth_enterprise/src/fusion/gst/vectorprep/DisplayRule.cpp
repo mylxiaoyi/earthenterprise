@@ -316,9 +316,9 @@ void DisplayRuleBase::ConvertFeatureType(gstGeodeHandle &geode) {
 
   throw khException(kh::tr("Invalid conversion from asset type (%1)"
                            " to diplay type (%2).")
-                    .arg(PrettyPrimType(geode->PrimType()))
+                    .arg(QString::fromStdString(PrettyPrimType(geode->PrimType())))
                     .arg(VectorDefs::PrettyFeatureDisplayType
-                         (featureDisplayType).ascii()));
+                         (featureDisplayType)));
 }
 
 void DisplayRuleBase::ReduceFeatures(unsigned int level, FeatureTile *tile) {

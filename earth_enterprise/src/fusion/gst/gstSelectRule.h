@@ -22,7 +22,7 @@
 #include <gstMisc.h>
 #include <gstRecord.h>
 #include <autoingest/.idl/storage/FilterConfig.h>
-#include <qregexp.h>
+#include <QtCore/qregexp.h>
 
 class gstFilter;
 

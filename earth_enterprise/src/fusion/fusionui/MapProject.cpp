@@ -23,12 +23,12 @@
 #include "AssetDerivedImpl.h"
 #include "ProjectLayerView.h"
 
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qheader.h>
-#include <qmessagebox.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qpushbutton.h>
+//#include <qheader.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qlineedit.h>
 
 class AssetBase;
 
@@ -61,7 +61,7 @@ class MapLayerItem : public LayerItemBase {
 
 MapLayerItem::MapLayerItem(QListView* parent, const QString& asset_path)
   : LayerItemBase(parent) {
-  layer_item_config_.assetRef = asset_path;
+  layer_item_config_.assetRef = asset_path.toStdString();
   Init();
 }
 
@@ -73,7 +73,7 @@ MapLayerItem::MapLayerItem(QListView* parent,
 }
 
 void MapLayerItem::Init() {
-  MapLayerAsset layer_asset(layer_item_config_.assetRef);
+  /*MapLayerAsset layer_asset(layer_item_config_.assetRef);
   if (layer_asset) {
     if (layer_item_config_.legend.UseDefault()) {
       setText(0, layer_asset->config.legend.defaultLocale.name + "<DEFAULT>");
@@ -88,7 +88,7 @@ void MapLayerItem::Init() {
     setText(0, "<INVALID>");
     setText(1, shortAssetName(layer_item_config_.assetRef));
     setPixmap(1, AssetDisplayHelper::Pixmap(AssetDisplayHelper::Key_Unknown));
-  }
+  }*/
 }
 
 LayerLegend MapLayerItem::GetEffectiveLegend(void) {
@@ -118,18 +118,18 @@ void MapLayerItem::DefaultLegend() {
 // ****************************************************************************
 MapProjectWidget::MapProjectWidget(QWidget *parent, AssetBase* base)
   : ProjectWidget(parent), AssetWidgetBase(base) {
-  add_group_btn->hide();
+  /*add_group_btn->hide();
   // HidePreview();
   HideLegend();
   HideUuid();
   ListView()->EnableAssetDrops(AssetDefs::Map, kLayer);
   ListView()->setColumnText(0, tr("Legend Name"));
   ListView()->addColumn(tr(kLayer.c_str()));
-  ListView()->header()->show();
+  ListView()->header()->show();*/
 }
 
 void MapProjectWidget::Prefill(const MapProjectEditRequest &req) {
-  const MapProjectConfig& cfg = req.config;
+  /*const MapProjectConfig& cfg = req.config;
   for (std::vector<MapProjectConfig::LayerItem>::const_reverse_iterator it =
          cfg.layers.rbegin();
        it != cfg.layers.rend(); ++it) {
@@ -145,22 +145,22 @@ void MapProjectWidget::Prefill(const MapProjectEditRequest &req) {
 
   connect(ListView(), SIGNAL(doubleClicked(QListViewItem*,
                                            const QPoint&, int)),
-          this, SLOT(ModifyItem(QListViewItem*, const QPoint&, int)));
+          this, SLOT(ModifyItem(QListViewItem*, const QPoint&, int)));*/
 }
 
 void MapProjectWidget::AssembleEditRequest(MapProjectEditRequest *request) {
   // assemble layers
-  request->config.layers.clear();
+  /*request->config.layers.clear();
   QListViewItem* item = ListView()->firstChild();
   while (item) {
     MapLayerItem* map_layer_item = static_cast<MapLayerItem*>(item);
     request->config.layers.push_back(map_layer_item->GetConfig());
     item = map_layer_item->Next();
-  }
+  }*/
 }
 
 LayerItemBase* MapProjectWidget::NewLayerItem() {
-  AssetChooser chooser(ListView(), AssetChooser::Open,
+  /*AssetChooser chooser(ListView(), AssetChooser::Open,
                        AssetDefs::Map, kLayer);
   if (chooser.exec() != QDialog::Accepted)
     return NULL;
@@ -169,11 +169,12 @@ LayerItemBase* MapProjectWidget::NewLayerItem() {
   if (!chooser.getFullPath(newpath))
     return NULL;
 
-  return NewLayerItem(newpath);
+  return NewLayerItem(newpath);*/
+  return nullptr;
 }
 
 LayerItemBase* MapProjectWidget::NewLayerItem(const QString& assetref) {
-  ListView()->setFocus();
+  /*ListView()->setFocus();
 
   // check to make sure we don't already have this one
   QListViewItem* list_item = ListView()->firstChild();
@@ -195,12 +196,13 @@ LayerItemBase* MapProjectWidget::NewLayerItem(const QString& assetref) {
   while (item->CanMoveDown())
     item->MoveDown();
   ListView()->SelectItem(item);
-  return item;
+  return item;*/
+  return nullptr;
 }
 
 void MapProjectWidget::ModifyItem(QListViewItem* item, const QPoint& pt,
                                   int col) {
-  if (item == 0 || col == -1)
+  /*if (item == 0 || col == -1)
     return;
 
   MapLayerItem* layer_item = static_cast<MapLayerItem*>(item);
@@ -209,12 +211,12 @@ void MapProjectWidget::ModifyItem(QListViewItem* item, const QPoint& pt,
       layer_item->GetEffectiveLegend());
   if (legend_dialog.exec() == QDialog::Accepted) {
     layer_item->SetLegend(legend_dialog.GetLegend());
-  }
+  }*/
 }
 
 void MapProjectWidget::ContextMenu(QListViewItem* item, const QPoint& point,
                                    int col) {
-  if (item == 0 || col == -1)
+  /*if (item == 0 || col == -1)
     return;
 
   enum { USE_DEFAULT, OVERRIDE_DEFAULT };
@@ -238,7 +240,7 @@ void MapProjectWidget::ContextMenu(QListViewItem* item, const QPoint& point,
         }
       }
       break;
-  }
+  }*/
 }
 
 

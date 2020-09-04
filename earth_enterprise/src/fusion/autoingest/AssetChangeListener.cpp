@@ -49,7 +49,7 @@ AssetChangeListener::thread_main(void)
           if (first) {
             notify(NFY_WARN,
                    "Unable to connect to System Manager: %s",
-                   error.latin1());
+                   error.toLatin1().data());
             notify(NFY_WARN, "Will try again every %d seconds",
                    retryConnDelay);
           }
@@ -62,7 +62,7 @@ AssetChangeListener::thread_main(void)
     // notifications on this socket
     if (!conn->TryNoArgRegister("AssetChanges", error)) {
       notify(NFY_WARN, "Unable to register for asset changes: %s",
-             error.latin1());
+             error.toLatin1().data());
       sleep(maxBlockSecs);
       // fall out to disconnect and reconnect and try again
     } else {

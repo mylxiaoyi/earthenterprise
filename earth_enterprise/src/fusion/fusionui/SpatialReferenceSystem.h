@@ -20,7 +20,7 @@
 
 #include "spatialreferencesystembase.h"
 
-class SpatialReferenceSystem : public SpatialReferenceSystemBase
+class SpatialReferenceSystem : public Ui::SpatialReferenceSystemBase
 {
  public:
   SpatialReferenceSystem( QWidget * );

@@ -16,7 +16,7 @@
 
 #include <cstdint>
 #include <vector>
-#include <qstring.h>
+#include <QtCore/QString>
 #include <khMetaData.h>
 #include <autoingest/.idl/storage/LayerConfig.h>
 #include <searchtabs/.idl/SearchTabs.h>

@@ -18,8 +18,9 @@
 #ifndef KHSRC_FUSION_FUSIONUI_ASSETTABLEVIEW_H__
 #define KHSRC_FUSION_FUSIONUI_ASSETTABLEVIEW_H__
 
-#include <qtable.h>
-#include <qpoint.h>
+//#include <qtable.h>
+#include <QtWidgets/QTableWidgetItem>
+#include <QtCore/qpoint.h>
 
 #include <gstAssetGroup.h>
 
@@ -27,16 +28,16 @@ class QDragObject;
 
 // -----------------------------------------------------------------------------
 
-class AssetTableItem : public QTableItem {
+class AssetTableItem : public QTableWidgetItem {
  public:
-  AssetTableItem(QTable* table, gstAssetHandle);
+  AssetTableItem(QTableWidget* table, gstAssetHandle);
   ~AssetTableItem();
 
   gstAssetHandle GetAssetHandle() const;
 
   // from QTableItem
-  virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
-                     bool sel);
+  //virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
+  //                   bool sel);
 
  private:
   gstAssetHandle asset_handle_;
@@ -44,18 +45,18 @@ class AssetTableItem : public QTableItem {
 
 // -----------------------------------------------------------------------------
 
-class AssetStateItem : public QTableItem {
+class AssetStateItem : public QTableWidgetItem {
  public:
-  AssetStateItem(QTable* table, QString state);
+  AssetStateItem(QTableWidget* table, QString state);
 
   // from QTableItem
-  virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
-                     bool sel);
+  //virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
+  //                   bool sel);
 };
 
 // -----------------------------------------------------------------------------
 
-class AssetTableView : public QTable {
+class AssetTableView : public QTableView {
  public:
   AssetTableView(QWidget* parent = 0, const char* name = 0);
   ~AssetTableView();

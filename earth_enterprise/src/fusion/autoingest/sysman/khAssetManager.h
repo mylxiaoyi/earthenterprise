@@ -22,7 +22,7 @@
 #include <khFunctor.h>
 #include <khThreadPool.h>
 #include <khMTTypes.h>
-#include <qdatetime.h>
+#include <QtCore/QDateTime>
 #include <FusionConnection.h>
 #include <autoingest/.idl/storage/AssetDefs.h>
 #include <autoingest/.idl/AssetChanges.h>

@@ -16,25 +16,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qpainter.h>
-#include <qinputdialog.h>
-#include <qcombobox.h>
-#include <qstatusbar.h>
-#include <qapplication.h>
-#include <qlayout.h>
-#include <qlcdnumber.h>
-#include <qspinbox.h>
-#include <qvbox.h>
-#include <qdockwindow.h>
-#include <qmessagebox.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
-#include <qlabel.h>
-#include <qprogressbar.h>
-#include <qdragobject.h>
-#include <qpushbutton.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <QtGui/qpainter.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qstatusbar.h>
+#include <QtWidgets/qapplication.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qlcdnumber.h>
+#include <QtWidgets/qspinbox.h>
+//#include <QtWidgets/qvbox.h>
+//#include <qdockwindow.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qmenubar.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qprogressbar.h>
+//#include <qdragobject.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qtextstream.h>
+#include <QtGui/QPixmap>
 
 #include <builddate.h>
 #include "fusion/fusionversion.h"
@@ -60,11 +61,11 @@
 #include "common/geInstallPaths.h"
 
 static QPixmap LoadPixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
@@ -73,15 +74,15 @@ class QPainter;
 // -----------------------------------------------------------------------------
 
 NameAction::NameAction(QObject* parent)
-  : QAction(parent, 0) {
+  : QAction(parent) {
 }
 
 void NameAction::ChangeText(const QString& text) {
-  if (text.isEmpty()) {
+  /*if (text.isEmpty()) {
     setText(QString("whatever!"));
   } else {
     setText(text);
-  }
+  }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +90,8 @@ void NameAction::ChangeText(const QString& text) {
 // globally visible structures
 MainWindow* MainWindow::self = 0;
 
-MainWindow::MainWindow(QWidget* parent, const char* name, WFlags fl)
-    : MainWindowBase(parent, name, fl),
+MainWindow::MainWindow(QWidget* parent, const char* name)
+    : MainWindowBase(),
       placemark_manager_(),
       project_manager_docker_(),
       preview_project_manager_(),
@@ -109,7 +110,7 @@ void MainWindow::Init() {
   //
   // set all global values here...
   //
-  setCaption(QString(GetFusionProductName()) + Preferences::CaptionText());
+  /*setCaption(QString(GetFusionProductName()) + Preferences::CaptionText());
 
   asset_manager_ = NULL;
   feature_editor_ = NULL;
@@ -216,7 +217,7 @@ void MainWindow::Init() {
     edit_tool = NULL;
     delete featureEditorAction;
     featureEditorAction = NULL;
-  }
+  }*/
 
   /*
   assetManagerAction
@@ -229,7 +230,7 @@ void MainWindow::Init() {
   systemManagerAction
   */
 
-  if (Preferences::ExperimentalMode) {
+  /*if (Preferences::ExperimentalMode) {
     toolsPublisherAction->removeFrom(tools_menu);
 
     QPopupMenu* admin_menu = new QPopupMenu(this);
@@ -237,21 +238,21 @@ void MainWindow::Init() {
     menubar->insertItem(tr("&Admin"), admin_menu, 7, 3);
   }
   previewProjection->setCurrentItem(
-      Preferences::getConfig().isMercatorPreview ? 1 : 0);
+      Preferences::getConfig().isMercatorPreview ? 1 : 0);*/
 }
 
 MainWindow::~MainWindow() {
-  delete project_manager_docker_;
+  /*delete project_manager_docker_;
   delete selection_view_docker_;
 
   delete asset_manager_;
   delete feature_editor_;
 
-  delete system_manager_;
+  delete system_manager_;*/
 }
 
 void MainWindow::previewProjectionActivated(int choice) {
-  bool is_mercator_preview = (choice != 0);
+  /*bool is_mercator_preview = (choice != 0);
   // Whenever preview projection is changed, update the preference and also save
   // it in file so as to remember last preview projection.
   if (is_mercator_preview != Preferences::getConfig().isMercatorPreview) {
@@ -273,12 +274,12 @@ void MainWindow::previewProjectionActivated(int choice) {
     }
     emit prefsChanged();
     gfxview->updateGL();  // Redraw the background.
-  }
+  }*/
 }
 
 void MainWindow::launchHelpManual() {
   // find manual
-  QString doc = khComposePath(
+  /*QString doc = khComposePath(
       kGESharePath,
       "doc/manual/index.html");
   if (!khExists(doc.latin1())) {
@@ -313,16 +314,16 @@ void MainWindow::launchHelpManual() {
   // ensure shell is bourne so we can redirect stderr
   setenv("SHELL", "/bin/sh", 1);
   QString cmd = browser + " " + doc + " 2> /dev/null &";
-  system(cmd.latin1());
+  system(cmd.latin1());*/
 }
 
 void MainWindow::helpAbout() {
-  AboutFusion about(this);
-  about.exec();
+  //AboutFusion about(this);
+  //about.exec();
 }
 
 void MainWindow::gfxviewContextMenu(QWidget* parent, const QPoint& pos) {
-  QPopupMenu menu(parent);
+  /*QPopupMenu menu(parent);
 
   select_tool->addTo(&menu);
   zoombox_tool->addTo(&menu);
@@ -333,12 +334,12 @@ void MainWindow::gfxviewContextMenu(QWidget* parent, const QPoint& pos) {
     edit_tool->addTo(&menu);
   }
 
-  menu.exec(pos);
+  menu.exec(pos);*/
 }
 
 
 void MainWindow::show() {
-  QFile file(Preferences::filepath("screen.layout"));
+  /*QFile file(Preferences::filepath("screen.layout"));
   if (file.open(IO_ReadOnly)) {
     QTextStream stream(&file);
     stream >> *this;
@@ -369,39 +370,40 @@ void MainWindow::show() {
   if (!validateGfx) {
     gfxview->ValidateGfxMode();
     validateGfx = true;
-  }
+  }*/
 }
 
 void MainWindow::setupSelectionView() {
-  selection_view_docker_ = new SelectionViewDocker(QDockWindow::InDock, this,
-                                                   "Attribute Table", 0, true);
-  addToolBar(selection_view_docker_, Qt::DockBottom);
+  //selection_view_docker_ = new SelectionViewDocker(QDockWindow::InDock, this,
+  //                                                 "Attribute Table", 0, true);
+  //addToolBar(selection_view_docker_, Qt::DockBottom);
 }
 
 
 void MainWindow::updatePlaceMarks() {
-  if (placemark_manager_ == NULL)
+  /*if (placemark_manager_ == NULL)
     placemark_manager_ = new PlacemarkManager();
 
   placeMarkList->clear();
   placeMarkList->insertItem(tr("Favorites..."));
-  placeMarkList->insertStringList(placemark_manager_->GetList());
+  placeMarkList->insertStringList(placemark_manager_->GetList());*/
 }
 
 class TextureWarning : public QMessageBox {
  public:
   TextureWarning(const QString& message, QWidget* parent)
-      : QMessageBox("Warning", message, QMessageBox::Warning,
-                    QMessageBox::Ok, QMessageBox::NoButton,
-                    QMessageBox::NoButton, parent, 0, false) {
+      //: QMessageBox("Warning", message, QMessageBox::Warning,
+      //              QMessageBox::Ok, QMessageBox::NoButton,
+      //              QMessageBox::NoButton, parent, 0, false) {
+      : QMessageBox(parent) {
     // must set this flag here because the base QWidget will
     // not honor it if modal is not true
-    setWFlags(WDestructiveClose);
+    //setWFlags(WDestructiveClose);
   }
 };
 
 gstStatus MainWindow::updateImageLayers() {
-  QString texpath = Preferences::getConfig().GetBackgroundPath();
+  /*QString texpath = Preferences::getConfig().GetBackgroundPath();
 
   // ensure opengl has been initialized before doing any texture work
   gfxview->updateGL();
@@ -439,24 +441,24 @@ gstStatus MainWindow::updateImageLayers() {
       warning->show();
       return GST_OPEN_FAIL;
     }
-  }
+  }*/
 
   return GST_OKAY;
 }
 
 void MainWindow::fileOpen() {
-  preview_project_manager_->FileOpen();
+  //preview_project_manager_->FileOpen();
 }
 
 void MainWindow::fileDragOpen(const QString& str) {
-  QString modstr = ProjectManager::CleanupDropText(str);
+  //QString modstr = ProjectManager::CleanupDropText(str);
 
-  preview_project_manager_->addLayers(modstr.latin1(), NULL);
+  //preview_project_manager_->addLayers(modstr.latin1(), NULL);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-  event->ignore();
-  fileExit();
+  //event->ignore();
+  //fileExit();
 }
 
 bool MainWindow::OkToQuit() {
@@ -473,14 +475,14 @@ bool MainWindow::OkToQuit() {
 
 
 void MainWindow::fileExit() {
-  if (!OkToQuit())
+  /*if (!OkToQuit())
     return;
   saveScreenLayout();
-  QApplication::exit(0);
+  QApplication::exit(0);*/
 }
 
 void MainWindow::saveScreenLayout() {
-  QFile file(Preferences::filepath("screen.layout"));
+  /*QFile file(Preferences::filepath("screen.layout"));
   if (file.open(IO_WriteOnly)) {
     QTextStream stream(&file);
     stream << *this;
@@ -494,13 +496,13 @@ void MainWindow::saveScreenLayout() {
   lp.ypos = y();
   lp.showme = true;
   lp.currentProject = 0;        // obsolete
-  lp.Save(Preferences::filepath("mainwindow.layout").latin1());
+  lp.Save(Preferences::filepath("mainwindow.layout").latin1());*/
 }
 
 //------------------------------------------------------------------------------
 
 void MainWindow::addPlaceMark() {
-  bool ok = FALSE;
+  /*bool ok = FALSE;
   QString text = QInputDialog::getText(tr("New Favorite"),
                                        tr("Favorite name:"),
                                        QLineEdit::Normal,
@@ -509,7 +511,7 @@ void MainWindow::addPlaceMark() {
     placeMarkList->insertItem(text);
     placemark_manager_->Add(gstPlacemark(text, gfxview->CenterLat(),
                                        gfxview->CenterLon(), gfxview->level()));
-  }
+  }*/
 }
 
 void MainWindow::managePlacemarks() {
@@ -520,38 +522,38 @@ void MainWindow::managePlacemarks() {
 
 void MainWindow::selectPlaceMark(int idx) {
   // ignore the first entry, as it is just the label 'Placemarks...'
-  if (idx != 0) {
+  /*if (idx != 0) {
     --idx;
     gstPlacemark pm = placemark_manager_->Get(idx);
     gfxview->setPosition(pm.latitude, pm.longitude, pm.level);
-  }
+  }*/
 }
 
 void MainWindow::editPrefs() {
-  Preferences prefs(this);
+  /*Preferences prefs(this);
 
   if (prefs.exec() != QDialog::Accepted)
     return;
 
   updateImageLayers();
 
-  emit prefsChanged();
+  emit prefsChanged();*/
 }
 
 void MainWindow::manageIcons() {
-  (new IconManager(this, false, Qt::WDestructiveClose))->show();
+  //(new IconManager(this, false, Qt::WDestructiveClose))->show();
 }
 
 void MainWindow::manageProviders() {
-  (new ProviderManager(this, true, Qt::WDestructiveClose))->exec();
+  //(new ProviderManager(this, true, Qt::WDestructiveClose))->exec();
 }
 
 void MainWindow::openPublisher() {
-  (new Publisher(this, true, Qt::WDestructiveClose))->exec();
+  //(new Publisher(this, true, Qt::WDestructiveClose))->exec();
 }
 
 void MainWindow::manageLocales() {
-  (new LocaleManager(this, true, Qt::WDestructiveClose))->exec();
+  //(new LocaleManager(this, true, Qt::WDestructiveClose))->exec();
 }
 
 void MainWindow::assetManager() {
@@ -560,17 +562,17 @@ void MainWindow::assetManager() {
 }
 
 void MainWindow::ShowFeatureEditor() {
-  if (Preferences::ExperimentalMode) {
+  /*if (Preferences::ExperimentalMode) {
     feature_editor_->showNormal();
     feature_editor_->raise();
-  }
+  }*/
 }
 
 void MainWindow::systemManager() {
-  if (system_manager_ == NULL)
+  /*if (system_manager_ == NULL)
     system_manager_ = new SystemManager();
   system_manager_->showNormal();
-  system_manager_->raise();
+  system_manager_->raise();*/
 }
 
 void MainWindow::viewSelection() {
@@ -586,22 +588,22 @@ void MainWindow::viewProjectManager() {
 }
 
 void MainWindow::latlongUpdate(double lat, double lon) {
-  QString ns = (lat >= 0.0) ? "N" : "S";
+  /*QString ns = (lat >= 0.0) ? "N" : "S";
   QString ew = (lon >= 0.0) ? "E" : "W";
   lat_lon_->setText(QString("%1%2, %3%4")
                     .arg(fabs(lat), 10, 'f', 6).arg(ns)
-                    .arg(fabs(lon), 10, 'f', 6).arg(ew));
+                    .arg(fabs(lon), 10, 'f', 6).arg(ew));*/
 }
 
 void MainWindow::drawstats(int frame, double tex, double geom) {
-  if (draw_stats_) {
+  /*if (draw_stats_) {
     draw_stats_->setText(QString("f:%1 t:%2 g:%3").arg(frame).
                          arg(tex, 0, 'f', 4).arg(geom, 0, 'f', 4));
-  }
+  }*/
 }
 
 void MainWindow::busyProgress(int val) {
-  if (val == 0) {
+  /*if (val == 0) {
     busy_progress_bar_->setProgress(0);
     busy_progress_max_ = 10;
     return;
@@ -616,5 +618,5 @@ void MainWindow::busyProgress(int val) {
   if (percent < 1)  // always draw something!
     percent = 1;
 
-  busy_progress_bar_->setProgress(percent);
+  busy_progress_bar_->setProgress(percent);*/
 }

@@ -14,16 +14,16 @@
 // limitations under the License.
 
 
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qimage.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qtabwidget.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtGui/qimage.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qtabwidget.h>
 
 #include <gstLayer.h>
 
@@ -38,11 +38,11 @@ static QString kDefaultLocaleName = QObject::tr("Default");
 
 LayerGroupProperties::LayerGroupProperties(
     QWidget* parent, const LayerConfig& config)
-    : LayerGroupPropertiesBase(parent, 0, false, 0),
+    : //LayerGroupPropertiesBase(parent, 0, false, 0),
       WidgetControllerManager(parent),
       layer_config_(config) {
 
-  idSpinBox->setValue(layer_config_.channelId);
+  /*idSpinBox->setValue(layer_config_.channelId);
   layer_config_.AssignUuidIfEmpty();
   uuidEdit->setText(layer_config_.asset_uuid_);
 
@@ -78,21 +78,21 @@ LayerGroupProperties::LayerGroupProperties(
     assert(transconsole_tab->parent() != 0);
   }
 
-  SyncToWidgets();
+  SyncToWidgets();*/
 }
 
 LayerConfig LayerGroupProperties::GetConfig() {
-  SyncToConfig();
+  /*SyncToConfig();
 
   layer_config_.isVisible = isVisibleCheck->isChecked();
   layer_config_.isExpandable = isExpandableCheck->isEnabled() &&
                                isExpandableCheck->isChecked();
   layer_config_.channelId = static_cast< unsigned int> (idSpinBox->value());
-  layer_config_.asset_uuid_ = uuidEdit->text().ascii();
+  layer_config_.asset_uuid_ = uuidEdit->text().ascii();*/
 
   return layer_config_;
 }
 
 void LayerGroupProperties::toggleIsVisible(bool state) {
-  isExpandableCheck->setEnabled(state);
+  //isExpandableCheck->setEnabled(state);
 }

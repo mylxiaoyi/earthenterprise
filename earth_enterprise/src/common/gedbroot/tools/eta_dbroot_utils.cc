@@ -15,9 +15,8 @@
 
 #include "common/gedbroot/tools/eta_dbroot_utils.h"
 
-#include <qstring.h>
-#include <qurl.h>
-
+#include <QtCore/QString>
+#include <QtCore/QUrl>
 
 #include <algorithm>
 #include <map>
@@ -218,7 +217,7 @@ bool MaybeSetUrlFromEta(const EtaStruct& root, const char* struct_name,
   string field_name = string(struct_name) + ".host";
   string host;
   MaybeReadFromNamedChild(root, field_name.c_str(), &host);
-  url.setHost(host);
+  url.setHost(QString(host.c_str()));
 
   if (!url.isValid()) {
     return false;
@@ -232,14 +231,14 @@ bool MaybeSetUrlFromEta(const EtaStruct& root, const char* struct_name,
   field_name = string(struct_name) + ".path";
   string path;
   MaybeReadFromNamedChild(root, field_name.c_str(), &path);
-  url.setPath(host);
+  url.setPath(QString(host.c_str()));
 
   field_name = string(struct_name) + ".secureSS";
   bool secure = false;
   MaybeReadFromNamedChild(root, field_name.c_str(), &secure);
-  url.setProtocol(secure ? "https" : "http");
+  url.setScheme(secure ? "https" : "http");
 
-  AddStringToProto(url.toString(), output);
+  AddStringToProto(url.toString().toStdString(), output);
 
   return true;
 }
@@ -460,7 +459,7 @@ void ParseStyleMaps(const EtaDocument& eta_doc, dbroot::DbRootProto* dbroot) {
 }
 
 const string ConvertToValidUTF8(const string& input) {
-  return std::string(QString(input).utf8());
+  return std::string(QString(input.c_str()).toUtf8().data());
 }
 
 
@@ -1085,17 +1084,17 @@ void ParseSearchTabs(const EtaDocument& eta_doc,
 
     // Read URL fragments and build URL.
     QUrl url;
-    url.setHost(reader.GetString("host", ""));
+    url.setHost(QString(reader.GetString("host", "").c_str()));
     url.setPort(reader.GetInt("port", 0));
-    url.setPath(reader.GetString("path", ""));
-    url.setProtocol(reader.GetBool("secure", false) ? "https" : "http");
+    url.setPath(QString(reader.GetString("path", "").c_str()));
+    url.setScheme(reader.GetBool("secure", false) ? "https" : "http");
     if (url.isValid()) {
-      search_tab->set_base_url(url.toString());
+      search_tab->set_base_url(url.toString().toStdString());
     } else {
       notify(NFY_WARN, "Invalid URL info in search tab: %s\n    host: %s"
                         "    port: %d    secure: %s", eta_tab->name().c_str(),
-                        string(url.host()).c_str(), url.port(),
-                        string(url.protocol()).c_str() );
+                        url.host().toStdString().c_str(), url.port(),
+                        url.scheme().toStdString().c_str() );
     }
 
     string viewport_prefix = reader.GetString("viewportPrefix", "");
@@ -1210,11 +1209,11 @@ void ParseValidDatabases(const EtaDocument& eta_doc,
 
       // Build url from host (which can be a full url) and port.
       QUrl url;
-      url.setHost(host);
+      url.setHost(QString(host.c_str()));
       if (port != 0) {
         url.setPort(port);
       }
-      database->set_database_url(url.toString());
+      database->set_database_url(url.toString().toStdString());
     }
   }
 }

@@ -14,12 +14,12 @@
 // limitations under the License.
 
 
-#include <qstringlist.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qtextedit.h>
-#include <qpushbutton.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtWidgets/qpushbutton.h>
 #include <gstRecord.h>
 
 #include "LabelFormat.h"
@@ -30,9 +30,9 @@ static QString InsertFieldTxt(QObject::tr("Insert Field"));
 
 LabelFormat::LabelFormat(QWidget* parent, const gstHeaderHandle &record_header,
                          const QString& txt, LineMode mode)
-    : LabelFormatBase(parent, 0, false, 0), mode_(mode) {
+    : Ui::LabelFormatBase(), mode_(mode) {
 
-  if (record_header) {
+  /*if (record_header) {
     if (record_header->numColumns() != 0) {
       insert_field_combo->insertItem(InsertFieldTxt);
       for (unsigned int col = 0; col < record_header->numColumns(); ++col)
@@ -54,11 +54,11 @@ LabelFormat::LabelFormat(QWidget* parent, const gstHeaderHandle &record_header,
     lineEdit->hide();
     textEdit->setText(txt);
     textEdit->show();
-  }
+  }*/
 }
 
 void LabelFormat::insertField(const QString &str) {
-  if (str == InsertFieldTxt)
+  /*if (str == InsertFieldTxt)
     return;
 
   insert_field_combo->blockSignals(true);
@@ -75,25 +75,25 @@ void LabelFormat::insertField(const QString &str) {
     textEdit->insert(QString("«%1»").arg(str));
     textEdit->setFocus();
     textEdit->blockSignals(false);
-  }
+  }*/
 }
 
 void LabelFormat::AutoPopulate() {
-  textEdit->blockSignals(true);
+  /*textEdit->blockSignals(true);
   // skip first line which is InsertFieldTxt
   for (int item = 1; item < insert_field_combo->count(); ++item) {
     QString field = insert_field_combo->text(item);
     textEdit->insert(QString("%1: \xAB%2\xBB<br>\n").arg(field).arg(field));
   }
-  textEdit->blockSignals(false);
+  textEdit->blockSignals(false);*/
 }
 
 void LabelFormat::accept() {
-  if (mode_ == SingleLine) {
+  /*if (mode_ == SingleLine) {
     label_text_ = lineEdit->text();
   } else {
     label_text_ = textEdit->text();
   }
 
-  LabelFormatBase::accept();
+  LabelFormatBase::accept();*/
 }

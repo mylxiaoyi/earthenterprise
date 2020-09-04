@@ -21,7 +21,7 @@
 #include <placemarkeditbase.h>
 #include <gst/.idl/gstPlacemark.h>
 
-class PlacemarkEdit : public PlacemarkEditBase
+class PlacemarkEdit : public Ui::PlacemarkEditBase
 {
  public:
   PlacemarkEdit( QWidget* parent, const gstPlacemark & );

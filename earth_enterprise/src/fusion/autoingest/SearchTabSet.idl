@@ -48,20 +48,20 @@ class SearchTabSet
   QString
   SearchTabSet::SearchTabsFilename(void)
   {
-    return khComposePath(geAssetRoot::Dirname(AssetDefs::AssetRoot(),
+    return QString(khComposePath(geAssetRoot::Dirname(AssetDefs::AssetRoot(),
                                               geAssetRoot::UserDataDir),
-                         "searchtabs.xml");
+                         "searchtabs.xml").c_str());
   }
   
   bool
   SearchTabSet::Load(void)
   {
     QString filename = SearchTabsFilename();
-    if (!khExists(filename)) {
+    if (!khExists(filename.toStdString())) {
       // missing file is not an error
       return true;
     }
-    bool retval = Load(filename.ascii());
+    bool retval = Load(filename.toLatin1().data());
     return retval;
   }
 
@@ -69,8 +69,8 @@ class SearchTabSet
   SearchTabSet::Save(void)
   {
     QString filename = SearchTabsFilename();
-    if (Save(filename)) {
-      khChmod(filename, 0666); // in case the umask trimmed any permissions
+    if (Save(filename.toStdString())) {
+      khChmod(filename.toStdString(), 0666); // in case the umask trimmed any permissions
       return true;
     } else {
       return false;

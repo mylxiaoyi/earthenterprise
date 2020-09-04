@@ -19,7 +19,7 @@
 #define KHSRC_FUSION_GST_GSTSITE_H__
 
 #include <vector>
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <gstVertex.h>
 #include <gstRecord.h>
 #include <autoingest/.idl/storage/LayerConfig.h>

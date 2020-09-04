@@ -28,7 +28,7 @@
 typedef unsigned int (*FromPixelFunc)( unsigned int );
 typedef unsigned int (*ToPixelFunc)( unsigned int );
 
-class RasterLayerProperties : public RasterLayerPropertiesBase
+class RasterLayerProperties : public Ui::RasterLayerPropertiesBase
 {
  public:
   RasterLayerProperties( QWidget* parent, const InsetStackItem &, AssetDefs::Type );

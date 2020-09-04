@@ -71,7 +71,7 @@ main(int argc, char *argv[]) {
     bool needed;
     QString error;
     if (!khAssetManagerProxy::BuildAsset(assetref, needed, error)) {
-      notify(NFY_FATAL, "%s", error.latin1());
+      notify(NFY_FATAL, "%s", error.toLatin1().data());
     } else if (!needed) {
       notify(NFY_NOTICE, "Nothing to do. Already up to date.");
     }

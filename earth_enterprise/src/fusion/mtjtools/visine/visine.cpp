@@ -15,8 +15,8 @@
 #include "stdio.h"
 
 // GDAL includes
-#include "cpl_string.h"
-#include "gdal_priv.h"
+#include <gdal/cpl_string.h>
+#include <gdal/gdal_priv.h>
 
 // KHistogram class
 #include "khistogram.h"

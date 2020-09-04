@@ -13,16 +13,16 @@
 // limitations under the License.
 
 
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qtextcodec.h>
-#include <qfileinfo.h>
-#include <qcolordialog.h>
-#include <qspinbox.h>
-#include <qwidgetstack.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtCore/qtextcodec.h>
+#include <QtCore/qfileinfo.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qstackedwidget.h>
 
 #include <notify.h>
 #include <autoingest/.idl/Systemrc.h>
@@ -50,14 +50,14 @@ std::string Preferences::prefsDir;
 QString Preferences::filepath(const QString& fname) {
   if (prefsDir.empty())
     fprintf(stderr, "prefsDir is empty!\n");
-  return prefsDir + QString("/") + fname;
+  return QString::fromStdString(prefsDir) + QString("/") + fname;
 }
 
 PrefsConfig& Preferences::getConfig() {
-  static bool loadonce = true;
+  //static bool loadonce = true;
   static PrefsConfig config;
 
-  if (loadonce) {
+  /*if (loadonce) {
     QString prefsPath = Preferences::filepath("preferences.xml");
     if (khExists(prefsPath)) {
       config.Load(prefsPath);
@@ -68,7 +68,7 @@ PrefsConfig& Preferences::getConfig() {
     loadonce = false;
 
     GfxView::SetIsMercatorPreview(Preferences::getConfig().isMercatorPreview);
-  }
+  }*/
   return config;
 }
 
@@ -82,7 +82,7 @@ PrefsConfig Preferences::getDefaultConfig() {
 // -----------------------------------------------------------------------------
 
 void Preferences::init() {
-  if (initOnce)
+  /*if (initOnce)
     return;
 
   initOnce = true;
@@ -103,17 +103,17 @@ void Preferences::init() {
   GlobalEnableAll  = RuntimeOptions::EnableAll();
   ExpertMode       = RuntimeOptions::ExpertMode();
   ExperimentalMode = RuntimeOptions::ExperimentalMode();
-  GoogleInternal   = RuntimeOptions::GoogleInternal();
+  GoogleInternal   = RuntimeOptions::GoogleInternal();*/
 }
 
 QString Preferences::empty_path("<i>" + QObject::tr("empty") + "</i>");
 
 Preferences::Preferences(QWidget* parent)
-    : PreferencesBase(parent, 0, false, 0),
+    : QDialog(parent), ui(new Ui::PreferencesBase),
       selectOutline(4, 0),
       selectFill(4, 0) {
   // restore saved preferences
-  const PrefsConfig& prefsConfig = getConfig();
+  /*const PrefsConfig& prefsConfig = getConfig();
 
   // gather all valid codecs from qt and insert in drop-down list
   codecCombo->insertItem(tr("<none>"));
@@ -206,11 +206,11 @@ Preferences::Preferences(QWidget* parent)
     terrain_path_label->setText(empty_path);
   } else {
     terrain_path_label->setText(prefsConfig.defaultTerrainPath);
-  }
+  }*/
 }
 
 void Preferences::ChooseSelectOutline() {
-  QRgb init = qRgba(selectOutline[0],
+  /*QRgb init = qRgba(selectOutline[0],
                     selectOutline[1],
                     selectOutline[2],
                     selectOutline[3]);
@@ -222,11 +222,11 @@ void Preferences::ChooseSelectOutline() {
   selectOutline[0] = qRed(rgba);
   selectOutline[1] = qGreen(rgba);
   selectOutline[2] = qBlue(rgba);
-  selectOutline[3] = qAlpha(rgba);
+  selectOutline[3] = qAlpha(rgba);*/
 }
 
 void Preferences::ChooseSelectFill() {
-  QRgb init = qRgba(selectFill[0],
+  /*QRgb init = qRgba(selectFill[0],
                     selectFill[1],
                     selectFill[2],
                     selectFill[3]);
@@ -238,11 +238,11 @@ void Preferences::ChooseSelectFill() {
   selectFill[0] = qRed(rgba);
   selectFill[1] = qGreen(rgba);
   selectFill[2] = qBlue(rgba);
-  selectFill[3] = qAlpha(rgba);
+  selectFill[3] = qAlpha(rgba);*/
 }
 
 void Preferences::ChooseImageryIndex() {
-  DatabaseIndexDialog fileDialog;
+  /*DatabaseIndexDialog fileDialog;
 
   fileDialog.addFilter("Google Earth Database (*gedb)");
   fileDialog.setSelectedFilter(0);
@@ -251,11 +251,11 @@ void Preferences::ChooseImageryIndex() {
 
   if (fileDialog.exec() == QDialog::Accepted) {
     imagery_index->setText(fileDialog.selectedFile());
-  }
+  }*/
 }
 
 void Preferences::ChooseImageryProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -266,11 +266,11 @@ void Preferences::ChooseImageryProject() {
     return;
   }
 
-  imagery_project->setText(newpath);
+  imagery_project->setText(newpath);*/
 }
 
 void Preferences::ChooseImageryIndexMercator() {
-  DatabaseIndexDialog fileDialog;
+  /*DatabaseIndexDialog fileDialog;
 
   fileDialog.addFilter("Prebuilt Mercator Raster (*kip, *.ktp)");
   fileDialog.setSelectedFilter(0);
@@ -279,11 +279,11 @@ void Preferences::ChooseImageryIndexMercator() {
 
   if (fileDialog.exec() == QDialog::Accepted) {
     imagery_index_mercator->setText(fileDialog.selectedFile());
-  }
+  }*/
 }
 
 void Preferences::ChooseImageryProjectMercator() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
                        kMercatorProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -294,11 +294,11 @@ void Preferences::ChooseImageryProjectMercator() {
     return;
   }
 
-  imagery_project_mercator->setText(newpath);
+  imagery_project_mercator->setText(newpath);*/
 }
 
 void Preferences::accept() {
-  PrefsConfig& config = getConfig();
+  /*PrefsConfig& config = getConfig();
   config.backgroundImageryProject = imagery_project->text();
   config.backgroundTexturePath = imagery_index->text();
   config.backgroundStreamServer = stream_server->text();
@@ -350,7 +350,7 @@ void Preferences::accept() {
 
   config.Save(Preferences::filepath("preferences.xml"));
 
-  PreferencesBase::accept();
+  PreferencesBase::accept();*/
 }
 
 QString Preferences::EmptyCheck(const QString& txt) {
@@ -365,7 +365,7 @@ QString Preferences::CaptionText() {
   // Allow user to override hostname for display as CaptionText.
   // This is useful for our docs team for example, but would also
   // allow users to use an easy to read nickname.
-  char* fusion_host = getenv("FUSION_HOSTNAME");
+  /*char* fusion_host = getenv("FUSION_HOSTNAME");
   std::string host;
   if (fusion_host) {
     host = fusion_host;
@@ -379,7 +379,8 @@ QString Preferences::CaptionText() {
     caption += " | ";
     caption += runtimeDesc;
   }
-  return caption;
+  return caption;*/
+  return QString::null;
 }
 
 QString Preferences::DefaultVectorPath() {
@@ -398,24 +399,24 @@ QString Preferences::DefaultTerrainPath() {
 }
 
 void Preferences::ChooseDefaultVectorPath() {
-  QString path = QFileDialog::getExistingDirectory(vector_path_label->text(),
+  /*QString path = QFileDialog::getExistingDirectory(vector_path_label->text(),
                      this, 0, tr("Select Folder"), true);
   if (path != QString::null)
-    vector_path_label->setText(path);
+    vector_path_label->setText(path);*/
 }
 
 void Preferences::ChooseDefaultImageryPath() {
-  QString path = QFileDialog::getExistingDirectory(imagery_path_label->text(),
+  /*QString path = QFileDialog::getExistingDirectory(imagery_path_label->text(),
                      this, 0, tr("Select Folder"), true);
   if (path != QString::null)
-    imagery_path_label->setText(path);
+    imagery_path_label->setText(path);*/
 }
 
 void Preferences::ChooseDefaultTerrainPath() {
-  QString path = QFileDialog::getExistingDirectory(terrain_path_label->text(),
+  /*QString path = QFileDialog::getExistingDirectory(terrain_path_label->text(),
                      this, 0, tr("Select Folder"), true);
   if (path != QString::null)
-    terrain_path_label->setText(path);
+    terrain_path_label->setText(path);*/
 }
 
 std::string Preferences::PublishServerName(const std::string& database_name) {
@@ -429,7 +430,7 @@ std::string Preferences::PublishServerName(const std::string& database_name) {
 
 void Preferences::UpdatePublishServerDbMap(const std::string& database_name,
                                            const std::string& server_name) {
-  PrefsConfig& config = getConfig();
+  /*PrefsConfig& config = getConfig();
   config.publisher_db_map[database_name] = server_name;
-  config.Save(Preferences::filepath("preferences.xml"));
+  config.Save(Preferences::filepath("preferences.xml"));*/
 }

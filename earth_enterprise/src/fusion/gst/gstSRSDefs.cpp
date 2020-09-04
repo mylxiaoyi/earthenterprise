@@ -23,9 +23,9 @@
 #include <string>
 #include <gstTXTTable.h>
 
-#include <ogr_spatialref.h>
-#include <cpl_conv.h>
-#include <cpl_string.h>
+#include <gdal/ogr_spatialref.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/cpl_string.h>
 #include <geInstallPaths.h>
 #include <khFileUtils.h>
 

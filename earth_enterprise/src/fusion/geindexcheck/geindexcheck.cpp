@@ -188,7 +188,7 @@ int main(int argc, char **argv) {
     header = khTransferGuard<geindex::Header>
         (new geindex::Header(file_pool, index_path));
   }
-  catch (khSimpleException e) {
+  catch (khSimpleException &e) {
     notify(NFY_FATAL, "ERROR: unable to read index header (%s)",
            e.what());
     return 2;

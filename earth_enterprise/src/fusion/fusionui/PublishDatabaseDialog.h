@@ -23,7 +23,9 @@
 #include "fusion/autoingest/Asset.h"
 #include "publishdatabasedialogbase.h"
 
-class PublishDatabaseDialog : public PublishDatabaseDialogBase {
+#include <QtWidgets/QDialog>
+
+class PublishDatabaseDialog : public QDialog {
  public:
   PublishDatabaseDialog(QWidget* parent, const Asset& asset,
                             const std::vector<QString>& nicknames);
@@ -35,6 +37,7 @@ class PublishDatabaseDialog : public PublishDatabaseDialogBase {
   std::string GetTargetPath();
 
  private:
+  Ui_PublishDatabaseDialogBase *ui;
   std::vector<std::string> valid_versions_;
 };
 

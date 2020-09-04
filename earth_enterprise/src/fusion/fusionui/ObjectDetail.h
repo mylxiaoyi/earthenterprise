@@ -19,7 +19,7 @@
 #ifndef _ObjectDetail_h_
 #define _ObjectDetail_h_
 
-#include <qlistview.h>
+#include <QtWidgets/qlistview.h>
 
 #include <khGuard.h>
 #include <gstVertex.h>
@@ -33,16 +33,16 @@ class gstDrawState;
 
 // -----------------------------------------------------------------------------
 
-class ObjectDetail : public ObjectDetailBase {
+class ObjectDetail : public QObject, public Ui::ObjectDetailBase {
   Q_OBJECT
 
  public:
   ObjectDetail(QWidget* parent, unsigned int id, gstGeodeHandle g, gstRecordHandle rec);
   ~ObjectDetail();
 
-  class VertexItem : public QListViewItem {
+  class VertexItem : public QWidget {
    public:
-    VertexItem(QListViewItem* parent, QListViewItem* after, const QString& l,
+    VertexItem(QWidget* parent, QWidget* after, const QString& l,
                const gstVertex& v);
     const gstVertex& getVertex() const { return vertex; }
 
@@ -56,7 +56,7 @@ class ObjectDetail : public ObjectDetailBase {
 
 protected slots:
 void drawVectors(const gstDrawState& s);
-  virtual void selectionChanged(QListViewItem* item);
+  //virtual void selectionChanged(QListViewItem* item);
 
  private:
   gstGeodeHandle geode_handle_;

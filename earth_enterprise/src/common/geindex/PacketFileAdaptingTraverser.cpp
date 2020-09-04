@@ -42,8 +42,8 @@ PacketFileAdaptingTraverserBase<TypedBucket>::PacketFileAdaptingTraverserBase(
 {
   ReadNext();
   if (!have_current_) {
-    QString warn(kh::tr("%1 is empty").arg(packetfile));
-    notify(NFY_WARN, "%s", warn.latin1());
+    QString warn(kh::tr("%1 is empty").arg(QString(packetfile.c_str())));
+    notify(NFY_WARN, "%s", warn.toLatin1().data());
   }
 }
 

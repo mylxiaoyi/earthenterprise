@@ -17,8 +17,8 @@
 #include <khException.h>
 #include <khFileUtils.h>
 #include <khgdal/khgdal.h>
-#include <cpl_string.h>
-#include <vrtdataset.h>
+#include <gdal/cpl_string.h>
+#include <gdal/vrtdataset.h>
 
 namespace iconutil {
 
@@ -34,7 +34,7 @@ void Extract(const std::string &src, ExtractType type,
 
   GDALDataset *srcDataset = (GDALDataset*)GDALOpen(src.c_str(), GA_ReadOnly );
   if (!srcDataset) {
-    throw khException(kh::tr("Unable to open %1").arg(src));
+    throw khException(kh::tr("Unable to open %1").arg(QString::fromStdString(src)));
   }
 
 

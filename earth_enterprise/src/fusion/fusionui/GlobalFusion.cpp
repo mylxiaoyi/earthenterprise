@@ -16,8 +16,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include <qpixmap.h>
-#include <qimage.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qimage.h>
 
 #include <gstMisc.h>
 #include <notify.h>

@@ -13,11 +13,12 @@
 // limitations under the License.
 
 
-#include <qlabel.h>
-#include <qpopupmenu.h>
-#include <qdragobject.h>
-#include <qfont.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qmenu.h>
+//#include <qdragobject.h>
+#include <QtGui/qfont.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/QPixmap>
 
 #include <autoingest/AssetVersion.h>
 #include <autoingest/khAssetManagerProxy.h>
@@ -28,11 +29,11 @@
 
 static QPixmap uic_load_pixmap( const QString &name )
 {
-  const QMimeSource *m = QMimeSourceFactory::defaultFactory()->data( name );
-  if ( !m )
-    return QPixmap();
+  //const QMimeSource *m = QMimeSourceFactory::defaultFactory()->data( name );
+  //if ( !m )
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode( m, pix );
+  //QImageDrag::decode( m, pix );
   return pix;
 }
 
@@ -44,13 +45,13 @@ static QPixmap uic_load_pixmap( const QString &name )
 #define COL_REF 3
 
 AssetChildItem::AssetChildItem( QListView *parent, const AssetVersion &ver)
-    : QListViewItem( parent ), AssetWatcher(ver->GetRef())
+    : QWidget( parent ), AssetWatcher(ver->GetRef())
 {
   configureWidgets(ver);
 }
 
-AssetChildItem::AssetChildItem( QListViewItem *parent, const AssetVersion &ver, const std::string &msg )
-    : QListViewItem( parent ), AssetWatcher(ver->GetRef())
+AssetChildItem::AssetChildItem( QWidget *parent, const AssetVersion &ver, const std::string &msg )
+    : QWidget( parent ), AssetWatcher(ver->GetRef())
 {
   configureWidgets(ver, msg);
 }
@@ -59,28 +60,28 @@ void
 AssetChildItem::configureWidgets(const AssetVersion &ver,
                                  const std::string &msg)
 {
-  setText( COL_SUBTYPE, msg + ver->PrettySubtype());
+  /*setText( COL_SUBTYPE, msg + ver->PrettySubtype());
   setText( COL_STATE, ver->PrettyState() );
   if ( ver->Logfile().size() != 0 )
     setPixmap( COL_LOG, uic_load_pixmap( "history.png" ) );
   setText( COL_REF, ver->GetRef().toString().c_str() );
 
   setExpandable(ver->inputs.size() ||
-                (!ver->IsLeaf() && ver->children.size()));
+                (!ver->IsLeaf() && ver->children.size()));*/
 }
 
 
 void
 AssetChildItem::changed(void)
 {
-  AssetVersion ver(ref);
-  setText( COL_STATE, ver->PrettyState() );
+  //AssetVersion ver(ref);
+  //setText( COL_STATE, ver->PrettyState() );
 }
 
 void
 AssetChildItem::setOpen(bool open)
 {
-  if (open) {
+  /*if (open) {
     // add my children
     AssetVersion ver(ref);
     if ( !ver->IsLeaf() ) {
@@ -114,10 +115,10 @@ AssetChildItem::setOpen(bool open)
     while ((tokill = firstChild())) {
       delete tokill;
     }
-  }
+  }*/
 }
 
-void AssetChildItem::paintCell( QPainter *p, const QColorGroup &cg, int col, int width, int align )
+/*void AssetChildItem::paintCell( QPainter *p, const QColorGroup &cg, int col, int width, int align )
 {
   QColorGroup ngrp = cg;
 
@@ -125,7 +126,7 @@ void AssetChildItem::paintCell( QPainter *p, const QColorGroup &cg, int col, int
     ngrp = AssetManager::GetStateDrawStyle( text( col ), p, cg );
 
   QListViewItem::paintCell( p, ngrp, col, width, align );
-}
+}*/
 
 std::string
 AssetChildItem::getVersionRef() const
@@ -139,9 +140,10 @@ AssetChildItem::getVersionRef() const
 AssetVersionProperties::VerPropMap AssetVersionProperties::openverprops;
 
 AssetVersionProperties::AssetVersionProperties( const std::string &verref_ )
-    : AssetVersionPropertiesBase( 0, 0, false, Qt::WDestructiveClose ), verref( verref_ )
+    : QDialog(), ui(new Ui::AssetVersionPropertiesBase)//, verref( verref_ )
 {
-  depListView->setColumnWidthMode( 0, QListView::Maximum );
+  ui->setupUi(this);
+  /*depListView->setColumnWidthMode( 0, QListView::Maximum );
   depListView->setColumnWidthMode( 1, QListView::Maximum );
   depListView->setSorting( -1 );
   depListView->setRootIsDecorated( true );
@@ -152,7 +154,7 @@ AssetVersionProperties::AssetVersionProperties( const std::string &verref_ )
   openverprops.insert(std::make_pair(verref, this));
 
   refresh();
-  show();
+  show();*/
 }
 
 AssetVersionProperties::~AssetVersionProperties()
@@ -162,7 +164,7 @@ AssetVersionProperties::~AssetVersionProperties()
 
 void AssetVersionProperties::refresh()
 {
-  depListView->clear();
+  /*depListView->clear();
 
 
   AssetVersion ver(verref);
@@ -175,11 +177,11 @@ void AssetVersionProperties::refresh()
   for ( int col = 0; col < depListView->columns(); col++ ) {
     int w = depListView->columnWidth( col );
     depListView->setColumnWidth( col, w + 20 );
-  }
+  }*/
 
 }
 
-void AssetVersionProperties::clicked( QListViewItem *item, const QPoint & pos, int col )
+/*void AssetVersionProperties::clicked( QListViewItem *item, const QPoint & pos, int col )
 {
   if ( item == NULL || col != COL_LOG )
     return;
@@ -190,7 +192,7 @@ void AssetVersionProperties::clicked( QListViewItem *item, const QPoint & pos, i
   if ( !logfile.empty() ) {
     AssetLog::Open(logfile);
   }
-}
+}*/
 
 void
 AssetVersionProperties::Open(const std::string &verref)
@@ -204,7 +206,7 @@ AssetVersionProperties::Open(const std::string &verref)
   }
 }
 
-void
+/*void
 AssetVersionProperties::rmbClicked( QListViewItem *item,
                                     const QPoint &pos, int )
 {
@@ -217,4 +219,4 @@ AssetVersionProperties::rmbClicked( QListViewItem *item,
     int item = menu.exec(pos);
     actions.handle(item);
   }
-}
+}*/

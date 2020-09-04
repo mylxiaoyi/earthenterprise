@@ -46,51 +46,51 @@ gepartialglobebuilder = env.executable(
     ['gepartialglobebuilder.cpp', 'partialglobebuilder.cpp',
      portablepacketwriter],
     LIBS=['sharedportablelib', 'gesimpleearthstream',
-          'sgl', 'gif', 'png12', 'jpeg',
+          'sgl', 'gif', 'png', 'jpeg',
           'freetype', 'geutil', 'gecommon', 'cutspec',
-          'geqtpacket', 'geos', 'qtutils'])
+          'geqtpacket', 'geos', 'qtutils', 'Qt5Core'])
 
 # Do NOT add to installer! Internal use only!
 gesimpleencode = env.executable('gesimpleencode',
                                 ['gesimpleencode.cpp'],
-                                LIBS=['geutil', 'gecommon'])
+                                LIBS=['geutil', 'gecommon', 'Qt5Core'])
 
 gedeltabuilder = env.executable(
     'gedeltabuilder',
     ['gedeltabuilder.cpp', deltabuilder, portablepacketwriter],
     LIBS=['sharedportablelib', 'gesimpleearthstream',
-          'sgl', 'gif', 'png12', 'jpeg',
-          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos'])
+          'sgl', 'gif', 'png', 'jpeg',
+          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos', 'Qt5Core'])
 
 geportableglobebuilder = env.executable(
     'geportableglobebuilder',
     ['geportableglobebuilder.cpp', portableglobebuilder, portablepacketwriter],
     LIBS=['sharedportablelib', 'gesimpleearthstream',
-          'sgl', 'gif', 'png12', 'jpeg',
-          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos', 'qtutils'])
+          'sgl', 'gif', 'png', 'jpeg',
+          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos', 'qtutils', 'Qt5Core'])
 
 gecreatemetadbroot = env.executable(
     'gecreatemetadbroot',
     ['gecreatemetadbroot.cpp', 'createmetadbroot'],
-    LIBS=['gecommon', 'gedbroot', 'geprotobuf'])
+    LIBS=['gecommon', 'gedbroot', 'geprotobuf', 'Qt5Core'])
 
 geportablemapbuilder = env.executable(
     'geportablemapbuilder',
     ['geportablemapbuilder.cpp', portablemapbuilder,
      portableglobebuilder, portablepacketwriter],
     LIBS=['sharedportablelib', 'gesimpleearthstream',
-          'sgl', 'gif', 'png12', 'jpeg',
-          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos', 'qtutils'])
+          'sgl', 'gif', 'png', 'jpeg',
+          'freetype', 'geutil', 'gecommon', 'geqtpacket', 'geos', 'qtutils', 'Qt5Core'])
 
 geportableglobepacker = env.executable(
     'geportableglobepacker',
     ['geportableglobepacker.cpp'],
-    LIBS=['sharedportablelib', 'geutil', 'gecommon'])
+    LIBS=['sharedportablelib', 'geutil', 'gecommon', 'Qt5Core'])
 
 geportableglcpacker = env.executable(
     'geportableglcpacker',
     ['geportableglcpacker.cpp'],
-    LIBS=['sharedportablelib', 'geutil', 'gecommon'])
+    LIBS=['sharedportablelib', 'geutil', 'gecommon', 'Qt5Core'])
 
 
 portable_glc_reader_sobj = env.SharedObject('servers/fileunpacker/shared/portable_glc_reader.cpp')
@@ -98,30 +98,30 @@ portable_glc_reader_sobj = env.SharedObject('servers/fileunpacker/shared/portabl
 geglxinfo = env.executable(
     'geglxinfo',
     ['geglxinfo.cpp', portable_glc_reader_sobj],
-    LIBS=['geutil', 'gecommon', 'glb', 'geprotobuf', 'geqtpacket'])
+    LIBS=['geutil', 'gecommon', 'glb', 'geprotobuf', 'geqtpacket', 'Qt5Core'])
 
 # Do NOT install this tool.
 gedecode = env.executable('gedecode',
                           ['gedecode.cpp'],
-                          LIBS=['geutil', 'gecommon'])
+                          LIBS=['geutil', 'gecommon', 'Qt5Core'])
 
 gerewritedbroot = env.executable(
     'gerewritedbroot',
     ['gerewritedbroot.cpp', 'rewritedbroot.cpp'],
     LIBS=['serverreaderlib', 'gedbroot', 'gesimpleearthstream',
-          'gecommon', 'geutil', 'geprotobuf'])
+          'gecommon', 'geutil', 'geprotobuf', 'Qt5Core'])
 
 gekmlgrabber = env.executable('gekmlgrabber',
                               ['gekmlgrabber.cpp'],
                               LIBS=['serverreaderlib', 'gesimpleearthstream',
-                                    'gecommon', 'geutil'])
+                                    'gecommon', 'geutil', 'Qt5Core'])
 
 polygontoqtnodes = env.StaticObject('polygontoqtnodes.cpp')
 
 gepolygontoqtnodes = env.executable(
     'gepolygontoqtnodes',
     ['gepolygontoqtnodes.cpp', polygontoqtnodes],
-    LIBS=['geutil', 'gecommon', 'geqtpacket', 'qtutils'])
+    LIBS=['geutil', 'gecommon', 'geqtpacket', 'qtutils', 'Qt5Core'])
 
 # Install portable commands
 env.install('server_bin', [geportableglobebuilder, geportablemapbuilder,
@@ -137,7 +137,7 @@ portableglobebuilder_test = env.test(
      portableglobebuilder, portablepacketwriter],
     LIBS=['sharedportablelib', 'gtest',
           'geutil', 'gecommon', 'geqtpacket',
-          'geos', 'gesimpleearthstream', 'qtutils'])
+          'geos', 'gesimpleearthstream', 'qtutils', 'Qt5Core'])
 
 portablemapbuilder_test = env.test(
     'portablemapbuilder_test',
@@ -145,7 +145,7 @@ portablemapbuilder_test = env.test(
      portableglobebuilder, portablepacketwriter],
      LIBS=['sharedportablelib', 'gtest',
            'geutil', 'gecommon', 'geqtpacket',
-           'geos', 'gesimpleearthstream', 'qtutils'])
+           'geos', 'gesimpleearthstream', 'qtutils', 'Qt5Core'])
 
 cutspec_test = env.test('cutspec_test',
                         ['cutspec_unittest.cpp'],
@@ -163,7 +163,7 @@ cutspec_test = env.test('cutspec_test',
 polygontoqtnodes_test = env.test(
     'polygontoqtnodes_unittest',
     ['polygontoqtnodes_unittest.cpp', polygontoqtnodes],
-    LIBS=['gtest', 'geutil', 'gecommon', 'geqtpacket', 'qtutils'])
+    LIBS=['gtest', 'geutil', 'gecommon', 'geqtpacket', 'qtutils', 'Qt5Core'])
 
 createmetadbroot_unittest = env.test(
     'createmetadbroot_unittest',
@@ -175,5 +175,5 @@ rewritedbroot_unittest = env.test(
     'rewritedbroot_unittest',
     ['rewritedbroot_unittest.cpp', 'rewritedbroot'],
     LIBS=['gtest', 'serverreaderlib', 'gedbroot', 'gesimpleearthstream',
-          'gecommon', 'geutil', 'geprotobuf'],
+          'gecommon', 'geutil', 'geprotobuf', 'Qt5Core'],
     CPPFLAGS='-Wno-error=narrowing')

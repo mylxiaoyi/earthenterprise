@@ -18,22 +18,23 @@
 #ifndef KHSRC_FUSION_FUSIONUI_PROJECTDOCKER_H__
 #define KHSRC_FUSION_FUSIONUI_PROJECTDOCKER_H__
 
-#include <qdockwindow.h>
+//#include <qdockwindow.h>
+#include <QtWidgets/QDockWidget>
 
 class QPushButton;
 class ProjectManager;
 class gstDrawState;
 
-class ProjectDocker : public QDockWindow {
+class ProjectDocker : public QDockWidget {
   Q_OBJECT
 
  public:
-  ProjectDocker(Place p, QWidget* parent, const char* name);
+  ProjectDocker(/*Place p,*/ QWidget* parent, const char* name);
 
   ProjectManager* Preview() const { return preview_; }
 
  protected slots:
-  void selectBox(const gstDrawState& s, Qt::ButtonState bs);
+  //void selectBox(const gstDrawState& s, Qt::ButtonState bs);
 
   void enableAllLayers();
   void disableAllLayers();

@@ -25,7 +25,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 #include "common/khExtents.h"
 #include "fusion/gst/gstMemory.h"

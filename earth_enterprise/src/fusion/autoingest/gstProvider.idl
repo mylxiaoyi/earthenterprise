@@ -16,8 +16,8 @@
 
 #include <string>
 #include <vector>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <khTypes.h>
 #include <cstdint>
 

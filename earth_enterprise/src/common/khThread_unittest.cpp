@@ -47,7 +47,7 @@ void testMutexAcquire(mutex_acquire_info& info, unsigned int timetowait) {
     khLockGuard timedTryLock(mutex, timetowait);
     info.acquired = true;
   }
-  catch (khTimedMutexException e) {
+  catch (khTimedMutexException &e) {
     info.timeoutExceptionCaught = true;
   }
   catch (...) {

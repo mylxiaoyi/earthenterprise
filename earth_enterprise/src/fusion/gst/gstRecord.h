@@ -43,7 +43,7 @@ class gstHeaderImpl : public khMTRefCounter {
     double multiplier;
     bool operator==(const FieldSpec& b) const {
       // forcing the column name comparison is now case-insensitive.
-      return (name.lower() == b.name.lower() && ftype == b.ftype &&
+      return (name.toLower() == b.name.toLower() && ftype == b.ftype &&
               length == b.length && multiplier == b.multiplier);
     }
   };

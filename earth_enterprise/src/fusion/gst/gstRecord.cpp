@@ -16,7 +16,7 @@
 
 #include <gstRecord.h>
 #include <gstGeode.h>
-#include <qtextcodec.h>
+#include <QtCore/qtextcodec.h>
 #include <gstJobStats.h>
 
 // ----------------------------------------------------------------------------
@@ -282,14 +282,14 @@ gstRecordFormatter::gstRecordFormatter(
   const QChar vend(0xbb);    // closing symbol '»'
 
   int varpos = 0;
-  while ((varpos = format_.find(vstart, varpos)) != -1) {
+  while ((varpos = format_.indexOf(vstart, varpos)) != -1) {
     bool match_found = false;
 
     // search all field names for a match
     for (unsigned int ii = 0; ii < hdr->numColumns(); ++ii) {
       QString check_me = QString(
           "%1%2%3").arg(vstart).arg(hdr->Name(ii)).arg(vend);
-      if (format_.find(check_me, varpos) == varpos) {
+      if (format_.indexOf(check_me, varpos) == varpos) {
         arg_pos_.push_back(varpos);
         arg_.push_back(ii);
         format_ = format_.remove(varpos, check_me.length());

@@ -27,7 +27,7 @@ class gstSource;
 class DisplayRuleConfig;
 class MapDisplayRuleConfig;
 
-class ThematicFilter : public ThematicFilterBase {
+class ThematicFilter : public Ui::ThematicFilterBase {
  public:
    ThematicFilter(QWidget* parent, gstLayer* layer);
    // Create a ThematicFilter dialog.
@@ -41,7 +41,7 @@ class ThematicFilter : public ThematicFilterBase {
   virtual void ChooseStartColor();
   virtual void ChooseEndColor();
   virtual void ChangeNumClasses();
-  virtual void SelectAttribute(QListBoxItem* item);
+  //virtual void SelectAttribute(QListBoxItem* item);
 
   bool DefineNewFilters(std::vector<DisplayRuleConfig>* configs);
 

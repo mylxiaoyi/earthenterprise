@@ -17,7 +17,7 @@
 #include "TextRenderer.h"
 #include "SGLHelps.h"
 
-#include <qimage.h>
+#include <QtGui/qimage.h>
 #include <SkFontHost.h>
 
 #include <khSimpleException.h>
@@ -47,10 +47,10 @@ TextRenderer::TextRenderer(const MapTextStyleConfig &config,
   else if (config.weight == MapTextStyleConfig::BoldItalic)
     typestyle = SkTypeface::kBoldItalic;
 
-  SkTypeface *typeface = FontInfo::GetTypeFace(config.font, typestyle);
+  SkTypeface *typeface = FontInfo::GetTypeFace(config.font.toStdString(), typestyle);
   if (typeface == NULL) {
     throw khSimpleException("Typeface not found for map tile rendering: ")
-        << config.font.utf8()
+        << config.font.toStdString()
         << ((config.weight & SkTypeface::kBold) ? "-Bold" : "")
         << ((config.weight & SkTypeface::kItalic) ? "-Italic" : "");
   }
@@ -85,11 +85,11 @@ void
 TextRenderer::DrawText(SkCanvas &canvas, const QString &text,
                        SkScalar x, SkScalar y) const
 {
-  QCString utf8 = text.utf8();
+  QString utf8 = text;
   if (drawOutline) {
-    canvas.drawText(utf8, utf8.length(), x, y, outlinePaint);
+    canvas.drawText(utf8.data(), utf8.length(), x, y, outlinePaint);
   }
-  canvas.drawText(utf8, utf8.length(), x, y, normalPaint);
+  canvas.drawText(utf8.data(), utf8.length(), x, y, normalPaint);
 }
 
 void
@@ -99,7 +99,7 @@ TextRenderer::DrawTextOnPath(SkCanvas &canvas,
                              SkScalar horiz_offset,
                              SkScalar vert_offset) const
 {
-  QCString utf8 = text.utf8();
+  QString utf8 = text;
   if (drawOutline) {
     canvas.drawTextOnPathHV(utf8.data(),
                           utf8.length(),
@@ -120,7 +120,7 @@ SkScalar
 TextRenderer::MeasureText(const QString &text,
                           SkScalar* above, SkScalar* below) const
 {
-  QCString utf8 = text.utf8();
+  QString utf8 = text;
   SkRect bounds;
   const SkScalar retVal = drawOutline
       ? outlinePaint.measureText(utf8.data(), utf8.length(), &bounds)
@@ -174,7 +174,7 @@ TextStyleToPixmap(const MapTextStyleConfig &config,
   SkScalar posY = margin + textAscent;
 
   // create the SkCanvas
-  QImage qimage(int(pixelWidth), int(pixelHeight), 32);
+  QImage qimage(int(pixelWidth), int(pixelHeight), QImage::Format_RGB32);
   // qimage.setAlphaBuffer(true);
   qimage.fill(bgColor.rgb());
 
@@ -188,7 +188,7 @@ TextStyleToPixmap(const MapTextStyleConfig &config,
   textRenderer.DrawText(canvas, text, posX, posY);
 
   // convert to a QPixmap
-  return QPixmap(qimage);
+  return QPixmap::fromImage(qimage);
 }
 
 

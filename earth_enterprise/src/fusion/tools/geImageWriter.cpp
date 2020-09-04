@@ -28,7 +28,7 @@
 
 // This is a GDAL header file which in some ancient version (1.4.2) didn't get
 // installed. With GDAL 1.10 it does get installed.
-#include <vrtdataset.h>
+#include <gdal/vrtdataset.h>
 
 #include <algorithm>
 #include <ios>

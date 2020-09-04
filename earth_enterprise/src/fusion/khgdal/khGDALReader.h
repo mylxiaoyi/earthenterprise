@@ -21,7 +21,7 @@
 #include <khException.h>
 #include "khgdal.h"
 #include "khGDALDataset.h"
-#include <gdalwarper.h>
+#include <gdal/gdalwarper.h>
 #include <khTileAddr.h>
 
 

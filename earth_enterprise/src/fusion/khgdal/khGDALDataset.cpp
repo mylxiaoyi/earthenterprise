@@ -20,8 +20,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <gdalwarper.h>
-#include <ogr_spatialref.h>
+#include <gdal/gdalwarper.h>
+#include <gdal/ogr_spatialref.h>
 
 #include "fusion/khgdal/khgdal.h"
 #include "fusion/khgdal/khAddGeoDataset.h"
@@ -93,7 +93,7 @@ khGDALDatasetImpl::khGDALDatasetImpl(const std::string &filename_,
         // convert the GDAL SRS string to ogrSRS (will validate)
         if ((ogrSRS.SetFromUserInput(srs.c_str()) != OGRERR_NONE) ||
             !ogrSRS.GetRoot()) {
-          throw khException(kh::tr("Unrecognized SRS: %1").arg(srs));
+          throw khException(kh::tr("Unrecognized SRS: %1").arg(QString(srs.c_str())));
         }
       } else if (khExists(khReplaceExtension(filename, ".prj"))) {
         needAddGeo = true;
@@ -152,7 +152,7 @@ khGDALDatasetImpl::khGDALDatasetImpl(const std::string &filename_,
              khExtension(overridefname).c_str(), geoTransform)) {
           throw khException
             (kh::tr("Unable to read/interpret %1")
-             .arg(overridefname));
+             .arg(QString(overridefname.c_str())));
         }
         needAddGeo = true;
         geoExtents = khGeoExtents(geoTransform, rasterSize);
@@ -179,7 +179,7 @@ khGDALDatasetImpl::khGDALDatasetImpl(const std::string &filename_,
                    khExtension(*sidecar).c_str(), geoTransform)) {
                 throw khException
                   (kh::tr("Unable to read/interpret %1")
-                   .arg(*sidecar));
+                   .arg(QString((*sidecar).c_str())));
               }
               geoExtents = khGeoExtents(geoTransform,rasterSize);
               break;
@@ -195,7 +195,7 @@ khGDALDatasetImpl::khGDALDatasetImpl(const std::string &filename_,
             geoExtents = ReadDotGeoFile(geofile, rasterSize);
             if (geoExtents.empty()) {
               throw khException
-                (kh::tr("Unable to read %1").arg(geofile));
+                (kh::tr("Unable to read %1").arg(QString(geofile.c_str())));
             }
           } else {
             throw khException(kh::tr("No geographic extents"));
@@ -221,10 +221,10 @@ khGDALDatasetImpl::khGDALDatasetImpl(const std::string &filename_,
     // See getMaskDS below
 
   } catch (const std::exception &e) {
-    throw khException(kh::tr("%1: %2").arg(filename).arg(e.what()));
+    throw khException(kh::tr("%1: %2").arg(QString(filename.c_str())).arg(e.what()));
   } catch (...) {
     throw khException(kh::tr("%1: Unknown error while opening")
-                      .arg(filename));
+                      .arg(QString(filename.c_str())));
   }
 }
 
@@ -262,7 +262,7 @@ khGDALDatasetImpl::EnsureKeyholeNormalizedInfo(void)
     }
     OGRSpatialReference ogrSRS;
     const char *wkt = srs.c_str();
-    if ((ogrSRS.importFromWkt((char**)&wkt) != OGRERR_NONE) ||
+    if ((ogrSRS.importFromWkt(&wkt) != OGRERR_NONE) ||
         !ogrSRS.GetRoot()) {
       throw khException(kh::tr("Internal Error: Unrecognized SRS"));
     }
@@ -377,11 +377,11 @@ khGDALDatasetImpl::EnsureKeyholeNormalizedInfo(void)
                         IsMercator());
     haveNormalized = true;
   } catch (const std::exception &e) {
-    throw khException(kh::tr("%1: %2").arg(filename).arg(e.what()));
+    throw khException(kh::tr("%1: %2").arg(QString(filename.c_str())).arg(e.what()));
   } catch (...) {
     throw khException
       (kh::tr("%1: Unknown error calculating normalized geo extents")
-       .arg(filename));
+       .arg(QString(filename.c_str())));
   }
 }
 

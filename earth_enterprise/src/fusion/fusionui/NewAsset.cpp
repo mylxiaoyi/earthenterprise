@@ -14,35 +14,36 @@
 
 
 #include <khConstants.h>
-#include <qpixmap.h>
-#include <qiconview.h>
+#include <QtWidgets/QWidget>
+#include <QtGui/qpixmap.h>
+//#include <qiconview.h>
 #include <autoingest/.idl/storage/AssetDefs.h>
 #include <fusionversion.h>
 
 #include "NewAsset.h"
 
-class NewAssetItem : public QIconViewItem {
+class NewAssetItem : public QWidget {
  public:
-  NewAssetItem(QIconView* parent, AssetDefs::Type t, const std::string &st);
+  NewAssetItem(QWidget* parent, AssetDefs::Type t, const std::string &st);
   AssetDisplayHelper DisplayHelper() const { return display_helper_; }
 
  private:
   AssetDisplayHelper display_helper_;
 };
 
-NewAssetItem::NewAssetItem(QIconView* parent, AssetDefs::Type t,
+NewAssetItem::NewAssetItem(QWidget* parent, AssetDefs::Type t,
                              const std::string &st)
-    : QIconViewItem(parent),
+    : QWidget(parent),
       display_helper_(t, st) {
-  setText(display_helper_.PrettyName());
-  setPixmap(display_helper_.GetPixmap());
+  //setText(display_helper_.PrettyName());
+  //setPixmap(display_helper_.GetPixmap());
 }
 
 // -----------------------------------------------------------------------------
 
 NewAsset::NewAsset(QWidget* parent)
-    : NewAssetBase(parent) {
-  QIconViewItem* first_item =
+    : NewAssetBase() {
+  /*QIconViewItem* first_item =
          new NewAssetItem(icon_view, AssetDefs::Vector, kProductSubtype);
   (void) new NewAssetItem(icon_view, AssetDefs::Vector, kProjectSubtype);
 
@@ -66,14 +67,14 @@ NewAsset::NewAsset(QWidget* parent)
   (void) new NewAssetItem(icon_view, AssetDefs::Database,
                           kMercatorMapDatabaseSubtype);
 
-  first_item->setSelected(true);
+  first_item->setSelected(true);*/
 }
 
 NewAsset::~NewAsset() {
 }
 
 AssetDisplayHelper::AssetKey NewAsset::ChooseAssetType() {
-  if (exec() != QDialog::Accepted) {
+  /*if (exec() != QDialog::Accepted) {
     return AssetDisplayHelper(AssetDefs::Invalid, "").GetKey();
   }
 
@@ -82,5 +83,6 @@ AssetDisplayHelper::AssetKey NewAsset::ChooseAssetType() {
     return item->DisplayHelper().GetKey();
   } else {
     return AssetDisplayHelper(AssetDefs::Invalid, "").GetKey();
-  }
+  }*/
+  return AssetDisplayHelper::AssetKey();
 }

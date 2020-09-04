@@ -16,8 +16,8 @@
 #include <cstdint>
 #include <string>
 #include <vector>
-#include <qstring.h>
-#include <qcolor.h>
+#include <QtCore/QString>
+#include <QtGui/QColor>
 #include <khConstants.h>
 #include <khMetaData.h>
 #include <geRange.h>
@@ -46,13 +46,13 @@ class FieldBinderDef;
 class MapTextStyleConfig {
   enum FontWeight { Regular, Bold, Italic, BoldItalic };
 
-  QString     font   = QString(kDefaultFont);
+  QString     font   = QString(QString(kDefaultFont.c_str()));
   FontWeight  weight = MapTextStyleConfig::Regular;
   unsigned int        size   = 12U;
-  QColor      color  = Qt::black;
+  QColor      color  = QColor(0, 0, 0);
   bool        drawOutline = true;
   IsUpToDateIgnoreIf(!drawOutline) float outlineThickness = 4.0F;
-  IsUpToDateIgnoreIf(!drawOutline) QColor outlineColor = Qt::white;
+  IsUpToDateIgnoreIf(!drawOutline) QColor outlineColor = QColor(255, 255, 255);
 
 #pragma GenerateIsUpToDate
 };
@@ -131,8 +131,8 @@ class MapShieldConfig : MapLabelConfig {
 
   ShieldStyle style_ = new: MapShieldConfig::OvalStyle, load: MapShieldConfig::IconStyle;
   ShieldIconScaling scaling_ = MapShieldConfig::IconFixedSizeStyle;
-  QColor box_color_ = Qt::black;
-  QColor fill_color_ = Qt::black;
+  QColor box_color_ = QColor(0, 0, 0);
+  QColor fill_color_ = QColor(0, 0, 0);
   std::string icon_href_ = std::string();
   IconReference::Type icon_type_ = IconReference::Internal;
   int left_margin_ = 0;
@@ -164,8 +164,8 @@ class MapFeatureConfig {
 
   VectorDefs::FeatureDisplayType displayType = VectorDefs::PointZ;
   VectorDefs::PolygonDrawMode polygonDrawMode = VectorDefs::FillAndOutline;
-  QColor fill_color = Qt::white;
-  QColor stroke_color = Qt::white;
+  QColor fill_color = QColor(255,255,255);
+  QColor stroke_color = QColor(255, 255, 255);
   float stroke_width = 2.0F;
   geRange<std::uint32_t> levelRange = geRange<std::uint32_t>(8, 14);
   bool drawAsRoads = false;

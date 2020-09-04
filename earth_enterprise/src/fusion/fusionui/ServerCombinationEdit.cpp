@@ -15,13 +15,13 @@
 
 #include "fusion/fusionui/ServerCombinationEdit.h"
 
-#include <qcheckbox.h>
-#include <qfiledialog.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qmessagebox.h>
-#include <qpushbutton.h>
-#include <qurl.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtCore/qurl.h>
 
 #include <autoingest/.idl/storage/AssetDefs.h>
 #include "fusion/fusionui/geGuiAuth.h"
@@ -29,25 +29,25 @@
 
 ServerCombinationEdit::ServerCombinationEdit(QWidget* parent,
                                              const ServerCombination& c)
-  : ServerCombinationEditBase(parent, 0, false, 0) {
-  nickname_edit->setText(c.nickname);
+  /*: ServerCombinationEditBase(parent, 0, false, 0)*/ {
+  /*nickname_edit->setText(c.nickname);
   stream_url_edit->setText(c.stream.url);
   cacert_edit->setText(c.stream.cacert_ssl);
   insecure_ssl_checkbox->setChecked(c.stream.insecure_ssl);
-  QueryServer();
+  QueryServer();*/
 }
 
 ServerCombination ServerCombinationEdit::GetCombination() const {
   ServerCombination c;
-  c.nickname = nickname_edit->text();
+  /*c.nickname = nickname_edit->text();
   c.stream.url = stream_url_edit->text();
   c.stream.cacert_ssl = cacert_edit->text();
-  c.stream.insecure_ssl = insecure_ssl_checkbox->isChecked();
+  c.stream.insecure_ssl = insecure_ssl_checkbox->isChecked();*/
   return c;
 }
 
 void ServerCombinationEdit::QueryServer() {
-  ServerConfig stream_server;
+  /*ServerConfig stream_server;
   stream_server.url = stream_url_edit->text();
   stream_server.cacert_ssl = cacert_edit->text();
   stream_server.insecure_ssl = insecure_ssl_checkbox->isChecked();
@@ -76,11 +76,11 @@ void ServerCombinationEdit::QueryServer() {
     nickname_edit->setText(stream_server.url);
   }
   ok_btn->setEnabled(true);
-  query_status_label->setText("<font color=\"#007f00\"><b>Success</b></font>");
+  query_status_label->setText("<font color=\"#007f00\"><b>Success</b></font>");*/
 }
 
 void ServerCombinationEdit::accept() {
-  if (nickname_edit->text().isEmpty() ||
+  /*if (nickname_edit->text().isEmpty() ||
       stream_url_edit->text().isEmpty()) {
     QMessageBox::critical(this, "Error",
       tr("Incomplete server association. The Name and URL fields are required.")
@@ -88,46 +88,46 @@ void ServerCombinationEdit::accept() {
     return;
   }
 
-  ServerCombinationEditBase::accept();
+  ServerCombinationEditBase::accept();*/
 }
 
 
 void ServerCombinationEdit::StreamUrlTextChanged(const QString& url_text) {
-  ok_btn->setEnabled(false);
+  /*ok_btn->setEnabled(false);
   query_status_label->setText("<none>");
 
   // Check whether scheme in URL is 'https' and set enabled for SSL option
   // controls.
   QUrl url(url_text);
   bool is_https = (url.protocol() == QString("https"));
-  UpdateSslOptionControls(is_https);
+  UpdateSslOptionControls(is_https);*/
 }
 
 void ServerCombinationEdit::CacertTextChanged() {
-  ok_btn->setEnabled(false);
-  query_status_label->setText("<none>");
+  //ok_btn->setEnabled(false);
+  //query_status_label->setText("<none>");
 }
 
 void ServerCombinationEdit::InsecureSslCheckboxToggled(bool state) {
-  ok_btn->setEnabled(false);
-  query_status_label->setText("<none>");
+  //ok_btn->setEnabled(false);
+  //query_status_label->setText("<none>");
 }
 
 
 void ServerCombinationEdit::UpdateSslOptionControls(bool enabled) {
-  cacert_label->setEnabled(enabled);
+  /*cacert_label->setEnabled(enabled);
   cacert_edit->setEnabled(enabled);
   insecure_ssl_checkbox->setEnabled(enabled);
   cacert_select_btn->setEnabled(enabled);
   if (!enabled) {
     cacert_edit->clear();
     insecure_ssl_checkbox->setChecked(false);
-  }
+  }*/
 }
 
 
 void ServerCombinationEdit::ChooseCacertFile() {
-  QString path = QFileDialog::getOpenFileName(
+  /*QString path = QFileDialog::getOpenFileName(
       cacert_edit->text(),
       tr("Bundle (*.crt);;PEM format (*.pem);;All files (*.*)"),
       this,
@@ -136,5 +136,5 @@ void ServerCombinationEdit::ChooseCacertFile() {
 
   if (path != QString::null) {
     cacert_edit->setText(path);
-  }
+  }*/
 }

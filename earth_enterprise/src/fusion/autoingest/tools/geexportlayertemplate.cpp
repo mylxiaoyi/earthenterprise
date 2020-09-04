@@ -120,7 +120,7 @@ main(int argc, char *argv[]) {
       for (std::vector<LayerConfig>::const_iterator layer =
              vproj->config.layers.begin();
            layer != vproj->config.layers.end(); ++layer) {
-        if (layer->DefaultNameWithPath() == layername) {
+        if (layer->DefaultNameWithPath().toStdString() == layername) {
           if (!layer->Save(output)) {
             // error message already emitted
             notify(NFY_FATAL, "Could not save template");
@@ -139,7 +139,7 @@ main(int argc, char *argv[]) {
         QString layer_name = layer->DefaultNameWithPath();
         layer_name.replace("/", "&#47;");
         std::string outfile = khComposePath(output,
-                                            (const char *)layer_name.utf8()) +
+                                            layer_name.toUtf8().constData()) +
                               ".khdsp";
         if (!layer->Save(outfile)) {
           // error message already emitted

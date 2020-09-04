@@ -21,7 +21,7 @@
 #include "AssetDisplayHelper.h"
 #include "newassetbase.h"
 
-class NewAsset : public NewAssetBase {
+class NewAsset : public Ui::NewAssetBase {
  public:
   NewAsset(QWidget* parent);
   ~NewAsset();

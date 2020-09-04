@@ -245,7 +245,7 @@ void gstKVPTable::SetHeader(const gstHeaderHandle& hdr) {
   int sz = 0;
   for (unsigned int ii = 0; ii < hdr->numColumns(); ++ii) {
     sz += sizeof(std::uint32_t);
-    sz += strlenSafe(hdr->Name(ii).utf8()) + 1;
+    sz += strlenSafe(hdr->Name(ii).toStdString().c_str()) + 1;
   }
 
   //
@@ -256,8 +256,8 @@ void gstKVPTable::SetHeader(const gstHeaderHandle& hdr) {
   for (unsigned int ii = 0; ii < hdr->numColumns(); ++ii) {
     *(reinterpret_cast<std::uint32_t*>(tbuf)) = hdr->ftype(ii);
     tbuf += sizeof(std::uint32_t);
-    strcpySafe(tbuf, hdr->Name(ii).utf8());
-    tbuf += strlenSafe(hdr->Name(ii).utf8()) + 1;
+    strcpySafe(tbuf, hdr->Name(ii).toStdString().c_str());
+    tbuf += strlenSafe(hdr->Name(ii).toStdString().c_str()) + 1;
   }
 
   if (::lseek64(fd_, file_header_.indexOffset, SEEK_SET) == -1 ||

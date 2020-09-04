@@ -15,7 +15,7 @@
 //
 
 #include <stdio.h>
-#include <qstring.h>
+#include <QtCore/QString>
 
 #include <iostream>
 #include <exception>

@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
-#include <qframe.h>
-#include <qlayout.h>
-#include <qdatetimeedit.h>
-#include <qpopupmenu.h>
-#include <qlabel.h>
-#include <qmessagebox.h>
+#include <QtWidgets/qframe.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qdatetimeedit.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include "AssetProperties.h"
 #include "AssetVersionProperties.h"
@@ -32,19 +32,19 @@
 #define COL_CREATETIME 1
 #define COL_STATE 2
 AssetVersionItem::AssetVersionItem( QListView *parent, const AssetVersion &ver )
-    : QListViewItem( parent, QString( "%1" ).arg( ver->version ),
-                     ver->meta.GetValue("createdtime"),
-                     ver->PrettyState() ),
+    : QWidget( parent),// QString( "%1" ).arg( ver->version ),
+                     //ver->meta.GetValue("createdtime"),
+                     //ver->PrettyState() ),
       AssetWatcher(ver->GetRef())
 {
 }
 
-int AssetVersionItem::compare( QListViewItem *item, int, bool ) const
+/*int AssetVersionItem::compare( QListViewItem *item, int, bool ) const
 {
   return atoi( text( 0 ).latin1() ) - atoi( item->text( 0 ).latin1() );
-}
+}*/
 
-void AssetVersionItem::paintCell( QPainter *p, const QColorGroup &cg,
+/*void AssetVersionItem::paintCell( QPainter *p, const QColorGroup &cg,
                                   int column, int width, int alignment )
 {
   QColorGroup ncg = cg;
@@ -53,21 +53,21 @@ void AssetVersionItem::paintCell( QPainter *p, const QColorGroup &cg,
     ncg = AssetManager::GetStateDrawStyle( text( column ), p, cg );
 
   QListViewItem::paintCell( p, ncg, column, width, alignment );
-}
+}*/
 
 void
 AssetVersionItem::changed(void)
 {
-  AssetVersion ver(ref);
-  setText( COL_STATE, ver->PrettyState() );
+  //AssetVersion ver(ref);
+  //setText( COL_STATE, ver->PrettyState() );
 }
 
 // ------------------------------------------------------------------------
 
 AssetProperties::AssetProperties( QWidget* parent, const gstAssetHandle &handle )
-    : AssetPropertiesBase( parent, 0, false, Qt::WDestructiveClose ), assetHandle( handle )
+    //: AssetPropertiesBase( parent, 0, false ), assetHandle( handle )
 {
-  versionsList->setSorting( 0, false );
+  /*versionsList->setSorting( 0, false );
 
   Asset asset = handle->getAsset();
   nameLabel->setText( shortAssetName( handle->getName() ) );
@@ -78,7 +78,7 @@ AssetProperties::AssetProperties( QWidget* parent, const gstAssetHandle &handle 
            this, SLOT( rmbClicked( QListViewItem *, const QPoint &, int ) ) );
 
 
-  refresh();
+  refresh();*/
 }
 
 AssetProperties::~AssetProperties()
@@ -87,7 +87,7 @@ AssetProperties::~AssetProperties()
 
 void AssetProperties::refresh()
 {
-  versionsList->clear();
+  /*versionsList->clear();
 
   Asset asset = assetHandle->getAsset();
   for (AssetStorage::VersionList::const_iterator it = asset->versions.begin();
@@ -99,21 +99,21 @@ void AssetProperties::refresh()
     versionsList->adjustColumn( col );
     int w = versionsList->columnWidth( col );
     versionsList->setColumnWidth( col, w + 10 );
-  }
+  }*/
 
 }
 
 
-void AssetProperties::selectVersion( QListViewItem *item )
+/*void AssetProperties::selectVersion( QListViewItem *item )
 {
   if ( item ) {
     AssetVersionItem *ver = ( AssetVersionItem* )item;
     AssetVersionProperties::Open(ver->getVersionRef());
   }
-}
+}*/
 
 
-void
+/*void
 AssetProperties::rmbClicked( QListViewItem *item,
                              const QPoint &pos, int )
 {
@@ -135,4 +135,4 @@ AssetProperties::rmbClicked( QListViewItem *item,
     default:
       actions.handle(selection);
   }
-}
+}*/

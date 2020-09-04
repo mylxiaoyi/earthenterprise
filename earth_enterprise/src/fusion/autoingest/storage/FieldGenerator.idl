@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-#include <qstring.h>
+#include <QtCore/QString>
 #requiresgetheapusage
 
 
@@ -25,7 +25,7 @@ class FieldGenerator {
 
 #hquote
   inline bool empty(void) const {
-    return value.stripWhiteSpace().isEmpty();
+    return value.trimmed().isEmpty();
   }
   inline bool HasJS(void) const {
     return ((mode == FieldGenerator::JSExpression) && !empty());

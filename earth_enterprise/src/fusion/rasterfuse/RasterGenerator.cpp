@@ -231,10 +231,10 @@ ImageInfo::ImageInfo(const std::string &infile,
     ComputeTileExtents();
 
   } catch (const std::exception &e) {
-    throw khException(kh::tr("%1: %2").arg(infile).arg(e.what()));
+    throw khException(kh::tr("%1: %2").arg(QString(infile.c_str())).arg(e.what()));
   } catch (...) {
     throw khException(kh::tr("%1: Unknown error processing file")
-                      .arg(infile));
+                      .arg(QString(infile.c_str())));
   }
 }
 
@@ -348,10 +348,10 @@ ImageInfo::ImageInfo(const std::string &infile,
     ComputeTileExtents();
 
   } catch (const std::exception &e) {
-    throw khException(kh::tr("%1: %2").arg(infile).arg(e.what()));
+    throw khException(kh::tr("%1: %2").arg(QString(infile.c_str())).arg(e.what()));
   } catch (...) {
     throw khException(kh::tr("%1: Unknown error processing file")
-                      .arg(infile));
+                      .arg(QString(infile.c_str())));
   }
 }
 
@@ -438,10 +438,10 @@ ImageInfo::ImageInfo(const std::string &maskfile,
     ComputeTileExtents();
 
   } catch (const std::exception &e) {
-    throw khException(kh::tr("%1: %2").arg(maskfile).arg(e.what()));
+    throw khException(kh::tr("%1: %2").arg(QString(maskfile.c_str())).arg(e.what()));
   } catch (...) {
     throw khException(kh::tr("%1: Unknown error processing file")
-                      .arg(maskfile));
+                      .arg(QString(maskfile.c_str())));
   }
 }
 
@@ -812,7 +812,7 @@ RasterGenerator::RasterGenerator(const ImageInfo &imageInfo,
                                imageInfo.degExtents());
   if (!outRP) {
     throw khException(kh::tr("Unable to create output rasterproduct ") +
-                      outfile);
+                      QString(outfile.c_str()));
   }
 
   notify(NFY_DEBUG, "GLOBAL PIXEL LOD: Upsample = %u",
@@ -848,7 +848,7 @@ RasterGenerator::RasterGenerator(const ImageInfo &imageInfo,
                                imageInfo.degExtents());
   if (!outRP) {
     throw khException(kh::tr("Unable to create mask output rasterproduct ") +
-                      outfile);
+                      QString(outfile.c_str()));
   }
 
   notify(NFY_DEBUG, "GLOBAL PIXEL LOD: Upsample = %u", toplevel);
@@ -881,7 +881,7 @@ RasterGenerator::RasterGenerator(const khRasterProduct *inRP,
        extractCov.degExtents(RasterProductTilespaceBase)));  /* data extents */
   if (!outRP) {
     throw khException(kh::tr("Unable to create output rasterproduct ") +
-                      outfile);
+                      QString(outfile.c_str()));
   }
 }
 

@@ -30,7 +30,7 @@ void SoftErrorPolicy::HandleSoftError(const QString &error) {
   if (max_soft_before_fatal_ == 0) {
     throw khException(error);
   }
-  error_messages_.push_back((const char *)error.utf8());
+  error_messages_.push_back(error.toStdString().c_str());
   if (NumSoftErrors() >= max_soft_before_fatal_) {
     throw TooManyException(error_messages_);
   }

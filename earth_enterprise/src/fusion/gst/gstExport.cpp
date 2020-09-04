@@ -19,11 +19,11 @@
 #include <third_party/rsa_md5/crc32.h>
 #include <unistd.h>
 #include <algorithm>
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <qcolor.h>
+#include <QtGui/qcolor.h>
 
 #include <notify.h>
 #include <gstGeode.h>
@@ -187,7 +187,7 @@ int gstPacketFileExporter::BuildPacket(const gstQuadAddress& addr,
 
   // collect all the individual packets
   for (unsigned int pk = 0; pk < allpaks.length(); ++pk)
-    memcpy(lump_pak_->getPtr(pk), allpaks[pk], sizeof(etDataPacket));
+    memcpy((void*)(lump_pak_->getPtr(pk)), allpaks[pk], sizeof(etDataPacket));
 
   lump_pak_->pointerToOffset();
 

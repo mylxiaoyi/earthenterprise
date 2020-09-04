@@ -111,7 +111,7 @@ varsubst(const std::string &str,
               tosubst = (*found->second)(tosubst);
             } else {
               throw khException
-                (kh::tr("Unrecognized qualifier: ") + *q);
+                (kh::tr("Unrecognized qualifier: ").toStdString() + *q);
             }
           }
           result.replace(pos, end - pos + 1, tosubst);

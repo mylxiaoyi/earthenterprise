@@ -14,8 +14,8 @@
 // limitations under the License.
 
 
-#include <qpixmap.h>
-#include <qimage.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qimage.h>
 #include <gstIconManager.h>
 #include <gstFileUtils.h>
 
@@ -50,20 +50,23 @@ static const char* const colorbox_xpm[] = {
 
 QPixmap ColorBox::Pixmap(unsigned int fill_r, unsigned int fill_g, unsigned int fill_b,
                          unsigned int outline_r, unsigned int outline_g, unsigned int outline_b) {
-  QImage box(colorbox_xpm);
+  /*QImage box(colorbox_xpm);
   box.setColor(kFillColorId, qRgb(fill_r, fill_g, fill_b));
   box.setColor(kOutlineColorId, qRgb(outline_r, outline_g, outline_b));
-  return QPixmap(box);
+  return QPixmap(box);*/
+  return QPixmap();
 }
 
 QColor ColorBox::FillColor(const QPixmap& pix) {
-  QImage image = pix.convertToImage();
-  return QColor(image.color(kFillColorId));
+  //QImage image = pix.convertToImage();
+  //return QColor(image.color(kFillColorId));
+  return QColor();
 }
 
 QColor ColorBox::OutlineColor(const QPixmap& pix) {
-  QImage image = pix.convertToImage();
-  return QColor(image.color(kOutlineColorId));
+  //QImage image = pix.convertToImage();
+  //return QColor(image.color(kOutlineColorId));
+  return QColor();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,13 +74,13 @@ QColor ColorBox::OutlineColor(const QPixmap& pix) {
 PixmapManager *thePixmapManager = NULL;
 
 void PixmapManager::init() {
-  if (thePixmapManager != NULL)
+  /*if (thePixmapManager != NULL)
     return;
-  thePixmapManager = new PixmapManager();
+  thePixmapManager = new PixmapManager();*/
 }
 
 PixmapManager::PixmapManager() {
-  IconReference::Type int_type = IconReference::Internal;
+  /*IconReference::Type int_type = IconReference::Internal;
   for (int id = 0; id < theIconManager->IconCount(int_type); ++id) {
     std::string iconpath = theIconManager->GetFullPath(int_type, id);
     QImage img(iconpath);
@@ -89,11 +92,11 @@ PixmapManager::PixmapManager() {
     pix_map_[theIconManager->GetIcon(int_type, id)] = img;
   }
 
-  updateExternal();
+  updateExternal();*/
 }
 
 void PixmapManager::updateExternal() {
-  IconReference::Type ext_type = IconReference::External;
+  /*IconReference::Type ext_type = IconReference::External;
   for (int id = 0; id < theIconManager->IconCount(ext_type); ++id) {
     const gstIcon& icon = theIconManager->GetIcon(ext_type, id);
     PixmapMapIterator found = pix_map_.find(icon);
@@ -108,11 +111,11 @@ void PixmapManager::updateExternal() {
       }
       pix_map_[icon] = img;
     }
-  }
+  }*/
 }
 
 QPixmap PixmapManager::GetPixmap(const gstIcon& icon, IconType type) {
-  gstIcon tmp = icon;
+  /*gstIcon tmp = icon;
 
   PixmapMapIterator found = pix_map_.find(icon);
 
@@ -149,7 +152,8 @@ QPixmap PixmapManager::GetPixmap(const gstIcon& icon, IconType type) {
       break;
   }
 
-  return pix;
+  return pix;*/
+  return QPixmap();
 }
 
 QPixmap PixmapManager::InvalidIconPixmap() {

@@ -26,7 +26,7 @@
 #include <map>
 #include <set>
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 #include "common/khFileUtils.h"
 #include "common/khStringUtils.h"
@@ -494,7 +494,7 @@ bool gstSelector::PrepareFeatures(
             NFY_FATAL,
             "Invalid conversion from resource type (%s) to display type (%s).",
             PrettyPrimType(geode->PrimType()).c_str(),
-            feature_configs.PrettyFeatureType().ascii());
+            feature_configs.PrettyFeatureType().toStdString().c_str());
       }
 
       // cut out segments that fall in this quadnode(box)

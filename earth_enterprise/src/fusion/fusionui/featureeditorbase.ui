@@ -1,465 +1,395 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>FeatureEditorBase</class>
-<comment>  Copyright 2017 Google Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment>  Copyright 2017 Google Inc.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
 </comment>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>FeatureEditorBase</cstring>
-    </property>
+  <exportmacro></exportmacro>
+  <class>FeatureEditorBase</class>
+  <widget class="QWidget" name="FeatureEditorBase">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>552</width>
-            <height>629</height>
-        </rect>
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>552</width>
+        <height>629</height>
+      </rect>
     </property>
-    <property name="caption">
-        <string>Feature Editor</string>
+    <property name="windowTitle">
+      <string>Feature Editor</string>
     </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>4</number>
-        </property>
-        <property name="spacing">
-            <number>4</number>
-        </property>
-        <widget class="QLayoutWidget" row="0" column="0">
-            <property name="name">
-                <cstring>layout13</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel3</cstring>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>32767</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>Check:</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>check_all_btn</cstring>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>25</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>All</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>check_none_btn</cstring>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>45</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>None</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QListView" row="1" column="0" rowspan="1" colspan="2">
-            <column>
-                <property name="text">
-                    <string>Feature</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>feature_listview</cstring>
-            </property>
-            <property name="selectionMode">
-                <enum>Extended</enum>
-            </property>
-            <property name="rootIsDecorated">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>experimental_box</cstring>
-            </property>
-            <property name="title">
-                <string>Experimental</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QPushButton" row="2" column="1" rowspan="1" colspan="5">
-                    <property name="name">
-                        <cstring>simplifyBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Simplify</string>
-                    </property>
-                </widget>
-                <spacer row="2" column="6" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>spacer32</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>261</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="5">
-                    <property name="name">
-                        <cstring>layout8</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QPushButton">
-                            <property name="name">
-                                <cstring>change_primtype_btn</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Change Feature Type:</string>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Point</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Line</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Polygon</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>prim_type_combo</cstring>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <spacer row="1" column="5" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>spacer6</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>280</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton" row="2" column="0">
-                    <property name="name">
-                        <cstring>joinBtn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Join</string>
-                    </property>
-                </widget>
-                <spacer row="3" column="3" rowspan="1" colspan="5">
-                    <property name="name">
-                        <cstring>spacer9</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>321</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>mobile_convert_btn</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Mobile Block Convert</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="2" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout5</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Level:</string>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>mobile_level_spin</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>24</number>
-                            </property>
-                            <property name="minValue">
-                                <number>4</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="4" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>layout7</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Grid Res</string>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>snap_grid_spin</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>32768</number>
-                            </property>
-                            <property name="minValue">
-                                <number>4</number>
-                            </property>
-                            <property name="value">
-                                <number>256</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>layout11</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QPushButton">
-                            <property name="name">
-                                <cstring>box_cut_btn</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Box Cut</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_3_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Level:</string>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>box_cut_spin</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>24</number>
-                            </property>
-                            <property name="minValue">
-                                <number>4</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="7">
-                    <property name="name">
-                        <cstring>layout13</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>snap_grid_spin_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Width</string>
-                            </property>
-                        </widget>
-                        <widget class="QLineEdit">
-                            <property name="name">
-                                <cstring>width_edit</cstring>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-            </grid>
-        </widget>
-        <spacer row="0" column="1">
-            <property name="name">
-                <cstring>spacer33</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
+    <layout class="QGridLayout">
+      <property name="margin">
+        <number>4</number>
+      </property>
+      <property name="spacing">
+        <number>4</number>
+      </property>
+      <item row="0" column="0">
+        <layout class="QHBoxLayout">
+          <item>
+            <widget class="QLabel" name="textLabel3">
+              <property name="maximumSize">
                 <size>
-                    <width>400</width>
-                    <height>21</height>
+                  <width>32767</width>
+                  <height>20</height>
                 </size>
+              </property>
+              <property name="font">
+                <font>
+                  <pointsize>8</pointsize>
+                </font>
+              </property>
+              <property name="text">
+                <string>Check:</string>
+              </property>
+              <property name="wordWrap">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="check_all_btn">
+              <property name="maximumSize">
+                <size>
+                  <width>25</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="font">
+                <font>
+                  <pointsize>8</pointsize>
+                </font>
+              </property>
+              <property name="text">
+                <string>All</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="check_none_btn">
+              <property name="maximumSize">
+                <size>
+                  <width>45</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="font">
+                <font>
+                  <pointsize>8</pointsize>
+                </font>
+              </property>
+              <property name="text">
+                <string>None</string>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item row="1" column="0" rowspan="1" colspan="2">
+        <widget class="QListView" name="feature_listview">
+          <column>
+            <property name="text">
+              <string>Feature</string>
             </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+        </widget>
+      </item>
+      <item row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QGroupBox" name="experimental_box">
+          <property name="title">
+            <string>Experimental</string>
+          </property>
+          <layout class="QGridLayout">
+            <item row="2" column="1" rowspan="1" colspan="5">
+              <widget class="QPushButton" name="simplifyBtn">
+                <property name="text">
+                  <string>Simplify</string>
+                </property>
+              </widget>
+            </item>
+            <item row="2" column="6" rowspan="1" colspan="2">
+              <spacer name="spacer32">
+                <property name="sizeHint">
+                  <size>
+                    <width>261</width>
+                    <height>20</height>
+                  </size>
+                </property>
+                <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                </property>
+                <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                </property>
+              </spacer>
+            </item>
+            <item row="1" column="0" rowspan="1" colspan="5">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QPushButton" name="change_primtype_btn">
+                    <property name="text">
+                      <string>Change Feature Type:</string>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QComboBox" name="prim_type_combo">
+                    <item>
+                      <property name="text">
+                        <string>Point</string>
+                      </property>
+                    </item>
+                    <item>
+                      <property name="text">
+                        <string>Line</string>
+                      </property>
+                    </item>
+                    <item>
+                      <property name="text">
+                        <string>Polygon</string>
+                      </property>
+                    </item>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="1" column="5" rowspan="1" colspan="3">
+              <spacer name="spacer6">
+                <property name="sizeHint">
+                  <size>
+                    <width>280</width>
+                    <height>20</height>
+                  </size>
+                </property>
+                <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                </property>
+                <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                </property>
+              </spacer>
+            </item>
+            <item row="2" column="0">
+              <widget class="QPushButton" name="joinBtn">
+                <property name="text">
+                  <string>Join</string>
+                </property>
+              </widget>
+            </item>
+            <item row="3" column="3" rowspan="1" colspan="5">
+              <spacer name="spacer9">
+                <property name="sizeHint">
+                  <size>
+                    <width>321</width>
+                    <height>21</height>
+                  </size>
+                </property>
+                <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                </property>
+                <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                </property>
+              </spacer>
+            </item>
+            <item row="0" column="0" rowspan="1" colspan="2">
+              <widget class="QPushButton" name="mobile_convert_btn">
+                <property name="text">
+                  <string>Mobile Block Convert</string>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="2" rowspan="1" colspan="2">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QLabel" name="textLabel1_3">
+                    <property name="text">
+                      <string>Level:</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QSpinBox" name="mobile_level_spin">
+                    <property name="maximum">
+                      <number>24</number>
+                    </property>
+                    <property name="minimum">
+                      <number>4</number>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="0" column="4" rowspan="1" colspan="3">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QLabel" name="textLabel2">
+                    <property name="text">
+                      <string>Grid Res</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QSpinBox" name="snap_grid_spin">
+                    <property name="maximum">
+                      <number>32768</number>
+                    </property>
+                    <property name="minimum">
+                      <number>4</number>
+                    </property>
+                    <property name="value">
+                      <number>256</number>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="3" column="0" rowspan="1" colspan="3">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QPushButton" name="box_cut_btn">
+                    <property name="text">
+                      <string>Box Cut</string>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QLabel" name="textLabel1_3_2">
+                    <property name="text">
+                      <string>Level:</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QSpinBox" name="box_cut_spin">
+                    <property name="maximum">
+                      <number>24</number>
+                    </property>
+                    <property name="minimum">
+                      <number>4</number>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="0" column="7">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QLabel" name="snap_grid_spin_2">
+                    <property name="text">
+                      <string>Width</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QLineEdit" name="width_edit"/>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </widget>
+      </item>
+      <item row="0" column="1">
+        <spacer name="spacer33">
+          <property name="sizeHint">
+            <size>
+              <width>400</width>
+              <height>21</height>
+            </size>
+          </property>
+          <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+          </property>
         </spacer>
-    </grid>
-</widget>
-<connections>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
     <connection>
-        <sender>change_primtype_btn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>ChangePrimType()</slot>
+      <sender>change_primtype_btn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>ChangePrimType()</slot>
     </connection>
     <connection>
-        <sender>check_all_btn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>CheckAll()</slot>
+      <sender>check_all_btn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>CheckAll()</slot>
     </connection>
     <connection>
-        <sender>check_none_btn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>CheckNone()</slot>
+      <sender>check_none_btn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>CheckNone()</slot>
     </connection>
     <connection>
-        <sender>feature_listview</sender>
-        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>ContextMenu(QListViewItem*,const QPoint&amp;,int)</slot>
+        <!--<sender>feature_listview</sender>
+      <signal>contextMenuRequested(Q3ListViewItem*,QPoint,int)</signal>
+      <receiver>FeatureEditorBase</receiver>
+        <slot>ContextMenu(Q3ListViewItem*,QPoint,int)</slot>-->
     </connection>
     <connection>
-        <sender>feature_listview</sender>
-        <signal>selectionChanged()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>SelectionChanged()</slot>
+      <sender>feature_listview</sender>
+      <signal>selectionChanged()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>SelectionChanged()</slot>
     </connection>
     <connection>
-        <sender>joinBtn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>Join()</slot>
+      <sender>joinBtn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>Join()</slot>
     </connection>
     <connection>
-        <sender>simplifyBtn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>Simplify()</slot>
+      <sender>simplifyBtn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>Simplify()</slot>
     </connection>
     <connection>
-        <sender>mobile_convert_btn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>MobileConvert()</slot>
+      <sender>mobile_convert_btn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>MobileConvert()</slot>
     </connection>
     <connection>
-        <sender>box_cut_btn</sender>
-        <signal>released()</signal>
-        <receiver>FeatureEditorBase</receiver>
-        <slot>BoxCut()</slot>
+      <sender>box_cut_btn</sender>
+      <signal>released()</signal>
+      <receiver>FeatureEditorBase</receiver>
+      <slot>BoxCut()</slot>
     </connection>
-</connections>
-<slots>
-    <slot>SelectionChanged()</slot>
-    <slot>ContextMenu(QListViewItem*, const QPoint&amp;, int)</slot>
-    <slot>BoxCut()</slot>
-    <slot>CheckAll()</slot>
-    <slot>CheckNone()</slot>
-    <slot>ShowPrevious()</slot>
-    <slot>ShowNext()</slot>
-    <slot>ChangePrimType()</slot>
-    <slot>Join()</slot>
-    <slot>Simplify()</slot>
-    <slot>MobileConvert()</slot>
-</slots>
-<pixmapinproject/>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+  </connections>
+</ui>

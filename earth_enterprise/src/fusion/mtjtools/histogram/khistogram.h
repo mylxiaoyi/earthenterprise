@@ -30,7 +30,7 @@
 #endif
 
 #ifdef  KHISTOGRAM_GDAL
-#include "gdal_priv.h"
+#include <gdal/gdal_priv.h>
 #endif
 
 class KHistogramBand : public KTable

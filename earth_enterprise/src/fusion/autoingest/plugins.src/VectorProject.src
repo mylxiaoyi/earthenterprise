@@ -132,7 +132,7 @@ VectorProjectAssetImplD::AddLayers(const std::vector<VectorProjectAddItem> &item
     // load the template file
     LayerConfig layerConfig;
     if (!layerConfig.Load(item->templateFile)) {
-      throw khException(kh::tr("Unable to load ") + item->templateFile);
+      throw khException(kh::tr("Unable to load ") + QString(item->templateFile.c_str()));
     }
 
     // instantiate the template - assign the relavent refs and ids
@@ -236,7 +236,7 @@ VectorProjectAssetImplD::HandleEditRequest(const VectorProjectEditRequest &req)
 
   if (!project)
     throw khException(kh::tr("Unable to create vector project: ") +
-                      projname);
+                      QString(projname.c_str()));
 
   // Note: All IDs should be assigned in the request. They are
   // assigned in a client (Fusion UI, gstVectorProject::AssembleEditRequest()),
@@ -393,10 +393,10 @@ VectorProjectAssetImplD::HandleDropFromRequest(const VectorProjectDropFromReques
       }
       if (found.empty()) {
         throw khException(kh::tr("Project doesn't have vector asset '%1'")
-                          .arg(i->assetRef));
+                          .arg(QString(i->assetRef.c_str())));
       } else if (found.size() > 1) {
         throw khException(kh::tr("Project has vector asset '%1' in multiple layers.\nPlease specify by layer name:\n")
-                          .arg(i->assetRef) +
+                          .arg(QString(i->assetRef.c_str())) +
                           qstring_join(found.begin(), found.end(),
                                        "\n"));
       } else {

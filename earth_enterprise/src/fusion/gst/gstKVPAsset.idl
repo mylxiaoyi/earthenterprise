@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 #include <gstTypes.h>
-#include <qstring.h>
+#include <QtCore/qstring.h>
 
 class gstKVPAsset
 {

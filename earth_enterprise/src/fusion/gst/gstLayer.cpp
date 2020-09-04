@@ -23,12 +23,12 @@
 #include <cmath>
 #include <algorithm>
 
-#include <qdatetime.h>
-#include <qstringlist.h>
-#include <qimage.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdir.h>
+#include <QtCore/qdatetime.h>
+#include <QtCore/qstringlist.h>
+#include <QtGui/qimage.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qtextstream.h>
+#include <QtCore/qdir.h>
 
 #include "common/khInsetCoverage.h"
 #include "common/khHashTable.h"
@@ -308,7 +308,7 @@ void gstLayer::QueryThread() {
           error += "\n";
           error += QString::fromUtf8(soft_errors.Errors()[i].c_str());
         }
-        query_progress_->SetWarning(error);
+        query_progress_->SetWarning(error.toStdString());
       }
     } catch(const SoftErrorPolicy::TooManyException &e) {
       std::vector<std::string> errors;
@@ -381,7 +381,7 @@ void gstLayer::GetSiteLabels(const gstDrawState& state,
   QString error;
   if (!TryPopulateJSDisplayBundle(&jsbundle, &error)) {
     notify(NFY_WARN, "Error Prepping JS for labels: %s",
-           (const char *)error.utf8());
+           error.toStdString().c_str());
     site_sets->resize(0);
     return;
   }
@@ -612,8 +612,8 @@ void gstLayer::BuildSetMgr::Update(unsigned int lev, bool need_lod) {
 //
 bool gstLayer::BuildSetMgr::DumpLODTable(const QString& path) {
   QFile file(path);
-  if (!file.open(IO_WriteOnly)) {
-    notify(NFY_WARN, "Unable to save LOD Table: %s", file.name().latin1());
+  if (!file.open(QIODevice::WriteOnly)) {
+    notify(NFY_WARN, "Unable to save LOD Table: %s", path.toStdString().c_str());
     return false;
   }
 
@@ -650,7 +650,7 @@ bool gstLayer::ExportStreamPackets(geFilePool &file_pool,
   QString error;
   if (!TryPopulateJSDisplayBundle(&jsbundle, &error)) {
     notify(NFY_WARN, "Error Prepping JS for export: %s",
-           (const char *)error.utf8());
+           error.toStdString().c_str());
     return false;
   }
 
@@ -742,7 +742,7 @@ bool gstLayer::ExportStreamPackets(geFilePool &file_pool,
              node_count_skipped_);
     }
     exporter_->Close();
-    return build_set_manager.DumpLODTable(QDir(pub_dir).filePath("lodtable"));
+    return build_set_manager.DumpLODTable(QDir(QString::fromStdString(pub_dir)).filePath("lodtable"));
   } catch(const std::exception &e) {
     notify(NFY_WARN, "Error during export: %s", e.what());
   } catch(...) {

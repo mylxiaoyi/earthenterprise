@@ -63,7 +63,7 @@ void RasterDbrootContext::EmitAll(const std::string &out_dir,
     std::string outfile =
         out_dir + "/" + kPostamblePrefix + "." + kDefaultLocaleSuffix;
     // no filtering right now for raster dbroots, always emit all layers
-    RasterDbrootGenerator dbrootgen(this, kDefaultLocaleSuffix, outfile);
+    RasterDbrootGenerator dbrootgen(this, QString::fromStdString(kDefaultLocaleSuffix), outfile);
     dbrootgen.Emit(output_format);
   }
 
@@ -72,7 +72,7 @@ void RasterDbrootContext::EmitAll(const std::string &out_dir,
     typedef std::set<QString>::const_iterator SetIterator;
     for (SetIterator i = used_locales.begin(); i != used_locales.end(); ++i) {
       std::string outfile = out_dir + "/" + kPostamblePrefix +
-          "." + i->latin1();
+          "." + i->toStdString();
       // no filtering right now for raster dbroots, always emit all layers
       RasterDbrootGenerator dbrootgen(this, *i /* locale */, outfile);
       dbrootgen.Emit(output_format);

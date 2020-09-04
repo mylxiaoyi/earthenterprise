@@ -20,9 +20,11 @@
 
 #include "aboutfusionbase.h"
 
-class AboutFusion : public AboutFusionBase {
+class AboutFusion : public QObject, public Ui::AboutFusionBase {
+    Q_OBJECT
+
  public:
-  AboutFusion(QWidget *p);
+  //AboutFusion(QWidget *p);
 };
 
 #endif  // !_AboutFusion_h_

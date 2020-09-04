@@ -327,8 +327,9 @@ void Request::WriteData(void* buffer, size_t size) {
     return;
 
   size_t prev_size = stream_.size();
-  if (!stream_.resize(prev_size + size))
-    return;
+  stream_.resize(prev_size + size);
+  //if (!stream_.resize(prev_size + size))
+  //  return;
 
   memcpy(stream_.data() + prev_size, buffer, size);
 }
@@ -466,7 +467,7 @@ gstEarthStream::gstEarthStream(const std::string& server)
     DbRootRequest request(image_request_handle_, url);
     request.Start();
     if (!request.GetStatus()) {
-      throw khException(kh::tr("Unable to open HTTP database: %1").arg(server));
+      throw khException(kh::tr("Unable to open HTTP database: %1").arg(QString::fromStdString(server)));
     }
   }
 }

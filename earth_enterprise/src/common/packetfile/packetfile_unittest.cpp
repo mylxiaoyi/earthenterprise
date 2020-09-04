@@ -185,7 +185,7 @@ class PacketFileUnitTest : public UnitTest<PacketFileUnitTest> {
              index_filename.c_str());
       success = false;
     }
-    catch (khSimpleException e) {
+    catch (khSimpleException &e) {
       notify(NFY_DEBUG, "TestIndexCRC: header test successful: %s", e.what());
     }
 
@@ -206,7 +206,7 @@ class PacketFileUnitTest : public UnitTest<PacketFileUnitTest> {
                index_filename.c_str());
         success = false;
       }
-      catch (khSimpleException e) {
+      catch (khSimpleException &e) {
         notify(NFY_DEBUG, "TestIndexCRC: entry test successful: %s", e.what());
       }
     }

@@ -124,14 +124,14 @@ khAssetManager::ApplyPending(void)
   }
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed writing time: %s",
-           khProgressMeter::msToString(elapsed).latin1());
+           khProgressMeter::msToString(elapsed).toLatin1().data());
   timer.start();
   if (!MutableAssetVersionD::SaveDirtyToDotNew(filetrans, 0)) {
     throw khException(kh::tr("Unable to save modified versions"));
   }
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed writing time: %s",
-         khProgressMeter::msToString(elapsed).latin1());
+         khProgressMeter::msToString(elapsed).toLatin1().data());
 
 
 
@@ -147,7 +147,7 @@ khAssetManager::ApplyPending(void)
     }
     int elapsed = timer.elapsed();
     notify(NFY_INFO, "Elapsed delete time: %s",
-           khProgressMeter::msToString(elapsed).latin1());
+           khProgressMeter::msToString(elapsed).toLatin1().data());
   }
 
 
@@ -180,7 +180,7 @@ khAssetManager::ApplyPending(void)
   }
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed commit time: %s",
-         khProgressMeter::msToString(elapsed).latin1());
+         khProgressMeter::msToString(elapsed).toLatin1().data());
 
   // AssetChanges
   notify(NFY_INFO, "Submitting change notifications");
@@ -191,7 +191,7 @@ khAssetManager::ApplyPending(void)
   }
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed submit time: %s",
-         khProgressMeter::msToString(elapsed).latin1());
+         khProgressMeter::msToString(elapsed).toLatin1().data());
 
   // task cmds
   notify(NFY_INFO, "Sending %lu task commands",
@@ -205,7 +205,7 @@ khAssetManager::ApplyPending(void)
   SendAlwaysTaskCmds();
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed task submit time: %s",
-         khProgressMeter::msToString(elapsed).latin1());
+         khProgressMeter::msToString(elapsed).toLatin1().data());
 
 #endif
 
@@ -217,7 +217,7 @@ khAssetManager::ApplyPending(void)
   pendingFileDeletes.clear();
   elapsed = timer.elapsed();
   notify(NFY_INFO, "Elapsed cleanup time: %s",
-         khProgressMeter::msToString(elapsed).latin1());
+         khProgressMeter::msToString(elapsed).toLatin1().data());
 }
 
 
@@ -278,7 +278,7 @@ khAssetManager::PendingAssetGuard::~PendingAssetGuard(void)
     try {
       int elapsed = timer.elapsed();
       notify(NFY_INFO, "Elapsed load and think time: %s",
-             khProgressMeter::msToString(elapsed).latin1());
+             khProgressMeter::msToString(elapsed).toLatin1().data());
       assetman.ApplyPending();
       notify(NFY_INFO,
              "---------- ~PendingAssetGuard (Successfull) ----------");
@@ -451,7 +451,7 @@ khAssetManager::HandleClientLoop(FusionConnection::Handle client) throw()
             DispatchRequest(msg, replyPayload);
           }
           if (replyPayload.substr(0, 6) == "ERROR:") {
-            client->SendException(msg, replyPayload);
+            client->SendException(msg, QString(replyPayload.c_str()));
           } else {
             client->SendReply(msg, replyPayload);
           }
@@ -1033,7 +1033,7 @@ khAssetManager::MakeAssetDir(const std::string &assetdir) {
     throw khException
       (kh::tr
        ("INTERNAL ERROR: Attempt to make a non-relative asset directory:\n%1")
-       .arg(assetdir));
+       .arg(QString(assetdir.c_str())));
   }
   std::string dir = AssetDefs::AssetPathToFilename(assetdir);
   khMakeDirOrThrow(dir, 0755);
@@ -1229,7 +1229,7 @@ std::string khAssetManager::RetrieveTasking(const FusionConnection::RecvPacket& 
 	      .arg(ToQString(GET_TASKS)));
 	  }
   }
-  catch (khTimedMutexException e) {
+  catch (khTimedMutexException &e) {
     // Replying with a string beginning "ERROR:" passes an exception message back to the caller
     // alternatively we could throw an exception but that could flood fusion logs with warnings
     replyPayload = sysManBusyMsg;

@@ -27,10 +27,10 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#include "gdalwarper.h"
-#include "cpl_string.h"
-#include "ogr_srs_api.h"
-#include "ogr_spatialref.h"
+#include <gdal/gdalwarper.h>
+#include <gdal/cpl_string.h>
+#include <gdal/ogr_srs_api.h>
+#include <gdal/ogr_spatialref.h>
 #include <khgdal/khgdal.h>
 #include <khTileAddr.h>
 #include "khGDALDataset.h"

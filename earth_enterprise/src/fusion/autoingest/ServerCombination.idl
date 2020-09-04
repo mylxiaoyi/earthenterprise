@@ -14,7 +14,7 @@
 
 
 #include <vector>
-#include <qstring.h>
+#include <QtCore/QString>
 
 
 class ServerConfig {
@@ -62,7 +62,7 @@ class ServerCombinationSet
   void
   ServerCombinationSet::EnsureDefaultsExist(void)
   {
-    const QString kDefaultHost = AssetDefs::MasterHostName();
+    const QString kDefaultHost = QString(AssetDefs::MasterHostName().c_str());
 
     std::vector<ServerCombination>::const_iterator it = combinations.begin();
     for (; it != combinations.end(); ++it) {
@@ -72,7 +72,7 @@ class ServerCombinationSet
     }
 
     std::string default_url = "http://" + AssetDefs::MasterHostName();
-    ServerConfig sc_default(default_url, kDefaultHost);
+    ServerConfig sc_default(default_url, kDefaultHost.toStdString());
     ServerCombination default_host(kDefaultHost, sc_default);
 
     combinations.push_back(default_host);

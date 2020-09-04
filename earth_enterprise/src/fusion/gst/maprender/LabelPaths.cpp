@@ -206,7 +206,7 @@ void LabelPaths:: AddPathShields(const MapFeatureConfig &feature_config,
   SkBitmap icon;
   if (bitmap_shields) {
     IconReference ref(feature_config.shield.icon_type_,
-                      feature_config.shield.icon_href_);
+                      QString::fromStdString(feature_config.shield.icon_href_));
     bitmap_shields = SkImageDecoder::DecodeFile(ref.SourcePath().c_str(),
                                                 &icon);
   }

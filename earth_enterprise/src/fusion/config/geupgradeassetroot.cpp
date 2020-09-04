@@ -129,12 +129,12 @@ void ValidateAssetRootForUpgrade(const AssetRootStatus &status, bool noprompt,
   }
 
   if (!status.dir_exists_) {
-    throw khException(kh::tr("%1 doesn't exist.").arg(status.assetroot_));
+    throw khException(kh::tr("%1 doesn't exist.").arg(QString::fromStdString(status.assetroot_)));
   }
 
   if (!status.has_volumes_) {
     throw khException(kh::tr("%1 isn't a valid asset root.")
-                      .arg(status.assetroot_));
+                      .arg(QString::fromStdString(status.assetroot_)));
   }
 
   if (!status.IsThisMachineMaster()) {
@@ -147,12 +147,12 @@ void ValidateAssetRootForUpgrade(const AssetRootStatus &status, bool noprompt,
 "then run the following command to fix it:\n"
 "  geconfigureassetroot --assetroot %6 --fixmasterhost\n"
 "then run geupgradeassetroot again.")
-                      .arg(status.master_host_)
-                      .arg(status.assetroot_)
-                      .arg(status.master_host_)
-                      .arg(status.assetroot_)
-                      .arg(status.master_host_)
-                      .arg(status.assetroot_)
+                      .arg(QString::fromStdString(status.master_host_))
+                      .arg(QString::fromStdString(status.assetroot_))
+                      .arg(QString::fromStdString(status.master_host_))
+                      .arg(QString::fromStdString(status.assetroot_))
+                      .arg(QString::fromStdString(status.master_host_))
+                      .arg(QString::fromStdString(status.assetroot_))
                       );
   }
 
@@ -161,8 +161,8 @@ void ValidateAssetRootForUpgrade(const AssetRootStatus &status, bool noprompt,
     throw khException(kh::tr(
 "%1 is configured for Google Earth Fusion version %2.\n"
 "Upgrades are not possible from versions older than 2.4.")
-                      .arg(status.assetroot_)
-                      .arg(status.version_));
+                      .arg(QString::fromStdString(status.assetroot_))
+                      .arg(QString::fromStdString(status.version_)));
   }
 
   // we don't check AssetRootNeedsUpgrade here

@@ -24,7 +24,7 @@
 
 class QPixmap;
 
-class SiteIcons : public SiteIconsBase {
+class SiteIcons : public Ui::SiteIconsBase {
  public:
   // currently selected icon
   // this is always maintained correct against the GUI
@@ -50,10 +50,10 @@ class SiteIcons : public SiteIconsBase {
 
  private:
   void accept();
-  void standardIconView_selectionChanged(QIconViewItem* item);
-  void customIconView_selectionChanged(QIconViewItem* item);
-  void standardIconView_doubleClicked(QIconViewItem* item);
-  void customIconView_doubleClicked(QIconViewItem* item);
+  //void standardIconView_selectionChanged(QIconViewItem* item);
+  //void customIconView_selectionChanged(QIconViewItem* item);
+  //void standardIconView_doubleClicked(QIconViewItem* item);
+  //void customIconView_doubleClicked(QIconViewItem* item);
 };
 
 #endif  // !KHSRC_FUSION_FUSIONUI_SITEICONS_H__

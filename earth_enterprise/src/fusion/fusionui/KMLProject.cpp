@@ -21,7 +21,7 @@
 #include "AssetChooser.h"
 #include "AssetDerivedImpl.h"
 
-#include <qmessagebox.h>
+#include <QtWidgets/qmessagebox.h>
 
 class AssetBase;
 
@@ -57,20 +57,20 @@ KMLLayerItem::KMLLayerItem(QListView* parent, const KMLProjectConfig::LayerItem&
 
 KMLLayerItem::KMLLayerItem(QListView* parent, const QString& asset_path)
   : LayerItemBase(parent) {
-  config_.assetRef = asset_path;
-  Asset asset(asset_path);
+  //config_.assetRef = asset_path;
+  //Asset asset(asset_path);
 }
 
 QString KMLLayerItem::text(int col) const {
   if (col == 0) {
-    return QString(config_.assetRef);
+    return QString(QString::fromStdString(config_.assetRef));
   } else {
     return QString();
   }
 }
 
 void KMLLayerItem::AdjustLevel() {
-  while (CanMoveUp()) {
+  /*while (CanMoveUp()) {
     SwapPosition(Previous());
     QListViewItem::listView()->sort();
     QListViewItem::listView()->setSelected(this, true);
@@ -79,7 +79,7 @@ void KMLLayerItem::AdjustLevel() {
     SwapPosition(Next());
     QListViewItem::listView()->sort();
     QListViewItem::listView()->setSelected(this, true);
-  }
+  }*/
 }
 
 // ****************************************************************************
@@ -91,25 +91,25 @@ KMLProjectWidget::KMLProjectWidget(QWidget *parent, AssetBase* base) :
 }
 
 void KMLProjectWidget::Prefill(const KMLProjectEditRequest &req) {
-  const KMLProjectConfig& cfg = req.config;
+  /*const KMLProjectConfig& cfg = req.config;
   for (std::vector<KMLProjectConfig::LayerItem>::const_iterator it =
          cfg.layers.begin(); it != cfg.layers.end(); ++it) {
     (void) new KMLLayerItem(ListView(), *it);
-  }
+  }*/
 }
 
 void KMLProjectWidget::AssembleEditRequest(KMLProjectEditRequest *request) {
-  request->config.layers.clear();
+  /*request->config.layers.clear();
   QListViewItem* item = ListView()->firstChild();
   while (item) {
     KMLLayerItem* kml_layer_item = static_cast<KMLLayerItem*>(item);
     request->config.layers.push_back(kml_layer_item->GetConfig());
     item = kml_layer_item->Next();
-  }
+  }*/
 }
 
 LayerItemBase* KMLProjectWidget::NewLayerItem() {
-  AssetChooser chooser(ListView(), AssetChooser::Open,
+  /*AssetChooser chooser(ListView(), AssetChooser::Open,
                        AssetDefs::Imagery, kProductSubtype);
 
   if (chooser.exec() != QDialog::Accepted)
@@ -121,12 +121,13 @@ LayerItemBase* KMLProjectWidget::NewLayerItem() {
 
   KMLLayerItem* item = new KMLLayerItem(ListView(), newpath);
   item->AdjustLevel();
-  return item;
+  return item;*/
+  return nullptr;
 }
 
 LayerItemBase* KMLProjectWidget::NewLayerItem(const QString& assetref) {
   // check to make sure we don't already have this one
-  QListViewItem* list_item = ListView()->firstChild();
+  /*QListViewItem* list_item = ListView()->firstChild();
   while (list_item) {
     KMLLayerItem* layer_item = static_cast<KMLLayerItem*>(list_item);
     if (layer_item->GetConfig().assetRef == assetref) {
@@ -142,7 +143,8 @@ LayerItemBase* KMLProjectWidget::NewLayerItem(const QString& assetref) {
 
   KMLLayerItem* item = new KMLLayerItem(ListView(), assetref);
   item->AdjustLevel();
-  return item;
+  return item;*/
+  return nullptr;
 }
 
 

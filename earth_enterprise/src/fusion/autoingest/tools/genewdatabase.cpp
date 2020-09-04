@@ -116,7 +116,7 @@ main(int argc, char *argv[]) {
     } else {
       QString error;
       if (!(*cmd)(req, error, 0 /* timeout */)) {
-        notify(NFY_FATAL, "%s", error.latin1());
+        notify(NFY_FATAL, "%s", error.toLatin1().data());
       }
     }
   } catch (const std::exception &e) {

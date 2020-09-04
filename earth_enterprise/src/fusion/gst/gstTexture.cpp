@@ -151,7 +151,7 @@ gstPYRTexture::gstPYRTexture(
   bool heightmap = false;
 
   if (!kip_) {
-    throw khException(kh::tr("Unable to open %1").arg(kippath));
+    throw khException(kh::tr("Unable to open %1").arg(QString::fromStdString(kippath)));
   } else if (kip_->type() == khRasterProduct::Imagery) {
     spec_ = gstGLTexSpec(GL_RGB, 256, 256, GL_RGB, GL_UNSIGNED_BYTE);
 
@@ -159,7 +159,7 @@ gstPYRTexture::gstPYRTexture(
     spec_ = gstGLTexSpec(GL_RGB, 256, 256, GL_RGB, GL_UNSIGNED_BYTE);
     heightmap = true;
   } else {
-    throw khException(kh::tr("%1 isn't Imagery or Heightmap").arg(kippath));
+    throw khException(kh::tr("%1 isn't Imagery or Heightmap").arg(QString::fromStdString(kippath)));
   }
 
   std::string kmppath_local;
@@ -830,14 +830,14 @@ gstGEDBTexture::gstGEDBTexture(const std::string& path)
   : compressor_(TransferOwnership(new JPEGCompressor(256, 256, 3, 0))) {
   std::string headerpath = khComposePath(path, kHeaderXmlFile);
   if (!khExists(headerpath)) {
-    throw khException(kh::tr("\"%1\" is not a GEDB").arg(path));
+    throw khException(kh::tr("\"%1\" is not a GEDB").arg(QString::fromStdString(path)));
   }
   std::string indexpath;
   {
     DbHeader header;
     if (!header.Load(headerpath)) {
       throw khException(kh::tr("Unable to load GEDB header \"%1\"")
-                        .arg(headerpath));
+                        .arg(QString::fromStdString(headerpath)));
     }
     indexpath = header.index_path_;
   }

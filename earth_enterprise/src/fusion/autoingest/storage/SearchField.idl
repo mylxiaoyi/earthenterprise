@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#include <qstring.h>
-#include <qobject.h>
+#include <QtCore/QString>
+#include <QtCore/QObject>
 #requiresgetheapusage
 
 class SearchField {

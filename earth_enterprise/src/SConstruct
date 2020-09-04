@@ -243,7 +243,7 @@ if sys.platform[0:5] == 'linux':
     warnflags += ['-Wno-parentheses']
   cppflags = ['-D_LARGEFILE64_SOURCE', '-DQT_THREAD_SUPPORT',
               '-DQT_NO_ASCII_CAST', '-DQT_CLEAN_NAMESPACE', '-D_REENTRANT',
-              '-DGUNIT_NO_GOOGLE3']
+              '-DGUNIT_NO_GOOGLE3', '-fPIC']
 
   # set any architecture specific specific flags
   if re.compile('i.86').match(march):
@@ -293,7 +293,7 @@ if gprof:
 rpathlink_dirs = [Dir(exportdirs['lib']).abspath]
 # SetUID binaries don't use RPATH's containing '$ORIGIN' (since that would be
 # exploitable).  Use absolute paths to library install locations instead:
-rpath_dirs = ["'$$ORIGIN/../qt/lib'",
+rpath_dirs = ["'/usr/lib/x86_64-linux-gnu'",
               "'$$ORIGIN/../lib64'",
               "'$$ORIGIN/../lib'",
               '%s/lib64' % optdir,
@@ -490,6 +490,7 @@ env = khEnvironment(
     CCFLAGS=optflags + extragccflags + warnflags,
     CPPFLAGS=cppflags,
     CPPPATH=[
+             Dir('/usr/include/x86_64-linux-gnu/qt5'),
              # generated 3rd party headers
              Dir(builddir + '/include'),
              Dir(builddir),  # generated headers
@@ -565,12 +566,12 @@ if home: env['ENV']['HOME'] = str(home)
 
 # setup QTDIR & friends
 # always use our Qt
-qtdir = exportdir
+qtdir = '/usr/lib/x86_64-linux-gnu/qt5' #exportdir
 qtdir_lib = '%s/lib' % exportdir
 env['ENV']['QTDIR'] = str(qtdir)
 env['QTDIR'] = str(qtdir)
-env['QTINCDIR'] = qtdir+'/include'
-env['QTLIBDIR'] = qtdir+'/lib'
+env['QTINCDIR'] = '/usr/include/x86_64-linux-gnu/qt5' #qtdir+'/include'
+env['QTLIBDIR'] = '/usr/lib/x86_64-linux-gnu' #qtdir+'/lib'
 env['MOC'] = qtdir+'/bin/moc'
 env['UIC'] = qtdir+'/bin/uic'
 env['LRELEASE'] = qtdir+'/bin/lrelease'

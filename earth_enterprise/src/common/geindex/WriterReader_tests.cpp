@@ -72,7 +72,7 @@ class WriterReaderUnitTest : public testing::Test {
     // Don't try this at home (i.e. in actual production code)
     QuadtreePath qt_path;
     assert(sizeof(offset) == sizeof(qt_path));
-    memcpy(&qt_path, &offset, sizeof(offset));
+    memcpy((void*)&qt_path, &offset, sizeof(offset));
     return qt_path.IsValid() ? qt_path.AsString() : "INVALID";
   }
 

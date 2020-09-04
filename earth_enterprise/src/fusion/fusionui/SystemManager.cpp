@@ -19,42 +19,42 @@
 #include "SystemListener.h"
 #include <autoingest/khAssetManagerProxy.h>
 #include <notify.h>
-#include <qapplication.h>
-#include <qlistbox.h>
-#include <qtooltip.h>
-#include <qpainter.h>
-#include <qpen.h>
+#include <QtWidgets/qapplication.h>
+//#include <qlistbox.h>
+#include <QtWidgets/qtooltip.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qpen.h>
 
 
-class WaitingItem : public QListBoxText
+class WaitingItem //: public QListBoxText
 {
  protected:
   virtual void paint(QPainter *painter) {
-    if (!error.isEmpty()) {
+    /*if (!error.isEmpty()) {
       QPen oldpen = painter->pen();
       painter->setPen(QObject::red);
       QListBoxText::paint(painter);
       painter->setPen(oldpen);
     } else {
       QListBoxText::paint(painter);
-    }
+    }*/
   }
  public:
   QString error;
-  WaitingItem(QListBox *parent, const QString &text,
+  /*WaitingItem(QListBox *parent, const QString &text,
               const QString &err = QString()) :
       QListBoxText(parent, text), error(err) {
-  }
+  }*/
 };
 
 class WaitingErrorTip : public QToolTip
 {
  public:
-  WaitingErrorTip(QListBox *listbox) : QToolTip(listbox) { }
+  //WaitingErrorTip(QListBox *listbox) : QToolTip(listbox) { }
   virtual ~WaitingErrorTip(void) { }
  protected:
   virtual void maybeTip(const QPoint &p) {
-    QListBox *listbox = dynamic_cast<QListBox*>(parentWidget());
+    /*QListBox *listbox = dynamic_cast<QListBox*>(parentWidget());
     if (listbox) {
       QListBoxItem *item = listbox->itemAt(p);
       if (item) {
@@ -64,26 +64,26 @@ class WaitingErrorTip : public QToolTip
         }
       }
             
-    }
+    }*/
   }
 };
 
-SystemManager::SystemManager( QWidget* parent, const char* name, bool modal, WFlags fl )
-    : SystemManagerBase( parent, name, modal, fl ), taskTimer(this)
+SystemManager::SystemManager( QWidget* parent, const char* name, bool modal)
+    //: /*SystemManagerBase( parent, name, modal, fl ),*/ taskTimer(this)
 {
-  connect(&taskTimer, SIGNAL(timeout()), this, SLOT(updateTasks()));
+  /*connect(&taskTimer, SIGNAL(timeout()), this, SLOT(updateTasks()));
 
   waitingList->setSelectionMode(QListBox::NoSelection);
   activeList->setSelectionMode(QListBox::NoSelection);
 
-  (void) new WaitingErrorTip(waitingList);
+  (void) new WaitingErrorTip(waitingList);*/
 }
 
 
 void
 SystemManager::show()
 {
-  if ( !isVisible() ) {
+  /*if ( !isVisible() ) {
     connect(SystemListener::instance,
             SIGNAL(assetsChanged(const AssetChanges &)),
             this,
@@ -94,25 +94,25 @@ SystemManager::show()
   // don't wait for the timer to populate the tasks for the first time
   updateTasks();
 
-  SystemManagerBase::show();
+  SystemManagerBase::show();*/
 }
 
 void
 SystemManager::hide()
 {
-  SystemManagerBase::hide();
+  /*SystemManagerBase::hide();
   disconnect(SystemListener::instance,
              SIGNAL(assetsChanged(const AssetChanges &)),
              this,
              SLOT(assetsChanged(const AssetChanges &)));
-  taskTimer.stop();
+  taskTimer.stop();*/
 }
 
 
 void
 SystemManager::assetsChanged(const AssetChanges &changes)
 {
-  static const unsigned int maxitems = 1000;
+  /*static const unsigned int maxitems = 1000;
   unsigned int count = activityList->count() + changes.items.size();
 
   activityList->setUpdatesEnabled(false);
@@ -139,13 +139,13 @@ SystemManager::assetsChanged(const AssetChanges &changes)
   activityList->repaint();
 
   // use this event as a clue to update the tasklist
-  updateTasks();
+  updateTasks();*/
 }
 
 void
 SystemManager::updateTasks(void)
 {
-  QString error;
+  /*QString error;
   TaskLists taskLists;
   if (!khAssetManagerProxy::GetCurrTasks("dummy", taskLists, error)) {
     QString errorMsg;
@@ -184,5 +184,5 @@ SystemManager::updateTasks(void)
         activeList->insertItem(p->hostname + ": " + a->verref);
       }
     }
-  }
+  }*/
 }

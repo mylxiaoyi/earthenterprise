@@ -32,7 +32,7 @@ class QFileDialog;
 class QStringList;
 class RasterProductImportRequest;
 
-class RasterAssetWidget : public RasterAssetWidgetBase {
+class RasterAssetWidget : public Ui::RasterAssetWidgetBase {
  protected:
   RasterAssetWidget(QWidget* parent, AssetDefs::Type type);
 

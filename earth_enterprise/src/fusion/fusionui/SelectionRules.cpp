@@ -18,28 +18,28 @@
 
 #include <unistd.h>
 
-#include <qdeepcopy.h>
-#include <qtable.h>
-#include <qmessagebox.h>
-#include <qinputdialog.h>
-#include <qfiledialog.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qstringlist.h>
-#include <qcolordialog.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qspinbox.h>
-#include <qtextedit.h>
-#include <qlayout.h>
-#include <qvalidator.h>
-#include <qtabwidget.h>
-#include <qwidgetstack.h>
-#include <qimage.h>
-#include <qdragobject.h>
-#include <qbuttongroup.h>
+//#include <qdeepcopy.h>
+#include <QtWidgets/qtableview.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qinputdialog.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtWidgets/qlayout.h>
+//#include <qvalidator.h>
+#include <QtWidgets/qtabwidget.h>
+#include <QtWidgets/qstackedwidget.h>
+#include <QtGui/qimage.h>
+//#include <qdragobject.h>
+#include <QtWidgets/qbuttongroup.h>
 #include <common/khTileAddrConsts.h>
 #include "fusion/fusionui/QueryRules.h"
 #include "fusion/fusionui/SiteIcons.h"
@@ -57,25 +57,25 @@
 enum { QueryRulesStackId = 0, JavascriptStackId = 1 };
 
 static QPixmap uic_load_pixmap(const QString& name) {
-  const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
-  if (!m)
-    return QPixmap();
+  //const QMimeSource* m = QMimeSourceFactory::defaultFactory()->data(name);
+  //if (!m)
+  //  return QPixmap();
   QPixmap pix;
-  QImageDrag::decode(m, pix);
+  //QImageDrag::decode(m, pix);
   return pix;
 }
 
 SelectionRules::SelectionRules(QWidget *parent,
                                const LayerConfig &cfg, gstLayer* layer,
                                const gstHeaderHandle &hdr, int idx)
-    : SelectionRulesBase(parent, 0, false, 0),
+    : //SelectionRulesBase(parent, 0, false, 0),
       hide_warnings_(true),
       is_beyond_recommended_build_level_(false),
       config(cfg),
       selected_filter_(-1),
       layer_(layer),
       last_feature_type_idx_(-1) {
-  lineLineWidthEdit->setValidator(
+  /*lineLineWidthEdit->setValidator(
       new QDoubleValidator(0.5, 5.0, 2, lineLineWidthEdit));
   polygonLineWidthEdit->setValidator(
       new QDoubleValidator(0.5, 5.0, 2, polygonLineWidthEdit));
@@ -139,11 +139,11 @@ SelectionRules::SelectionRules(QWidget *parent,
   }
 
   // Ok to show warnings after initialization.
-  hide_warnings_ = false;
+  hide_warnings_ = false;*/
 }
 
 void SelectionRules::MoveRuleDown() {
-  updateConfig();
+  /*updateConfig();
   selected_filter_ = -1;
 
   // modifying the list text triggers a signal which we don't want just yet
@@ -161,11 +161,11 @@ void SelectionRules::MoveRuleDown() {
 
   filterList->blockSignals(false);
 
-  filterList->setSelected(id + 1, true);
+  filterList->setSelected(id + 1, true);*/
 }
 
 void SelectionRules::MoveRuleUp() {
-  updateConfig();
+  /*updateConfig();
   selected_filter_ = -1;
 
   filterList->blockSignals(true);
@@ -181,18 +181,18 @@ void SelectionRules::MoveRuleUp() {
   config.displayRules[id - 1] = from_cfg;
 
   filterList->blockSignals(false);
-  filterList->setSelected(id - 1, true);
+  filterList->setSelected(id - 1, true);*/
 }
 
 void SelectionRules::InsertFilter(const DisplayRuleConfig& cfg) {
-  config.displayRules.push_back(cfg);
+  /*config.displayRules.push_back(cfg);
   filterList->insertItem(QDeepCopy<QString>(cfg.name));
   selected_filter_ = -1;
-  filterList->setSelected(filterList->numRows() - 1, true);
+  filterList->setSelected(filterList->numRows() - 1, true);*/
 }
 
 void SelectionRules::NewRule() {
-  updateConfig();
+  /*updateConfig();
 
   bool ok = false;
 
@@ -204,11 +204,11 @@ void SelectionRules::NewRule() {
     DisplayRuleConfig cfg;
     cfg.name = QDeepCopy<QString>(filter_name);
     InsertFilter(cfg);
-  }
+  }*/
 }
 
 void SelectionRules::CopyRule() {
-  updateConfig();
+  /*updateConfig();
 
   int id = filterList->currentItem();
   const DisplayRuleConfig& from_cfg = config.displayRules[id];
@@ -226,11 +226,11 @@ void SelectionRules::CopyRule() {
     cfg.feature.style.id = 0;
     cfg.site.style.id = 0;
     InsertFilter(cfg);
-  }
+  }*/
 }
 
 void SelectionRules::thematicFilter() {
-  ThematicFilter thematic_filter(this, layer_);
+  /*ThematicFilter thematic_filter(this, layer_);
   std::vector<DisplayRuleConfig> filters;
   if (thematic_filter.DefineNewFilters(&filters)) {
     // remove all existing filters
@@ -243,11 +243,11 @@ void SelectionRules::thematicFilter() {
     }
     // filterList->blockSignals(false);
     filterList->setSelected(filterList->numRows() - 1, true);
-  }
+  }*/
 }
 
 void SelectionRules::DeleteRule() {
-  filterList->blockSignals(true);
+  /*filterList->blockSignals(true);
 
   int id = filterList->currentItem();
 
@@ -262,11 +262,11 @@ void SelectionRules::DeleteRule() {
   filterList->blockSignals(false);
 
   selected_filter_ = -1;
-  filterList->setSelected(newid, true);
+  filterList->setSelected(newid, true);*/
 }
 
 void SelectionRules::RenameRule() {
-  int id = filterList->currentItem();
+  /*int id = filterList->currentItem();
   DisplayRuleConfig cfg = config.displayRules[id];
 
   QString text = cfg.name;
@@ -293,20 +293,20 @@ void SelectionRules::RenameRule() {
     } else {
       break;
     }
-  }
+  }*/
 }
 
 void SelectionRules::selectTab(QWidget* w) {
   // Don't display warnings when switching tabs.
-  hide_warnings_ = true;
+  /*hide_warnings_ = true;
   SelectRule(filterList->currentItem());
 
   // Ok to display warnings again.
-  hide_warnings_ = false;
+  hide_warnings_ = false;*/
 }
 
 void SelectionRules::SelectRule(int idx) {
-  if (idx == -1)
+  /*if (idx == -1)
     return;
 
   updateConfig();
@@ -331,11 +331,11 @@ void SelectionRules::SelectRule(int idx) {
     activateFilterLogic(static_cast<int>(filtercfg.match));
     queryScroller->init(filtercfg);
     scriptFilterEdit->setText(filtercfg.matchScript);
-  }
+  }*/
 }
 
 void SelectionRules::activateFilterLogic(int logic) {
-  switch (logic) {
+  /*switch (logic) {
     case FilterConfig::MatchAll:
     case FilterConfig::MatchAny:
       filterStack->raiseWidget(QueryRulesStackId);
@@ -343,11 +343,11 @@ void SelectionRules::activateFilterLogic(int logic) {
     case FilterConfig::JSExpression:
       filterStack->raiseWidget(JavascriptStackId);
       break;
-  }
+  }*/
 }
 
 void SelectionRules::activateFeatureType(int index) {
-  if (index != last_feature_type_idx_) {
+  /*if (index != last_feature_type_idx_) {
     updateLastConfig();
 
     // Update last feature index.
@@ -355,12 +355,12 @@ void SelectionRules::activateFeatureType(int index) {
 
     // Toggle feature type.
     toggleFeatureType(index);
-  }
+  }*/
 }
 
 void SelectionRules::toggleFeatureType(int index) {
   // Update feature type in FeatureConfig of current rule.
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   featurecfg.featureType = static_cast<VectorDefs::FeatureDisplayType>(index);
 
   switch (static_cast<VectorDefs::FeatureDisplayType>(index)) {
@@ -381,11 +381,11 @@ void SelectionRules::toggleFeatureType(int index) {
   }
 
   // Update widgets with new feature type.
-  updateFeatureWidgets();
+  updateFeatureWidgets();*/
 }
 
 void SelectionRules::enableSiteLabel(bool flag) {
-  siteIDLabel->setEnabled(flag);
+  /*siteIDLabel->setEnabled(flag);
   siteIDBox->setEnabled(flag);
   siteStartLevelLabel->setEnabled(flag);
   siteStartLevelBox->setEnabled(flag);
@@ -393,11 +393,11 @@ void SelectionRules::enableSiteLabel(bool flag) {
   siteEndLevelBox->setEnabled(flag);
 
   siteLabelGroup->setEnabled(flag);
-  siteIconGroup->setEnabled(flag);
+  siteIconGroup->setEnabled(flag);*/
 }
 
 void SelectionRules::changeElevationMode(int mode) {
-  StyleConfig::AltitudeMode elevMode = (StyleConfig::AltitudeMode) mode;
+  /*StyleConfig::AltitudeMode elevMode = (StyleConfig::AltitudeMode) mode;
   if (elevMode == StyleConfig::ClampToGround) {
     extrude_check->setEnabled(false);
     custom_height_box->setEnabled(false);
@@ -405,11 +405,11 @@ void SelectionRules::changeElevationMode(int mode) {
              elevMode == StyleConfig::Absolute) {
     extrude_check->setEnabled(true);
     custom_height_box->setEnabled(true);
-  }
+  }*/
 }
 
 void SelectionRules::changePointDecimation(int method) {
-  SiteConfig::PointDecimationMode decimationMode =
+  /*SiteConfig::PointDecimationMode decimationMode =
       static_cast<SiteConfig::PointDecimationMode>(method);
   bool enable = (decimationMode == SiteConfig::RepSubset);
 
@@ -421,11 +421,11 @@ void SelectionRules::changePointDecimation(int method) {
   labelPointDecimationMaxQuadEdit->setEnabled(enable);
   pointDecimationRatioBox->setEnabled(enable);
   labelPointDecimationRatioBox->setEnabled(enable);
-  labelSuffixPointDecimationRatioBox->setEnabled(enable);
+  labelSuffixPointDecimationRatioBox->setEnabled(enable);*/
 }
 
 void SelectionRules::toggleDrawAsRoads(bool drawAsRoads) {
-  roadLabelTypeLabel->setEnabled(drawAsRoads);
+  /*roadLabelTypeLabel->setEnabled(drawAsRoads);
   roadLabelTypeCombo->setEnabled(drawAsRoads);
   if (drawAsRoads) {
     drawLabelCheck->setChecked(false);
@@ -433,28 +433,28 @@ void SelectionRules::toggleDrawAsRoads(bool drawAsRoads) {
     checkMaxLevel(featureEndLevelBox->value());
   } else {
     labelWidgetStack->raiseWidget(0);
-  }
+  }*/
 }
 
 void SelectionRules::changeRoadLabelType(int type) {
-  if (type == static_cast<int>(FeatureConfig::Label))
+  /*if (type == static_cast<int>(FeatureConfig::Label))
     roadShieldGroup->setEnabled(false);
   else
-    roadShieldGroup->setEnabled(true);
+    roadShieldGroup->setEnabled(true);*/
 }
 
 void SelectionRules::checkMaxLevel(int max_level) {
-  displayMaxBuildLevelWarning();
+  //displayMaxBuildLevelWarning();
 }
 
 
 void SelectionRules::checkMaxBuildLevel(int max_build_level) {
-  displayMaxBuildLevelWarning();
+  //displayMaxBuildLevelWarning();
 }
 
 
 void SelectionRules::SetIsBeyondRecommendedBuildLevels() {
-  VectorDefs::FeatureDisplayType featureType =
+  /*VectorDefs::FeatureDisplayType featureType =
       static_cast<VectorDefs::FeatureDisplayType>(
           featureTypeCombo->currentItem());
 
@@ -474,11 +474,11 @@ void SelectionRules::SetIsBeyondRecommendedBuildLevels() {
     is_beyond_recommended_build_level_ =
       max_level > max_recommended_level &&
       max_build_level > max_recommended_level;
-  }
+  }*/
 }
 
 void SelectionRules::displayMaxBuildLevelWarning() {
-  bool was_beyond_recommendation = is_beyond_recommended_build_level_;
+  /*bool was_beyond_recommendation = is_beyond_recommended_build_level_;
   // Update the value of is_beyond_recommended_build_level_.
   // Keep track of whether we're currently beyond the recommended build levels.
   SetIsBeyondRecommendedBuildLevels();
@@ -527,11 +527,11 @@ void SelectionRules::displayMaxBuildLevelWarning() {
                          arg(static_cast<int>(
                           pow(2, 22-max_recommended_level)*0.5)),
                          tr("OK"), 0, 0, 0);
-  }
+  }*/
 }
 
 void SelectionRules::changePolygonDrawMode(int mode) {
-  if (mode == static_cast<int>(VectorDefs::FillAndOutline)) {
+  /*if (mode == static_cast<int>(VectorDefs::FillAndOutline)) {
     polygonFillColorLabel->setEnabled(true);
     polygonFillColorBtn->setEnabled(true);
     polygonLineColorLabel->setEnabled(true);
@@ -552,11 +552,11 @@ void SelectionRules::changePolygonDrawMode(int mode) {
     polygonLineColorBtn->setEnabled(false);
     polygonLineWidthLabel->setEnabled(false);
     polygonLineWidthEdit->setEnabled(false);
-  }
+  }*/
 }
 
 void SelectionRules::editSiteLabel() {
-  switch (siteLabelModeCombo->currentItem()) {
+  /*switch (siteLabelModeCombo->currentItem()) {
     case LabelConfig::Original:
       {
       LabelFormat label_format(this, layer_->GetSourceAttr(),
@@ -580,11 +580,11 @@ void SelectionRules::editSiteLabel() {
       }
       break;
     }
-  }
+  }*/
 }
 
 void SelectionRules::editRoadLabel() {
-  switch (roadLabelModeCombo->currentItem()) {
+  /*switch (roadLabelModeCombo->currentItem()) {
     case LabelConfig::Original:
       {
       LabelFormat label_format(this, layer_->GetSourceAttr(),
@@ -607,19 +607,19 @@ void SelectionRules::editRoadLabel() {
       }
       break;
     }
-  }
+  }*/
 }
 
 void SelectionRules::editHeightVariable() {
-  LabelFormat label_format(this, layer_->GetSourceAttr(),
+  /*LabelFormat label_format(this, layer_->GetSourceAttr(),
                            custom_height_var_name_edit->text(),
                            LabelFormat::SingleLine);
   if (label_format.exec() == QDialog::Accepted)
-    custom_height_var_name_edit->setText(label_format.GetText());
+    custom_height_var_name_edit->setText(label_format.GetText());*/
 }
 
 void SelectionRules::editPopupText() {
-  switch (popupTextModeCombo->currentItem()) {
+  /*switch (popupTextModeCombo->currentItem()) {
     case LabelConfig::Original:
       {
         LabelFormat label_format(this, layer_->GetSourceAttr(),
@@ -642,78 +642,78 @@ void SelectionRules::editPopupText() {
       }
       break;
     }
-  }
+  }*/
 }
 
 void SelectionRules::chooseSiteIcon() {
-  if (SiteIcons::selectIcon(this, PixmapManager::NormalIcon, &siteIcon_)) {
+  /*if (SiteIcons::selectIcon(this, PixmapManager::NormalIcon, &siteIcon_)) {
     QPixmap pix = thePixmapManager->GetPixmap(siteIcon_,
                                               PixmapManager::RegularPair);
     siteIconBtn->setPixmap(pix);
-  }
+  }*/
 }
 
 void SelectionRules::chooseRoadShield() {
-  if (SiteIcons::selectIcon(this, PixmapManager::NormalIcon, &roadShield)) {
+  /*if (SiteIcons::selectIcon(this, PixmapManager::NormalIcon, &roadShield)) {
     QPixmap pix = thePixmapManager->GetPixmap(roadShield,
                                               PixmapManager::NormalIcon);
     roadShieldBtn->setPixmap(pix);
-  }
+  }*/
 }
 
 void SelectionRules::chooseLineLineColor() {
-  QColor init_color = lineLineColorBtn->paletteBackgroundColor();
-  lineLineColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = lineLineColorBtn->paletteBackgroundColor();
+  //lineLineColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::choosePolygonFillColor() {
-  QColor init_color = polygonFillColorBtn->paletteBackgroundColor();
-  polygonFillColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = polygonFillColorBtn->paletteBackgroundColor();
+  //polygonFillColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::choosePolygonLineColor() {
-  QColor init_color = polygonLineColorBtn->paletteBackgroundColor();
-  polygonLineColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = polygonLineColorBtn->paletteBackgroundColor();
+  //polygonLineColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseSiteNormalLabelColor() {
-  QColor init_color = siteNormalLabelColorBtn->paletteBackgroundColor();
-  siteNormalLabelColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = siteNormalLabelColorBtn->paletteBackgroundColor();
+  //siteNormalLabelColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseSiteHighlightLabelColor() {
-  QColor init_color = siteHighlightLabelColorBtn->paletteBackgroundColor();
-  siteHighlightLabelColorBtn->setPaletteBackgroundColor(
-      chooseColor(init_color));
+  //QColor init_color = siteHighlightLabelColorBtn->paletteBackgroundColor();
+  //siteHighlightLabelColorBtn->setPaletteBackgroundColor(
+  //    chooseColor(init_color));
 }
 
 void SelectionRules::chooseSiteNormalIconColor() {
-  QColor init_color = siteNormalIconColorBtn->paletteBackgroundColor();
-  siteNormalIconColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = siteNormalIconColorBtn->paletteBackgroundColor();
+  //siteNormalIconColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseSiteHighlightIconColor() {
-  QColor init_color = siteHighlightIconColorBtn->paletteBackgroundColor();
-  siteHighlightIconColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = siteHighlightIconColorBtn->paletteBackgroundColor();
+  //siteHighlightIconColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseRoadLabelColor() {
-  QColor init_color = roadLabelColorBtn->paletteBackgroundColor();
-  roadLabelColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = roadLabelColorBtn->paletteBackgroundColor();
+  //roadLabelColorBtn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseBalloonBgColor() {
-  QColor init_color = balloon_bgcolor_btn->paletteBackgroundColor();
-  balloon_bgcolor_btn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = balloon_bgcolor_btn->paletteBackgroundColor();
+  //balloon_bgcolor_btn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::chooseBalloonFgColor() {
-  QColor init_color = balloon_textcolor_btn->paletteBackgroundColor();
-  balloon_textcolor_btn->setPaletteBackgroundColor(chooseColor(init_color));
+  //QColor init_color = balloon_textcolor_btn->paletteBackgroundColor();
+  //balloon_textcolor_btn->setPaletteBackgroundColor(chooseColor(init_color));
 }
 
 void SelectionRules::changeBalloonStyleMode(int balloon_mode_combo_box_id) {
-  switch (balloon_mode_combo_box_id) {
+  /*switch (balloon_mode_combo_box_id) {
     case 0:  // default
       balloon_details_frame->setEnabled(true);
       balloon_style_stack->raiseWidget(1);
@@ -722,24 +722,25 @@ void SelectionRules::changeBalloonStyleMode(int balloon_mode_combo_box_id) {
       balloon_details_frame->setEnabled(true);
       balloon_style_stack->raiseWidget(0);
       break;
-  }
+  }*/
 }
 
 void SelectionRules::editBalloonStyleText() {
-  BalloonStyleText dialog(this, balloon_style_text->text());
+  /*BalloonStyleText dialog(this, balloon_style_text->text());
   if (dialog.exec() == QDialog::Accepted)
-    balloon_style_text->setText(dialog.GetText());
+    balloon_style_text->setText(dialog.GetText());*/
 }
 
 QColor SelectionRules::chooseColor(QColor color) {
-  QRgb init_color = color.rgb();
-  QRgb rgba = QColorDialog::getRgba(init_color, 0, this);
+  //QRgb init_color = color.rgb();
+  //QRgb rgba = QColorDialog::getRgba(init_color, 0, this);
 
-  return QColor(rgba);
+  //return QColor(rgba);
+  return QColor();
 }
 
 void SelectionRules::updatePointVisibility() {
-  featureWidgetStack->raiseWidget(0);
+  /*featureWidgetStack->raiseWidget(0);
   labelWidgetStack->raiseWidget(0);
 
   featureIDLabel->setEnabled(false);
@@ -757,11 +758,11 @@ void SelectionRules::updatePointVisibility() {
 
   changePointDecimation(pointDecimationBox->selectedId());
   enableSiteLabel(drawLabelCheck->isChecked());
-  changeElevationMode(elev_mode_combo->currentItem());
+  changeElevationMode(elev_mode_combo->currentItem());*/
 }
 
 void SelectionRules::updateLineVisibility() {
-  featureWidgetStack->raiseWidget(1);
+  /*featureWidgetStack->raiseWidget(1);
   labelWidgetStack->raiseWidget(0);
 
   featureIDLabel->setEnabled(true);
@@ -780,11 +781,11 @@ void SelectionRules::updateLineVisibility() {
   toggleDrawAsRoads(drawAsRoadsCheck->isChecked());
   changeRoadLabelType(roadLabelTypeCombo->currentItem());
   changeElevationMode(elev_mode_combo->currentItem());
-  enableSiteLabel(drawLabelCheck->isChecked());
+  enableSiteLabel(drawLabelCheck->isChecked());*/
 }
 
 void SelectionRules::updatePolygonVisibility() {
-  featureWidgetStack->raiseWidget(2);
+  /*featureWidgetStack->raiseWidget(2);
   labelWidgetStack->raiseWidget(0);
 
   featureIDLabel->setEnabled(true);
@@ -802,7 +803,7 @@ void SelectionRules::updatePolygonVisibility() {
 
   changePolygonDrawMode(polygonDrawModeCombo->currentItem());
   enableSiteLabel(drawLabelCheck->isChecked());
-  changeElevationMode(elev_mode_combo->currentItem());
+  changeElevationMode(elev_mode_combo->currentItem());*/
 }
 
 int SelectionRules::BalloonComboBoxId(SiteConfig::BalloonStyleMode mode) {
@@ -824,7 +825,7 @@ SiteConfig::BalloonStyleMode SelectionRules::BalloonStyleMode(
 }
 
 void SelectionRules::UpdateBalloonStyleWidgets(const SiteConfig& site_cfg) {
-  balloon_style_text->setText(site_cfg.balloonText);
+  /*balloon_style_text->setText(site_cfg.balloonText);
   balloon_bgcolor_btn->setPaletteBackgroundColor(
       VectorToQColor(site_cfg.balloonBgColor));
   balloon_textcolor_btn->setPaletteBackgroundColor(
@@ -833,20 +834,20 @@ void SelectionRules::UpdateBalloonStyleWidgets(const SiteConfig& site_cfg) {
   balloon_directions_check->setChecked(site_cfg.balloonInsertDirections);
   int balloon_combo_box_id = BalloonComboBoxId(site_cfg.balloonStyleMode);
   balloon_style_options->setCurrentItem(balloon_combo_box_id);
-  changeBalloonStyleMode(balloon_combo_box_id);
+  changeBalloonStyleMode(balloon_combo_box_id);*/
 }
 
 void SelectionRules::UpdateElevationModeWidgets(const StyleConfig& cfg) {
-  elev_mode_combo->setCurrentItem(static_cast<int>(cfg.altitudeMode));
+  /*elev_mode_combo->setCurrentItem(static_cast<int>(cfg.altitudeMode));
   extrude_check->setChecked(cfg.extrude);
   custom_height_box->setChecked(static_cast<bool>(cfg.enableCustomHeight));
   custom_height_var_name_edit->setText(cfg.customHeightVariableName);
   custom_height_offset_edit->setText(QString::number(cfg.customHeightOffset));
-  custom_height_scale_edit->setText(QString::number(cfg.customHeightScale));
+  custom_height_scale_edit->setText(QString::number(cfg.customHeightScale));*/
 }
 
 void SelectionRules::UpdatePopupWidgets(const SiteConfig& cfg) {
-  siteIconGroup->setChecked(cfg.enablePopup);
+  /*siteIconGroup->setChecked(cfg.enablePopup);
 
   const IconConfig& icon_cfg = cfg.style.icon;
   siteIcon_ = gstIcon(icon_cfg.href, icon_cfg.type);
@@ -868,11 +869,11 @@ void SelectionRules::UpdatePopupWidgets(const SiteConfig& cfg) {
 
   popupTextModeCombo->setCurrentItem(cfg.popupTextMode);
 
-  sitePopupText->setText(cfg.popupText);
+  sitePopupText->setText(cfg.popupText);*/
 }
 
 void SelectionRules::updatePointWidgets() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &fstylecfg = featurecfg.style;
   StyleConfig &stylecfg = sitecfg.style;
@@ -910,11 +911,11 @@ void SelectionRules::updatePointWidgets() {
   updatePointVisibility();
 
   // Keep track of whether we're currently beyond the recommended build levels.
-  SetIsBeyondRecommendedBuildLevels();
+  SetIsBeyondRecommendedBuildLevels();*/
 }
 
 void SelectionRules::updateLineWidgets() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &fstylecfg = featurecfg.style;
   StyleConfig &sstylecfg = sitecfg.style;
@@ -973,11 +974,11 @@ void SelectionRules::updateLineWidgets() {
   updateLineVisibility();
 
   // Keep track of whether we're currently beyond the recommended build levels.
-  SetIsBeyondRecommendedBuildLevels();
+  SetIsBeyondRecommendedBuildLevels();*/
 }
 
 void SelectionRules::updatePolygonWidgets() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &fstylecfg = featurecfg.style;
   StyleConfig &sstylecfg = sitecfg.style;
@@ -1019,11 +1020,11 @@ void SelectionRules::updatePolygonWidgets() {
   updatePolygonVisibility();
 
   // Keep track of whether we're currently beyond the recommended build levels.
-  SetIsBeyondRecommendedBuildLevels();
+  SetIsBeyondRecommendedBuildLevels();*/
 }
 
 void SelectionRules::updateFeatureWidgets() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   featureTypeCombo->setCurrentItem(static_cast<int>(featurecfg.featureType));
 
   switch (featurecfg.featureType) {
@@ -1041,7 +1042,7 @@ void SelectionRules::updateFeatureWidgets() {
       throw khException(
           kh::tr("Invalid drawFeatureType VectorDefs::IconZ"));
       break;
-  }
+  }*/
 }
 
 void SelectionRules::QColorToVector(QColor color, std::vector< unsigned int> * vec) {
@@ -1062,7 +1063,7 @@ QColor SelectionRules::VectorToQColor(const std::vector< unsigned int> & vec) {
 }
 
 void SelectionRules::BalloonStyleWidgetsToConfig(SiteConfig* cfg) {
-  cfg->balloonText = balloon_style_text->text();
+  /*cfg->balloonText = balloon_style_text->text();
   QColorToVector(balloon_bgcolor_btn->paletteBackgroundColor(),
                  &cfg->balloonBgColor);
   QColorToVector(balloon_textcolor_btn->paletteBackgroundColor(),
@@ -1070,21 +1071,21 @@ void SelectionRules::BalloonStyleWidgetsToConfig(SiteConfig* cfg) {
   cfg->balloonStyleMode =
       BalloonStyleMode(balloon_style_options->currentItem());
   cfg->balloonInsertHeader = balloon_header_check->isChecked();
-  cfg->balloonInsertDirections = balloon_directions_check->isChecked();
+  cfg->balloonInsertDirections = balloon_directions_check->isChecked();*/
 }
 
 void SelectionRules::ElevationModeWidgetsToConfig(StyleConfig* cfg) {
-  cfg->altitudeMode = static_cast<StyleConfig::AltitudeMode>(
+  /*cfg->altitudeMode = static_cast<StyleConfig::AltitudeMode>(
       elev_mode_combo->currentItem());
   cfg->extrude = extrude_check->isChecked();
   cfg->enableCustomHeight = custom_height_box->isChecked();
   cfg->customHeightVariableName = custom_height_var_name_edit->text();
   cfg->customHeightOffset = custom_height_offset_edit->text().toFloat();
-  cfg->customHeightScale = custom_height_scale_edit->text().toFloat();
+  cfg->customHeightScale = custom_height_scale_edit->text().toFloat();*/
 }
 
 void SelectionRules::updatePointConfig() {
-  SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
+  /*SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &sstylecfg = sitecfg.style;
   LabelConfig &slabelcfg = sstylecfg.label;
   IconConfig &siconcfg = sstylecfg.icon;
@@ -1125,11 +1126,11 @@ void SelectionRules::updatePointConfig() {
   sitecfg.popupText = sitePopupText->text();
 
   BalloonStyleWidgetsToConfig(&sitecfg);
-  ElevationModeWidgetsToConfig(&sstylecfg);
+  ElevationModeWidgetsToConfig(&sstylecfg);*/
 }
 
 void SelectionRules::updateLineConfig() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &fstylecfg = featurecfg.style;
   StyleConfig &sstylecfg = sitecfg.style;
@@ -1190,11 +1191,11 @@ void SelectionRules::updateLineConfig() {
 
   BalloonStyleWidgetsToConfig(&sitecfg);
   ElevationModeWidgetsToConfig(&sstylecfg);
-  ElevationModeWidgetsToConfig(&fstylecfg);
+  ElevationModeWidgetsToConfig(&fstylecfg);*/
 }
 
 void SelectionRules::updatePolygonConfig() {
-  FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
+  /*FeatureConfig &featurecfg = config.displayRules[selected_filter_].feature;
   SiteConfig &sitecfg = config.displayRules[selected_filter_].site;
   StyleConfig &fstylecfg = featurecfg.style;
   StyleConfig &sstylecfg = sitecfg.style;
@@ -1243,12 +1244,12 @@ void SelectionRules::updatePolygonConfig() {
 
   BalloonStyleWidgetsToConfig(&sitecfg);
   ElevationModeWidgetsToConfig(&sstylecfg);
-  ElevationModeWidgetsToConfig(&fstylecfg);
+  ElevationModeWidgetsToConfig(&fstylecfg);*/
 }
 
 void SelectionRules::doUpdateConfig(
     VectorDefs::FeatureDisplayType feature_type) {
-  applyQueryChanges();
+  /*applyQueryChanges();
 
   switch (feature_type) {
     case VectorDefs::PointZ:
@@ -1265,11 +1266,11 @@ void SelectionRules::doUpdateConfig(
       throw khException(
           kh::tr("Invalid drawFeatureType VectorDefs::IconZ"));
       break;
-  }
+  }*/
 }
 
 void SelectionRules::updateConfig() {
-  if (selected_filter_ == -1)
+  /*if (selected_filter_ == -1)
     return;
 
   FeatureConfig &featurecfg = config.displayRules[ selected_filter_ ].feature;
@@ -1278,11 +1279,11 @@ void SelectionRules::updateConfig() {
           featureTypeCombo->currentItem());
   featurecfg.featureType = featureType;
 
-  doUpdateConfig(featurecfg.featureType);
+  doUpdateConfig(featurecfg.featureType);*/
 }
 
 void SelectionRules::updateLastConfig() {
-  if (selected_filter_ == -1)
+  /*if (selected_filter_ == -1)
     return;
 
   assert(last_feature_type_idx_ != -1);
@@ -1290,29 +1291,29 @@ void SelectionRules::updateLastConfig() {
   FeatureConfig &featurecfg = config.displayRules[ selected_filter_ ].feature;
   assert(static_cast<int>(featurecfg.featureType) == last_feature_type_idx_);
 
-  doUpdateConfig(featurecfg.featureType);
+  doUpdateConfig(featurecfg.featureType);*/
 }
 
 void SelectionRules::applyQueryChanges() {
-  FilterConfig &filtercfg = config.displayRules[ selected_filter_ ].filter =
+  /*FilterConfig &filtercfg = config.displayRules[ selected_filter_ ].filter =
       queryScroller->getConfig();
   filtercfg.matchScript = scriptFilterEdit->text();
-  filtercfg.match = (FilterConfig::MatchType) matchLogicCombo->currentItem();
+  filtercfg.match = (FilterConfig::MatchType) matchLogicCombo->currentItem();*/
 }
 
 void SelectionRules::accept() {
   // update the current display rule config
-  updateConfig();
+  /*updateConfig();
 
   // update layer config stuff
   config.allowFeatureDuplication = featureDuplicationCheck->isChecked();
   config.allowEmptyLayer = emptyLayerCheck->isChecked();
 
-  SelectionRulesBase::accept();
+  SelectionRulesBase::accept();*/
 }
 
 void SelectionRules::editScriptFilter() {
-  QString script = scriptFilterEdit->text();
+  /*QString script = scriptFilterEdit->text();
   QStringList contextScripts = layer_->GetExternalContextScripts();
   if (!config.layerContextScript.isEmpty()) {
     contextScripts.push_back(config.layerContextScript);
@@ -1321,12 +1322,12 @@ void SelectionRules::editScriptFilter() {
                         script, ScriptEditor::Expression,
                         contextScripts)) {
     scriptFilterEdit->setText(script);
-  }
+  }*/
 }
 
 void SelectionRules::compileAndAccept() {
   // update the current display rule config
-  updateConfig();
+  /*updateConfig();
 
   // gte the common pieces once
   QStringList contextScripts = layer_->GetExternalContextScripts();
@@ -1415,7 +1416,7 @@ void SelectionRules::compileAndAccept() {
     }
   }
 
-  accept();
+  accept();*/
 }
 
 void SelectionRules::labelModeChanged(int newMode) {

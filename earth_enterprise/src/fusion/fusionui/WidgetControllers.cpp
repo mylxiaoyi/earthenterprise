@@ -17,15 +17,15 @@
 
 #include "fusion/fusionui/WidgetControllers.h"
 
-#include <qpushbutton.h>
-#include <qcolordialog.h>
-#include <qgroupbox.h>
-#include <qspinbox.h>
-#include <qlineedit.h>
-#include <qtextedit.h>
-#include <qvalidator.h>
-#include <qdatetime.h>
-#include <qlabel.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qcolordialog.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qspinbox.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtGui/qvalidator.h>
+#include <QtCore/qdatetime.h>
+#include <QtWidgets/qlabel.h>
 
 #include <autoingest/.idl/storage/MapSubLayerConfig.h>
 
@@ -106,19 +106,19 @@ ColorButtonController::ColorButtonController(WidgetControllerManager &manager,
 void
 ColorButtonController::clicked(void)
 {
-  QColor orig_color = button->paletteBackgroundColor();
+  /*QColor orig_color = button->paletteBackgroundColor();
   QColor new_color = QColor(QColorDialog::getRgba(orig_color.rgb(), 0,
                                                   button));
   if (new_color != orig_color) {
     button->setPaletteBackgroundColor(new_color);
     EmitChanged();
-  }
+  }*/
 }
 
 void
 ColorButtonController::SyncToConfig(void)
 {
-  *config = button->paletteBackgroundColor();
+  //*config = button->paletteBackgroundColor();
 }
 
 void
@@ -130,7 +130,7 @@ ColorButtonController::SyncToWidgetsImpl(void)
 void
 ColorButtonController::MySyncToWidgetsImpl(void)
 {
-  button->setPaletteBackgroundColor(*config);
+  //button->setPaletteBackgroundColor(*config);
 }
 
 void ColorButtonController::Create(WidgetControllerManager &manager,
@@ -151,31 +151,31 @@ IconButtonController::IconButtonController(WidgetControllerManager &manager,
 void
 IconButtonController::Clicked(void)
 {
-  if (SiteIcons::selectIcon(&button_, PixmapManager::NormalIcon, &shield_)) {
+  /*if (SiteIcons::selectIcon(&button_, PixmapManager::NormalIcon, &shield_)) {
     SetIcon();
-  }
+  }*/
 }
 
 void
 IconButtonController::SetIcon()
 {
-  const QPixmap pix = thePixmapManager->GetPixmap(shield_,
+  /*const QPixmap pix = thePixmapManager->GetPixmap(shield_,
                                                   PixmapManager::NormalIcon);
-  if (!pix.isNull()) button_.setPixmap(pix);
+  if (!pix.isNull()) button_.setPixmap(pix);*/
 }
 
 void
 IconButtonController::SyncToConfig(void)
 {
-  icon_href_ = shield_.IconRef().href;
-  icon_type_ = shield_.IconRef().type;
+  //icon_href_ = shield_.IconRef().href;
+  //icon_type_ = shield_.IconRef().type;
 }
 
 void
 IconButtonController::MySyncToWidgetsImpl(void)
 {
-  shield_ = gstIcon(IconReference(icon_type_, icon_href_));
-  SetIcon();
+  //shield_ = gstIcon(IconReference(icon_type_, icon_href_));
+  //SetIcon();
 }
 
 void
@@ -209,20 +209,20 @@ MapIconController::MapIconController(WidgetControllerManager &manager,
     config_(config),
     center_label_group_box_(center_label_group_box)
 {
-  ColorButtonController::Create(manager, fill_color_button,
+  /*ColorButtonController::Create(manager, fill_color_button,
                                 &(config_->fill_color_));
   ColorButtonController::Create(manager, outline_color_button,
                                 &(config_->box_color_));
   IconButtonController::Create(manager, *button, config->icon_href_,
                                config->icon_type_);
   MySyncToWidgetsImpl();
-  connect(combo_type, SIGNAL(activated(int)), this, SLOT(ShieldStyleChanged(int)));
+  connect(combo_type, SIGNAL(activated(int)), this, SLOT(ShieldStyleChanged(int)));*/
 }
 
 void
 MapIconController::ShieldStyleChanged(int index)
 {
-  bool is_icon = (MapShieldConfig::IconStyle == index);
+  /*bool is_icon = (MapShieldConfig::IconStyle == index);
   combo_scaling_->setEnabled(is_icon);
   button_->setEnabled(is_icon);
   fill_color_label_->setEnabled(!is_icon);
@@ -231,13 +231,13 @@ MapIconController::ShieldStyleChanged(int index)
   outline_color_label_->setEnabled(!is_icon);
   if (!is_icon && center_label_group_box_ != NULL) {
     center_label_group_box_->setChecked(true);
-  }
+  }*/
 }
 
 void
 MapIconController::SyncToConfig(void)
 {
-  switch (combo_type_->currentItem()) {
+  /*switch (combo_type_->currentItem()) {
     case 0:
       (*config_).style_ = MapShieldConfig::OvalStyle;
       break;
@@ -254,7 +254,7 @@ MapIconController::SyncToConfig(void)
         case 2:
           (*config_).scaling_ = MapShieldConfig::IconVariableAspectStyle; break;
       }
-  }
+  }*/
 }
 
 void
@@ -266,7 +266,7 @@ MapIconController::SyncToWidgetsImpl(void)
 void
 MapIconController::MySyncToWidgetsImpl(void)
 {
-  switch (config_->style_) {
+  /*switch (config_->style_) {
     case MapShieldConfig::OvalStyle:
       combo_type_->setCurrentItem(0); break;
     case MapShieldConfig::BoxStyle:
@@ -287,7 +287,7 @@ MapIconController::MySyncToWidgetsImpl(void)
         break;
     }
   }
-  ShieldStyleChanged(combo_type_->currentItem());
+  ShieldStyleChanged(combo_type_->currentItem());*/
 }
 
 void MapIconController::Create(WidgetControllerManager &manager,
@@ -300,10 +300,10 @@ void MapIconController::Create(WidgetControllerManager &manager,
                                QPushButton *outline_color_button,
                                MapShieldConfig *config,
                                QGroupBox *center_label_group_box) {
-  (void) new MapIconController(manager, combo_type, combo_scaling, button,
+  /*(void) new MapIconController(manager, combo_type, combo_scaling, button,
                                fill_color_label, fill_color_button,
                                outline_color_label, outline_color_button,
-                               config, center_label_group_box);
+                               config, center_label_group_box);*/
 }
 
 
@@ -318,22 +318,23 @@ SpinBoxControllerBase::SpinBoxControllerBase(
     WidgetController(manager),
     spin(spin_)
 {
-  spin->setMinValue(minValue);
+  /*spin->setMinValue(minValue);
   spin->setMaxValue(maxValue);
   spin->setValue(initialValue);
-  connect(spin, SIGNAL(valueChanged(int)), this, SLOT(EmitChanged()));
+  connect(spin, SIGNAL(valueChanged(int)), this, SLOT(EmitChanged()));*/
 }
 
 int
 SpinBoxControllerBase::GetValue(void) const
 {
-  return spin->value();
+  //return spin->value();
+  return 0;
 }
 
 void
 SpinBoxControllerBase::SetValue(int v)
 {
-  return spin->setValue(v);
+  //return spin->setValue(v);
 }
 
 
@@ -349,25 +350,25 @@ RangeSpinControllerBase::RangeSpinControllerBase(
     minSpin(minSpin_),
     maxSpin(maxSpin_)
 {
-  minSpin->setMinValue(limit.min);
+  /*minSpin->setMinValue(limit.min);
   maxSpin->setMaxValue(limit.max);
 
   SetValue(initial);
 
   connect(minSpin, SIGNAL(valueChanged(int)), this, SLOT(MinChanged(int)));
-  connect(maxSpin, SIGNAL(valueChanged(int)), this, SLOT(MaxChanged(int)));
+  connect(maxSpin, SIGNAL(valueChanged(int)), this, SLOT(MaxChanged(int)));*/
 }
 
 void
 RangeSpinControllerBase::MinChanged(int val) {
-  maxSpin->setMinValue(val);  // Whenever min changes update the clamp for max
-  EmitChanged();
+  //maxSpin->setMinValue(val);  // Whenever min changes update the clamp for max
+  //EmitChanged();
 }
 
 void
 RangeSpinControllerBase::MaxChanged(int val) {
-  minSpin->setMaxValue(val);  // Whenever max changes update the clamp for min
-  EmitChanged();
+  //minSpin->setMaxValue(val);  // Whenever max changes update the clamp for min
+  //EmitChanged();
 }
 
 
@@ -393,10 +394,10 @@ RangeSpinControllerBase::GetValue(void) const
 void
 RangeSpinControllerBase::SetValue(const geRange<int> &val)
 {
-  minSpin->setMaxValue(val.max);
+  /*minSpin->setMaxValue(val.max);
   maxSpin->setMinValue(val.min);
   minSpin->setValue(val.min);
-  maxSpin->setValue(val.max);
+  maxSpin->setValue(val.max);*/
 }
 
 
@@ -407,20 +408,20 @@ void FloatEditController::Create(WidgetControllerManager &manager,
                                  QLineEdit *lineEdit, float *config,
                                  float min, float max, int decimals)
 {
-  (void) new FloatEditController(manager, lineEdit, config,
-                                 min, max, decimals);
+  //(void) new FloatEditController(manager, lineEdit, config,
+  //                               min, max, decimals);
 }
 
 void
 FloatEditController::SyncToConfig(void)
 {
-  *config = lineEdit->text().toFloat();
+  //*config = lineEdit->text().toFloat();
 }
 
 void
 FloatEditController::SyncToWidgetsImpl(void)
 {
-  lineEdit->setText(QString::number(*config));
+  //lineEdit->setText(QString::number(*config));
 }
 
 FloatEditController::FloatEditController(WidgetControllerManager &manager,
@@ -430,10 +431,10 @@ FloatEditController::FloatEditController(WidgetControllerManager &manager,
     lineEdit(lineEdit_),
     config(config_)
 {
-  lineEdit->setText(QString::number(*config));
+  /*lineEdit->setText(QString::number(*config));
   connect(lineEdit, SIGNAL(textChanged(const QString&)),
           this, SLOT(EmitTextChanged()));
-  lineEdit->setValidator(new QDoubleValidator(min, max, decimals, lineEdit));
+  lineEdit->setValidator(new QDoubleValidator(min, max, decimals, lineEdit));*/
 }
 
 
@@ -443,13 +444,13 @@ FloatEditController::FloatEditController(WidgetControllerManager &manager,
 void
 ComboController::SyncToConfig(void)
 {
-  *config = contents[combo->currentItem()].first;
+  //*config = contents[combo->currentItem()].first;
 }
 
 void
 ComboController::SyncToWidgetsImpl(void)
 {
-  MySyncToWidgetsImpl();
+  //MySyncToWidgetsImpl();
 }
 
 ComboController::ComboController(WidgetControllerManager &manager,
@@ -461,21 +462,21 @@ ComboController::ComboController(WidgetControllerManager &manager,
     contents(contents_)
 {
   // populate the combo
-  combo->clear();
+  /*combo->clear();
   for (unsigned int i = 0; i < contents.size(); ++i) {
     combo->insertItem(contents[i].second);
   }
 
   MySyncToWidgetsImpl();
 
-  connect(combo, SIGNAL(activated(int)), this, SLOT(EmitChanged()));
+  connect(combo, SIGNAL(activated(int)), this, SLOT(EmitChanged()));*/
 }
 
 void
 ComboController::MySyncToWidgetsImpl(void)
 {
   // Find which entry is in the config
-  unsigned int pos = 0;
+  /*unsigned int pos = 0;
   for (; pos < contents.size(); ++pos) {
     if (*config == contents[pos].first)
       break;
@@ -485,7 +486,7 @@ ComboController::MySyncToWidgetsImpl(void)
     pos = 0;
   }
 
-  combo->setCurrentItem(pos);
+  combo->setCurrentItem(pos);*/
 }
 
 
@@ -495,7 +496,7 @@ ComboController::MySyncToWidgetsImpl(void)
 // ****************************************************************************
 template <class TextWidget>
 void TextWidgetController<TextWidget>::SyncToConfig(void) {
-  *config_ = text_edit_->text();
+  //*config_ = text_edit_->text();
 }
 
 template <class TextWidget>
@@ -520,26 +521,26 @@ TextWidgetController<TextWidget>::TextWidgetController(
     text_edit_(text_edit),
     config_(config)
 {
-  MySyncToWidgetsImpl();
-  Connect();
+  //MySyncToWidgetsImpl();
+  //Connect();
 }
 
 template <>
 void TextWidgetController<QLineEdit>::Connect(void) {
-  connect(text_edit_, SIGNAL(textChanged(const QString &)),
-          this, SLOT(EmitTextChanged()));
+  //connect(text_edit_, SIGNAL(textChanged(const QString &)),
+  //        this, SLOT(EmitTextChanged()));
 }
 
 template <>
 void TextWidgetController<QTextEdit>::Connect(void) {
-  connect(text_edit_, SIGNAL(textChanged()), this, SLOT(EmitTextChanged()));
+  //connect(text_edit_, SIGNAL(textChanged()), this, SLOT(EmitTextChanged()));
 }
 
 
 
 template <class TextWidget>
 void TextWidgetController<TextWidget>::MySyncToWidgetsImpl(void) {
-  text_edit_->setText(*config_);
+  //text_edit_->setText(*config_);
 }
 
 // explicit instantiations
@@ -553,17 +554,17 @@ template class TextWidgetController<QTextEdit>;
 // ****************************************************************************
 template <class TextWidget>
 void TextWidgetMetaFieldController<TextWidget>::SyncToConfig(void) {
-  TextWidgetController<TextWidget>::SyncToConfig();
+  /*TextWidgetController<TextWidget>::SyncToConfig();
   if (storage_.isEmpty()) {
     config_->Erase(key_);
   } else {
     config_->SetValue(key_, storage_);
-  }
+  }*/
 }
 
 template <class TextWidget>
 void TextWidgetMetaFieldController<TextWidget>::SyncToWidgetsImpl(void) {
-  MySyncToWidgetsImpl();
+  //MySyncToWidgetsImpl();
 }
 
 
@@ -573,8 +574,8 @@ void TextWidgetMetaFieldController<TextWidget>::Create(
     TextWidget *text_edit,
     khMetaData *config,
     const QString &key) {
-  (void) new TextWidgetMetaFieldController(manager, text_edit,
-                                           config, key);
+  //(void) new TextWidgetMetaFieldController(manager, text_edit,
+                                           //config, key);
 }
 
 
@@ -595,8 +596,8 @@ TextWidgetMetaFieldController<TextWidget>::TextWidgetMetaFieldController(
 
 template <class TextWidget>
 void TextWidgetMetaFieldController<TextWidget>::MySyncToWidgetsImpl(void) {
-  storage_ = config_->GetValue(key_);
-  TextWidgetController<TextWidget>::MySyncToWidgetsImpl();
+  //storage_ = config_->GetValue(key_);
+  //TextWidgetController<TextWidget>::MySyncToWidgetsImpl();
 }
 
 // explicit instantiations
@@ -608,7 +609,7 @@ template class TextWidgetMetaFieldController<QTextEdit>;
 // ***  TimestampInserterController
 // ****************************************************************************
 ButtonHandlerBase::ButtonHandlerBase(QPushButton *button) {
-  connect(button, SIGNAL(clicked()), this, SLOT(HandleButtonClick()));
+  //connect(button, SIGNAL(clicked()), this, SLOT(HandleButtonClick()));
 }
 
 template <class TextWidget>
@@ -625,8 +626,8 @@ TimestampInserterController<TextWidget>::TimestampInserterController(
 template <class TextWidget>
 void TimestampInserterController<TextWidget>::HandleButtonClick(void)
 {
-  QDateTime now = QDateTime::currentDateTime();
-  text_edit_->insert(now.toString("yyyy-MM-dd hh:mm"));
+  //QDateTime now = QDateTime::currentDateTime();
+  //text_edit_->insert(now.toString("yyyy-MM-dd hh:mm"));
 }
 
 template class TimestampInserterController<QLineEdit>;

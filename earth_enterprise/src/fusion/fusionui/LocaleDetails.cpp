@@ -14,21 +14,21 @@
 // limitations under the License.
 
 
-#include <qheader.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qvalidator.h>
-#include <qregexp.h>
-#include <qpushbutton.h>
-#include <qobjectlist.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qstringlist.h>
-#include <qmessagebox.h>
-#include <qpopupmenu.h>
-#include <qpainter.h>
-#include <qcursor.h>
+//#include <qheader.h>
+#include <QtWidgets/qcombobox.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qlineedit.h>
+#include <QtGui/qvalidator.h>
+#include <QtCore/qregexp.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtCore/qobject.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qlabel.h>
+#include <QtCore/qstringlist.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qmenu.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qcursor.h>
 
 #include <gstIconManager.h>
 #include <gstSource.h>
@@ -48,9 +48,10 @@
 // ****************************************************************************
 // ***  ItemBase
 // ****************************************************************************
-class ItemBase : public QTableItem {
+class ItemBase : public QWidget {
  public:
-  ItemBase(QTable* table, QTableItem::EditType et, bool is_defaultable);
+  //ItemBase(QTableView* table, QTableItem::EditType et, bool is_defaultable);
+  ItemBase(QTableView* table, bool is_defaultable);
   virtual ~ItemBase() { }
 
   void SetUseDefault(bool mode);
@@ -59,8 +60,8 @@ class ItemBase : public QTableItem {
   bool IsDefaultable() const { return is_defaultable_; }
 
   // from QTableItem
-  virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
-                     bool sel);
+  //virtual void paint(QPainter* p, const QColorGroup& cg, const QRect& cr,
+  //                   bool sel);
 
   virtual void MouseButtonPressed(int button, const QPoint& pos) = 0;
   virtual void ContextMenu(const QPoint& pos) = 0;
@@ -74,27 +75,27 @@ class ItemBase : public QTableItem {
   bool specialRender;
 };
 
-ItemBase::ItemBase(QTable* table, QTableItem::EditType et,
+ItemBase::ItemBase(QTableView* table, //QTableItem::EditType et,
                    bool is_defaultable)
-    : QTableItem(table, et, QString("")),
+    : //QTableItem(table, et, QString("")),
       is_defaultable_(is_defaultable),
       specialRender(false) {
   SetUseDefault(IsDefaultable());
 }
 
 void ItemBase::SetUseDefault(bool mode) {
-  use_default_ = mode;
+  /*use_default_ = mode;
   if (mode) {
     setText("<default>");
     setPixmap(QPixmap());
   } else {
     setText(QString(""));
-  }
+  }*/
 }
 
-void ItemBase::paint(
-    QPainter* p, const QColorGroup& cg, const QRect& cr, bool sel) {
-  if (use_default_) {
+//void ItemBase::paint(
+//    QPainter* p, const QColorGroup& cg, const QRect& cr, bool sel) {
+  /*if (use_default_) {
     QFont f = p->font();
     f.setBold(true);
     p->setFont(f);
@@ -108,8 +109,8 @@ void ItemBase::paint(
     QTableItem::paint(p, cg, cr, sel);
   } else {
     QTableItem::paint(p, cg, cr, sel);
-  }
-}
+  }*/
+//}
 
 
 // ****************************************************************************
@@ -117,9 +118,10 @@ void ItemBase::paint(
 // ****************************************************************************
 class IconItem : public ItemBase {
  public:
-  IconItem(QTable* table, bool is_defaultable,
+  IconItem(QTableView* table, bool is_defaultable,
            Defaultable<IconReference> &config) :
-      ItemBase(table, QTableItem::Never, is_defaultable),
+      //ItemBase(table, QTableItem::Never, is_defaultable),
+      ItemBase(table, is_defaultable),
       config_(config) {
     SyncToWidgets();
   }
@@ -148,14 +150,14 @@ class IconItem : public ItemBase {
 };
 
 void IconItem::SetIcon(const IconReference& icon) {
-  SetUseDefault(false);
+  /*SetUseDefault(false);
   icon_ = icon;
   QPixmap pix = thePixmapManager->GetPixmap(icon, PixmapManager::LayerIcon);
-  setPixmap(pix);
+  setPixmap(pix);*/
 }
 
 void IconItem::ContextMenu(const QPoint& pos) {
-  enum { OPT_DEFAULT, OPT_CHOOSE_ICON };
+  /*enum { OPT_DEFAULT, OPT_CHOOSE_ICON };
 
   QPopupMenu menu(table());
   if (IsDefaultable())
@@ -169,18 +171,18 @@ void IconItem::ContextMenu(const QPoint& pos) {
     case OPT_CHOOSE_ICON:
       MouseButtonPressed(0, pos);
       break;
-  }
+  }*/
 }
 
 void IconItem::MouseButtonPressed(int button, const QPoint& pos) {
 
-  gstIcon new_icon;
+  /*gstIcon new_icon;
   if (!IsDefault()) {
     new_icon = gstIcon(icon_);
   }
   if (SiteIcons::selectIcon(table(), PixmapManager::LayerIcon, &new_icon)) {
     SetIcon(new_icon.IconRef());
-  }
+  }*/
 }
 
 
@@ -189,24 +191,24 @@ void IconItem::MouseButtonPressed(int button, const QPoint& pos) {
 // ****************************************************************************
 class LookAtItem : public ItemBase {
  public:
-  LookAtItem(QTable* table, bool is_defaultable,
+  LookAtItem(QTableView* table, bool is_defaultable,
              Defaultable<QString> &config);
   virtual void MouseButtonPressed(int button, const QPoint& pos);
   virtual void ContextMenu(const QPoint& pos);
 
   void SyncToWidgets(void) {
-    if (config_.UseDefault()) {
+    /*if (config_.UseDefault()) {
       SetUseDefault(true);
     } else {
       SetLookAt(config_);
-    }
+    }*/
   }
   void SyncToConfig(void) {
-    if (IsDefault()) {
+    /*if (IsDefault()) {
       config_.SetUseDefault();
     } else {
       config_ = text();
-    }
+    }*/
   }
  private:
   void SetLookAt(const QString& str);
@@ -214,19 +216,19 @@ class LookAtItem : public ItemBase {
   Defaultable<QString> &config_;
 };
 
-LookAtItem::LookAtItem(QTable* table, bool is_defaultable,
+LookAtItem::LookAtItem(QTableView* table, bool is_defaultable,
                        Defaultable<QString> &config)
-    : ItemBase(table, QTableItem::Never, is_defaultable), config_(config) {
+    : ItemBase(table, is_defaultable), config_(config) {
   SyncToWidgets();
 }
 
 void LookAtItem::SetLookAt(const QString& str) {
-  SetUseDefault(false);
-  setText(str);
+  //SetUseDefault(false);
+  //setText(str);
 }
 
 void LookAtItem::ContextMenu(const QPoint& pos) {
-  enum { OPT_DEFAULT, OPT_SPECIFY_LOOKAT, OPT_REMOVE_LOOKAT };
+  /*enum { OPT_DEFAULT, OPT_SPECIFY_LOOKAT, OPT_REMOVE_LOOKAT };
 
   QPopupMenu menu(table());
   if (IsDefaultable())
@@ -246,7 +248,7 @@ void LookAtItem::ContextMenu(const QPoint& pos) {
     case OPT_REMOVE_LOOKAT:
       SetLookAt("");
       break;
-  }
+  }*/
 }
 
 void LookAtItem::MouseButtonPressed(int button, const QPoint& pos) {
@@ -260,19 +262,19 @@ void LookAtItem::MouseButtonPressed(int button, const QPoint& pos) {
 
   QString sourceFileName = files[0];
 
-  gstSource src(sourceFileName.ascii());
+  gstSource src(sourceFileName.toLatin1().data());
   if (src.Open() != GST_OKAY) {
-    QMessageBox::critical(table(), "Error" ,
+    /*QMessageBox::critical(table(), "Error" ,
                       QObject::tr("Unable to open the source file."),
-                      QObject::tr("OK"), 0, 0, 0);
+                      QObject::tr("OK"), 0, 0, 0);*/
     return;
   }
   if (src.NumFeatures(0) != 1) {
-    QMessageBox::critical(table(), "Error" ,
+    /*QMessageBox::critical(table(), "Error" ,
                       QObject::tr("The source has more than one feature.\n"
                                   "Multiple features are not supported at this time.\n"
                                   "Please use Google Earth to create a placemark."),
-                      QObject::tr("OK"), 0, 0, 0);
+                      QObject::tr("OK"), 0, 0, 0);*/
     return;
   }
 
@@ -283,26 +285,26 @@ void LookAtItem::MouseButtonPressed(int button, const QPoint& pos) {
       QString lookAtString = value->ValueAsString().c_str();
       SetLookAt(lookAtString);
     } else {
-      QMessageBox::critical(
-          table(), "Error" ,
-          QObject::tr("Cannot find an attribute named 'LookAt'."),
-          QObject::tr("OK"), 0, 0, 0);
+      //QMessageBox::critical(
+      //    table(), "Error" ,
+      //    QObject::tr("Cannot find an attribute named 'LookAt'."),
+      //    QObject::tr("OK"), 0, 0, 0);
     }
   } catch (const khException &e) {
-    QMessageBox::critical(table(), "Error" ,
-                          QObject::tr("Cannot load attributes:\n") +
-                          e.qwhat(),
-                          QObject::tr("OK"), 0, 0, 0);
+    //QMessageBox::critical(table(), "Error" ,
+    //                      QObject::tr("Cannot load attributes:\n") +
+    //                      e.qwhat(),
+    //                      QObject::tr("OK"), 0, 0, 0);
   } catch (const std::exception &e) {
-    QMessageBox::critical(table(), "Error" ,
-                          QObject::tr("Cannot load attributes:\n") +
-                          e.what(),
-                          QObject::tr("OK"), 0, 0, 0);
+    //QMessageBox::critical(table(), "Error" ,
+    //                      QObject::tr("Cannot load attributes:\n") +
+    //                      e.what(),
+    //                      QObject::tr("OK"), 0, 0, 0);
   } catch (...) {
-    QMessageBox::critical(table(), "Error" ,
-                          QObject::tr("Cannot load attributes:\n") +
-                          "Unknown error",
-                          QObject::tr("OK"), 0, 0, 0);
+    //QMessageBox::critical(table(), "Error" ,
+    //                      QObject::tr("Cannot load attributes:\n") +
+    //                      "Unknown error",
+    //                      QObject::tr("OK"), 0, 0, 0);
   }
 }
 
@@ -315,7 +317,7 @@ class TextItem : public ItemBase {
   typedef const QValidator* (*ValidatorFactory)(void);
 
 
-  TextItem(QTable* table, bool is_defaultable,
+  TextItem(QTableView* table, bool is_defaultable,
            Defaultable<QString> &config,
            ValidatorFactory = 0);
   virtual void MouseButtonPressed(int button, const QPoint& pos);
@@ -331,11 +333,11 @@ class TextItem : public ItemBase {
     }
   }
   void SyncToConfig(void) {
-    if (IsDefault()) {
+    /*if (IsDefault()) {
       config_.SetUseDefault();
     } else {
       config_ = text();
-    }
+    }*/
   }
  protected:
   Defaultable<QString>* GetRefToConfig() { return &config_; }
@@ -354,7 +356,7 @@ class IntItem : public TextItem {
     return new QIntValidator(bottom, top, NULL);
   };
 
-  IntItem(QTable* table, bool is_defaultable, Defaultable<int>* config) :
+  IntItem(QTableView* table, bool is_defaultable, Defaultable<int>* config) :
       TextItem(table, is_defaultable,
                *(new Defaultable<QString>(config->UseDefault(),
                                           QString::number(config->GetValue()))),
@@ -364,23 +366,23 @@ class IntItem : public TextItem {
   }
 
   virtual void SyncToWidgets(void) {
-    if (config_.UseDefault()) {
+    /*if (config_.UseDefault()) {
       SetUseDefault(true);
     } else {
       SetUseDefault(false);
       text_->GetMutableValue().setNum(config_.GetValue());
       setText(*text_);
-    }
+    }*/
   }
 
   virtual void SyncToConfig(void) {
-    if (IsDefault()) {
+    /*if (IsDefault()) {
       config_.SetUseDefault();
       text_->SetUseDefault();
     } else {
       *text_ = text();
       config_ = text_->GetValue().toInt();
-    }
+    }*/
   }
 
   ~IntItem() { delete text_; }
@@ -393,10 +395,10 @@ class IntItem : public TextItem {
 };
 
 
-TextItem::TextItem(QTable* table, bool is_defaultable,
+TextItem::TextItem(QTableView* table, bool is_defaultable,
                    Defaultable<QString> &config,
                    ValidatorFactory validator_factory) :
-    ItemBase(table, QTableItem::OnTyping, is_defaultable),
+    ItemBase(table, is_defaultable),
     config_(config),
     validator_factory_(validator_factory) {
   SyncToWidgets();
@@ -406,7 +408,7 @@ void TextItem::MouseButtonPressed(int button, const QPoint& pos) {
 }
 
 void TextItem::ContextMenu(const QPoint& pos) {
-  if (!IsDefaultable())
+  /*if (!IsDefaultable())
     return;
 
   enum { OPT_DEFAULT };
@@ -415,29 +417,30 @@ void TextItem::ContextMenu(const QPoint& pos) {
   menu.insertItem("Use default value", OPT_DEFAULT);
 
   if (menu.exec(pos) == OPT_DEFAULT)
-    SetUseDefault(true);
+    SetUseDefault(true);*/
 }
 
 QWidget* TextItem::createEditor() const {
-  QLineEdit* line_edit = new QLineEdit(table()->viewport());
+  /*QLineEdit* line_edit = new QLineEdit(table()->viewport());
   if (validator_factory_) {
     line_edit->setValidator((*validator_factory_)());
   }
   if (!IsDefault())
     line_edit->setText(text());
-  return line_edit;
+  return line_edit;*/
+  return nullptr;
 }
 
 void TextItem::setContentFromEditor(QWidget* w) {
-  QLineEdit* line_edit = dynamic_cast<QLineEdit*>(w);
+  /*QLineEdit* line_edit = dynamic_cast<QLineEdit*>(w);
   if (line_edit) {
     SetText(line_edit->text());
-  }
+  }*/
 }
 
 void TextItem::SetText(const QString& text) {
-  SetUseDefault(false);
-  setText(text);
+  //SetUseDefault(false);
+  //setText(text);
 }
 
 
@@ -446,7 +449,7 @@ void TextItem::SetText(const QString& text) {
 // ****************************************************************************
 class BoolItem : public ItemBase {
  public:
-  BoolItem(QTable* table, bool is_defaultable,
+  BoolItem(QTableView* table, bool is_defaultable,
            Defaultable<bool> &config,
            const QString &true_str = QString("On"),
            const QString &false_str = QString("Off"));
@@ -454,32 +457,32 @@ class BoolItem : public ItemBase {
   virtual void ContextMenu(const QPoint& pos);
 
   void SyncToWidgets(void) {
-    if (config_.UseDefault()) {
+    /*if (config_.UseDefault()) {
       SetUseDefault(true);
     } else {
       SetBool(config_);
-    }
+    }*/
   }
   void SyncToConfig(void) {
-    if (IsDefault()) {
+    /*if (IsDefault()) {
       config_.SetUseDefault();
     } else {
       config_ = GetBool();
-    }
+    }*/
   }
  private:
   void SetBool(bool b);
-  bool GetBool(void) { return text() == true_str_; }
+  //bool GetBool(void) { return text() == true_str_; }
   Defaultable<bool> &config_;
   QString true_str_;
   QString false_str_;
 };
 
-BoolItem::BoolItem(QTable* table, bool is_defaultable,
+BoolItem::BoolItem(QTableView* table, bool is_defaultable,
                    Defaultable<bool> &config,
                    const QString &true_str,
                    const QString &false_str)
-    : ItemBase(table, QTableItem::Never, is_defaultable),
+    : ItemBase(table, is_defaultable),
       config_(config),
       true_str_(true_str), false_str_(false_str)
 {
@@ -487,12 +490,12 @@ BoolItem::BoolItem(QTable* table, bool is_defaultable,
 }
 
 void BoolItem::SetBool(bool b) {
-  SetUseDefault(false);
-  QTableItem::setText(b ? true_str_ : false_str_);
+  //SetUseDefault(false);
+  //QTableItem::setText(b ? true_str_ : false_str_);
 }
 
 void BoolItem::MouseButtonPressed(int button, const QPoint& pos) {
-  if (IsDefault()) {
+  /*if (IsDefault()) {
     SetBool(true);
   } else if (GetBool()) {
     SetBool(false);
@@ -505,11 +508,11 @@ void BoolItem::MouseButtonPressed(int button, const QPoint& pos) {
   }
 
   // why do we need this?
-  table()->updateCell(row(), col());
+  table()->updateCell(row(), col());*/
 }
 
 void BoolItem::ContextMenu(const QPoint& pos) {
-  enum { OPT_DEFAULT, OPT_ON, OPT_OFF };
+  /*enum { OPT_DEFAULT, OPT_ON, OPT_OFF };
 
   QPopupMenu menu(table());
   if (IsDefaultable()) {
@@ -529,7 +532,7 @@ void BoolItem::ContextMenu(const QPoint& pos) {
     case OPT_OFF:
       SetBool(false);
       break;
-  }
+  }*/
 }
 
 
@@ -538,7 +541,7 @@ void BoolItem::ContextMenu(const QPoint& pos) {
 // ****************************************************************************
 class LocaleColumn {
  public:
-  LocaleColumn(QTable *table,
+  LocaleColumn(QTableView *table,
                const std::vector<LocaleDetails::FieldEnum> &field_list,
                const QString& locale_name,
                const LocaleConfig &config,
@@ -565,7 +568,7 @@ LocaleDetails::LocaleDetails(
     LocaleConfig *default_locale_config,
     LocaleMap    *locale_map_config) :
     WidgetController(manager),
-    table_(layer_legend->GetTable()),
+    //table_(layer_legend->GetTable()),
     default_locale_config_(default_locale_config),
     locale_map_config_(locale_map_config),
     filtering_(true)
@@ -573,7 +576,7 @@ LocaleDetails::LocaleDetails(
 {
 
   // populate field list from edit_mode
-  switch (edit_mode) {
+  /*switch (edit_mode) {
     case LayerMode:
     case KMLLayerMode:
       field_list_.push_back(FIELD_ICON);
@@ -709,7 +712,7 @@ LocaleDetails::LocaleDetails(
           this, SLOT(ContextMenu(int, int, const QPoint&)));
 
 
-  MySyncToWidgetsImpl();
+  MySyncToWidgetsImpl();*/
 }
 
 LocaleDetails::~LocaleDetails(void) {
@@ -717,11 +720,11 @@ LocaleDetails::~LocaleDetails(void) {
 }
 
 void LocaleDetails::MySyncToWidgetsImpl(void) {
-  locale_cols_.clear();
+  /*locale_cols_.clear();
   table_->setNumCols(0);
 
   // populate locale_cols from config
-  AddLocale("default", *default_locale_config_, false /* is_defaultable */);
+  AddLocale("default", *default_locale_config_, false*/ /* is_defaultable *//*);
   std::vector<QString> supported_locales = LocaleManager::SupportedLocales();
   LocaleConfig empty_locale;
   for (std::vector<QString>::iterator it = supported_locales.begin();
@@ -733,7 +736,7 @@ void LocaleDetails::MySyncToWidgetsImpl(void) {
     } else if (!filtering_) {
       AddLocale(*it, LocaleConfig());
     }
-  }
+  }*/
 }
 
 void LocaleDetails::SyncToConfig(void) {
@@ -755,7 +758,7 @@ void LocaleDetails::SyncToConfig(void) {
 
 
 void LocaleDetails::CellPressed(int row, int col, int btn, const QPoint& pos) {
-  if (btn == Qt::RightButton || row == -1)
+  /*if (btn == Qt::RightButton || row == -1)
     return;
 
   ItemBase* locale_item = dynamic_cast<ItemBase*>(table_->item(row, col));
@@ -764,16 +767,16 @@ void LocaleDetails::CellPressed(int row, int col, int btn, const QPoint& pos) {
     // unlike the global ones sent by the ContextMenuRequest() signal
     // so map them to the global coordinate system for use by QPopupMenu
     locale_item->MouseButtonPressed(btn, table_->mapToGlobal(pos));
-  }
+  }*/
 }
 
 void LocaleDetails::ContextMenu(int row, int col, const QPoint& pos) {
-  if (row == -1)
+  /*if (row == -1)
     return;
   ItemBase* locale_item = dynamic_cast<ItemBase*>(table_->item(row, col));
   if (locale_item) {
     locale_item->ContextMenu(pos);
-  }
+  }*/
 }
 
 
@@ -786,10 +789,10 @@ void LocaleDetails::FilterToggled(bool on) {
 void LocaleDetails::AddLocale(const QString& name,
                               const LocaleConfig& config,
                               bool is_defaultable) {
-  locale_cols_.push_back(TransferOwnership(
+  /*locale_cols_.push_back(TransferOwnership(
                              new LocaleColumn(table_, field_list_,
                                               name, config,
-                                              is_defaultable)));
+                                              is_defaultable)));*/
 }
 
 
@@ -809,7 +812,7 @@ void LocaleDetails::Create(WidgetControllerManager &manager,
 // ***  LocaleColumn
 // ****************************************************************************
 LocaleColumn::LocaleColumn(
-    QTable *table,
+    QTableView *table,
     const std::vector<LocaleDetails::FieldEnum> &field_list,
     const QString& locale_name,
     const LocaleConfig &config,
@@ -817,7 +820,7 @@ LocaleColumn::LocaleColumn(
     locale_name_(locale_name),
     config_(config)
 {
-  int col = table->numCols();
+  /*int col = table->numCols();
   table->setNumCols(col + 1);
 
   table->horizontalHeader()->setLabel(col, locale_name);
@@ -892,12 +895,12 @@ LocaleColumn::LocaleColumn(
     table->setItem(row, col, items_.back());
     table->adjustRow(row);
     table->adjustColumn(col);
-  }
+  }*/
 }
 
 
 void LocaleColumn::SyncToConfig(void) {
-  for (unsigned int i = 0; i < items_.size(); ++i) {
+  /*for (unsigned int i = 0; i < items_.size(); ++i) {
     items_[i]->SyncToConfig();
-  }
+  }*/
 }

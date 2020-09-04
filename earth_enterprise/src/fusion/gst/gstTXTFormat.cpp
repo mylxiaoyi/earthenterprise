@@ -19,8 +19,9 @@
 #include <gstTXTFormat.h>
 #include <gstTXTTable.h>
 #include <gstRecord.h>
-#include <qfile.h>
-#include <qstringlist.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/QTextStream>
 #include <khFileUtils.h>
 
 gstTXTFormat::gstTXTFormat(const char *n)
@@ -37,23 +38,28 @@ gstTXTFormat::~gstTXTFormat() {
 bool gstTXTFormat::DiscoverLayout(const char* fname,
                                   gstRegistry* inforeg) {
   QFile csvfile(fname);
-  if (!csvfile.open(IO_ReadOnly | IO_Translate))
+  if (!csvfile.open(QIODevice::ReadOnly))
     return false;
 
+  QTextStream csvIn(&csvfile);
+  if (csvIn.atEnd())
+      return false;
+
   QString firstline;
-  if (csvfile.readLine(firstline, 2048) == -1)
-    return false;
+  //if (csvfile.readLine(firstline, 2048) == -1)
+  //  return false;
+  firstline = csvIn.readLine();
 
   gstRegistry::Group* layout = inforeg->locateGroup("Layout", 1);
   layout->addTag(new gstValue("delimited"))->SetName("FileType");
 
   // attempt to split with commas
   QChar del(',');
-  QStringList fields = QStringList::split(del, firstline, true);
+  QStringList fields = firstline.split(del);
   // and if that fails, try tabs
   if (fields.count() < 2) {
     del = '\t';
-    fields = QStringList::split(del, firstline, true);
+    fields = firstline.split(del);
   }
 
   layout->addTag(new gstValue(QString(del)))->SetName("Delimiter");
@@ -68,16 +74,16 @@ bool gstTXTFormat::DiscoverLayout(const char* fname,
   bool have_lon = false;
   for (QStringList::Iterator it = fields.begin();
        it != fields.end(); ++it, ++pos) {
-    QString field = (*it).stripWhiteSpace();
+    QString field = (*it).simplified();
     gstRegistry::Group* grp = field_defs->addGroup(
-        QString("%1").arg(pos).latin1());
+        QString("%1").arg(pos).toStdString().c_str());
     if (field.isEmpty()) {
       notify(NFY_WARN, "Empty column name found. Replacing with (null)");
       field = "(null)";
     }
-    grp->addTag(new gstValue(field.latin1()))->SetName("Name");
+    grp->addTag(new gstValue(field.toStdString().c_str()))->SetName("Name");
 
-    QString lower = field.lower();
+    QString lower = field.toLower();
     if (!have_lat && (lower == "dlat" || lower == "latitude" ||
                       lower.startsWith("lat"))) {
       lat = pos;
@@ -234,7 +240,7 @@ gstStatus gstTXTFormat::OpenFile() {
 
   if (getNotifyLevel() >= NFY_DEBUG) {
     for (unsigned int ii = 0; ii < table_->NumColumns(); ++ii)
-      fprintf(stderr, "\t[%d] %s\n", ii, table_->GetHeader()->Name(ii).latin1());
+      fprintf(stderr, "\t[%d] %s\n", ii, table_->GetHeader()->Name(ii).toStdString().c_str());
   }
 
   AddLayer(gstPoint, table_->NumRows(), table_->GetHeader());

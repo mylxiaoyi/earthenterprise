@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qpushbutton.h>
+#include <QtWidgets/qframe.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qgroupbox.h>
+#include <QtWidgets/qpushbutton.h>
 
 #include <gstAssetGroup.h>
 #include "AssetChooser.h"
@@ -26,14 +26,14 @@
 
 class AssetBase;
 
-QString DatabaseWidget::empty_text(tr("<none>"));
+//QString DatabaseWidget::empty_text(tr("<none>"));
 
-DatabaseWidget::DatabaseWidget(QWidget* parent, AssetBase* base)
-  : DatabaseWidgetBase(parent), AssetWidgetBase(base) {
+DatabaseWidget::DatabaseWidget(QWidget* parent, AssetBase* base) 
+  : Ui::DatabaseWidgetBase(), AssetWidgetBase(base) {
 }
 
 void DatabaseWidget::Prefill(const DatabaseEditRequest& request) {
-  std::vector<std::string> projects;
+  /*std::vector<std::string> projects;
 
   if (request.config.vectorProject.size() != 0) {
     projects.push_back(request.config.vectorProject);
@@ -60,11 +60,11 @@ void DatabaseWidget::Prefill(const DatabaseEditRequest& request) {
     } else {
       terrain_project_label->setText(empty_text);
     }
-  }
+  }*/
 }
 
 void DatabaseWidget::AssembleEditRequest(DatabaseEditRequest* request) {
-  if (vector_project_label->text() != empty_text) {
+  /*if (vector_project_label->text() != empty_text) {
     request->config.vectorProject =
         vector_project_label->text().latin1() + kVectorProjectSuffix;
   } else {
@@ -83,12 +83,12 @@ void DatabaseWidget::AssembleEditRequest(DatabaseEditRequest* request) {
         terrain_project_label->text().latin1() + kTerrainProjectSuffix;
   } else {
     request->config.terrainProject = std::string();
-  }
+  }*/
 
 }
 
 void DatabaseWidget::ChooseVectorProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Vector,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -97,11 +97,11 @@ void DatabaseWidget::ChooseVectorProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  vector_project_label->setText(shortAssetName(newpath));
+  vector_project_label->setText(shortAssetName(newpath));*/
 }
 
 void DatabaseWidget::ChooseImageryProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Imagery,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -110,11 +110,11 @@ void DatabaseWidget::ChooseImageryProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  imagery_project_label->setText(shortAssetName(newpath));
+  imagery_project_label->setText(shortAssetName(newpath));*/
 }
 
 void DatabaseWidget::ChooseTerrainProject() {
-  AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Terrain,
+  /*AssetChooser chooser(this, AssetChooser::Open, AssetDefs::Terrain,
                        kProjectSubtype);
   if (chooser.exec() != QDialog::Accepted)
     return;
@@ -123,17 +123,17 @@ void DatabaseWidget::ChooseTerrainProject() {
   if (!chooser.getFullPath(newpath))
     return;
 
-  terrain_project_label->setText(shortAssetName(newpath));
+  terrain_project_label->setText(shortAssetName(newpath));*/
 }
 
 void DatabaseWidget::ClearVectorProject() {
-  vector_project_label->setText(empty_text);
+  //vector_project_label->setText(empty_text);
 }
 
 void DatabaseWidget::ClearImageryProject() {
-  imagery_project_label->setText(empty_text);
+  //imagery_project_label->setText(empty_text);
 }
 
-void DatabaseWidget::ClearTerrainProject() {
-  terrain_project_label->setText(empty_text);
-}
+//void DatabaseWidget::ClearTerrainProject() {
+  //terrain_project_label->setText(empty_text);
+//}

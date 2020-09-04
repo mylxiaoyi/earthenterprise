@@ -19,9 +19,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <fnmatch.h>
-#include <qstring.h>
-#include <qtextcodec.h>
-#include <qregexp.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qtextcodec.h>
+#include <QtCore/qregexp.h>
 
 #include <gstValue.h>
 #include <gstMisc.h>
@@ -270,7 +270,7 @@ int gstValue::RawSize() {
       return sizeof(double);
     case gstTagString:
     case gstTagUnicode:
-      return strlen(qstring_->utf8()) + 1;
+      return qstring_->length() + 1;
   }
 
   return 0;
@@ -320,7 +320,7 @@ std::string gstValue::ValueAsCSV() const {
       return ValueAsString();
     case gstTagString:
     case gstTagUnicode:
-      return std::string(FormatAsCSV(qstring_->latin1()));
+      return std::string(FormatAsCSV(qstring_->toStdString().c_str()));
   }
 
   return 0;
@@ -380,7 +380,7 @@ bool gstValue::operator!=(const gstValue& v) const {
 }
 
 bool gstValue::MatchesWildcard(const gstValue& v) const {
-  QRegExp rx(v.ValueAsUnicode(), true, true);
+  QRegExp rx(v.ValueAsUnicode());
   return rx.exactMatch(ValueAsUnicode());
 }
 
@@ -623,7 +623,7 @@ void gstValue::set(const char* buf, int len) {
       if (codec_) {
         *qstring_ = codec_->toUnicode(ExtractString(buf, len).c_str());
       } else {
-        *qstring_ = QString(ExtractString(buf, len, &need_codec_));
+        *qstring_ = QString::fromStdString(ExtractString(buf, len, &need_codec_));
       }
       break;
   }
@@ -641,10 +641,10 @@ void gstValue::set(const QString& unicode) {
       num_data_.uiVal = unicode.toUInt();
       break;
     case gstTagInt64:
-      num_data_.i64Val = strtoll(unicode.latin1(), NULL, 0);
+      num_data_.i64Val = strtoll(unicode.toStdString().c_str(), NULL, 0);
       break;
     case gstTagUInt64:
-      num_data_.ui64Val = strtoull(unicode.latin1(), NULL, 0);
+      num_data_.ui64Val = strtoull(unicode.toStdString().c_str(), NULL, 0);
       break;
     case gstTagFloat:
       num_data_.fVal = unicode.toFloat();
@@ -902,7 +902,7 @@ void gstValue::GetRaw(const void* buf) {
       if (qstring_->isEmpty()) {
         *((char*)buf) = '\0';
       } else {
-        strcpy((char*)buf, qstring_->utf8());
+        strcpy((char*)buf, qstring_->toStdString().c_str());
       }
       break;
   }
@@ -1029,7 +1029,7 @@ std::int64_t gstValue::ValueAsInt64() const {
       if (qstring_->isEmpty()) {
         return 0;
       } else {
-        return std::int64_t(strtoll(qstring_->latin1(), NULL, 0));
+        return std::int64_t(strtoll(qstring_->toStdString().c_str(), NULL, 0));
       }
   }
   return 0;
@@ -1049,7 +1049,7 @@ std::int64_t gstValue::ValueAsInt64() const {
       if (qstring_->isEmpty()) {
         return 0;
       } else {
-        return static_cast<std::uint64_t>(strtoull(qstring_->latin1(), NULL, 0));
+        return static_cast<std::uint64_t>(strtoull(qstring_->toStdString().c_str(), NULL, 0));
       }
   }
   return 0;
@@ -1097,7 +1097,7 @@ double gstValue::ValueAsDouble() const {
 
 std::string gstValue::ValueAsString() const {
   if (type_ == gstTagString || type_ == gstTagUnicode) {
-    return std::string(qstring_->utf8());
+    return qstring_->toStdString();
   }
 
   // handle all numeric types below
@@ -1162,16 +1162,16 @@ QString gstValue::ValueAsUnicode() const {
       string.setNum(num_data_.uiVal);
       break;
     case gstTagInt64:
-      string = ValueAsString();
+      string = QString::fromStdString(ValueAsString());
       break;
     case gstTagUInt64:
-      string = ValueAsString();
+      string = QString::fromStdString(ValueAsString());
       break;
     case gstTagFloat:
-      string = ValueAsString();
+      string = QString::fromStdString(ValueAsString());
       break;
     case gstTagDouble:
-      string = ValueAsString();
+      string = QString::fromStdString(ValueAsString());
       break;
   }
 

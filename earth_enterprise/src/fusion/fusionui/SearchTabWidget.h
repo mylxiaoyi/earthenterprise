@@ -18,7 +18,7 @@
 #ifndef KHSRC_FUSION_FUSIONUI_SEARCHTABWIDGET_H__
 #define KHSRC_FUSION_FUSIONUI_SEARCHTABWIDGET_H__
 
-#include <qtabwidget.h>
+#include <QtWidgets/qtabwidget.h>
 #include <vector>
 #include <autoingest/.idl/storage/SearchTabReference.h>
 

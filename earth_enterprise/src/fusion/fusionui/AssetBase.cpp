@@ -13,19 +13,21 @@
 // limitations under the License.
 
 
-#include <qaction.h>
-#include <qframe.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qmenubar.h>
-#include <qmessagebox.h>
-#include <qpixmap.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
-#include <qvariant.h>
-#include <qwhatsthis.h>
+#include <QtWidgets/qaction.h>
+#include <QtWidgets/qframe.h>
+#include <QtGui/qimage.h>
+#include <QtWidgets/qlabel.h>
+#include <QtWidgets/qlayout.h>
+#include <QtWidgets/qmenubar.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qtooltip.h>
+#include <QtCore/qvariant.h>
+#include <QtWidgets/qwhatsthis.h>
+#include <QtGui/QCloseEvent>
+#include <QtGui/QResizeEvent>
 #include <khException.h>
 
 #include "AssetBase.h"
@@ -39,17 +41,17 @@
 QString AssetBase::untitled_name(QObject::tr("Untitled"));
 
 AssetBase::AssetBase(QWidget* parent)
-  : QMainWindow(parent, 0, WType_TopLevel) {
-  setFocusPolicy(QMainWindow::TabFocus);
+  : QMainWindow(parent/*, 0, WType_TopLevel*/) {
+  //setFocusPolicy(QMainWindow::TabFocus);
   setCentralWidget(new QWidget(this));
-  QGridLayout* asset_base_layout = new QGridLayout(centralWidget(), 2, 1, 11, 6);
+  QGridLayout* asset_base_layout = new QGridLayout(centralWidget());//, 2, 1, 11, 6);
 
   main_frame_ = new QFrame(centralWidget());
-  main_frame_->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)7,
-      (QSizePolicy::SizeType)7, 0, 0, main_frame_->sizePolicy().hasHeightForWidth()));
+  //main_frame_->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)7,
+  //    (QSizePolicy::SizeType)7, 0, 0, main_frame_->sizePolicy().hasHeightForWidth()));
   main_frame_->setFrameShape(QFrame::NoFrame);
   main_frame_->setFrameShadow(QFrame::Raised);
-  main_frame_layout_ = new QGridLayout(main_frame_, 1, 1, 0, 6);
+  main_frame_layout_ = new QGridLayout(main_frame_);//, 1, 1, 0, 6);
 
   asset_base_layout->addWidget(main_frame_, 0, 0);
 
@@ -58,44 +60,44 @@ AssetBase::AssetBase(QWidget* parent)
 
   // actions
   save_action_ = new QAction(this);
-  save_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("filesave.png")));
+  //save_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("filesave.png")));
   saveas_action_ = new QAction(this);
-  saveas_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("filesaveas.png")));
+  //saveas_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("filesaveas.png")));
   build_action_ = new QAction(this);
   //  build_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("notes.png")));
   savebuild_action_ = new QAction(this);
   close_action_ = new QAction(this);
-  close_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("fileclose.png")));
+  //close_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("fileclose.png")));
   hidden_action_ = new QAction(this);
-  hidden_action_->setToggleAction(true);
+  //hidden_action_->setToggleAction(true);
   notes_action_ = new QAction(this);
-  notes_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("notes.png")));
+  //notes_action_->setIconSet(QIconSet(QPixmap::fromMimeSource("notes.png")));
 
   // menubar
   menu_bar_ = new QMenuBar(this);
 
-  file_menu_ = new QPopupMenu(this);
-  save_action_->addTo(file_menu_);
-  saveas_action_->addTo(file_menu_);
-  file_menu_->insertSeparator();
-  build_action_->addTo(file_menu_);
-  savebuild_action_->addTo(file_menu_);
-  file_menu_->insertSeparator();
-  close_action_->addTo(file_menu_);
+  file_menu_ = new QMenu(this);
+  //save_action_->addTo(file_menu_);
+  //saveas_action_->addTo(file_menu_);
+  //file_menu_->insertSeparator();
+  //build_action_->addTo(file_menu_);
+  //savebuild_action_->addTo(file_menu_);
+  //file_menu_->insertSeparator();
+  //close_action_->addTo(file_menu_);
 
-  menu_bar_->insertItem(QString(""), file_menu_, 1);
+  //menu_bar_->insertItem(QString(""), file_menu_, 1);
 
-  edit_menu_ = new QPopupMenu(this);
-  notes_action_->addTo(edit_menu_);
-  hidden_action_->addTo(edit_menu_);
-  menu_bar_->insertItem(QString(""), edit_menu_, 2);
+  edit_menu_ = new QMenu(this);
+  //notes_action_->addTo(edit_menu_);
+  //hidden_action_->addTo(edit_menu_);
+  //menu_bar_->insertItem(QString(""), edit_menu_, 2);
 
   languageChange();
   //resize(QSize(545, 317).expandedTo(minimumSizeHint()));
-  clearWState(WState_Polished);
+  //clearWState(WState_Polished);
 
   // signals and slots connections
-  connect(save_action_, SIGNAL(activated()), this, SLOT(Save()));
+  /*connect(save_action_, SIGNAL(activated()), this, SLOT(Save()));
   connect(saveas_action_, SIGNAL(activated()), this, SLOT(SaveAs()));
   connect(build_action_, SIGNAL(activated()), this, SLOT(Build()));
   connect(savebuild_action_, SIGNAL(activated()), this, SLOT(SaveAndBuild()));
@@ -103,7 +105,7 @@ AssetBase::AssetBase(QWidget* parent)
   connect(notes_action_, SIGNAL(activated()), this, SLOT(EditNotes()));
   connect(file_menu_, SIGNAL(aboutToShow()), this, SLOT(AboutToShowFileMenu()));
   connect(file_menu_, SIGNAL(aboutToHide()), this, SLOT(AboutToHideFileMenu()));
-  connect(hidden_action_, SIGNAL(toggled(bool)), this, SLOT(SetHidden(bool)));
+  connect(hidden_action_, SIGNAL(toggled(bool)), this, SLOT(SetHidden(bool)));*/
   save_error_ = false;
   last_save_error_ = false;
 }
@@ -135,27 +137,27 @@ void AssetBase::closeEvent(QCloseEvent* event) {
 // Sets the strings of the subwidgets using the current
 // language.
 void AssetBase::languageChange() {
-  setCaption(tr("Asset Base"));
+  setWindowTitle(tr("Asset Base"));
   save_action_->setText(tr("Save"));
-  save_action_->setMenuText(tr("&Save"));
-  save_action_->setAccel(tr("Ctrl+S"));
+  //save_action_->setMenuText(tr("&Save"));
+  //save_action_->setAccel(tr("Ctrl+S"));
   saveas_action_->setText(tr("Save As"));
-  saveas_action_->setMenuText(tr("Save &As..."));
+  //saveas_action_->setMenuText(tr("Save &As..."));
   build_action_->setText(tr("Build"));
-  build_action_->setMenuText(tr("&Build"));
+  //build_action_->setMenuText(tr("&Build"));
   savebuild_action_->setText(tr("Save and Build"));
-  savebuild_action_->setMenuText(tr("&Save and Build"));
+  //savebuild_action_->setMenuText(tr("&Save and Build"));
   close_action_->setText(tr("Close"));
-  close_action_->setMenuText(tr("&Close"));
-  close_action_->setAccel(tr("Ctrl+W"));
+  //close_action_->setMenuText(tr("&Close"));
+  //close_action_->setAccel(tr("Ctrl+W"));
   hidden_action_->setText(tr("Hidden"));
-  hidden_action_->setMenuText(tr("&Hidden"));
+  //hidden_action_->setMenuText(tr("&Hidden"));
   notes_action_->setText(tr("Notes"));
-  notes_action_->setMenuText(tr("&Notes"));
-  if (menu_bar_->findItem(1))
-    menu_bar_->findItem(1)->setText(tr("&File"));
-  if (menu_bar_->findItem(2))
-    menu_bar_->findItem(2)->setText(tr("&Edit"));
+  //notes_action_->setText(tr("&Notes"));
+  if (menu_bar_->find(1))
+    menu_bar_->find(1)->setWindowTitle(tr("&File"));
+  if (menu_bar_->find(2))
+    menu_bar_->find(2)->setWindowTitle(tr("&Edit"));
 }
 
 bool AssetBase::Save() {
@@ -199,8 +201,8 @@ bool AssetBase::Save() {
 
 bool AssetBase::SaveAs() {
   AssetChooser chooser(this, AssetChooser::Save, AssetType(), AssetSubtype());
-  if (chooser.exec() != QDialog::Accepted)
-    return false;
+  //if (chooser.exec() != QDialog::Accepted)
+  //  return false;
 
   QString newpath;
   (void) chooser.getFullPath(newpath);
@@ -255,9 +257,9 @@ void AssetBase::Close() {
 
 void AssetBase::EditNotes() {
   AssetNotes asset_notes(this, meta_.GetValue("notes"));
-  if (asset_notes.exec() == QDialog::Accepted) {
+  /*if (asset_notes.exec() == QDialog::Accepted) {
       meta_.SetValue("notes", asset_notes.GetText());
-  }
+  }*/
 }
 
 void AssetBase::SetHidden(bool on) {
@@ -271,7 +273,7 @@ void AssetBase::InstallMainWidget() {
 
 void AssetBase::SetName(const QString& text) {
   asset_path_ = text;
-  setCaption(AssetPrettyName() + " : " + shortAssetName(text));
+  setWindowTitle(AssetPrettyName() + " : " + shortAssetName(text));
   emit NameChanged(text);
 }
 
@@ -282,7 +284,8 @@ QString AssetBase::Name() const {
 void AssetBase::SetMeta(const khMetaData& meta) {
   meta_ = meta;
   bool hidden = meta.GetAs("hidden", false);
-  hidden_action_->setOn(hidden);
+  //hidden_action_->setOn(hidden);
+  hidden_action_->setVisible(hidden);
 }
 
 khMetaData AssetBase::Meta() const {
@@ -292,8 +295,8 @@ khMetaData AssetBase::Meta() const {
 bool AssetBase::EnsureNameValid() {
   if (asset_path_ == untitled_name) {
     AssetChooser chooser(this, AssetChooser::Save, AssetType(), AssetSubtype());
-    if (chooser.exec() != QDialog::Accepted)
-      return false;
+    //if (chooser.exec() != QDialog::Accepted)
+    //  return false;
 
     QString newpath;
     (void) chooser.getFullPath(newpath);
@@ -316,7 +319,7 @@ void AssetBase::Build(void) {
 
   QString error;
   bool needed = false;;
-  bool success = khAssetManagerProxy::BuildAsset((const char*)Name().utf8(),
+  bool success = khAssetManagerProxy::BuildAsset((const char*)Name().toUtf8().data(),
                                                  needed, error);
   if (success && !needed) {
     error = kh::tr("Nothing to do. Already up to date.");

@@ -24,7 +24,7 @@
 #include "WidgetControllers.h"
 #include "layerlegendbase.h"
 
-class LayerLegendDialog : public LayerLegendBase, WidgetControllerManager {
+class LayerLegendDialog : public Ui::LayerLegendBase, WidgetControllerManager {
  public:
   LayerLegendDialog(QWidget* parent, LocaleDetails::EditMode mode,
                     const LayerLegend& legend);

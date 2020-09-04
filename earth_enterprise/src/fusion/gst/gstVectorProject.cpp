@@ -16,7 +16,7 @@
 
 #include <gstVectorProject.h>
 
-#include <qmap.h>
+#include <QtCore/qmap.h>
 #include <algorithm>
 
 #include <gstFilter.h>
@@ -91,7 +91,7 @@ bool gstVectorProject::Prefill(const VectorProjectConfig& cfg) {
         group_map[fullPath] = layer;
       } else {
         notify(NFY_WARN, "Internal Error: Duplicate group name: %s",
-               (const char*)fullPath.utf8());
+               fullPath.toStdString().c_str());
       }
     }
   }
@@ -99,7 +99,7 @@ bool gstVectorProject::Prefill(const VectorProjectConfig& cfg) {
   for (std::vector<gstLayer*>::const_iterator it = layers_.begin();
        it != layers_.end(); ++it) {
     notify(NFY_DEBUG, "layer id = %d, name = \"%s\"", (*it)->Id(),
-           (*it)->GetPath().latin1());
+           (*it)->GetPath().toStdString().c_str());
     if ((*it)->isGroup()) {
       notify(NFY_DEBUG, "  ** Group");
       continue;
@@ -107,7 +107,7 @@ bool gstVectorProject::Prefill(const VectorProjectConfig& cfg) {
     for (unsigned int f = 0; f < (*it)->NumFilters(); ++f) {
       notify(NFY_DEBUG,
              "  filter %d, name = \"%s\": feature style = %d, site style = %d",
-             f, (*it)->GetFilterById(f)->Name().latin1(),
+             f, (*it)->GetFilterById(f)->Name().toStdString().c_str(),
              (*it)->GetFilterById(f)->FeatureConfigs().config.style.id,
              (*it)->GetFilterById(f)->Site().config.style.id);
     }

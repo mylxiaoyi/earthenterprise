@@ -25,7 +25,7 @@
 
 class gstLayer;
 
-class LayerProperties : public LayerPropertiesBase,
+class LayerProperties : public Ui::LayerPropertiesBase,
                         public WidgetControllerManager {
  public:
   LayerProperties(QWidget* parent, const LayerConfig& config, gstLayer *layer);

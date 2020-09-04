@@ -19,8 +19,8 @@
 #ifndef _featureEditor_h_
 #define _featureEditor_h_
 
-#include <qdockwindow.h>
-#include <qlistview.h>
+#include <QtWidgets/qdockwidget.h>
+#include <QtWidgets/qlistview.h>
 
 #include <khGuard.h>
 #include <gstVertex.h>
@@ -44,12 +44,12 @@ QString PrimTypeToString(int type);
 
 // ----------------------------------------------------------------------------
 
-class FeatureItem : public QCheckListItem {
+class FeatureItem : public QWidget {
  public:
   FeatureItem(QListView* parent, int id, gstGeodeHandle g, gstRecordHandle a);
   ~FeatureItem();
 
-  virtual int compare(QListViewItem* item, int, bool) const;
+  //virtual int compare(QListViewItem* item, int, bool) const;
   virtual void setOpen(bool o);
 
   const gstGeodeHandle Geode() const { return geode_; }
@@ -75,12 +75,12 @@ class FeatureItem : public QCheckListItem {
 
 // ----------------------------------------------------------------------------
 
-class SubpartItem : public QListViewItem {
+class SubpartItem : public QWidget {
  public:
-  SubpartItem(QListViewItem* parent, int id, gstGeodeHandle geode);
+  SubpartItem(QWidget* parent, int id, gstGeodeHandle geode);
   ~SubpartItem();
 
-  virtual int compare(QListViewItem* item, int, bool) const;
+  //virtual int compare(QListViewItem* item, int, bool) const;
   virtual void setOpen(bool o);
 
   gstGeodeHandle Geode() { return geode_; }
@@ -95,12 +95,12 @@ class SubpartItem : public QListViewItem {
 
 // ----------------------------------------------------------------------------
 
-class VertexItem : public QListViewItem {
+class VertexItem : public QWidget {
  public:
-  VertexItem(QListViewItem* parent, int id, gstGeodeHandle geode);
+  VertexItem(QWidget* parent, int id, gstGeodeHandle geode);
   ~VertexItem();
 
-  virtual int compare(QListViewItem* item, int, bool) const;
+  //virtual int compare(QListViewItem* item, int, bool) const;
 
   gstGeodeHandle Geode() const { return geode_; }
   gstVertex Vertex() const;
@@ -115,7 +115,7 @@ class VertexItem : public QListViewItem {
 
 // ----------------------------------------------------------------------------
 
-class FeatureEditor : public FeatureEditorBase {
+class FeatureEditor : public QObject, public Ui::FeatureEditorBase {
   Q_OBJECT
 
  public:
@@ -129,15 +129,15 @@ class FeatureEditor : public FeatureEditorBase {
   bool Close();
 
  signals:
-  void ZoomToBox(const gstBBox& b);
+  //void ZoomToBox(const gstBBox& b);
   void RedrawPreview();
 
  protected slots:
-  void DrawFeatures(const gstDrawState& s);
-  void MousePress(const gstBBox& b, Qt::ButtonState s);
-  void MouseMove(const gstVertex& v);
+  //void DrawFeatures(const gstDrawState& s);
+  //void MousePress(const gstBBox& b, Qt::ButtonState s);
+  //void MouseMove(const gstVertex& v);
   void MouseRelease();
-  void SelectBox(const gstDrawState& state, Qt::ButtonState btn_state);
+  //void SelectBox(const gstDrawState& state, Qt::ButtonState btn_state);
   void KeyPress(QKeyEvent* e);
   
   // file menu
@@ -172,9 +172,9 @@ class FeatureEditor : public FeatureEditorBase {
   virtual void Join();
   virtual void Simplify();
 
-  virtual void dragEnterEvent(QDragEnterEvent* event);
-  virtual void dropEvent(QDropEvent* event);
-  virtual void ContextMenu(QListViewItem* item, const QPoint& pos, int);
+  //virtual void dragEnterEvent(QDragEnterEvent* event);
+  //virtual void dropEvent(QDropEvent* event);
+  //virtual void ContextMenu(QListViewItem* item, const QPoint& pos, int);
   virtual void SelectionChanged();
   bool ExportKVP(const QString& fname);
 

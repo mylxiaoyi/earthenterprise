@@ -18,7 +18,7 @@
 #include <functional>
 #include <algorithm>
 
-#include <qstringlist.h>
+#include <QtCore/QStringList>
 
 #include "autoingest/.idl/storage/VectorProjectConfig.h"
 #include "common/RuntimeOptions.h"
@@ -173,7 +173,7 @@ VectorProjectConfig::EnsureFolderExists(const QString &folder) {
   // didn't find a match, let's try to make one
   QString delim = QString("|");
   QString parent;
-  if (folder.find(delim) != -1) {
+  if (folder.indexOf(delim) != -1) {
     parent = folder.section(delim, 0, -2);
     EnsureFolderExists(parent);
   }
@@ -181,7 +181,7 @@ VectorProjectConfig::EnsureFolderExists(const QString &folder) {
   newLayer.legend = parent;
   newLayer.defaultLocale.name_ = folder.section(delim, -1);
   newLayer.defaultLocale.icon_ = IconReference(IconReference::Internal,
-                                               kDefaultIconName);
+                                               QString(kDefaultIconName.c_str()));
   layers.push_back(newLayer);
 }
 
@@ -253,7 +253,7 @@ VectorProjectConfig::AfterLoad(const VectorProjectConfig::DeprecatedMembers &)
       roads.defaultLocale.name_ = "roads";
       roads.channelId = 0;
       roads.defaultLocale.icon_=
-        IconReference(IconReference::Internal, kDefaultIconName);
+        IconReference(IconReference::Internal, QString(kDefaultIconName.c_str()));
       l = layers.insert(l, roads);
       ++l;
       roadsAdded = true;
@@ -263,7 +263,7 @@ VectorProjectConfig::AfterLoad(const VectorProjectConfig::DeprecatedMembers &)
       borders.defaultLocale.name_ = "borders";
       borders.channelId = 0;
       borders.defaultLocale.icon_ =
-        IconReference(IconReference::Internal, kDefaultIconName);
+        IconReference(IconReference::Internal, QString(kDefaultIconName.c_str()));
       l = layers.insert(l, borders);
       ++l;
       bordersAdded = true;

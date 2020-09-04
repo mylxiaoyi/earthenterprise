@@ -16,11 +16,11 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qiconview.h>
-#include <qtabwidget.h>
-#include <qmessagebox.h>
+#include <QtGui/qimage.h>
+#include <QtGui/qpixmap.h>
+//#include <qiconview.h>
+#include <QtWidgets/qtabwidget.h>
+#include <QtWidgets/qmessagebox.h>
 
 #include <khArray.h>
 #include <notify.h>
@@ -29,8 +29,8 @@
 #include "SiteIcons.h"
 
 SiteIcons::SiteIcons(QWidget *parent, PixmapManager::IconType type)
-    : SiteIconsBase(parent, 0, true, 0) {
-  IconReference::Type ctype = IconReference::Internal;
+    /*: SiteIconsBase(parent, 0, true, 0)*/ {
+  /*IconReference::Type ctype = IconReference::Internal;
   for (int ii = 0; ii < theIconManager->IconCount(ctype); ++ii) {
     const gstIcon& icon = theIconManager->GetIcon(ctype, ii);
     const QPixmap& pix = thePixmapManager->GetPixmap(icon, type);
@@ -52,11 +52,11 @@ SiteIcons::SiteIcons(QWidget *parent, PixmapManager::IconType type)
   // make sure that at least the default icon exists
   assert(standardIconView->findItem(gstIcon().href()));
 
-  setDefault();
+  setDefault();*/
 }
 
 bool SiteIcons::setSelection(const gstIcon& icon) {
-  QIconView* iconview[] = { standardIconView, customIconView };
+  /*QIconView* iconview[] = { standardIconView, customIconView };
 
   QIconViewItem* currIcon = iconview[icon.type()]->findItem(icon.href());
   if (currIcon) {
@@ -64,38 +64,39 @@ bool SiteIcons::setSelection(const gstIcon& icon) {
     iconview[icon.type()]->setCurrentItem(currIcon);
     selection = icon;
   }
-  return currIcon;
+  return currIcon;*/
+  return false;
 }
 
-void SiteIcons::standardIconView_selectionChanged(QIconViewItem* item) {
-  if (!item)
+//void SiteIcons::standardIconView_selectionChanged(QIconViewItem* item) {
+  /*if (!item)
     return;
 
   customIconView->clearSelection();
-  selection = gstIcon(item->text(), IconReference::Internal);
-}
+  selection = gstIcon(item->text(), IconReference::Internal);*/
+//}
 
-void SiteIcons::customIconView_selectionChanged(QIconViewItem* item) {
-  if (!item)
+//void SiteIcons::customIconView_selectionChanged(QIconViewItem* item) {
+  /*if (!item)
     return;
 
   standardIconView->clearSelection();
-  selection = gstIcon(item->text(), IconReference::External);
-}
+  selection = gstIcon(item->text(), IconReference::External);*/
+//}
 
-void SiteIcons::standardIconView_doubleClicked(QIconViewItem* item) {
-  selection = gstIcon(item->text(), IconReference::Internal);
-  accept();
-}
+//void SiteIcons::standardIconView_doubleClicked(QIconViewItem* item) {
+  //selection = gstIcon(item->text(), IconReference::Internal);
+  //accept();
+//}
 
-void SiteIcons::customIconView_doubleClicked(QIconViewItem* item) {
-  selection = gstIcon(item->text(), IconReference::External);
-  accept();
-}
+//void SiteIcons::customIconView_doubleClicked(QIconViewItem* item) {
+  //selection = gstIcon(item->text(), IconReference::External);
+  //accept();
+//}
 
 bool SiteIcons::selectIcon(QWidget *parent, PixmapManager::IconType type,
                            gstIcon* icon) {
-  SiteIcons dialog(parent, type);
+  /*SiteIcons dialog(parent, type);
 
   if (!dialog.setSelection(*icon)) {
     notify(NFY_WARN, "Can't find icon: %s", icon->href().ascii());
@@ -107,16 +108,17 @@ bool SiteIcons::selectIcon(QWidget *parent, PixmapManager::IconType type,
     *icon = dialog.getSelection();
   }
 
-  return (result == QDialog::Accepted);
+  return (result == QDialog::Accepted);*/
+  return false;
 }
 
 void SiteIcons::accept() {
-  QIconView* iconview[] = { standardIconView, customIconView };
+  /*QIconView* iconview[] = { standardIconView, customIconView };
 
   if (iconview[iconTabs->currentPageIndex()]->currentItem() == 0) {
     QMessageBox::critical(this, "Fusion",
                           tr("Please select an icon."));
   } else {
     SiteIconsBase::accept();
-  }
+  }*/
 }

@@ -13,62 +13,70 @@
 // limitations under the License.
 
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
-#include <qtextedit.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qstatusbar.h>
-#include <qmessagebox.h>
-#include <qapplication.h>
-#include <qaccel.h>
-#include <qtextstream.h>
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qsimplerichtext.h>
-#include <qgrid.h>
+#include <QtGui/qimage.h>
+#include <QtGui/qpixmap.h>
+#include <QtWidgets/qtoolbar.h>
+#include <QtWidgets/qtoolbutton.h>
+#include <QtWidgets/qmenubar.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtCore/qfile.h>
+#include <QtWidgets/qfiledialog.h>
+#include <QtWidgets/qstatusbar.h>
+#include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qapplication.h>
+//#include <Qt3Support/q3accel.h>
+#include <QtCore/qtextstream.h>
+#include <QtGui/qpainter.h>
+//#include <Qt3Support/q3paintdevicemetrics.h>
+//#include <Qt3Support/q3simplerichtext.h>
+//#include <Qt3Support/q3grid.h>
+//#include <Qt3Support/q3mimefactory.h>
 
-#include <qcanvas.h>
+//#include <Qt3Support/q3canvas.h>
 
 #include "fileopen.xpm"
 
 #include "application.h"
 #include "imageview.h"
-#include "gdal.h"
+#include <gdal/gdal.h>
+
+#include <QtGui/QCloseEvent>
 
 ApplicationWindow::ApplicationWindow()
-    : QMainWindow( 0, "scroll", WDestructiveClose | WGroupLeader )
+    : QMainWindow( 0 )//, "scroll")//, WDestructiveClose | WGroupLeader )
 {
   QPixmap openIcon;
 
-  QToolBar * fileTools = new QToolBar( this, "file operations" );
-  fileTools->setLabel( "File Operations" );
+  QToolBar * fileTools = new QToolBar( "file operations", this );
+  fileTools->setWindowTitle( "File Operations" );
 
   openIcon = QPixmap( fileopen );
-  (void) new QToolButton( openIcon, "Open", QString::null,
-                          this, SLOT(choose()), fileTools, "open" );
+  //(void) new QToolButton( openIcon, "Open", QString::null,
+  //                        this, SLOT(choose()), fileTools, "open" );
 
-  QMimeSourceFactory::defaultFactory()->setPixmap( "fileopen", openIcon );
+  //Q3MimeSourceFactory::defaultFactory()->setPixmap( "fileopen", openIcon );
 
-  QPopupMenu * file = new QPopupMenu( this );
-  menuBar()->insertItem( "&File", file );
+  /*Q3PopupMenu * file = new Q3PopupMenu( this );
+  //menuBar()->insertItem( "&File", file );
+  menuBar()->addMenu("&File");
 
-  file->insertItem( openIcon, "&Open...",
-                         this, SLOT(choose()), CTRL+Key_O );
-  file->insertItem( "&Save", this, SLOT(save()));
+  //file->insertMenu( openIcon, "&Open...",
+  //                       this, SLOT(choose()), CTRL+Qt::Key_O );
+  file->addMenu("&Open");
+  //file->insertMenu( "&Save", this, SLOT(save()));
+  file->addMenu("&Save");
 
-  file->insertSeparator();
+  file->addSeparator();
 
-  file->insertItem( "&Quit", qApp, SLOT( closeAllWindows() ), CTRL+Key_Q );
+  //file->insertMenu( "&Quit", qApp, SLOT( closeAllWindows() ), Qt::ControlModifier+Qt::Key_Q );
+  file->addMenu("&Quit");*/
 
-  QPopupMenu * help = new QPopupMenu( this );
-  menuBar()->insertItem( "&Help", help );
-  help->insertItem( "&Commands", this,
-                    SLOT(keyhelps()), CTRL+Key_H);
+  /*Q3PopupMenu * help = new Q3PopupMenu( this );
+  //menuBar()->insertMenu( "&Help", help );
+  menuBar()->addMenu(help);
+  //help->insertMenu( "&Commands", this,
+  //                  SLOT(keyhelps()), Qt::ControlModifier+Qt::Key_H);
+  help->addMenu("&Commands");*/
 
 
 
@@ -81,7 +89,7 @@ ApplicationWindow::ApplicationWindow()
   viewer->setFocus();
 
   setCentralWidget(viewer);
-  statusBar()->message( "Please open an image", 0 );
+  statusBar()->showMessage( "Please open an image", 0 );
 
   resize(800, 600);
 }
@@ -93,10 +101,10 @@ ApplicationWindow::~ApplicationWindow()
 void ApplicationWindow::loadInitImage(const std::string &image_file_path) {
   QString abs_file_path;
   // Set prevDir per fileName (using non executed QFileDialog setting.)
-  QFileDialog *fdlg = new QFileDialog(QString::null, QString::null, this);
-  fdlg->setSelection(image_file_path);
-  setCaption(fdlg->selectedFile()); // using selectedFile() to get full path
-  prevDir = fdlg->dirPath();
+  QFileDialog *fdlg = new QFileDialog(this);
+  //fdlg->setSelection(image_file_path);
+  setWindowTitle(fdlg->selectedFiles()[0]); // using selectedFile() to get full path
+  //prevDir = fdlg->selectedUrls()[0];
   delete fdlg;
   viewer->loadInitImage(image_file_path);
 }
@@ -104,11 +112,11 @@ void ApplicationWindow::loadInitImage(const std::string &image_file_path) {
 
 void ApplicationWindow::choose()
 {
-  QFileDialog *fdlg = new QFileDialog(prevDir, QString::null, this);
-  fdlg->addFilter("Images (*.pre *.img *.tif *.tiff *.jp2 *.sid *.jpg *.IMG *.TIF *.TIFF *.JP2 *.SID *.JPG)");
+  QFileDialog *fdlg = new QFileDialog(this, "", prevDir);
+  //fdlg->setFilter("Images (*.pre *.img *.tif *.tiff *.jp2 *.sid *.jpg *.IMG *.TIF *.TIFF *.JP2 *.SID *.JPG)");
   if (fdlg->exec() == QDialog::Accepted) {
-    prevDir = fdlg->dirPath();
-    load(fdlg->selectedFile());
+    //prevDir = fdlg->selectedUrls()[0];
+    load(fdlg->selectedFiles()[0]);
   }
   delete fdlg;
 }
@@ -155,8 +163,9 @@ void ApplicationWindow::keyhelps()
 
 void ApplicationWindow::load( const QString &fileName )
 {
-  viewer->setFilename((char *)fileName.ascii());
-  setCaption(fileName);
+  viewer->setFilename((char *)fileName.toLatin1().data());
+  //setCaption(fileName);
+  setWindowTitle(fileName);
 }
 
 void ApplicationWindow::closeEvent( QCloseEvent* ce )

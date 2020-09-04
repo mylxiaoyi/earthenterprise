@@ -57,13 +57,13 @@ def Emitter(env, target, source):
   cppfile = os.path.join(uidir, base+'.cpp')
   mocdir = os.path.join(str(target[0].get_dir()), '.moc')
   mocfile = os.path.join(mocdir, 'moc_' + base + '.cpp')
-  env.uic_impl(cppfile, [hfile, source])
+  #env.uic_impl(cppfile, [hfile, source])
   env.moc(mocfile, hfile)
   return [hfile], [source]
 
 uic = SCons.Builder.Builder(action='$UIC $SOURCE -o $TARGET',
                             emitter=Emitter)
-uic_impl = SCons.Builder.Builder(action='$UIC -o $TARGET -impl $SOURCES')
+#uic_impl = SCons.Builder.Builder(action='$UIC -o $TARGET -impl $SOURCES')
 moc = SCons.Builder.Builder(action='$MOC -o $TARGET $SOURCE')
 
 
@@ -295,7 +295,7 @@ class khEnvironment(Environment):
     self.exportdirs = exportdirs
     self.installdirs = installdirs
     self['BUILDERS']['uic'] = uic
-    self['BUILDERS']['uic_impl'] = uic_impl
+    #self['BUILDERS']['uic_impl'] = uic_impl
     self['BUILDERS']['moc'] = moc
     self['BUILDERS']['IDLH'] = idl_h_builder
     self['BUILDERS']['IDLIMPLH'] = idl_impl_h_builder
@@ -626,10 +626,11 @@ class khEnvironment(Environment):
     else:
       imgcollect = []
 
-    uicpps = ['.ui/' + u + '.cpp' for u in uifiles]
-    uimoccpps = ['.moc/moc_' + u + '.cpp' for u in uifiles]
+    #uicpps = ['.ui/' + u + '.cpp' for u in uifiles]
+    #uimoccpps = ['.moc/moc_' + u + '.cpp' for u in uifiles]
     hmoccpps = ['.moc/moc_' + h + '.cpp' for h in hfiles]
-    return uicpps + uimoccpps + hmoccpps + imgcollect
+    #return uicpps + uimoccpps + hmoccpps + imgcollect
+    return hmoccpps + imgcollect
 
   def idl(self, sources):
     for idlfile in sources:

@@ -21,8 +21,8 @@
 #include <errno.h>
 #include <string.h>
 
-#include <qtextedit.h>
-#include <qscrollview.h>
+#include <QtWidgets/qtextedit.h>
+#include <QtWidgets/QScrollArea>
 
 #include "AssetLog.h"
 
@@ -51,10 +51,11 @@ AssetLog::Open(const std::string &filename)
 
 
 AssetLog::AssetLog( const std::string &logpath )
-    : AssetLogBase( 0, NULL, false,  Qt::WDestructiveClose ), _logfile( logpath ), _logfd( -1 )
+    : QDialog(nullptr), ui(new Ui_AssetLogBase),  _logfile( logpath ), _logfd( -1 )
 {
+  ui->setupUi(this);
   _written = 0;
-  logTextEdit->setUndoRedoEnabled(false);
+  /*logTextEdit->setUndoRedoEnabled(false);
   logTextEdit->setWordWrap(QTextEdit::WidgetWidth);
   logTextEdit->setWrapPolicy(QTextEdit::Anywhere);
   logTextEdit->setHScrollBarMode(QScrollView::AlwaysOff);
@@ -68,7 +69,7 @@ AssetLog::AssetLog( const std::string &logpath )
 
   show();
 
-  openlogs.insert(std::make_pair(_logfile, this));
+  openlogs.insert(std::make_pair(_logfile, this));*/
 }
 
 AssetLog::~AssetLog()
@@ -83,7 +84,7 @@ void AssetLog::timerEvent( QTimerEvent *e )
 {
   // Keep trying to open the file every time we're called.  It is possible that
   // we've been given a valid path name but the file doesn't exist yet.
-  if (_logfd == -1) {
+  /*if (_logfd == -1) {
     _logfd = ::open( _logfile.c_str(), O_RDONLY );
     if (_logfd == -1)
       return;
@@ -114,5 +115,5 @@ void AssetLog::timerEvent( QTimerEvent *e )
 
     remainder -= sz;
     _written += sz;
-  }
+  }*/
 }

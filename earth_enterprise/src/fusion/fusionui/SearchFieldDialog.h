@@ -20,7 +20,7 @@
 
 #include "searchfielddialogbase.h"
 
-class SearchFieldDialog : public SearchFieldDialogBase {
+class SearchFieldDialog : public Ui::SearchFieldDialogBase {
  public:
   SearchFieldDialog(QWidget* parent, const QStringList used_fields);
 

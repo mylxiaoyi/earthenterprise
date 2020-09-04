@@ -17,7 +17,7 @@
 #include <vector>
 #include <string>
 #include <sys/types.h>
-#include <qstring.h>
+#include <QtCore/QString>
 
 class TaskLists {
   class WaitingTask {

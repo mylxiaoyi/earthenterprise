@@ -18,7 +18,7 @@
 #ifndef BASE_PORT_H_
 #define BASE_PORT_H_
 
-#include <libjs/jsautocfg.h>
+#include <js/jsautocfg.h>
 
 #include <limits.h>         // So we can set the bounds of our types
 #include <string.h>         // for memcpy()

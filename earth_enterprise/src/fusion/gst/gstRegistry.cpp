@@ -18,7 +18,7 @@
 #include <alloca.h>
 #include <stdio.h>
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 #include <notify.h>
 #include <gstRegistry.h>
@@ -181,7 +181,7 @@ gstStatus gstRegistry::parse() {
           if (strlenSafe(val) && val[strlenSafe(val) - 1] == '"')
             break;
         }
-        found->set(bigval.latin1());
+        found->set(bigval);
       } else {
         found->set(val);
       }

@@ -19,10 +19,10 @@
 #include <khFileUtils.h>
 #include <khSpawn.h>
 // this one is not exported in normal gdal distributions only in keyhole's
-#include "vrtdataset.h"
+#include <gdal/vrtdataset.h>
 #include <khgdal/khGDALDataset.h>
-#include <cpl_string.h>
-#include <gdal_alg.h>
+#include <gdal/cpl_string.h>
+#include <gdal/gdal_alg.h>
 #include "common/khException.h"
 
 void
@@ -62,7 +62,7 @@ void ValidateTypename(const std::string &n) {
   khTypes::StorageEnum storage = khTypes::StorageNameToEnum(n.c_str());
   if ((storage == khTypes::UInt64) ||
       (storage == khTypes::Int64)) {
-    throw khException(kh::tr("Unsupported type name: %1").arg(n));
+    throw khException(kh::tr("Unsupported type name: %1").arg(QString::fromStdString(n)));
   }
 }
 
